@@ -1,0 +1,2 @@
+iccarm.exe --cpu=Cortex-M7 -DBL2 -I%1\..\Inc %1\stm32h7s7xx_flash.icf --silent --preprocess=ns %1\flash.icf.i > %1\prebuild.log 2>&1
+iccarm.exe --cpu=Cortex-M7 -DBL2 -DSTM32H7S7xx -I%1\..\Inc -I%1\..\..\..\..\..\..\Drivers\STM32H7RSxx_HAL_Driver\Inc -I%1\..\..\..\..\..\..\Drivers\CMSIS\Device\ST\STM32H7RSxx\Include -I%1\..\..\..\..\..\..\Drivers\CMSIS\Core\Include %1\..\src\image_macros_to_preprocess_bl2.c --silent --preprocess=ns %1\image_macros_preprocessed_bl2.c >> %1\prebuild.log 2>&1

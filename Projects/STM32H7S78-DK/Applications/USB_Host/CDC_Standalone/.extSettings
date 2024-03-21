@@ -1,0 +1,12 @@
+[Boot:ProjectFiles]
+[Boot:Others]
+Define=
+HALModule=
+[Boot:Groups]
+Doc=../README.md;
+[Appli:ProjectFiles]
+[Appli:Others]
+Define=
+HALModule=
+[Appli:Groups]
+Doc=../README.md;

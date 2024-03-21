@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>I3C_Target_I2C_ComDMA</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+	</buildSpec>
+	<natures>
+		<nature>com.st.stm32cube.ide.mcu.MCUProjectNature</nature>
+		<nature>com.st.stm32cube.ide.mcu.MCURootProjectNature</nature>
+		<nature>com.st.stm32cube.ide.mcu.MCUCubeIdeServicesRevAev2ProjectNature</nature>
+		<nature>com.st.stm32cube.ide.mcu.MCUNonUnderRootProjectNature</nature>
+		<nature>com.st.stm32cube.ide.mcu.MCUCubeProjectNature</nature>
+		<nature>com.st.stm32cube.ide.mcu.MCUAppliEnabledProjectNature</nature>
+		<nature>com.st.stm32cube.ide.mcu.MCURootBootProjectNature</nature>
+		<nature>com.st.stm32cube.ide.mcu.MCUSingleCpuProjectNature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>I3C_Target_I2C_ComDMA.ioc</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/I3C_Target_I2C_ComDMA.ioc</locationURI>
+		</link>
+	</linkedResources>
+</projectDescription>

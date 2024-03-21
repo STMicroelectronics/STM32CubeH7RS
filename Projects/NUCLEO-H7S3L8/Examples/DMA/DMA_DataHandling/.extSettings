@@ -1,0 +1,8 @@
+[ProjectFiles]
+HeaderPath=..\..\..\..\..\..\Drivers\BSP\STM32H7RSxx_Nucleo
+[Others]
+Define=
+HALModule=GPIO
+[Groups]
+Doc=../README.md;
+Drivers/BSP/STM32H7RSxx_Nucleo=../../../../../../Drivers/BSP/STM32H7RSxx_Nucleo/stm32h7rsxx_nucleo.c;

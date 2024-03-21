@@ -1,0 +1,7 @@
+[ProjectFiles]
+[Others]
+Define=
+HALModule=GPIO
+[Groups]
+Doc=../README.md;
+

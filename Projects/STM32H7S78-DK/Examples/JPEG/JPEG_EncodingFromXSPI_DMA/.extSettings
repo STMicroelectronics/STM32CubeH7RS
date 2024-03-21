@@ -1,0 +1,10 @@
+[ProjectFiles]
+HeaderPath=..\..\..\..\..\..\Drivers\BSP\STM32H7S78-DK
+[Others]
+Define=
+HALModule=GPIO
+[Groups]
+Application/User/Appli=../Appli/Src/Image_argb_8888.c;../Appli/Src/Image_rgb_565.c;../Appli/Src/Image_rgb_888.c;../Appli/Src/encode_dma.c;
+Doc=../README.md;
+Drivers/BSP/STM32H7S78-DK=../../../../../../Drivers/BSP/STM32H7S78-DK/stm32h7s78_discovery.c;
+Utilities=../../../../../../Utilities/JPEG/jpeg_utils.c;

@@ -1,0 +1,13 @@
+[Boot:ProjectFiles]
+[Boot:Others]
+[Boot:Groups]
+Doc=../README.md;
+[Appli:ProjectFiles]
+HeaderPath=../../../../../../Drivers/BSP/STM32H7RSxx_Nucleo;./../../../../../Drivers/BSP/Components/tcpp0203
+[Appli:Others]
+Define=TCPP0203_SUPPORT
+HALModule=I2C
+[Appli:Groups]
+Doc=../README.md;
+Drivers/BSP/Components=../../../../../../Drivers/BSP/Components/tcpp0203/tcpp0203.c;../../../../../../Drivers/BSP/Components/tcpp0203/tcpp0203_reg.c;
+Drivers/BSP/STM32H7RSxx_Nucleo=../../../../../../Drivers/BSP/STM32H7RSxx_Nucleo/stm32h7rsxx_nucleo.c;../../../../../../Drivers/BSP/STM32H7RSxx_Nucleo/stm32h7rsxx_nucleo_bus.c;../../../../../../Drivers/BSP/STM32H7RSxx_Nucleo/stm32h7rsxx_nucleo_usbpd_pwr.c;

@@ -1,0 +1,16 @@
+[submodule "Drivers/STM32H7RSxx_HAL_Driver"]
+	path = Drivers/STM32H7RSxx_HAL_Driver
+	url = https://github.com/STMicroelectronics/stm32h7rsxx_hal_driver.git
+	branch = main
+[submodule "Drivers/CMSIS/Device/ST/STM32H7RSxx"]
+	path = Drivers/CMSIS/Device/ST/STM32H7RSxx
+	url = https://github.com/STMicroelectronics/cmsis_device_h7rs.git
+	branch = main
+[submodule "Drivers/BSP/STM32H7RSxx_Nucleo"]
+	path = Drivers/BSP/STM32H7RSxx_Nucleo
+	url = https://github.com/STMicroelectronics/stm32h7rsxx-nucleo-bsp.git
+	branch = main
+[submodule "Drivers/BSP/STM32H7S78-DK"]
+	path = Drivers/BSP/STM32H7S78-DK
+	url = https://github.com/STMicroelectronics/stm32h7s78-dk-bsp.git
+	branch = main

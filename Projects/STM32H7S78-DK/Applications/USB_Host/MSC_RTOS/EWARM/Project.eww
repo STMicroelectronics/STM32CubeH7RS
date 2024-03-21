@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workspace>
+    <project>
+        <path>$WS_DIR$\Boot\MSC_RTOS_Boot.ewp</path>
+    </project>
+    <project>
+        <path>$WS_DIR$\Appli\MSC_RTOS_Appli.ewp</path>
+    </project>
+    <batchBuild />
+</workspace>

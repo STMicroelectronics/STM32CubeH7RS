@@ -1,0 +1,45 @@
+/**
+  ******************************************************************************
+  * @file    sd_diskio_dma_rtos.h
+  * @author  MCD Application Team
+  * @brief   Header for sd_diskio_dma_rtos.c module
+  ******************************************************************************
+  * @attention
+  *
+  * Copyright (c) 2023 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the st_license.txt
+  * file in the root directory of this software component.
+  * If no st_license.txt file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
+  */
+/* Define to prevent recursive inclusion -------------------------------------*/
+#ifndef __SD_DISKIO_DMA_RTOS_H
+#define __SD_DISKIO_DMA_RTOS_H
+
+#ifdef __cplusplus
+ extern "C" {
+#endif
+
+  /* Includes ------------------------------------------------------------------*/
+  /*
+   * The sd_diskio_config.h is under application project
+   * and contain the config parameters for SD diskio
+   *
+   */
+#include "sd_diskio_config.h"
+#include "cmsis_os2.h"
+#include "ff_gen_drv.h"
+
+/* Exported types ------------------------------------------------------------*/
+/* Exported constants --------------------------------------------------------*/
+/* Exported functions ------------------------------------------------------- */
+extern const Diskio_drvTypeDef SD_DMA_Driver;
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* __SD_DISKIO_DMA_RTOS_H */

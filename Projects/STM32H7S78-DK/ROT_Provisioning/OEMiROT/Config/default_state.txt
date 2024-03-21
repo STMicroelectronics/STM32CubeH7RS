@@ -1,0 +1,2 @@
+default_product_state=CLOSED
+default_dbgauth=CERTIFICATE

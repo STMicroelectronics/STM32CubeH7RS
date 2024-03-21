@@ -1,0 +1,89 @@
+/*###ICF### Section handled by ICF editor, don't touch! ****/
+/*-Editor annotation file-*/
+/* IcfEditorFile="$TOOLKIT_DIR$\config\ide\IcfEditor\cortex_v1_0.xml" */
+/*-Specials-*/
+define symbol CODE_OFFSET = 0x0; /* This define is updated automatically from OEMiROT_BOOT project */
+define symbol CODE_SIZE = 0x200000; /* This define is updated automatically from OEMiROT_BOOT project */
+define symbol PARTITION_START = 0x70000000; /* This define is updated automatically from OEMiROT_BOOT project */
+define symbol IMAGE_HEADER_SIZE = 0x400; /* mcuboot header size */
+define symbol __ICFEDIT_intvec_start__ = PARTITION_START + CODE_OFFSET + IMAGE_HEADER_SIZE;
+/*-Memory Regions-*/
+define symbol __ICFEDIT_region_ROM_start__ = PARTITION_START + CODE_OFFSET + IMAGE_HEADER_SIZE;
+define symbol __ICFEDIT_region_ROM_end__   = PARTITION_START + CODE_OFFSET + CODE_SIZE - 1;
+define symbol NONCACHEABLEBUFFER_size      = 0x400;
+define symbol CONF_FLAG_size               = 0x20;
+define symbol RAMECC_HANDLER_size          = 0x40;
+define symbol __ICFEDIT_region_RAM_start__ = 0x30004000;
+define symbol __ICFEDIT_region_RAM_end__   = 0x30007FFF - NONCACHEABLEBUFFER_size - CONF_FLAG_size - RAMECC_HANDLER_size;
+define symbol NONCACHEABLEBUFFER_start     = __ICFEDIT_region_RAM_end__ + 1;
+define symbol NONCACHEABLEBUFFER_end       = __ICFEDIT_region_RAM_end__ + NONCACHEABLEBUFFER_size;
+define symbol __ICFEDIT_region_CONF_FLAG_start__ = NONCACHEABLEBUFFER_end + 1;
+define symbol __ICFEDIT_region_CONF_FLAG_end__   = NONCACHEABLEBUFFER_end + CONF_FLAG_size;
+define symbol __ICFEDIT_region_RAMECC_HANDLER_start__ = __ICFEDIT_region_CONF_FLAG_end__ + 1;
+define symbol __ICFEDIT_region_RAMECC_HANDLER_end__   = 0x30007FFF;
+
+/*-Sizes-*/
+define symbol __ICFEDIT_size_cstack__ = 0x400;
+define symbol __ICFEDIT_size_heap__   = 0x200;
+/**** End of ICF editor section. ###ICF###*/
+
+define symbol __region_ITCM_start__ = 0x00000000;
+define symbol __region_ITCM_end__   = 0x0000FFFF;
+define symbol __region_DTCM_start__ = 0x20000000;
+define symbol __region_DTCM_end__   = 0x2000FFFF;
+define symbol __region_SRAMAHB_start__ = 0x30000000;
+define symbol __region_SRAMAHB_end__   = 0x30007FFF;
+define symbol __region_BKPSRAM_start__ = 0x38800000;
+define symbol __region_BKPSRAM_end__   = 0x38800FFF;
+define symbol __region_EXTRAM_start__ = 0x70000000;
+define symbol __region_EXTRAM_end__   = 0x71FFFFFF;
+
+export symbol IMAGE_HEADER_SIZE;
+
+export symbol __ICFEDIT_intvec_start__;
+
+export symbol NONCACHEABLEBUFFER_start;
+export symbol NONCACHEABLEBUFFER_size;
+
+export symbol __ICFEDIT_region_RAMECC_HANDLER_start__;
+export symbol __ICFEDIT_region_RAMECC_HANDLER_end__;
+
+export symbol __ICFEDIT_region_CONF_FLAG_start__;
+export symbol __ICFEDIT_region_CONF_FLAG_end__;
+
+export symbol __ICFEDIT_region_ROM_start__;
+export symbol __ICFEDIT_region_ROM_end__;
+
+export symbol __region_EXTRAM_start__;
+export symbol __region_EXTRAM_end__;
+
+define memory mem with size = 4G;
+define region ROM_region      = mem:[from __ICFEDIT_region_ROM_start__ to __ICFEDIT_region_ROM_end__];
+define region RAM_region      = mem:[from __ICFEDIT_region_RAM_start__ to __ICFEDIT_region_RAM_end__];
+/*define region EXTRAM_region   = mem:[from __region_EXTRAM_start__ to __region_EXTRAM_end__];*/
+define region NONCACHEABLE_region   = mem:[from NONCACHEABLEBUFFER_start to NONCACHEABLEBUFFER_end];
+define region ITCM_region     = mem:[from __region_ITCM_start__ to __region_ITCM_end__];
+define region DTCM_region     = mem:[from __region_DTCM_start__ to __region_DTCM_end__];
+/*define region SRAMAHB_region  = mem:[from __region_SRAMAHB_start__ to __region_SRAMAHB_end__];*/
+/*define region BKPSRAM_region  = mem:[from __region_BKPSRAM_start__ to __region_BKPSRAM_end__];*/
+define region RAMECC_HANDLER_region = mem:[from __ICFEDIT_region_RAMECC_HANDLER_start__ to __ICFEDIT_region_RAMECC_HANDLER_end__];
+define region CONF_FLAG_region = mem:[from __ICFEDIT_region_CONF_FLAG_start__ to __ICFEDIT_region_CONF_FLAG_end__];
+
+define block CSTACK    with alignment = 8, size = __ICFEDIT_size_cstack__   { };
+define block HEAP      with alignment = 8, size = __ICFEDIT_size_heap__     { };
+
+initialize by copy { readwrite };
+do not initialize  { section .noinit, section noncacheable_buffer };
+do not initialize  { section .ramecchandlernoinit };
+
+define block RAMECC_HANDLER_NOINIT { section .ramecchandlernoinit};
+
+place at address mem:__ICFEDIT_intvec_start__ { readonly section .intvec };
+
+place in ROM_region    { readonly };
+place in RAM_region    { readwrite,
+                         block CSTACK, block HEAP };
+place in NONCACHEABLE_region { section noncacheable_buffer };
+place in RAMECC_HANDLER_region { block RAMECC_HANDLER_NOINIT };
+place in CONF_FLAG_region { readwrite section .flag };
+keep { section .flag };

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="SCHVerif.xsd">
+<Obdata>
+	<Info>
+		<Title>OEMuROT configuration</Title>
+		<MCU>STM32H7S78</MCU>
+		<ObDestAddress>0x00000208</ObDestAddress>
+		<DoEncryption>1</DoEncryption>
+		<GlobalAlign>32</GlobalAlign>
+		<FlashStart>0x24000000</FlashStart>
+		<FlashSize>0xA0000000</FlashSize>
+		<FlashSectorSize>0x2000</FlashSectorSize>
+		<OBKStart>0xFFD0900</OBKStart>
+		<OBKSize>0x2F0</OBKSize>
+		<OBKSectorSize>0x01</OBKSectorSize>
+		<AuthOBKStart>0xFFD0900</AuthOBKStart>
+		<AuthOBKSize>0x2F0</AuthOBKSize>
+	</Info>
+	<Hash>
+	</Hash>
+	<File>
+		<Name>Authentication key</Name>
+		<Value>./../Keys/OEMuROT_Authentication.pem</Value>
+		<Align>1</Align>
+		<KeyType>ecdsa-p256</KeyType>
+		<Type>Public</Type>
+		<Default>./../Keys/OEMuROT_Authentication.pem</Default>
+		<Tooltip>Select the key used to authenticate the firmware. When this key is regenerated,the firmware image must be processed with Imgtool</Tooltip>
+	</File>
+	<File>
+		<Name>Encryption key</Name>
+		<Value>./../Keys/OEMuROT_Encryption.pem</Value>
+		<Align>1</Align>
+		<KeyType>ecdsa-p256</KeyType>
+		<Type></Type>
+		<Default>./../Keys/OEMuROT_Encryption.pem</Default>
+		<Tooltip>Select the key used to encrypt firmware and data images</Tooltip>
+	</File>
+	<Output>
+		<Name>Output File</Name>
+		<Value>./../Binary/OEMuROT_Config.obk</Value>
+		<Default>./../Binary/OEMuROT_Config.obk</Default>
+		<Tooltip>Select the output file .obk including OEMuROT configuration</Tooltip>
+	</Output>
+</Obdata>
+</Root>

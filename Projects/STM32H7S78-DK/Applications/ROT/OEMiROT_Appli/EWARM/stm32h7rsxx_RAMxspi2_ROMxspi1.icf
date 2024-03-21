@@ -1,0 +1,50 @@
+/*###ICF### Section handled by ICF editor, don't touch! ****/
+/*-Editor annotation file-*/
+/* IcfEditorFile="$TOOLKIT_DIR$\config\ide\IcfEditor\cortex_v1_0.xml" */
+/*-Specials-*/
+define symbol CODE_OFFSET = 0x0; /* This define is updated automatically from OEMiROT_BOOT project */
+define symbol CODE_SIZE = 0x200000; /* This define is updated automatically from OEMiROT_BOOT project */
+define symbol PARTITION_START = 0x70000000; /* This define is updated automatically from OEMiROT_BOOT project */
+define symbol IMAGE_HEADER_SIZE = 0x400; /* mcuboot header size */
+define exported symbol __ICFEDIT_intvec_start__ = PARTITION_START + CODE_OFFSET + IMAGE_HEADER_SIZE;
+/*-Memory Regions-*/
+define symbol __ICFEDIT_region_ROM_start__ = PARTITION_START + CODE_OFFSET + IMAGE_HEADER_SIZE;
+define symbol __ICFEDIT_region_ROM_end__   = PARTITION_START + CODE_OFFSET + CODE_SIZE - 1;
+define symbol __ICFEDIT_region_RAM_start__ = 0x30004000;
+define symbol __ICFEDIT_region_RAM_end__   = 0x30007F9F;
+
+define exported symbol __ICFEDIT_region_CONF_FLAG_start__ = 0x30007FA0;
+define exported symbol __ICFEDIT_region_CONF_FLAG_end__   = 0x30007FBF;
+
+define symbol __ICFEDIT_region_RAMECC_HANDLE_start__ = 0x30007FC0;
+define symbol __ICFEDIT_region_RAMECC_HANDLE_end__   = 0x30007FFF;
+
+/*-Sizes-*/
+define symbol __ICFEDIT_size_cstack__ = 0x400;
+define symbol __ICFEDIT_size_heap__   = 0x200;
+/**** End of ICF editor section. ###ICF###*/
+
+
+define memory mem with size = 4G;
+define region ROM_region            = mem:[from __ICFEDIT_region_ROM_start__            to __ICFEDIT_region_ROM_end__];
+define region RAM_region            = mem:[from __ICFEDIT_region_RAM_start__            to __ICFEDIT_region_RAM_end__];
+define region RAMECC_HANDLE_region  = mem:[from __ICFEDIT_region_RAMECC_HANDLE_start__  to __ICFEDIT_region_RAMECC_HANDLE_end__];
+define region CONF_FLAG_region      = mem:[from __ICFEDIT_region_CONF_FLAG_start__      to __ICFEDIT_region_CONF_FLAG_end__];
+
+define block CSTACK    with alignment = 8, size = __ICFEDIT_size_cstack__   { };
+define block HEAP      with alignment = 8, size = __ICFEDIT_size_heap__     { };
+
+initialize by copy { readwrite };
+do not initialize  { section .noinit };
+do not initialize  { section .ramecchandlenoinit };
+
+define block RAMECC_HANDLE_NOINIT { section .ramecchandlenoinit};
+
+place at address mem:__ICFEDIT_intvec_start__ { readonly section .intvec };
+
+place in ROM_region            { readonly };
+place in RAM_region            { readwrite,
+                                  block CSTACK, block HEAP };
+place in RAMECC_HANDLE_region  { block RAMECC_HANDLE_NOINIT };
+place in CONF_FLAG_region      { readwrite section .flag };
+keep { section .flag };

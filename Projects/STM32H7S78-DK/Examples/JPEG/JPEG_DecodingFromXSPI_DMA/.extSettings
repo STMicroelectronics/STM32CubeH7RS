@@ -1,0 +1,9 @@
+[ProjectFiles]
+HeaderPath=..\..\..\..\..\..\Drivers\BSP\STM32H7S78-DK
+[Others]
+Define=
+HALModule=GPIO
+[Groups]
+Application/User/Appli=../Appli/Src/decode_dma.c
+Doc=../README.md;
+Drivers/BSP/STM32H7S78-DK=../../../../../../Drivers/BSP/STM32H7S78-DK/stm32h7s78_discovery.c;

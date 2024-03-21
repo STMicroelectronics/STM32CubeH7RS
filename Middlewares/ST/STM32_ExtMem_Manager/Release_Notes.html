@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Release Notes for STM32 External Memory Manager</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <link rel="stylesheet" href="_htmresc/mini-st.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  <link rel="icon" type="image/x-icon" href="_htmresc/favicon.png" />
+</head>
+<body>
+<div class="row">
+<div class="col-sm-12 col-lg-4">
+<center>
+<h1 id="release-notes-for">Release Notes for</h1>
+<h1 id="stm32_extmem_manager"><mark>STM32_ExtMem_Manager</mark></h1>
+<p>Copyright © 2024 STMicroelectronics<br />
+</p>
+<a href="https://www.st.com" class="logo"><img src="_htmresc/st_logo_2020.png" alt="ST logo" /></a>
+</center>
+<h1 id="purpose">Purpose</h1>
+<p>The source code delivered is a middleware to manage different types of external memory.</p>
+<p>The STM32_ExtMem_Manager component provides SW implementation that facilitates external memories integration.</p>
+<p>It supports Serial Flash Discovery Parameters (JEDEC SFDP, aligned with JEDEC standard JESD216F.02) to facilitate serial NOR Flash integration.</p>
+<p>Thanks to STM32_ExtMem_Manager’s high scalability, support of multiple external memories types(NOR, RAM, SD) and interface types (XSPI, SDMMC, FMC) becomes easier.</p>
+<figure>
+<img src="_htmresc/stm32_ExtMem_Manager_archi.bmp" alt="STM32_ExtMem_Manager Architecture" /><figcaption>STM32_ExtMem_Manager Architecture</figcaption>
+</figure>
+<p><br />
+</p>
+<p>Here is the list of references to user documents:</p>
+<ul>
+<li><a href="https://wiki.st.com/stm32mcu/wiki/Getting_started_with_External_memory_Manager_and_External_memory_loader">WIKI Page</a>: Getting started with External memory Manager</li>
+</ul>
+</div>
+<div class="col-sm-12 col-lg-8">
+<h1 id="update-history">Update History</h1>
+<div class="collapse">
+<input type="checkbox" id="collapse-section1" checked aria-hidden="true"> <label for="collapse-section1" aria-hidden="true"><strong>V1.0.0 / 28-February-2024</strong></label>
+<div>
+<h2 id="first-release">First release</h2>
+<p>First official release of STM32_ExtMem_Manager</p>
+<h2 id="known-limitations">Known limitations</h2>
+<ul>
+<li>List of the tested memories
+<ul>
+<li>NOR_SFDP : MACRONIX MX66UW1G45G, MX25UW25645G</li>
+<li>PSRAM: APMEMORY APS256XXN</li>
+<li>SDCARD: micro SD kingstone 1GB</li>
+</ul></li>
+</ul>
+<h2 id="supported-devices-and-boards">Supported Devices and boards</h2>
+<ul>
+<li>Not applicable</li>
+</ul>
+<h2 id="backward-compatibility">Backward Compatibility</h2>
+<ul>
+<li>Not applicable</li>
+</ul>
+<h2 id="dependencies">Dependencies</h2>
+<ul>
+<li>Not applicable</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<footer class="sticky">
+<div class="columns">
+<div class="column" style="width:95%;">
+
+</div><div class="column" style="width:5%;">
+<p><abbr title="Based on template cx566953 version 2.1">Info</abbr></p>
+</div>
+</div>
+</footer>
+</body>
+</html>

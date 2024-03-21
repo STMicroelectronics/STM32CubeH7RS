@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workspace>
+    <project>
+        <path>$WS_DIR$\Boot\Template_XIP_Boot.ewp</path>
+    </project>
+    <project>
+        <path>$WS_DIR$\Appli\Template_XIP_Appli.ewp</path>
+    </project>
+    <project>
+        <path>$WS_DIR$\ExtMemLoader\Template_XIP_ExtMemLoader.ewp</path>
+    </project>
+    <batchBuild />
+</workspace>

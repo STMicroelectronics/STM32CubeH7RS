@@ -1,0 +1,142 @@
+## <b>FDCAN_Power_Down Example Description</b>
+
+This example describes the functionality of the power down mode in the FDCAN peripheral.
+
+At the beginning of the main program, the HAL_Init() function is called to reset
+all the peripherals and initialize the systick used as 1ms HAL timebase.
+
+This project runs from the external Flash memory. It is launched from a first boot stage and inherits from this boot project
+configuration (caches, MPU regions [region 0 and 1], system clock at 600 MHz and external memory interface at the highest speed).
+Note that the boot part is automatically downloaded from the IDE environment via the board project Templates/Template_XIP/Binary/Boot_XIP.hex file.
+
+This project calls also SCB_EnableICache() and SCB_EnableDCache() functions in order to enable
+the Layer 1 Core Instruction and Data Caches.
+
+The example is divided into several sections:<br>
+
+  - In the first section, the *HAL_FDCAN_Init()* function is called to configure the module in external loopback mode,  with a **Nominal Bit Rate of 1 MBit/s** and a **sampling point at 75%**.<br>
+    Additionally, it has a **Data Bit Rate of 2 MBit/s** and a **sampling point at 80%**.<br>
+    Reception filters are then configured with *HAL_FDCAN_ConfigFilter()*, to receive:<br>
+      - messages with pre-defined standard ID to Rx FIFO 0<br>
+
+    Then FDCAN module is started with *HAL_FDCAN_Start()*.<br>
+  - In section 2, the following messages is sent:<br>
+      - one standard ID message matching Rx FIFO 0 filter<br>
+    The application then checks that the message was received and as expected.
+  - In section 3, the FDCAN module enters power down mode.
+  - In section 4, the application tries to send an FDCAN message, and checks that it remains pending until power down mode is excited.
+  - In section 5, the FDCAN clock is disabled. At this point, the energy consumption is a bit reduced as the module is in power down mode.
+  - In section 6, the application exits power down mode of the FDCAN module and re-enable it's clock.
+  - In section 7, the application checks the message was received and as expected, indicating that the power down mode did not interfere with the FDCAN configuration.
+
+The FDCAN peripheral configuration is ensured by the *HAL_FDCAN_Init()* function.
+This later is calling the *HAL_FDCAN_MspInit()* function which core is implementing
+the configuration of the needed FDCAN resources according to the used hardware (CLOCK, GPIO, NVIC and DMA).
+User may update this function to change FDCAN configuration.
+
+
+NUCLEO-H7S3L8's LEDs can be used to monitor the transfer status:
+
+  - LD1 is ON when all messages were successfully transmitted and received.
+  - LD3 toggle slowly when there is an error in transmission/reception process.
+
+#### <b>Notes</b>
+
+ 1. Care must be taken when using HAL_Delay(), this function provides accurate delay (in milliseconds)
+    based on variable incremented in SysTick ISR. This implies that if HAL_Delay() is called from
+    a peripheral ISR process, then the SysTick interrupt must have higher priority (numerically lower)
+    than the peripheral interrupt. Otherwise the caller ISR process will be blocked.
+    To change the SysTick interrupt priority you have to use HAL_NVIC_SetPriority() function.
+
+ 2. The application needs to ensure that the SysTick time base is always set to 1 millisecond
+    to have correct HAL operation.
+
+ 3. Whenever the application is using ITCM/DTCM memories (@0x0000000 / @0x20000000: not cacheable and only accessible
+    by the Cortex M7 and the GPDMA/HPDMA), there is no need for cache maintenance.
+    If the application needs to put DMA buffers in AXI SRAM (starting from @0x24000000), the user has to:
+    - either define a non-cacheable region in the MPU and linker configuration file to locate DMA buffers
+      (a proposed dma_buffer section is available from CMSIS Device linker template file and its size must
+      be adapted to the application requirements)
+    - or to ensure cache maintenance operations to ensure the cache coherence between the CPU and the DMAs.
+    This is true also for any other data buffers accessed by the CPU and other masters (DMA2D, LTDC)
+    The addresses and the size of cacheable buffers (shared between CPU and other masters)
+    must be properly defined to be aligned to data cache line size (32 bytes) and of a size of being multiple
+    of this cache line size.
+    Please refer to the AN4838 "Managing memory protection unit (MPU) in STM32 MCUs"
+    Please refer to the AN4839 "Level 1 cache on STM32F7 Series"
+
+### <b>Keywords</b>
+
+Connectivity, CAN/FDCAN, Loopback, Polling, CAN FIFO, CAN Filter, Power Down
+
+### <b>Directory contents</b>
+
+File | Description
+ --- | ---
+FDCAN/FDCAN_Power_Down/Appli/Inc/stm32h7rsxx_nucleo_conf.h    | BSP configuration file
+FDCAN/FDCAN_Power_Down/Appli/Inc/stm32h7rsxx_hal_conf.h   | HAL configuration file
+FDCAN/FDCAN_Power_Down/Appli/Inc/stm32h7rsxx_it.h         | Header for stm32h7rsxx_it.c
+FDCAN/FDCAN_Power_Down/Appli/Inc/main.h                 | Header for main.c module
+FDCAN/FDCAN_Power_Down/Appli/Src/stm32h7rsxx_it.c         | Interrupt handlers
+FDCAN/FDCAN_Power_Down/Appli/Src/main.c                 | Main program
+FDCAN/FDCAN_Power_Down/Appli/Src/stm32h7rsxx_hal_msp.c    | HAL MSP module
+FDCAN/FDCAN_Power_Down/Appli/Src/system_stm32h7rsxx.c     | stm32h7rsxx system source file
+
+### <b>Hardware and Software environment</b>
+
+  - This example runs on STM32H7S3L8Hx devices.
+
+  - This example has been tested with NUCLEO-H7S3L8 board and can be
+    easily tailored to any other supported device and development board.
+
+  - User Option Bytes requirement (with STM32CubeProgrammer tool)
+
+    - XSPI2_HSLV=1     I/O XSPIM_P2 High speed option enabled
+
+  - NUCLEO-H7S3L8 Set-up:
+    No FDCAN connector available on this board. FDCAN RX/TX signals are accessible through Arduino connector.
+      - FDCAN RX : PD0
+      - FDCAN TX : PD1
+
+### <b>How to use it ?</b>
+
+In order to make the program work, you must do the following :
+
+**EWARM** and **MDK-ARM**:
+
+ - Open your preferred toolchain
+ - Rebuild all files from sub-project Appli and load your images into memories: This sub-project will first load Boot_XIP.hex in internal Flash,
+   than load Appli part in External memory available on NUCLEO-H7S3L8 board.
+ - Run the example
+
+**CubeIDE**:
+
+ - Compile the example/application; the elf file is required to configure the debug profile (the "active configuration" must be "debug", else only assembly debug is available)
+ - Open the menu [Run]->[Debug configuration] and double click on  [STM32 C/C++ Application] (it creates a default debug configuration for the current project selected)
+ - In [Debugger] tab, section "External  loaders" add the external loader corresponding to your Board/Memory as described below:
+ - In "External loaders" section, click on [Add]
+ - Select the loader among the available list (**MX25UW25645G_NUCLEO-H7S3L8.stldr** or **MX66UW1G45G_STM32H7S78-DK.stldr**)
+ - Option "Enabled" checked and Option "Initialize" unchecked
+ - In "Misc" section, uncheck the option "Verify flash download"
+ - In [Startup] tab, section "Load Image and Symbols":
+   - Click on [Add]
+   - If your project contains a boot project:
+     - click on "Project" and then select the boot project.
+     - click on Build configuration and select "Use active".
+     - then select the following options:
+       - "Perform build" checked.
+       - "Download" checked.
+       - "Load symbols" unchecked.
+   - If your project doesn't contain a boot project:
+     - click on [File System] and select the Boot HEX file corresponding to your board
+
+        Boot_XIP.hex can be found in folder [Binary] on each Template_XIP project
+
+        You may need to force the capability to select a .hex file by typing " * " + pressing the "Enter" key in the file name dialog
+
+     - then select the following options:
+       - "Download"      checked.
+       - "Load symbols" unchecked.
+       - Click Ok
+     - Back in the in the [Startup] tab, move down the boot project for it to be in second position
+ - Our debug configuration is ready to be used.

@@ -1,0 +1,76 @@
+/*
+ * Copyright (c) 2019, Arm Limited. All rights reserved.
+ * Copyright (c) 2023, STMicroelectronics. All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
+ */
+#include "region_defs.h"
+#include "mcuboot_config/mcuboot_config.h"
+
+#define _HEX(n) 0x##n
+#define HEX(n)  _HEX(n)
+
+/* Enumeration that is used by the assemble.py and imgtool\main.py scripts
+ * for correct binary generation when nested macros are used
+ */
+
+enum image_attributes
+{
+  /* area for preparing images */
+  RE_IMAGE_FLASH_SIZE = (IMAGE_MAX_SIZE),
+  /* area for flashing images */
+  RE_IMAGE_DOWNLOAD_ADDRESS = (EXT_FLASH_BASE_ADDRESS + FLASH_AREA_2_OFFSET),
+
+  RE_FLASH_AREA_SCRATCH_START = (EXT_FLASH_BASE_ADDRESS + FLASH_AREA_SCRATCH_OFFSET),
+  RE_FLASH_AREA_SCRATCH_SIZE = FLASH_AREA_SCRATCH_SIZE,
+
+  RE_APP_RAM_START = (APP_RAM_START),
+  RE_APP_RAM_SIZE = (APP_RAM_DATA_SIZE - RAMECC_HANDLE_SIZE - CONF_FLAG_SIZE),
+  RE_RAMECC_HANDLE_START = (RAMECC_HANDLE_START),
+  RE_RAMECC_HANDLE_SIZE = (RAMECC_HANDLE_SIZE),
+  RE_CONF_FLAG_START = (CONF_FLAG_START),
+  RE_CONF_FLAG_SIZE = (CONF_FLAG_SIZE),
+
+  RE_CODE_START = (EXT_FLASH_BASE_ADDRESS + FLASH_AREA_0_OFFSET),
+#if (OEMIROT_LOAD_AND_RUN != NO_LOAD_AND_RUN)
+  RE_PARTITION_START = (IMAGE_PRIMARY_RUN_PARTITION_BASE),
+  RE_AREA_0_OFFSET = (IMAGE_PRIMARY_RUN_PARTITION_OFFSET),
+  RE_RUN_START = (IMAGE_PRIMARY_RUN_PARTITION_BASE + IMAGE_PRIMARY_RUN_PARTITION_OFFSET),
+#else /* not (OEMIROT_LOAD_AND_RUN != NO_LOAD_AND_RUN) */
+  RE_PARTITION_START = (EXT_FLASH_BASE_ADDRESS),
+  RE_AREA_0_OFFSET = (FLASH_AREA_0_OFFSET),
+  RE_RUN_START = (EXT_FLASH_BASE_ADDRESS + FLASH_AREA_0_OFFSET),
+#endif /* OEMIROT_LOAD_AND_RUN != NO_LOAD_AND_RUN */
+  RE_AREA_0_SIZE = (FLASH_AREA_0_SIZE),
+
+  RE_RUN_ROT_SIZE = (BL2_CODE_SIZE),
+#if  defined(OEMUROT_ENABLE)
+  RE_RUN_ROT_START = (BL2_CODE_START - BL2_HEADER_SIZE),
+  RE_BL2_RAM_BASE = (BL2_RAM_BASE),
+  RE_BL2_RAM_SIZE = (BL2_RAM_SIZE),
+#else /* not OEMUROT_ENABLE */
+  RE_RUN_ROT_START = (BL2_CODE_START),
+  RE_BL2_BOOT_ADDRESS = (BL2_BOOT_VTOR_ADDR),
+  /* area for programming hardening on page */
+  RE_BL2_WRP_OFFSET = (FLASH_AREA_BL2_OFFSET),
+
+  RE_BL2_HDP_START = 0x0,
+  RE_BL2_HDP_END = (FLASH_AREA_BL2_OFFSET + FLASH_AREA_BL2_SIZE - 0x1),
+  RE_BL2_WRP_SIZE = (FLASH_AREA_BL2_SIZE),
+#endif /* OEMUROT_ENABLE */
+  /* area for updates slot address */
+
+#if defined(MCUBOOT_OVERWRITE_ONLY)
+  RE_OVER_WRITE = (0x1),
+#else /* not MCUBOOT_OVERWRITE_ONLY */
+  RE_OVER_WRITE = (0x0),
+#endif /* MCUBOOT_OVERWRITE_ONLY */
+#if  defined(OEMUROT_ENABLE)
+  RE_OEMUROT_ENABLE = (0x1),
+#else /* not OEMUROT_ENABLE */
+  RE_OEMUROT_ENABLE = (0x0),
+#endif /* OEMUROT_ENABLE */
+  RE_FLASH_PAGE_NBR = (0x7),
+  RE_HDP_BLOCK_NBR = (0xFF),
+};

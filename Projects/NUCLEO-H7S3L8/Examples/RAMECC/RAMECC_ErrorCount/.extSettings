@@ -1,0 +1,9 @@
+[ProjectFiles]
+HeaderPath=..\..\..\..\..\..\Drivers\BSP\STM32H7RSxx_Nucleo
+[Others]
+Define=
+HALModule=RAMECC;GPIO
+[Groups]
+Doc=../README.md;
+Drivers/BSP/STM32H7RSxx_Nucleo=../../../../../../Drivers/BSP/STM32H7RSxx_Nucleo/stm32h7rsxx_nucleo.c;
+Drivers/STM32H7RSxx_HAL_Driver=../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_hal_ramecc.c;

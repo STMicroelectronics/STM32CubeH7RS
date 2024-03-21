@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workspace>
+  <project>
+    <path>$WS_DIR$\Boot\AUDIO_Standalone_Boot.ewp</path>
+  </project><project>
+    <path>$WS_DIR$\Appli\AUDIO_Standalone_Appli.ewp</path>
+  </project>
+  <batchBuild />
+</workspace>
