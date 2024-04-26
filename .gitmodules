@@ -14,3 +14,43 @@
 	path = Drivers/BSP/STM32H7S78-DK
 	url = https://github.com/STMicroelectronics/stm32h7s78-dk-bsp.git
 	branch = main
+[submodule "Drivers/BSP/Components/aps256xx"]
+	path = Drivers/BSP/Components/aps256xx
+	url = https://github.com/STMicroelectronics/stm32-aps256.git
+	branch = main
+[submodule "Drivers/BSP/Components/Common"]
+	path = Drivers/BSP/Components/Common
+	url = https://github.com/STMicroelectronics/stm32-bsp-common.git
+	branch = main
+[submodule "Drivers/BSP/Components/gt911"]
+	path = Drivers/BSP/Components/gt911
+	url = https://github.com/STMicroelectronics/stm32-gt911.git
+	branch = main
+[submodule "Drivers/BSP/Components/lan8742"]
+	path = Drivers/BSP/Components/lan8742
+	url = https://github.com/STMicroelectronics/stm32-lan8742.git
+	branch = main
+[submodule "Drivers/BSP/Components/mx25uw25645g"]
+	path = Drivers/BSP/Components/mx25uw25645g
+	url = https://github.com/STMicroelectronics/stm32-mx25uw25645g.git
+	branch = main
+[submodule "Drivers/BSP/Components/mx66uw1g45g"]
+	path = Drivers/BSP/Components/mx66uw1g45g
+	url = https://github.com/STMicroelectronics/stm32-mx66uw1g45g.git
+	branch = main
+[submodule "Drivers/BSP/Components/ov5640"]
+	path = Drivers/BSP/Components/ov5640
+	url = https://github.com/STMicroelectronics/stm32-ov5640.git
+	branch = main
+[submodule "Drivers/BSP/Components/rk050hr18"]
+	path = Drivers/BSP/Components/rk050hr18
+	url = https://github.com/STMicroelectronics/stm32-rk050hr18.git
+	branch = main
+[submodule "Drivers/BSP/Components/tcpp0203"]
+	path = Drivers/BSP/Components/tcpp0203
+	url = https://github.com/STMicroelectronics/stm32-tcpp0203.git
+	branch = main
+[submodule "Drivers/BSP/Components/wm8904"]
+	path = Drivers/BSP/Components/wm8904
+	url = https://github.com/STMicroelectronics/stm32-wm8904.git
+	branch = main
