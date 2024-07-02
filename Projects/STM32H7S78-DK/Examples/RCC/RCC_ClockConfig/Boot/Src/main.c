@@ -194,7 +194,7 @@ void SystemClock_Config(void)
   RCC_ClkInitStruct.APB4CLKDivider = RCC_APB4_DIV2;
   RCC_ClkInitStruct.APB5CLKDivider = RCC_APB5_DIV2;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_6) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_7) != HAL_OK)
   {
     Error_Handler();
   }
@@ -271,7 +271,7 @@ static void SystemClockHSE_Config(void)
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_SYSCLK;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_CSI;  
   
-    if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_6) != HAL_OK)        
+    if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_7) != HAL_OK)        
       {
         /* Initialization Error */
         Error_Handler();
@@ -308,7 +308,7 @@ static void SystemClockHSE_Config(void)
   RCC_ClkInitStruct.APB2CLKDivider  = RCC_HCLK_DIV2;
   RCC_ClkInitStruct.APB4CLKDivider  = RCC_HCLK_DIV2;
   RCC_ClkInitStruct.APB5CLKDivider  = RCC_HCLK_DIV2;
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_6) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_7) != HAL_OK)
   {
     /* Initialization Error */
     Error_Handler();
@@ -354,7 +354,7 @@ static void SystemClockHSI_Config(void)
   /* -1- Select HSE  as system clock source to allow modification of the PLL configuration */
   RCC_ClkInitStruct.ClockType       = RCC_CLOCKTYPE_SYSCLK;
   RCC_ClkInitStruct.SYSCLKSource    = RCC_SYSCLKSOURCE_HSE;
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_6) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_7) != HAL_OK)
   {
     /* Initialization Error */
     Error_Handler();
@@ -389,7 +389,7 @@ static void SystemClockHSI_Config(void)
   RCC_ClkInitStruct.APB4CLKDivider  = RCC_HCLK_DIV2;
   RCC_ClkInitStruct.APB5CLKDivider  = RCC_HCLK_DIV2;
   
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_6) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_7) != HAL_OK)
   {
     /* Initialization Error */
     Error_Handler();
@@ -434,7 +434,7 @@ static void SystemClockCSI_Config(void)
   /* -1- Select HSI as system clock source to allow modification of the PLL configuration */
   RCC_ClkInitStruct.ClockType       = RCC_CLOCKTYPE_SYSCLK;
   RCC_ClkInitStruct.SYSCLKSource    = RCC_SYSCLKSOURCE_HSI;
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_6) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_7) != HAL_OK)
   {
     Error_Handler();
   }
@@ -467,7 +467,7 @@ static void SystemClockCSI_Config(void)
   RCC_ClkInitStruct.APB2CLKDivider  = RCC_HCLK_DIV2;
   RCC_ClkInitStruct.APB4CLKDivider = RCC_HCLK_DIV2;
   RCC_ClkInitStruct.APB5CLKDivider = RCC_HCLK_DIV2;
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_6) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_7) != HAL_OK)
   {
     Error_Handler();
   }

@@ -104,7 +104,6 @@ In order to make the program work, you must do the following :
  - Rebuild all files from sub-project Appli and load your images into memories: This sub-project will first load Boot_XIP.hex in internal Flash,
    than load Appli part in External memory available on NUCLEO-H7S3L8 board.
  - Run the example
- - Unplug then Plug STLINK connection to perform a power-on-reset
 
 **CubeIDE**:
 

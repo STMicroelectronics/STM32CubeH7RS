@@ -16,8 +16,16 @@
   */
 /* USER CODE END Header */
 
-#ifndef FFCONF_DEF
+/*---------------------------------------------------------------------------/
+/  Configurations of FatFs Module
+/---------------------------------------------------------------------------*/
+
 #define FFCONF_DEF 80286	/* Revision ID */
+/*-----------------------------------------------------------------------------/
+/ Additional user header to be used
+/-----------------------------------------------------------------------------*/
+#include "main.h"
+#include "stm32h7rsxx_hal.h"
 
 /*---------------------------------------------------------------------------/
 / Function Configurations
@@ -278,4 +286,4 @@
 /  The FF_FS_TIMEOUT defines timeout period in unit of O/S time tick.
 */
 
-#endif /* FFCONF_DEF */
+/*--- End of configuration options ---*/

@@ -18,6 +18,7 @@
 | FatFS                           | ChaN - STMicroelectronics                                    | BSD-3-Clause |
 | FreeRTOS                        | Amazon.com, Inc. or its affiliates                           | MIT |
 | LwIP                            | Swedish Institute of Computer Science                        | BSD-3-Clause |
+| mbed-crypto                     | Arm Limited                                                  | Apache-2.0   |
 | mcuboot                         | Linaro Limited, Arm Limited (or its affiliates), JUUL Labs, Nordic Semiconductor ASA, Cypress Semiconductor Corporation,  Runtime Inc, Open Source Foundries Limited,  Intel Corporation,  Wind River Systems, Inc., The Linux Foundation and its contributors,  the fiat-crypto authors, Chris Morrison,  Kenneth MacKay | Apache-2.0 |
 | OpenBootloader                  | STMicroelectronics                                           | SLA |
 | STM32_USBPD_Library - Core      | STMicroelectronics                                           | SLA |
@@ -28,7 +29,7 @@
 | STM32_ExtMem_Manager            | STMicroelectronics                                           | SLA |
 | Applications projects           | STMicroelectronics                                           | SLA |
 | Examples Projects               | STMicroelectronics                                           | SLA |
-| Templates Projects              | STMicroelectronics                                           | BSD-3-Clause |
+| Templates Projects              | STMicroelectronics                                           | SLA |
 | Common                          | STMicroelectronics                                           | BSD-3-Clause |
 | CPU                             | STMicroelectronics                                           | BSD-3-Clause |
 | Fonts                           | STMicroelectronics                                           | BSD-3-Clause |

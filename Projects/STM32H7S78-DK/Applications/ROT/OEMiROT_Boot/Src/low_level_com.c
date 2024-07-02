@@ -72,18 +72,30 @@ static ARM_USART_CAPABILITIES USART_GetCapabilities(void)
 
 #define COM_BAUD_RATE 115200U
 
+#if defined(STM32H7S3xx) || defined(STM32H7R3xx)
+#define COM_INSTANCE                           USART3
+#define COM_CLK_CONFIG()                       MODIFY_REG(RCC->CCIPR2, RCC_CCIPR2_UART234578SEL, (uint32_t)(RCC_USART234578CLKSOURCE_PCLK1))
+#define COM_CLK_ENABLE()                       __HAL_RCC_USART3_CLK_ENABLE()
+#define COM_CLK_DISABLE()                      __HAL_RCC_USART3_CLK_DISABLE()
+#define COM_TX_PIN                             GPIO_PIN_8
+#define COM_TX_AF                              GPIO_AF7_USART3
+#define COM_RX_PIN                             GPIO_PIN_9
+#define COM_RX_AF                              GPIO_AF7_USART3
+#else /* not (STM32H7S3xx or STM32H7R3xx) */
 #define COM_INSTANCE                           UART4
+#define COM_CLK_CONFIG()                       ((void)0U)
 #define COM_CLK_ENABLE()                       __HAL_RCC_UART4_CLK_ENABLE()
 #define COM_CLK_DISABLE()                      __HAL_RCC_UART4_CLK_DISABLE()
-#define COM_TX_GPIO_PORT                       GPIOD
-#define COM_TX_GPIO_CLK_ENABLE()               __HAL_RCC_GPIOD_CLK_ENABLE()
 #define COM_TX_PIN                             GPIO_PIN_1
 #define COM_TX_AF                              GPIO_AF8_UART4
-
-#define COM_RX_GPIO_PORT                       GPIOD
-#define COM_RX_GPIO_CLK_ENABLE()               __HAL_RCC_GPIOD_CLK_ENABLE()
 #define COM_RX_PIN                             GPIO_PIN_0
 #define COM_RX_AF                              GPIO_AF8_UART4
+#endif /* STM32H7S3xx or STM32H7R3xx */
+
+#define COM_TX_GPIO_PORT                       GPIOD
+#define COM_RX_GPIO_PORT                       GPIOD
+#define COM_TX_GPIO_CLK_ENABLE()               __HAL_RCC_GPIOD_CLK_ENABLE()
+#define COM_RX_GPIO_CLK_ENABLE()               __HAL_RCC_GPIOD_CLK_ENABLE()
 
 static UART_HandleTypeDef  uart_device;
 static int32_t USART0_Initialize(ARM_USART_SignalEvent_t cb_event)
@@ -94,6 +106,7 @@ static int32_t USART0_Initialize(ARM_USART_SignalEvent_t cb_event)
   /* Configure COM Tx as alternate function */
   COM_TX_GPIO_CLK_ENABLE();
   COM_RX_GPIO_CLK_ENABLE();
+  COM_CLK_CONFIG();
   COM_CLK_ENABLE();
   GPIO_Init.Pin       = COM_TX_PIN;
   GPIO_Init.Mode      = GPIO_MODE_AF_PP;

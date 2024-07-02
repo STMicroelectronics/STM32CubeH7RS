@@ -298,7 +298,7 @@ static void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 /**
   * @brief  Output Compare callback in non blocking mode 
-  * @param  htim : TIM OC handle
+  * @param  htim TIM OC handle
   * @retval None
   */
 void HAL_TIM_OC_DelayElapsedCallback(TIM_HandleTypeDef *htim)

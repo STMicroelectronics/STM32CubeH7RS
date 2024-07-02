@@ -39,7 +39,7 @@
 <ol type="1">
 <li>Whenever the application is using ITCM/DTCM memories (<span class="citation" data-cites="0x0000000">@0x0000000</span> / <span class="citation" data-cites="0x20000000">@0x20000000</span>: not cacheable and only accessible by the Cortex M7 and the GPDMA/HPDMA), there is no need for cache maintenance. If the application needs to put DMA buffers in AXI SRAM (starting from <span class="citation" data-cites="0x24000000">@0x24000000</span>), the user has to:
 <ul>
-<li>either define a non-cacheable region in the MPU and linker configuration file to locate DMA buffers (a proposed dma_buffer section is available from CMSIS Device linker template file and its size must be adapted to the application requirements)</li>
+<li>either define a non-cacheable region in the MPU and linker configuration file to locate DMA buffers (a proposed noncacheable_buffer section is available from CMSIS Device linker template file and its size must be adapted to the application requirements)</li>
 <li>or to ensure cache maintenance operations to ensure the cache coherence between the CPU and the DMAs.</li>
 </ul>
 This is true also for any other data buffers accessed by the CPU and other masters (DMA2D, LTDC) The addresses and the size of cacheable buffers (shared between CPU and other masters) must be properly defined to be aligned to data cache line size (32 bytes) and of a size of being multiple of this cache line size.

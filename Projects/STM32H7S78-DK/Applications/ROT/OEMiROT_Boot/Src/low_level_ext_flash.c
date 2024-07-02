@@ -34,6 +34,7 @@
 #define ARG_UNUSED(arg)  ((void)arg)
 #endif /* ARG_UNUSED */
 
+
 /* config for flash driver */
 #if defined(OEMIROT_MCE_PROTECTION)
 #define EXT_FLASH0_PROG_UNIT  0x10 /* Cryptographic constraint for MCE writing */
@@ -445,7 +446,9 @@ static int32_t Ext_Flash_Initialize(ARM_Flash_SignalEvent_t cb_event)
 {
   ARG_UNUSED(cb_event);
   uint32_t flash_size_in_bytes;
+#if !defined(STM32H7R3xx) && !defined(STM32H7R7xx)
   XSPIM_CfgTypeDef xspi_manager_cfg = {0};
+#endif /* !STM32H7R3xx && !STM32H7R7xx */
 
   if (Ext_Flash_SetHslv() != ARM_DRIVER_OK)
   {
@@ -475,13 +478,17 @@ static int32_t Ext_Flash_Initialize(ARM_Flash_SignalEvent_t cb_event)
     return ARM_DRIVER_ERROR;
   }
 
+#if !defined(STM32H7R3xx) && !defined(STM32H7R7xx)
   /* Connect Instance1(XSPI1/MCE1) to port2 */
   xspi_manager_cfg.IOPort = HAL_XSPIM_IOPORT_2;
   xspi_manager_cfg.nCSOverride = HAL_XSPI_CSSEL_OVR_DISABLED;
+
+
   if (HAL_XSPIM_Config(&XSPI_HANDLE, &xspi_manager_cfg, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
   {
     return ARM_DRIVER_ERROR;
   }
+#endif /* !STM32H7R3xx && !STM32H7R7xx */
 
 #if defined(OEMIROT_MCE_PROTECTION)
   /* Initialize DMA for the external memory */

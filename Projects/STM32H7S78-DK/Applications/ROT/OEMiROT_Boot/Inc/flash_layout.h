@@ -42,8 +42,10 @@ extern "C" {
 #define MCUBOOT_OVERWRITE_ONLY     /* Defined: the FW installation uses overwrite method.
                                       UnDefined: The FW installation uses swap mode. */
 
+#if defined(STM32H7S3xx) || defined(STM32H7S7xx)
 #define MCUBOOT_USE_MCE            /* Defined: The external flash can be protected by MCE.
                                       UnDefined: The MCE isn't supported. */
+#endif /* STM32H7S3xx || STM32H7S7xx */
 
 #define MCUBOOT_EXT_LOADER         /* Defined: Use system bootloader (in system flash).
                                       Undefined: Do not use system bootloader. */
@@ -74,11 +76,20 @@ extern "C" {
 #define INT_FLASH_SECTOR_SIZE           (0x2000)              /* Embedded Flash: 8 KB */
 #define EXT_FLASH_SECTOR_SIZE           (0x1000)              /* External Flash: 4 KB */
 #define EXT_FLASH_TOTAL_SIZE            (0x08000000)          /* External Flash: 128 MBytes */
+#if defined(STM32H7S3xx) || defined(STM32H7S7xx)
 #define EXT_FLASH_BASE_ADDRESS          (0x90000000)          /* External Flash (XSPI1 + MCE1 - AES) */
 #define EXT_RAM_BASE_ADDRESS            (0x70000000)          /* External Flash (XSPI2 + MCE2 - Noekeon) */
+#else
+#define EXT_FLASH_BASE_ADDRESS          (0x70000000)          /* External Flash (XSPI1) */
+#define EXT_RAM_BASE_ADDRESS            (0x90000000)          /* External Flash (XSPI2) */
+#endif /* STM32H7S3xx || STM32H7S7xx */
 #define FLASH_AREA_IMAGE_SECTOR_SIZE    EXT_FLASH_SECTOR_SIZE /* External Flash: 4 KB */
+
+
+
 #define FLASH_AREA_WRP_GROUP_SIZE       (0x2000)              /* 8 KB */
 #define FLASH_AREA_HDP_GROUP_SIZE       (0x100)               /* 256 bytes */
+
 
 /* XSPI instances used by the external memories:
  *  - XSPI1 + MCE1 (AES) must be used with the external flash.
@@ -89,10 +100,15 @@ extern "C" {
  *  - the external RAM is available via XSPI-PHY1 (Port1).
  * The XSPI I/O Manager (XSPIM) must be used in swapped mode.
  */
-#define EXT_FLASH_XSPI_INSTANCE         XSPI1
 #define MCE_AES_CONTEXT                 MCE1_CONTEXT1
 #define MCE_AES_CONTEXT_ID              MCE_CONTEXT1
+#if defined(STM32H7S3xx) || defined(STM32H7S7xx)
+#define EXT_FLASH_XSPI_INSTANCE         XSPI1
 #define EXT_RAM_XSPI_INSTANCE           XSPI2
+#else
+#define EXT_FLASH_XSPI_INSTANCE         XSPI2
+#define EXT_RAM_XSPI_INSTANCE           XSPI1
+#endif /* STM32H7S3xx || STM32H7S7xx */
 
 /* Size of the DMA shared memory to perform memory-mapped writing with MCE */
 #define BL2_DMA_SHARED_MEM_SIZE         (0x100)               /* 256 bytes */
@@ -153,6 +169,7 @@ extern "C" {
 /* area for BL2 code protected by hdp */
 #define FLASH_AREA_BL2_OFFSET           (0x00000)
 #define FLASH_AREA_BL2_SIZE             (0x10000)
+
 /* HDP area end at this address */
 #define FLASH_BL2_HDP_END               (FLASH_AREA_BL2_OFFSET+FLASH_AREA_BL2_SIZE-1)
 /* control area for BL2 code protected by hdp */
@@ -304,3 +321,4 @@ extern "C" {
 #endif
 
 #endif /* FLASH_LAYOUT_H */
+

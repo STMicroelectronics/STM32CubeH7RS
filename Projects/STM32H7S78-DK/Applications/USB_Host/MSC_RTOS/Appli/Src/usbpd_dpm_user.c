@@ -23,7 +23,6 @@
 #include "main.h"
 #include "usbpd_core.h"
 #include "usbpd_dpm_user.h"
-#include "cmsis_os.h"
 #if defined(_TRACE)
 #include "usbpd_trace.h"
 #include "string.h"

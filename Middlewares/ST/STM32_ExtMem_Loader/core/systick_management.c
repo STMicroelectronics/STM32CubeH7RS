@@ -31,7 +31,7 @@
 /** @defgroup EXTMEM_LOADER_SYSTICK_Exported_Functions Exported Functions
   * @{
   */
-
+#if !defined(STM32_EXTMEMLOADER_STM32CUBEOPENBLTARGET)
 /**
   * @brief This function configures the source of the time base:
   *        The time source is configured to have 1ms time base with a dedicated
@@ -56,7 +56,7 @@ HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
   }
   return retr;
 }
-
+#endif
 /**
   * @brief Provide a tick value in millisecond.
   * @note The function is an override of the HAL function to increment the

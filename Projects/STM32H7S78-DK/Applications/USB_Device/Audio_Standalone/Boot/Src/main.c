@@ -224,6 +224,11 @@ static void MX_FLASH_Init(void)
   /* USER CODE BEGIN FLASH_Init 1 */
 
   /* USER CODE END FLASH_Init 1 */
+  HAL_FLASHEx_OBGetConfig(&pOBInit);
+  if ((pOBInit.USERConfig1 & OB_XSPI1_HSLV_ENABLE) != OB_XSPI1_HSLV_ENABLE||
+(pOBInit.USERConfig1 & OB_XSPI2_HSLV_ENABLE) != OB_XSPI2_HSLV_ENABLE||
+(pOBInit.USERConfig2 & OB_I2C_NI3C_I2C) != OB_I2C_NI3C_I2C)
+{
   if (HAL_FLASH_Unlock() != HAL_OK)
   {
     Error_Handler();
@@ -249,6 +254,7 @@ static void MX_FLASH_Init(void)
   {
     Error_Handler();
   }
+}
   /* USER CODE BEGIN FLASH_Init 2 */
 
   /* USER CODE END FLASH_Init 2 */

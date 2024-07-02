@@ -18,7 +18,6 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "fatfs.h"
-#include "main.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -74,6 +73,7 @@ static uint32_t DiskRemoveEvent = 0x2;
 FS_FileOperationsTypeDef Appli_state = APPLICATION_IDLE;
 static uint8_t workBuffer[FF_MAX_SS];
 /* USER CODE END PV */
+
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN PFP */
 static void StartThread(void *argument);
@@ -90,7 +90,6 @@ static uint8_t SD_IsDetected(void);
 
 void MX_FATFS_Init(void)
 {
-
   /* USER CODE BEGIN Init */
   /* additional user code for init */
   /*## FatFS: Link the disk I/O driver(s)  ###########################*/

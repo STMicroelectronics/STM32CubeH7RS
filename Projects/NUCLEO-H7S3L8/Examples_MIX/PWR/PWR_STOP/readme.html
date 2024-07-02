@@ -38,7 +38,7 @@
 <li><p>The application needs to ensure that the SysTick time base is always set to 1 millisecond to have correct HAL operation.</p></li>
 <li>Whenever the application is using ITCM/DTCM memories (<span class="citation" data-cites="0x0000000">@0x0000000</span> / <span class="citation" data-cites="0x20000000">@0x20000000</span>: not cacheable and only accessible by the Cortex M7 and the GPDMA/HPDMA), there is no need for cache maintenance. If the application needs to put DMA buffers in AXI SRAM (starting from <span class="citation" data-cites="0x24000000">@0x24000000</span>), the user has to:
 <ul>
-<li>either define a non-cacheable region in the MPU and linker configuration file to locate DMA buffers (a proposed dma_buffer section is available from CMSIS Device linker template file and its size must be adapted to the application requirements)</li>
+<li>either define a non-cacheable region in the MPU and linker configuration file to locate DMA buffers (a proposed noncacheable_buffer section is available from CMSIS Device linker template file and its size must be adapted to the application requirements)</li>
 <li>or to ensure cache maintenance operations to ensure the cache coherence between the CPU and the DMAs.</li>
 </ul>
 This is true also for any other data buffers accessed by the CPU and other masters (DMA2D, LTDC) The addresses and the size of cacheable buffers (shared between CPU and other masters) must be properly defined to be aligned to data cache line size (32 bytes) and of a size of being multiple of this cache line size.
@@ -51,22 +51,18 @@ This is true also for any other data buffers accessed by the CPU and other maste
 <p>Power, PWR, stop mode, wake-up, external reset, Interrupt, low power mode</p>
 <h3 id="directory-contents"><b>Directory contents</b></h3>
 <ul>
-<li>Examples_MIX/PWR/PWR_STOP/Boot/Inc/stm32h7rsxx_conf.h HAL Configuration file</li>
-<li>Examples_MIX/PWR/PWR_STOP/Boot/Inc/stm32h7rsxx_it.h Header for stm32h7rsxx_it.c</li>
-<li>Examples_MIX/PWR/PWR_STOP/Boot/Inc/main.h Header file for main.c</li>
-<li>Examples_MIX/PWR/PWR_STOP/Boot/Src/system_stm32h7rsxx.c STM32H7RSxx system clock configuration file</li>
-<li>Examples_MIX/PWR/PWR_STOP/Boot/Src/stm32h7rsxx_it.c Interrupt handlers</li>
-<li>Examples_MIX/PWR/PWR_STOP/Boot/Src/main.c Main program</li>
-<li>Examples_MIX/PWR/PWR_STOP/Boot/Src/stm32h7rsxx_hal_msp.c HAL MSP module</li>
+<li>PWR/PWR_STOP/Boot/Inc/stm32h7rsxx_conf.h HAL Configuration file</li>
+<li>PWR/PWR_STOP/Boot/Inc/stm32h7rsxx_it.h Header for stm32h7rsxx_it.c</li>
+<li>PWR/PWR_STOP/Boot/Inc/main.h Header file for main.c</li>
+<li>PWR/PWR_STOP/Boot/Src/system_stm32h7rsxx.c STM32H7RSxx system clock configuration file</li>
+<li>PWR/PWR_STOP/Boot/Src/stm32h7rsxx_it.c Interrupt handlers</li>
+<li>PWR/PWR_STOP/Boot/Src/main.c Main program</li>
+<li>PWR/PWR_STOP/Boot/Src/stm32h7rsxx_hal_msp.c HAL MSP module</li>
 </ul>
 <h3 id="hardware-and-software-environment"><b>Hardware and Software environment</b></h3>
 <ul>
-<li><p>This example runs on STM32H7RSxx devices</p></li>
+<li><p>This example runs on STM32H7S3L8Hx devices</p></li>
 <li><p>This example has been tested with STMicroelectronics NUCLEO-H7S3L8 board and can be easily tailored to any other supported device and development board.</p></li>
-<li><p>User Option Bytes requirement (with STM32CubeProgrammer tool)</p>
-<ul>
-<li>XSPI2_HSLV=1 I/O XSPIM_P2 High speed option enabled</li>
-</ul></li>
 <li>NUCLEO-H7S3L8 set-up:
 <ul>
 <li>Use LD1 and LD2 connected respectively to PD.10 and PD.13 pins</li>

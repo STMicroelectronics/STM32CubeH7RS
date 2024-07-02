@@ -46,7 +46,7 @@ __FLASH_SIZE   = 0x00010000;
 
 
 __RAM_BEGIN    = 0x24000000;
-__RAM_SIZE     = 0x71C00;
+__RAM_SIZE     = 0x4FC00;
 __RAM_NONCACHEABLEBUFFER_SIZE = 0x400;
 
 /* Memories definition */

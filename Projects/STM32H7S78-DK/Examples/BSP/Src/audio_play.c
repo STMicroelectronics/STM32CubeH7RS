@@ -179,10 +179,10 @@ void AudioPlay_demo(void)
   UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_WHITE);
   UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_BLUE);
   UTIL_LCD_DisplayStringAt(0, LINE(15), (uint8_t *)"       PLAYING...     ", CENTER_MODE);
-  sprintf((char*)VolStr, "VOL:%lu", uwVolume);
+  sprintf((char*)VolStr, "VOL:%u", uwVolume);
   UTIL_LCD_DisplayStringAt(0,  LINE(16), (uint8_t *)VolStr, CENTER_MODE);
 
-  sprintf((char*)FreqStr, "FREQ:%lu", *AudioFreq_ptr);
+  sprintf((char*)FreqStr, "FREQ:%u", *AudioFreq_ptr);
   UTIL_LCD_DisplayStringAt(0, LINE(17), (uint8_t *)FreqStr, CENTER_MODE);
   UTIL_LCD_SetFont(&Font20);
 
@@ -274,7 +274,7 @@ void AudioPlay_demo(void)
                 uwVolume = 0;
               }
 
-              sprintf((char*)VolStr, "VOL:%lu", uwVolume);
+              sprintf((char*)VolStr, "VOL:%u", uwVolume);
               BSP_AUDIO_OUT_SetVolume(0, uwVolume);
               UTIL_LCD_DisplayStringAt(0,  LINE(16), (uint8_t *)VolStr, CENTER_MODE);
               LastTSTick = HAL_GetTick();
@@ -293,7 +293,7 @@ void AudioPlay_demo(void)
                     AudioFreq_ptr++;
                     BSP_AUDIO_OUT_SetVolume(0, 0);
                     BSP_AUDIO_OUT_Stop(0);
-                    sprintf((char*)FreqStr, "FREQ:%lu", *AudioFreq_ptr);
+                    sprintf((char*)FreqStr, "FREQ:%u", *AudioFreq_ptr);
                     UTIL_LCD_DisplayStringAt(0, LINE(17), (uint8_t *)FreqStr, CENTER_MODE);
                     BSP_AUDIO_OUT_SetSampleRate(0, *AudioFreq_ptr);
                     AUDIO_Start((uint32_t *)AUDIO_SRC_FILE_ADDRESS, (uint32_t)AUDIO_FILE_SIZE);
@@ -323,7 +323,7 @@ void AudioPlay_demo(void)
             {
               uwVolume = 100;
             }
-            sprintf((char*)VolStr, "VOL:%lu", uwVolume);
+            sprintf((char*)VolStr, "VOL:%u", uwVolume);
             BSP_AUDIO_OUT_SetVolume(0, uwVolume);
             UTIL_LCD_DisplayStringAt(0,  LINE(16), (uint8_t *)VolStr, CENTER_MODE);
             LastTSTick = HAL_GetTick();
@@ -338,7 +338,7 @@ void AudioPlay_demo(void)
               BSP_AUDIO_OUT_Stop(0);
               BSP_AUDIO_OUT_SetSampleRate(0, *AudioFreq_ptr);
               AUDIO_Start((uint32_t *)AUDIO_SRC_FILE_ADDRESS, (uint32_t)AUDIO_FILE_SIZE);
-              sprintf((char*)FreqStr, "FREQ:%lu", *AudioFreq_ptr);
+              sprintf((char*)FreqStr, "FREQ:%u", *AudioFreq_ptr);
               UTIL_LCD_DisplayStringAt(0, LINE(17), (uint8_t *)FreqStr, CENTER_MODE);
               LastTSTick = HAL_GetTick();
               TS_Available = 0;

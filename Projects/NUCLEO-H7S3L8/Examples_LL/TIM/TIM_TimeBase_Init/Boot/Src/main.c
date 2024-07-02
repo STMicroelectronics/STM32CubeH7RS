@@ -157,8 +157,8 @@ In this example TIM1 input clock TIM1CLK is set to APB2 clock PCLK2 (TIM1CLK = P
   */
 void SystemClock_Config(void)
 {
-  LL_FLASH_SetLatency(LL_FLASH_LATENCY_6);
-  while(LL_FLASH_GetLatency()!= LL_FLASH_LATENCY_6)
+  LL_FLASH_SetLatency(LL_FLASH_LATENCY_7);
+  while(LL_FLASH_GetLatency()!= LL_FLASH_LATENCY_7)
   {
   }
   LL_PWR_SetRegulVoltageScaling(LL_PWR_REGU_VOLTAGE_SCALE0);

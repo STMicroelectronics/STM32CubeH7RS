@@ -78,7 +78,7 @@
                 </option>
                 <option>
                     <name>OGChipSelectEditMenu</name>
-                    <state>STM32H7R3L8	ST STM32H7R3L8</state>
+                    <state>STM32H7S3L8	ST STM32H7S3L8</state>
                 </option>
                 <option>
                     <name>GenLowLevelInterface</name>
@@ -124,7 +124,7 @@
                 </option>
                 <option>
                     <name>GFPUDeviceSlave</name>
-                    <state>STM32H7R3L8	ST STM32H7R3L8</state>
+                    <state>STM32H7S3L8	ST STM32H7S3L8</state>
                 </option>
                 <option>
                     <name>FPU2</name>

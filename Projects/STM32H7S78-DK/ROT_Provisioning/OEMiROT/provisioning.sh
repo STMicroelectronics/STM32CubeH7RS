@@ -3,6 +3,9 @@
 # Getting the Trusted Package Creator and STM32CubeProgammer CLI path
 source ../env.sh
 
+# Select device type (H7S or H7R)
+device_type="H7S"
+
 isGeneratedByCubeMX=$PROJECT_GENERATED_BY_CUBEMX
 
 if [ $# -ge 1 ]; then mode=$1; else mode=MANUAL; fi
@@ -352,16 +355,20 @@ if [ "$isGeneratedByCubeMX" == "false" ]; then
   if [ "$mode" != "AUTO" ]; then read -p "" -n1 -s; fi
 fi
 
-if [[ "${product_state_selected^^}" == "OPEN" ]]; then
-    action="Configure OEMiROT_Config.xml for OPEN"
-    echo "   * $action"
-    $python"$AppliCfg" xmlval --value 0 --decimal -txml DoEncryption "$oemirot_config_file" >> $provisioning_log 2>&1
-    if [ $? -ne 0 ]; then step_error; fi
+if [[ "$device_type" == "H7S" ]]; then
+    if [[ "${product_state_selected^^}" == "OPEN" ]]; then
+        action="Configure OEMiROT_Config.xml for OPEN"
+        echo "   * $action"
+        $python"$AppliCfg" xmlval --value 0 --decimal -txml DoEncryption "$oemirot_config_file" >> $provisioning_log 2>&1
+        if [ $? -ne 0 ]; then step_error; fi
+    else
+        action="Configure OEMiROT_Config.xml for CLOSED or LOCKED"
+        echo "   * $action"
+        $python"$AppliCfg" xmlval --value 1 --decimal -txml DoEncryption "$oemirot_config_file" >> $provisioning_log 2>&1
+        if [ $? -ne 0 ]; then step_error; fi
+    fi
 else
-    action="Configure OEMiROT_Config.xml for CLOSED or LOCKED"
-    echo "   * $action"
-    $python"$AppliCfg" xmlval --value 1 --decimal -txml DoEncryption "$oemirot_config_file" >> $provisioning_log 2>&1
-    if [ $? -ne 0 ]; then step_error; fi
+    $python"$AppliCfg" xmlval --value 0 --decimal -txml DoEncryption "$oemirot_config_file" >> $provisioning_log 2>&1
 fi
 if [ $? -ne 0 ]; then step_error; fi
 

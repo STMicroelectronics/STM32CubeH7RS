@@ -101,53 +101,10 @@ static const uint32_t aDecrementScatter_ExpectedResult_Buffer[SCATTER_BUFFER_SIZ
 static uint32_t __attribute__((section("noncacheable_buffer"))) aDST_IncrementGather_Buffer[GATHER_BUFFER_SIZE] = {0};
 /* Destination decrement gather buffer */
 static uint32_t __attribute__((section("noncacheable_buffer"))) aDST_DecrementGather_Buffer[GATHER_BUFFER_SIZE] = {0};
-
 /* Destination increment scatter buffer */
-static uint32_t __attribute__((section("noncacheable_buffer"))) aDST_IncrementScatter_Buffer[SCATTER_BUFFER_SIZE] =
-{
-  0x00000000, 0x00000000, 0x00000000, 0x00000000,
-
-  0x01020304, 0x05060708, 0x090A0B0C, 0x0D0E0F10,
-  0x11121314, 0x15161718, 0x191A1B1C, 0x1D1E1F20,
-
-  0x00000000, 0x00000000, 0x00000000, 0x00000000,
-
-  0x21222324, 0x25262728, 0x292A2B2C, 0x2D2E2F30,
-  0x31323334, 0x35363738, 0x393A3B3C, 0x3D3E3F40,
-
-  0x00000000, 0x00000000, 0x00000000, 0x00000000,
-
-  0x41424344, 0x45464748, 0x494A4B4C, 0x4D4E4F50,
-  0x51525354, 0x55565758, 0x595A5B5C, 0x5D5E5F60,
-
-  0x00000000, 0x00000000, 0x00000000, 0x00000000,
-
-  0x61626364, 0x65666768, 0x696A6B6C, 0x6D6E6F70,
-  0x71727374, 0x75767778, 0x797A7B7C, 0x7D7E7F80
-};
+static uint32_t __attribute__((section("noncacheable_buffer"))) aDST_IncrementScatter_Buffer[SCATTER_BUFFER_SIZE] = {0};
 /* Destination decrement scatter buffer */
-static uint32_t __attribute__((section("noncacheable_buffer"))) aDST_DecrementScatter_Buffer[SCATTER_BUFFER_SIZE] =
-{
-  0x00000000, 0x00000000, 0x00000000, 0x00000000,
-
-  0x01020304, 0x05060708, 0x090A0B0C, 0x0D0E0F10,
-  0x11121314, 0x15161718, 0x191A1B1C, 0x1D1E1F20,
-
-  0x00000000, 0x00000000, 0x00000000, 0x00000000,
-
-  0x21222324, 0x25262728, 0x292A2B2C, 0x2D2E2F30,
-  0x31323334, 0x35363738, 0x393A3B3C, 0x3D3E3F40,
-
-  0x00000000, 0x00000000, 0x00000000, 0x00000000,
-
-  0x41424344, 0x45464748, 0x494A4B4C, 0x4D4E4F50,
-  0x51525354, 0x55565758, 0x595A5B5C, 0x5D5E5F60,
-
-  0x00000000, 0x00000000, 0x00000000, 0x00000000,
-
-  0x61626364, 0x65666768, 0x696A6B6C, 0x6D6E6F70,
-  0x71727374, 0x75767778, 0x797A7B7C, 0x7D7E7F80
-};
+static uint32_t __attribute__((section("noncacheable_buffer"))) aDST_DecrementScatter_Buffer[SCATTER_BUFFER_SIZE] = {0};
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -250,7 +207,7 @@ int main(void)
   }
 
   /* Check destination buffer */
-  if (Buffercmp((uint8_t*)aDST_IncrementGather_Buffer, (uint8_t*)aIncrementGather_ExpectedResult_Buffer, GATHER_BUFFER_SIZE * 2U) != 0U)
+  if (Buffercmp((uint8_t*)aDST_IncrementGather_Buffer, (uint8_t*)aIncrementGather_ExpectedResult_Buffer, GATHER_BUFFER_SIZE * 4U) != 0U)
   {
     Error_Handler();
   }
@@ -261,6 +218,15 @@ int main(void)
 
 
   /*##-2- Incremented scatter DMA transaction #################################*/
+  /* Prepare destination buffer */
+  memcpy(aDST_IncrementScatter_Buffer, aSRC_Const_Buffer, SCATTER_BUFFER_SIZE * sizeof(aSRC_Const_Buffer[0]));
+
+  /* Set specific parts of the buffer to zero */
+  for (int indexbuff = 0; indexbuff < 40; indexbuff += 12)
+  {
+    memset(&aDST_IncrementScatter_Buffer[indexbuff], 0U, 4U * sizeof(aDST_IncrementScatter_Buffer[0]));
+  }
+
   DMA_Increment_ScatterOperation();
 
   /* Wait for end of transmission or an error occurred */
@@ -273,7 +239,7 @@ int main(void)
   }
 
   /* Check destination buffer */
-  if (Buffercmp((uint8_t*)aDST_IncrementScatter_Buffer, (uint8_t*)aSRC_Const_Buffer, SCATTER_BUFFER_SIZE * 2U) != 0U)
+  if (Buffercmp((uint8_t*)aDST_IncrementScatter_Buffer, (uint8_t*)aSRC_Const_Buffer, SCATTER_BUFFER_SIZE * 4U) != 0U)
   {
     Error_Handler();
   }
@@ -298,7 +264,7 @@ int main(void)
   }
 
   /* Check destination buffer */
-  if (Buffercmp((uint8_t*)aDST_DecrementGather_Buffer, (uint8_t*)aDecrementGather_ExpectedResult_Buffer, GATHER_BUFFER_SIZE * 2U) != 0U)
+  if (Buffercmp((uint8_t*)aDST_DecrementGather_Buffer, (uint8_t*)aDecrementGather_ExpectedResult_Buffer, GATHER_BUFFER_SIZE * 4U) != 0U)
   {
     Error_Handler();
   }
@@ -309,6 +275,15 @@ int main(void)
 
 
   /*##-4- Decremented scatter DMA transaction #################################*/
+  /* Prepare destination buffer */
+  memcpy(aDST_DecrementScatter_Buffer, aSRC_Const_Buffer, SCATTER_BUFFER_SIZE * sizeof(aSRC_Const_Buffer[0]));
+
+  /* Set specific parts of the buffer to zero */
+  for (int indexbuff = 0; indexbuff < 40; indexbuff += 12)
+  {
+    memset(&aDST_DecrementScatter_Buffer[indexbuff], 0U, 4U * sizeof(aDST_DecrementScatter_Buffer[0]));
+  }
+
   DMA_Decrement_ScatterOperation();
 
   /* Wait for end of transmission or an error occurred */
@@ -321,7 +296,7 @@ int main(void)
   }
 
   /* Check destination buffer */
-  if (Buffercmp((uint8_t*)aDST_DecrementScatter_Buffer, (uint8_t*)aDecrementScatter_ExpectedResult_Buffer, SCATTER_BUFFER_SIZE * 2U) != 0U)
+  if (Buffercmp((uint8_t*)aDST_DecrementScatter_Buffer, (uint8_t*)aDecrementScatter_ExpectedResult_Buffer, SCATTER_BUFFER_SIZE * 4U) != 0U)
   {
     Error_Handler();
   }
@@ -436,10 +411,10 @@ static void DMA_Increment_GatherOperation(void)
     Error_Handler();
   }
   RepeatBlockConfig.RepeatCount = GATHER_BLOCK_NUM;
-  RepeatBlockConfig.SrcAddrOffset = GATHER_ADDRESS_OFFSET;
+  RepeatBlockConfig.SrcAddrOffset = GATHER_ADDRESS_OFFSET; /* +8 words */
   RepeatBlockConfig.DestAddrOffset = 0U;
-  RepeatBlockConfig.BlkSrcAddrOffset = (-(SRC_BUFFER_SIZE * 4U));
-  RepeatBlockConfig.BlkDestAddrOffset = (-(GATHER_BUFFER_SIZE * 4U));
+  RepeatBlockConfig.BlkSrcAddrOffset = (-(SRC_BUFFER_SIZE * 4U)); /* -48 words */
+  RepeatBlockConfig.BlkDestAddrOffset = (-(GATHER_BUFFER_SIZE * 4U)); /* -16 words */
   if (HAL_DMAEx_ConfigRepeatBlock(&handle_GPDMA1_Channel15, &RepeatBlockConfig) != HAL_OK)
   {
     Error_Handler();
@@ -492,9 +467,9 @@ static void DMA_Increment_ScatterOperation(void)
   }
   RepeatBlockConfig.RepeatCount = SCATTER_BLOCK_NUM;
   RepeatBlockConfig.SrcAddrOffset = 0;
-  RepeatBlockConfig.DestAddrOffset = SCATTER_ADDRESS_OFFSET;
-  RepeatBlockConfig.BlkSrcAddrOffset = (-(GATHER_BUFFER_SIZE * 4U));
-  RepeatBlockConfig.BlkDestAddrOffset = (-(40 * 4U));
+  RepeatBlockConfig.DestAddrOffset = SCATTER_ADDRESS_OFFSET; /* +8 words */
+  RepeatBlockConfig.BlkSrcAddrOffset = (-(GATHER_BUFFER_SIZE * 4U)); /* -16 words */
+  RepeatBlockConfig.BlkDestAddrOffset = (-(SCATTER_BUFFER_SIZE * 4U)); /* -48 words */
   if (HAL_DMAEx_ConfigRepeatBlock(&handle_GPDMA1_Channel15, &RepeatBlockConfig) != HAL_OK)
   {
     Error_Handler();
@@ -506,7 +481,7 @@ static void DMA_Increment_ScatterOperation(void)
 
   /* Configure the source, destination and buffer size DMA fields and Start DMA Channel/Stream transfer */
   /* Enable All the DMA interrupts */
-  if (HAL_DMA_Start_IT(&handle_GPDMA1_Channel15, (uint32_t)&aDST_IncrementGather_Buffer, (uint32_t)&aDST_IncrementScatter_Buffer, SCATTER_BUFFER_SIZE * 4) != HAL_OK)
+  if (HAL_DMA_Start_IT(&handle_GPDMA1_Channel15, (uint32_t)&aDST_IncrementGather_Buffer, (uint32_t)&aDST_IncrementScatter_Buffer, GATHER_BUFFER_SIZE * 4U) != HAL_OK)
   {
     Error_Handler();
   }
@@ -542,10 +517,10 @@ static void DMA_Decrement_GatherOperation(void)
     Error_Handler();
   }
   RepeatBlockConfig.RepeatCount = GATHER_BLOCK_NUM;
-  RepeatBlockConfig.SrcAddrOffset = GATHER_ADDRESS_OFFSET;
-  RepeatBlockConfig.DestAddrOffset = (-(GATHER_ADDRESS_OFFSET));
-  RepeatBlockConfig.BlkSrcAddrOffset = (-(SRC_BUFFER_SIZE * 4U));
-  RepeatBlockConfig.BlkDestAddrOffset = GATHER_BLOCK_OFFSET * 2U;
+  RepeatBlockConfig.SrcAddrOffset = GATHER_ADDRESS_OFFSET; /* +8 words */
+  RepeatBlockConfig.DestAddrOffset = (-(GATHER_ADDRESS_OFFSET)); /* -8 words */
+  RepeatBlockConfig.BlkSrcAddrOffset = (-(SRC_BUFFER_SIZE * 4U)); /* -48 words */
+  RepeatBlockConfig.BlkDestAddrOffset = GATHER_BUFFER_SIZE * 4U; /* +16 words */
   if (HAL_DMAEx_ConfigRepeatBlock(&handle_GPDMA1_Channel15, &RepeatBlockConfig) != HAL_OK)
   {
     Error_Handler();
@@ -594,9 +569,9 @@ static void DMA_Decrement_ScatterOperation(void)
   }
   RepeatBlockConfig.RepeatCount = SCATTER_BLOCK_NUM;
   RepeatBlockConfig.SrcAddrOffset = 0;
-  RepeatBlockConfig.DestAddrOffset = (-(16 * 4U));
-  RepeatBlockConfig.BlkSrcAddrOffset = (-(GATHER_BUFFER_SIZE * 4U));
-  RepeatBlockConfig.BlkDestAddrOffset = SCATTER_BLOCK_OFFSET * 4U;
+  RepeatBlockConfig.DestAddrOffset = (-(16 * 4U)); /* -16 words */
+  RepeatBlockConfig.BlkSrcAddrOffset = (-(GATHER_BUFFER_SIZE * 4U)); /* -16 words */
+  RepeatBlockConfig.BlkDestAddrOffset = SCATTER_BUFFER_SIZE * 4U; /* +48 words */
   if (HAL_DMAEx_ConfigRepeatBlock(&handle_GPDMA1_Channel15, &RepeatBlockConfig) != HAL_OK)
   {
     Error_Handler();
@@ -608,7 +583,7 @@ static void DMA_Decrement_ScatterOperation(void)
 
   /* Configure the source, destination and buffer size DMA fields and Start DMA Channel/Stream transfer */
   /* Enable All the DMA interrupts */
-  if (HAL_DMA_Start_IT(&handle_GPDMA1_Channel15, (uint32_t)&aDST_IncrementGather_Buffer, (uint32_t)&aDST_DecrementScatter_Buffer[36], SCATTER_BUFFER_SIZE * 4U) != HAL_OK)
+  if (HAL_DMA_Start_IT(&handle_GPDMA1_Channel15, (uint32_t)&aDST_IncrementGather_Buffer, (uint32_t)&aDST_DecrementScatter_Buffer[36], GATHER_BUFFER_SIZE * 4U) != HAL_OK)
   {
     Error_Handler();
   }

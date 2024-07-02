@@ -115,6 +115,7 @@ void HAL_LPTIM_MspInit(LPTIM_HandleTypeDef* hlptim)
   }
   __HAL_RCC_LPTIM1_CLK_SLEEP_ENABLE();
   /* USER CODE END LPTIM1_MspInit 1 */
+
   }
 
 }

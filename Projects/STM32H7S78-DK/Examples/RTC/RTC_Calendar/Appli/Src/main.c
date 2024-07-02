@@ -86,7 +86,8 @@ int main(void)
        - Low Level Initialization
      */
   /* USER CODE END 1 */
-/* Enable the CPU Cache */
+
+  /* Enable the CPU Cache */
 
   /* Enable I-Cache---------------------------------------------------------*/
   SCB_EnableICache();

@@ -55,8 +55,6 @@ extern "C" {
 /* IRQ priorities */
 #define BSP_BUTTON_USER_IT_PRIORITY         15U
 
-/* User button EXTI handle */
-#define H_EXTI_13                           hpb_exti[BUTTON_USER]
 /**
   * @}
   */

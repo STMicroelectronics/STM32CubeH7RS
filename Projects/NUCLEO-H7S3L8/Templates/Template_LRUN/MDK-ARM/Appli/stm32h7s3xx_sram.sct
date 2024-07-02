@@ -14,8 +14,8 @@ LOAD_FLASH 0x24050000 0x00022000  {    ; load region size_region
   }
 
   RW_DTCM 0x20000000 0x00010000  {  ; RW data
-   *(STACK, +RW)
-   *(HEAP, +RW)
+   *(STACK)
+   *(HEAP)
   }
 
   RW_SRAMAHB 0x30000000 0x8000  {

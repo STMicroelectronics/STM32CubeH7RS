@@ -98,7 +98,7 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-  // Quick Fix: disable Dcache
+  // Tracer for USBPD needs Dcache to be disabled to avoid corrupted transfer
   SCB_DisableDCache();
   /* USER CODE END Init */
 

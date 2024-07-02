@@ -129,12 +129,11 @@
 		<Default>0x00</Default>
 	</Data>
 	<Data>
-		<Name>External non-volatile memory size</Name>
+		<Name>Reserved8</Name>
 		<Value>0x10000000</Value>
 		<Width>4</Width>
-		<Hidden>1</Hidden>
+		<Reserved>1</Reserved>
 		<Default>0x10000000</Default>
-		<Tooltip>Enter the size of the external non-volatile memory</Tooltip>
 	</Data>
 	<List>
 		<Name>STiROT_iLoader offset</Name>
@@ -160,10 +159,21 @@
 		<Hidden>1</Hidden>
 		<Tooltip>Enter the STiROT_iLoader size (aligned on flash sector size)</Tooltip>
 	</Data>
+	<List>
+		<Name>MCE</Name>
+		<Value>0x0</Value>
+		<Width>4</Width>
+		<Default>0x0</Default>
+		<Val>0x0, MCE1 (XSPI/AES)</Val>
+		<Val>0x1, MCE2 (XSPI/Noekeon)</Val>
+		<Val>0x2, MCE3 (FMC/Noekeon)</Val>
+		<Hidden>1</Hidden>
+		<Tooltip>Select the MCE that will encrypt the firmware installation area in the external flash</Tooltip>
+	</List>
 	<Data>
-		<Name>Reserved8</Name>
+		<Name>Reserved9</Name>
 		<Value>0x00</Value>
-		<Width>7</Width>
+		<Width>3</Width>
 		<Reserved>1</Reserved>
 		<Default>0x00</Default>
 	</Data>

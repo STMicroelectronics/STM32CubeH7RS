@@ -325,7 +325,7 @@ void boot_platform_quit(struct boot_arm_vector_table *vector)
   {
     Error_Handler();
   }
-#endif /* ICACHE_ENABLED */
+#endif /* OEMIROT_ICACHE_ENABLE */
 
   SCB_DisableICache();
   SCB_DisableDCache();
@@ -689,14 +689,18 @@ void icache_init(void)
   {
     Error_Handler();
   }
+
 #endif /* ICACHE_MONITOR */
+
   ICACHE_MONITOR_PRINT()
 
+#ifdef OEMIROT_ICACHE_ENABLE
   /* Enable ICache */
   if (HAL_ICACHE_Enable() != HAL_OK)
   {
     Error_Handler();
   }
+#endif /* OEMIROT_ICACHE_ENABLE */
 }
 
 /**
@@ -821,6 +825,7 @@ int32_t boot_platform_init(void)
   stdio_init();
 #endif /*  OEMIROT_DEV_MODE */
 
+
   /* Enable I-Cache */
   SCB_EnableICache();
 
@@ -830,7 +835,7 @@ int32_t boot_platform_init(void)
 #ifdef OEMIROT_ICACHE_ENABLE
   /* Configure and enable ICache */
   icache_init();
-#endif /* ICACHE_ENABLED */
+#endif /* OEMIROT_ICACHE_ENABLE */
 
   /* Reload Independent Watchdog */
   IWDG->KR = KR_RELOAD;

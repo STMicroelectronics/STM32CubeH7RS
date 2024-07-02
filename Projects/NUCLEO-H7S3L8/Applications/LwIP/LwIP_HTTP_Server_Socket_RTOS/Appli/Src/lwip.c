@@ -427,6 +427,7 @@ void MX_LWIP_Init(void)
   /* Set the link callback function, this function is called on change of link status*/
   netif_set_link_callback(&gnetif, ethernet_link_status_updated);
 
+  /* Create the Ethernet link handler thread */
 /* USER CODE BEGIN H7_OS_THREAD_NEW_CMSIS_RTOS_V2 */
   memset(&attributes, 0x0, sizeof(osThreadAttr_t));
   attributes.name = "EthLink";

@@ -3,6 +3,9 @@
 :: Getting the Trusted Package Creator and STM32CubeProgammer CLI path
 call ../env.bat
 
+:: Select device type (H7S or H7R)
+set device_type=H7S
+
 :: Enable delayed expansion
 setlocal EnableDelayedExpansion
 
@@ -246,12 +249,15 @@ echo.
 if [%1] neq [AUTO] pause >nul
 
 :cubemx2
-if /i "!product_state_selected!" == "OPEN" (
-    set "action=Configure OEMiROT_Config.xml for OPEN"
+if  "%device_type%" == "H7S" (
+    if /i "!product_state_selected!" == "OPEN" (
+        set "action=Configure OEMiROT_Config.xml for OPEN"
+        set "command=%AppliCfg% xmlval --value 0 --decimal -txml DoEncryption %oemirot_config_file%"
+    ) else (
+        set "action=Configure OEMiROT_Config.xml for CLOSED or LOCKED"
+        set "command=%AppliCfg% xmlval --value 1 --decimal -txml DoEncryption %oemirot_config_file%"
+)) else (
     set "command=%AppliCfg% xmlval --value 0 --decimal -txml DoEncryption %oemirot_config_file%"
-) else (
-    set "action=Configure OEMiROT_Config.xml for CLOSED or LOCKED"
-    set "command=%AppliCfg% xmlval --value 1 --decimal -txml DoEncryption %oemirot_config_file%"
 )
 echo    * %action%
 %command% >> %provisioning_log% 2>&1

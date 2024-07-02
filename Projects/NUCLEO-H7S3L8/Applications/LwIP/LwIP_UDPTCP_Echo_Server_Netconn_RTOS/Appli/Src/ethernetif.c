@@ -41,7 +41,7 @@
 /* The time to block waiting for input. */
 #define TIME_WAITING_FOR_INPUT ( osWaitForever )
 /* Time to block waiting for transmissions to finish */
-#define ETHIF_TX_TIMEOUT                       (2000U)
+#define ETHIF_TX_TIMEOUT (2000U)
 /* USER CODE BEGIN OS_THREAD_STACK_SIZE_WITH_RTOS */
 /* Stack size of the interface thread */
 #define INTERFACE_THREAD_STACK_SIZE ( 512 )
@@ -62,9 +62,9 @@
 /* Private variables ---------------------------------------------------------*/
 /*
 @Note: This interface is implemented to operate in zero-copy mode only:
-        - Rx buffers will be allocated from LwIP stack memory heap,
+        - Rx Buffers will be allocated from LwIP stack Rx memory pool,
           then passed to ETH HAL driver.
-        - Tx buffers will be allocated from LwIP stack memory heap,
+        - Tx Buffers will be allocated from LwIP stack memory heap,
           then passed to ETH HAL driver.
 
 @Notes:
@@ -114,11 +114,25 @@ ETH_DMADescTypeDef  DMATxDscrTab[ETH_TX_DESC_CNT]; /* Ethernet Tx DMA Descriptor
 __attribute__((at(0x24020000))) ETH_DMADescTypeDef  DMARxDscrTab[ETH_RX_DESC_CNT]; /* Ethernet Rx DMA Descriptors */
 __attribute__((at(0x24020080))) ETH_DMADescTypeDef  DMATxDscrTab[ETH_TX_DESC_CNT]; /* Ethernet Tx DMA Descriptors */
 
-#elif (defined ( __GNUC__ ) || defined ( __ARMCC_VERSION )) /* GNU and ARM 6 Compiler */
+#elif (defined ( __GNUC__ ) || defined ( __ARMCC_VERSION )) /* GNU Compiler */
 
 ETH_DMADescTypeDef DMARxDscrTab[ETH_RX_DESC_CNT] __attribute__((section(".RxDescripSection"))); /* Ethernet Rx DMA Descriptors */
-ETH_DMADescTypeDef DMATxDscrTab[ETH_TX_DESC_CNT] __attribute__((section(".TxDescripSection"))); /* Ethernet Tx DMA Descriptors */
+ETH_DMADescTypeDef DMATxDscrTab[ETH_TX_DESC_CNT] __attribute__((section(".TxDescripSection")));   /* Ethernet Tx DMA Descriptors */
 
+#endif
+
+#if defined ( __ICCARM__ ) /*!< IAR Compiler */
+#pragma location = 0x24020100
+extern u8_t memp_memory_RX_POOL_base[];
+
+#elif defined ( __CC_ARM ) /* MDK ARM Compiler */
+__attribute__((section(".Rx_PoolSection"))) extern u8_t memp_memory_RX_POOL_base[];
+
+#elif defined ( __ARMCC_VERSION ) /* ARM 6 Compiler */
+__attribute__((section(".Rx_PoolSection"))) u8_t memp_memory_RX_POOL_base[];
+
+#elif defined ( __GNUC__ ) /* GNU */
+__attribute__((section(".Rx_PoolSection"))) extern u8_t memp_memory_RX_POOL_base[];
 #endif
 
 /* USER CODE BEGIN 2 */
@@ -137,20 +151,6 @@ const osThreadAttr_t EthIf_attributes = {
 const osSemaphoreAttr_t TxPktSemaphore_attributes = {
   .name = "TxPktSemaphore"
 };
-
-#if defined ( __ICCARM__ ) /*!< IAR Compiler */
-#pragma location = 0x24020100
-extern u8_t memp_memory_RX_POOL_base[];
-
-#elif defined ( __CC_ARM ) /* MDK ARM Compiler */
-__attribute__((section(".Rx_PoolSection"))) extern u8_t memp_memory_RX_POOL_base[];
-
-#elif defined ( __ARMCC_VERSION ) /* ARM 6 Compiler */
-__attribute__((section(".Rx_PoolSection"))) u8_t memp_memory_RX_POOL_base[];
-
-#elif defined ( __GNUC__ ) /* GNU Compiler */
-__attribute__((section(".Rx_PoolSection"))) extern u8_t memp_memory_RX_POOL_base[];
-#endif
 /* USER CODE END 2 */
 
 osSemaphoreId_t RxPktSemaphore = NULL;   /* Semaphore to signal incoming packets */
@@ -313,7 +313,12 @@ static void low_level_init(struct netif *netif)
   LAN8742_RegisterBusIO(&LAN8742, &LAN8742_IOCtx);
 
   /* Initialize the LAN8742 ETH PHY */
-  LAN8742_Init(&LAN8742);
+  if(LAN8742_Init(&LAN8742) != LAN8742_STATUS_OK)
+  {
+    netif_set_link_down(netif);
+    netif_set_down(netif);
+    return;
+  }
 
   if (hal_eth_init_status == HAL_OK)
   {
@@ -442,7 +447,7 @@ static err_t low_level_output(struct netif *netif, struct pbuf *p)
       if(HAL_ETH_GetError(&heth) & HAL_ETH_ERROR_BUSY)
       {
         /* Wait for descriptors to become available */
-        osSemaphoreAcquire( TxPktSemaphore, ETHIF_TX_TIMEOUT);
+        osSemaphoreAcquire(TxPktSemaphore, ETHIF_TX_TIMEOUT);
         HAL_ETH_ReleaseTxPacket(&heth);
         errval = ERR_BUF;
       }

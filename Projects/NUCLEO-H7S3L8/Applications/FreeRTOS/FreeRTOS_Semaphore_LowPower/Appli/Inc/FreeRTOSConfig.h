@@ -55,6 +55,7 @@ extern uint32_t SystemCoreClock;
 #ifndef CMSIS_device_header
 #define CMSIS_device_header "stm32h7rsxx.h"
 #endif /* CMSIS_device_header */
+
 #define configENABLE_FPU                         1
 #define configENABLE_MPU                         0
 
@@ -162,7 +163,6 @@ header file. */
 standard names. */
 #define vPortSVCHandler    SVC_Handler
 #define xPortPendSVHandler PendSV_Handler
-
 /* IMPORTANT: After 10.3.1 update, Systick_Handler comes from NVIC (if SYS timebase = systick), otherwise from cmsis_os2.c */
 
 #define USE_CUSTOM_SYSTICK_HANDLER_IMPLEMENTATION 0

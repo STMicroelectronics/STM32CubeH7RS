@@ -143,6 +143,14 @@ BOOTStatus_TypeDef JumpToApplication(void)
 
   SCB->VTOR = (uint32_t)Application_vector;
   JumpToApp = (pFunction) (*(__IO uint32_t *)(Application_vector + 4u));
+
+#if ((defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1)) || \
+     (defined (__ARM_ARCH_8_1M_MAIN__ ) && (__ARM_ARCH_8_1M_MAIN__ == 1)) || \
+     (defined (__ARM_ARCH_8M_BASE__ ) && (__ARM_ARCH_8M_BASE__ == 1))    )
+  /* on ARM v8m, set MSPLIM before setting MSP to avoid unwanted stack overflow faults */
+  __set_MSPLIM(0x00000000);
+#endif  /* __ARM_ARCH_8M_MAIN__ or __ARM_ARCH_8M_BASE__ */
+
   __set_MSP(*(__IO uint32_t*) Application_vector);
 
   /* Re-enable the interrupts */

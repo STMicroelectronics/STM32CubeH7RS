@@ -62,11 +62,11 @@ typedef enum  {
   */
 /**
  * @brief this function initializes the driver SDCARD
+ * @param Peripheral pointer on preipheral object
  * @param SDCARDObject object SDCARD
- * @param ClockInput timeout value
  * @return @ref EXTMEM_DRIVER_SDCARD_StatusTypeDef
  **/
-EXTMEM_DRIVER_SDCARD_StatusTypeDef EXTMEM_DRIVER_SDCARD_Init(void *IP,
+EXTMEM_DRIVER_SDCARD_StatusTypeDef EXTMEM_DRIVER_SDCARD_Init(void *Peripheral,
                                                       EXTMEM_DRIVER_SDCARD_ObjectTypeDef* SDCARDObject);
 
 /**

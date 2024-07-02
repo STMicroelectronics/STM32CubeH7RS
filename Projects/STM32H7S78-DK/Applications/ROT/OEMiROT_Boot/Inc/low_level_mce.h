@@ -24,10 +24,12 @@
 extern "C" {
 #endif
 
+#if defined(STM32H7S3xx) || defined(STM32H7S7xx)
 /* Includes ------------------------------------------------------------------*/
 #include "stm32h7rsxx_hal.h"
 #include "boot_hal_cfg.h"
 #include "low_level_obkeys.h"
+
 
 /* Types of MCE regions (also used as indexes) */
 #define LL_MCE_REGION_CODE_PRIMARY                    (0U)
@@ -77,9 +79,12 @@ HAL_StatusTypeDef LL_MCE_DisableCodePrimaryRegion(void);
 HAL_StatusTypeDef LL_MCE_EnableCodePrimaryRegion(void);
 bool LL_MCE_IsBufferInCodePrimaryRegion(const uint8_t *pBuffer, size_t Length);
 
+#endif /* STM32H7S3xx || STM32H7S7xx */
+
 #ifdef __cplusplus
 }
 #endif
 
 #endif /* LOW_LEVEL_MCE_H */
+
 

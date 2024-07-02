@@ -46,9 +46,10 @@
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
-/* USER CODE BEGIN PFP */
 static void MPU_AdjustRegionAddressSize(uint32_t Address, uint32_t Size, MPU_Region_InitTypeDef *pInit);
 static void MPU_Config(void);
+/* USER CODE BEGIN PFP */
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -121,6 +122,9 @@ int main(void)
 }
 
 /* USER CODE BEGIN 4 */
+
+/* USER CODE END 4 */
+
 /**
   * @brief  This function configures the MPU context of the application.
   * @retval None
@@ -322,7 +326,6 @@ static void MPU_AdjustRegionAddressSize(uint32_t Address, uint32_t Size, MPU_Reg
   /* control the loop decrement */
   loopcontrol--;
 }
-/* USER CODE END 4 */
 
 /**
   * @brief  This function is executed in case of error occurrence.

@@ -130,4 +130,4 @@ For "AUDIO_Standalone_Appli" project :
 
 <b>Note</b>
 
-   The application uses the internal HSI clock as system clock source.
+   The application uses the external HSE clock as system clock source.

@@ -24,7 +24,9 @@
 #include "mcuboot_config/mcuboot_config.h"
 #include "low_level_security.h"
 #include "low_level_obkeys.h"
+#if defined(STM32H7S3xx) || defined(STM32H7S7xx)
 #include "low_level_mce.h"
+#endif /* STM32H7S3xx || STM32H7S7xx */
 #include "low_level_ramecc.h"
 #ifdef OEMIROT_DEV_MODE
 #define BOOT_LOG_LEVEL BOOT_LOG_LEVEL_INFO
@@ -525,8 +527,9 @@ void LL_SECU_ApplyRunTimeProtections(void)
 
 #endif /* OEMIROT_USER_SRAM_ECC */
   /* Init MCE peripheral */
+#if defined(STM32H7S3xx) || defined(STM32H7S7xx)
   LL_MCE_Configure();
-
+#endif /* STM32H7S3xx || STM32H7S7xx */
   /* Set MPU to forbid execution outside of immutable code  */
   mpu_init_cfg();
 
@@ -606,7 +609,7 @@ void LL_SECU_CheckStaticProtections(void)
     BOOT_LOG_DBG("Flash write protection group 0x%lx: OB 0x%lx",
                  val, flash_option_bytes.WRPSector);
 #ifndef OEMIROT_ENABLE_SET_OB
-    BOOT_LOG_ERR("Unexpected value for write protection ");
+    BOOT_LOG_ERR("Unexpected value for write protection");
     Error_Handler();
 #else
     flash_option_bytes.WRPState = OB_WRPSTATE_ENABLE;
@@ -1433,6 +1436,7 @@ uint32_t LL_SECU_GetProductState(uint32_t NvState, uint32_t OemProvdState, uint3
   * @param  SaesTimeout timeout of SAES
   * @retval None
   */
+#if defined(STM32H7S3xx) || defined(STM32H7S7xx)
 void LL_SECU_ConfigureSAES(CRYP_HandleTypeDef *hCryp, uint32_t HDPLLevel, uint32_t SaesTimeout,
                            uint32_t AHKIndex)
 {
@@ -1495,8 +1499,9 @@ void LL_SECU_ConfigureSAES(CRYP_HandleTypeDef *hCryp, uint32_t HDPLLevel, uint32
 
   (void) HAL_FLASH_OB_Lock();
   (void) HAL_FLASH_Lock();
-}
 
+}
+#endif /* STM32H7S3xx || STM32H7S7xx */
 void IWDG_IRQHandler(void)
 {
   NVIC_SystemReset();

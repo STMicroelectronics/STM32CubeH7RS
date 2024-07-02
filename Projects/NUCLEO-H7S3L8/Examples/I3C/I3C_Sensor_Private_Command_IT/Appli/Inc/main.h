@@ -86,7 +86,7 @@ void Error_Handler(void);
 /* Define LSM6DS0 Static Address */
 #define LSM6DSO_STA                       (0xD6>>1)
 
-#define DISPLAY_REFRESH_DELAY             1000 /* Time between two display refresg in ms */
+#define DISPLAY_REFRESH_DELAY             1000 /* Time between two display refresh in ms */
 
 /* Size of Transmission buffer */
 #define TXBUFFERSIZE                      (COUNTOF(aTxBuffer) - 1)

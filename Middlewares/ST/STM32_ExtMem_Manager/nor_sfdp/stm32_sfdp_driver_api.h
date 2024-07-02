@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * @file    stm32_sfdp_driver.h
+  * @file    stm32_sfdp_driver_api.h
   * @author  MCD Application Team
   * @brief   This file contains the sfdp driver definition.
   ******************************************************************************
@@ -17,8 +17,8 @@
   */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __STM32_NOR_SFDP_DRIVER_H
-#define __STM32_NOR_SFDP_DRIVER_H
+#ifndef __STM32_NOR_SFDP_DRIVER_API_H
+#define __STM32_NOR_SFDP_DRIVER_API_H
 
 #ifdef __cplusplus
  extern "C" {
@@ -50,13 +50,14 @@ typedef enum  {
   EXTMEM_DRIVER_NOR_SFDP_ERROR_UNKNOWN_COMMAND        = -4,
   EXTMEM_DRIVER_NOR_SFDP_ERROR_BUSY                   = -5,
   EXTMEM_DRIVER_NOR_SFDP_ERROR_WRITEENABLE            = -6,
-  EXTMEM_DRIVER_NOR_SFDP_WRTIEERROR                   = -7,
+  EXTMEM_DRIVER_NOR_SFDP_ERROR_WRITE                  = -7,
   EXTMEM_DRIVER_NOR_SFDP_ERROR_SECTORTYPE             = -8,
   EXTMEM_DRIVER_NOR_SFDP_ERROR_SECTORTYPE_UNAVAILABLE = -9,
   EXTMEM_DRIVER_NOR_SFDP_ERROR_ADDRESS_ALIGNMENT      = -10,
   EXTMEM_DRIVER_NOR_SFDP_ERROR_ERASE_TIMEOUT          = -11,
   EXTMEM_DRIVER_NOR_SFDP_ERROR_FLASHBUSY              = -12,
   EXTMEM_DRIVER_NOR_SFDP_ERROR_MAP_ENABLE             = -13,
+  EXTMEM_DRIVER_NOR_SFDP_ERROR_MEMTYPE_CHECK          = -14,
   EXTMEM_DRIVER_NOR_SFDP_ERROR                        = -128,
 } EXTMEM_DRIVER_NOR_SFDP_StatusTypeDef;
 
@@ -83,13 +84,13 @@ typedef enum  {
 /**
  * @brief this function initialize the driver SFDP
  *
- * @param IP IP pointer
+ * @param Peripheral Peripheral pointer
  * @param Config config type
  * @param ClockInput timeout value
  * @param SFDPObject memory object
  * @return @ref EXTMEM_DRIVER_NOR_SFDP_StatusTypeDef
  **/
-EXTMEM_DRIVER_NOR_SFDP_StatusTypeDef EXTMEM_DRIVER_NOR_SFDP_Init(void *IP, EXTMEM_LinkConfig_TypeDef Config, uint32_t ClockInput, EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef *SFDPObject);
+EXTMEM_DRIVER_NOR_SFDP_StatusTypeDef EXTMEM_DRIVER_NOR_SFDP_Init(void *Peripheral, EXTMEM_LinkConfig_TypeDef Config, uint32_t ClockInput, EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef *SFDPObject);
 
 /**
  * @brief this function un-initialize the driver SFDP
@@ -186,4 +187,4 @@ EXTMEM_DRIVER_NOR_SFDP_StatusTypeDef EXTMEM_DRIVER_NOR_SFDP_Disable_MemoryMapped
 }
 #endif
 
-#endif /* __STM32_NOR_SFDP_DRIVER_H */
+#endif /* __STM32_NOR_SFDP_DRIVER_API_H */

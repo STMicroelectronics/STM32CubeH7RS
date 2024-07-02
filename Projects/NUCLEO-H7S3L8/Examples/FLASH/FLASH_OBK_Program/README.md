@@ -48,7 +48,7 @@ The programmed keys have been generated randomly by calling HAL API of RNG IP.
     by the Cortex M7 and the GPDMA/HPDMA), there is no need for cache maintenance.
     If the application needs to put DMA buffers in AXI SRAM (starting from @0x24000000), the user has to:
     - either define a non-cacheable region in the MPU and linker configuration file to locate DMA buffers
-      (a proposed dma_buffer section is available from CMSIS Device linker template file and its size must
+      (a proposed noncacheable_buffer section is available from CMSIS Device linker template file and its size must
       be adapted to the application requirements)
     - or to ensure cache maintenance operations to ensure the cache coherence between the CPU and the DMAs.
     This is true also for any other data buffers accessed by the CPU and other masters (DMA2D, LTDC)
@@ -91,3 +91,6 @@ In order to make the program work, you must do the following :
  - Open your preferred toolchain
  - Rebuild all files and load your image into target memory
  - Run the example
+ 
+ **CubeIDE**:
+ When resorting to STM32CubeIDE: select the Debug probe: ST-LINK(OpenOCD)

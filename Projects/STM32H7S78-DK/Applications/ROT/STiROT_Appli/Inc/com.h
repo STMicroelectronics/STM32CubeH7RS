@@ -44,19 +44,28 @@ extern "C" {
   * @{
   */
 
+#if defined(STM32H7S3xx) || defined(STM32H7R3xx)
+#define COM_UART                                USART3
+#define COM_UART_CLK_ENABLE()                   __HAL_RCC_USART3_CLK_ENABLE()
+#define COM_UART_CLK_DISABLE()                  __HAL_RCC_USART3_CLK_DISABLE()
+#define COM_UART_TX_AF                          GPIO_AF7_USART3
+#define COM_UART_RX_AF                          GPIO_AF7_USART3
+#define COM_UART_TX_PIN                         GPIO_PIN_8
+#define COM_UART_RX_PIN                         GPIO_PIN_9
+#else /* not (STM32H7S3xx or STM32H7R3xx) */
 #define COM_UART                                UART4
 #define COM_UART_CLK_ENABLE()                   __HAL_RCC_UART4_CLK_ENABLE()
 #define COM_UART_CLK_DISABLE()                  __HAL_RCC_UART4_CLK_DISABLE()
-
 #define COM_UART_TX_AF                          GPIO_AF8_UART4
-#define COM_UART_TX_GPIO_PORT                   GPIOD
+#define COM_UART_RX_AF                          GPIO_AF8_UART4
 #define COM_UART_TX_PIN                         GPIO_PIN_1
+#define COM_UART_RX_PIN                         GPIO_PIN_0
+#endif /* STM32H7S3xx or STM32H7R3xx */
+
+#define COM_UART_TX_GPIO_PORT                   GPIOD
+#define COM_UART_RX_GPIO_PORT                   GPIOD
 #define COM_UART_TX_GPIO_CLK_ENABLE()           __HAL_RCC_GPIOD_CLK_ENABLE()
 #define COM_UART_TX_GPIO_CLK_DISABLE()          __HAL_RCC_GPIOD_CLK_DISABLE()
-
-#define COM_UART_RX_AF                          GPIO_AF8_UART4
-#define COM_UART_RX_GPIO_PORT                   GPIOD
-#define COM_UART_RX_PIN                         GPIO_PIN_0
 #define COM_UART_RX_GPIO_CLK_ENABLE()           __HAL_RCC_GPIOD_CLK_ENABLE()
 #define COM_UART_RX_GPIO_CLK_DISABLE()          __HAL_RCC_GPIOD_CLK_DISABLE()
 

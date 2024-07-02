@@ -1,0 +1,13 @@
+[Boot:ProjectFiles]
+[Boot:Others]
+[Boot:Groups]
+Doc=../README.md;
+[Appli:ProjectFiles]
+HeaderPath=../../../../../../Drivers/BSP/STM32H7S78-DK;./../../../../../Drivers/BSP/Components/tcpp0203
+[Appli:Others]
+Define=TCPP0203_SUPPORT
+HALModule=I2C
+[Appli:Groups]
+Doc=../README.md;
+Drivers/BSP/Components=../../../../../../Drivers/BSP/Components/tcpp0203/tcpp0203.c;../../../../../../Drivers/BSP/Components/tcpp0203/tcpp0203_reg.c;
+Drivers/BSP/STM32H7S78-DK=../../../../../../Drivers/BSP/STM32H7S78-DK/stm32h7s78_discovery.c;../../../../../../Drivers/BSP/STM32H7S78-DK/stm32h7s78_discovery_bus.c;../../../../../../Drivers/BSP/STM32H7S78-DK/stm32h7s78_discovery_usbpd_pwr.c;

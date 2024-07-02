@@ -18,6 +18,7 @@
   */
 
 /* Includes ------------------------------------------------------------------*/
+#if defined(STM32H7S3xx) || defined(STM32H7S7xx)
 #include "low_level_mce.h"
 #include "low_level_security.h"
 #if  (OEMIROT_LOAD_AND_RUN == LOAD_AND_RUN_EXT_RAM)
@@ -29,6 +30,7 @@
 /* Private defines -----------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
+
 
 #define LL_MCE_REGION_DISABLED      (0xFFU)
 #define LL_MCE_MASTERKEYS_LENGTH    (16U) /* 128 bits key */
@@ -1071,3 +1073,4 @@ static void LL_MCE_LockGlobalConfig(MCE_HandleTypeDef *hmce)
   }
 }
 #endif /* OEMIROT_MCE_PROTECTION */
+#endif /* STM32H7S3xx || STM32H7S7xx */

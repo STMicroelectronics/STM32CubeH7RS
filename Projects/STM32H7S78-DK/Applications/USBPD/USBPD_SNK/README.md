@@ -5,12 +5,8 @@ This application is a USBPD type C Consumer using FreeRTOS.
 USBPD Consumer: This application initialize the type C port 1 in sink mode with only one PDO at 5V.
 
 ####  <b>Expected success behavior</b>
-Connect UCPD cube Monitor on the VCP associated to our board (only available if USB cable is connected)
-The UCPD Cube Monitor will be used to trace all the messages exchange between the ports partner.
-
-#### <b>Error behaviors</b>
-
-Errors are detected and the corresponding message is displayed on the UCPD Cube Monitor.
+Connect a USBPD power source to the type C port 1.
+A USBPD contract should be negotiated between the ports partner.
 
 #### <b>Assumptions if any</b>
 
@@ -30,8 +26,6 @@ Connectivity, USBPD, FreeRTOS, UART/USART, USB_PD_Lib, UCPD, Type C
   - This example has been tested with STMicroelectronics STM32H7S78-DK (MB1736)
     board and can be easily tailored to any other supported device
     and development board.
-
-  - Connect ST-Link cable to the PC USB port to display data on the CubeMx Monitor.
 	
 ### <b>How to use it ?</b>
 
@@ -40,7 +34,6 @@ In order to make the program work, you must do the following :
  - Open your preferred toolchain
  - Rebuild all files and load your image into target memory
  - Run the application
- - Run CubeMx Monitor and open trace tools
  - Connect a type C source device on the Type-C connector 1
 
 <b>Note</b>

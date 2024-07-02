@@ -23,6 +23,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32h7rsxx_hal.h"
+#include "usbpd.h"
 
 /** @addtogroup STM32H7RSxx_HAL_Driver
   * @{
@@ -165,6 +166,27 @@ void HAL_ResumeTick(void)
   __HAL_TIM_ENABLE_IT(&htim6, TIM_IT_UPDATE);
 }
 
+/**
+  * @brief  Period elapsed callback in non blocking mode
+  * @note   This function is called  when TIM6 interrupt took place, inside
+  * HAL_TIM6_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
+  * a global variable "uwTick" used as application time base.
+  * @param  htim TIM handle
+  * @retval None
+  */
+#if (USE_HAL_TIM_REGISTER_CALLBACKS == 1U)
+void TimeBase_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+  /* Prevent unused argument(s) compilation warning */
+  UNUSED(htim);
+
+  HAL_IncTick();
+
+  USBPD_DPM_TimerCounter();
+
+  GUI_TimerCounter();
+}
+#endif /* USE_HAL_TIM_REGISTER_CALLBACKS */
 /**
   * @}
   */

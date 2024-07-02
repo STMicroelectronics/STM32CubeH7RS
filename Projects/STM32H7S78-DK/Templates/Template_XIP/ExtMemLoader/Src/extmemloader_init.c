@@ -57,8 +57,9 @@ XSPI_HandleTypeDef hxspi2;
 static void MX_GPIO_Init(void);
 static void MX_XSPI2_Init(void);
 static void MX_SBS_Init(void);
+#if !defined(STM32_EXTMEMLOADER_STM32CUBEOPENBLTARGET)
 static void SystemClock_Config(void);
-
+#endif
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -80,7 +81,7 @@ uint32_t extmemloader_Init()
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */
-
+#if !defined(STM32_EXTMEMLOADER_STM32CUBEOPENBLTARGET)
   /* Init system */
   SystemInit();
 
@@ -99,16 +100,30 @@ uint32_t extmemloader_Init()
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
 
-  /* MPU Configuration--------------------------------------------------------*/
-  HAL_MPU_Disable();
-
   /* USER CODE BEGIN Init */
 
   /* USER CODE END Init */
 
   /* Configure the system clock  */
   SystemClock_Config();
+#else
+  /* Reset of all peripherals, Initializes the Flash interface. */
+   __HAL_RCC_SBS_CLK_ENABLE();
 
+  /* System interrupt init*/
+
+  /* Enable the XSPIM_P2 interface */
+  HAL_PWREx_EnableXSPIM2();
+
+  /* high speed low voltage config */
+  HAL_SBS_EnableIOSpeedOptimize(SBS_IO_XSPI1_HSLV);
+  HAL_SBS_EnableIOSpeedOptimize(SBS_IO_XSPI2_HSLV);
+  
+#endif
+  
+ /* MPU Configuration--------------------------------------------------------*/
+  HAL_MPU_Disable();
+  
   /* USER CODE BEGIN SysInit */
 
   /* USER CODE END SysInit */
@@ -129,7 +144,7 @@ uint32_t extmemloader_Init()
 
   return retr;
 }
-
+#if !defined(STM32_EXTMEMLOADER_STM32CUBEOPENBLTARGET)
 /**
   * @brief System Clock Configuration
   * @retval None
@@ -192,12 +207,12 @@ void SystemClock_Config(void)
   RCC_ClkInitStruct.APB4CLKDivider = RCC_APB4_DIV2;
   RCC_ClkInitStruct.APB5CLKDivider = RCC_APB5_DIV2;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_6) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_7) != HAL_OK)
   {
     Error_Handler();
   }
 }
-
+#endif
 /**
   * @brief SBS Initialization Function
   * @param None

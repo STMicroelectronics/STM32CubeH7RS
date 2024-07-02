@@ -17,8 +17,8 @@
   */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef EXTMEM_H_
-#define EXTMEM_H_
+#ifndef __STM32_EXTMEM_H_
+#define __STM32_EXTMEM_H_
 
 #ifdef __cplusplus
 extern "C" {
@@ -35,6 +35,11 @@ extern "C" {
 /** @defgroup EXTMEN_Exported_Types External Memory Exported Types
   * @{
   */
+
+/**
+  * @brief type of memory supported
+  */
+#define EXTMEM_VERSION 0x00010100 /* version v1.1.0 */
 
 /**
   * @brief type of memory supported
@@ -105,8 +110,8 @@ typedef struct {
   uint32_t LogBlockNbr;     /*!< Specifies the Card logical Capacity in blocks   */
   uint32_t LogBlockSize;    /*!< Specifies logical block size in bytes           */
   uint32_t CardSpeed;       /*!< Specifies the card Speed                        */
- } EXTMEM_DRIVER_SDCARD_InfoTypeDef;   
- 
+ } EXTMEM_DRIVER_SDCARD_InfoTypeDef;
+
 /**
  * @brief define how many physiqual lines are connected with the memory
  */
@@ -241,4 +246,4 @@ EXTMEM_StatusTypeDef EXTMEM_GetMapAddress(uint32_t MemId, uint32_t *BaseAddress)
 }
 #endif
 
-#endif /* EXTMEM_H_ */
+#endif /* __STM32_EXTMEM_H_ */

@@ -30,7 +30,7 @@ File | Description
 
 ### <b>Hardware and Software environment</b>
 
-  - This template runs on STM32H7S7xx devices.
+  - This template runs on STM32H7S7xx and STM32H7R7xx devices.
   - This example has been tested with STMicroelectronics STM32H7S78-DK (MB1736)
     board and can be easily tailored to any other supported device
     and development board.
@@ -43,11 +43,33 @@ This project is targeted to boot through <b>OEMiROT boot path</b> (for <b>STiROT
 
 <u>Before compiling the project, you should first:</u>
 
-- <u>update the environment variables</u> with your own paths (located in ../../../ROT_Provisioning/env.bat)
+- <u>update the environment variables</u>
+    - for **H7S and H7R**, with your own paths and com port (located in Firmware/Projects/STM32H7S78-DK/ROT_Provisioning/env.bat (.sh))
+    - for **H7S and H7R**, with device type (located in Firmware/Projects/STM32H7S78-DK/ROT_Provisioning/OEMiROT/obkey_provisioning.bat, obkey_provisioning_open.bat, provisioning.bat (.sh))
+    - for **H7R only**, with these following additional steps:
+        - in Firmware/Projects/STM32H7S78-DK/ROT_Provisioning/DA/Config (and OEMiROT/Config), use a text editor to set the field DoEncryption to 0 in the *.xml* files
+        - use STM32TrustedPackageCreator to generate matching *.obk* files in the folder Binary
+        - in Firmware/Projects/STM32H7S78-DK/ROT_Provisioning/DA/Binary (and OEMiROT/Config), use a binary editor to ensure the field DoEncryption is set to 0 (byte number 8) in *.obk* files
+        - in Firmware/Projects/STM32H7S78-DK/ROT_Provisioning/env.bat (.sh):
+
+          replace these following two lines:
+
+          ```
+          set stm32ExtLoaderFlash=-elbl %stm32tool_path%/ExternalLoader/MX66UW1G45G_STM32H7S78-DK_XSPIM1-SFIx.stldr
+          set stm32ExtLoaderFlash=-elbl %stm32tool_path%/ExternalLoader/MX66UW1G45G_STM32H7S78-DK_XSPIM1.stldr
+          ```
+
+          by these lines:
+
+          ```
+          set stm32ExtLoaderFlash=-elbl %stm32tool_path%/ExternalLoader/MX66UW1G45G_STM32H7S78-DK-SFIx.stldr
+          set stm32ExtLoaderFlash=-elbl %stm32tool_path%/ExternalLoader/MX66UW1G45G_STM32H7S78-DK.stldr
+          ```
+
 - <u>start the provisioning process</u>. During the provisioning process, the linker files
 as well as the postbuild command of the project will be automatically updated.
 
-The <b>provisioning process</b> (ROT_Provisioning/OEMiROT/provisioning.bat) is divided in 2 majors steps :
+The <b>provisioning process</b> (ROT_Provisioning/OEMiROT/provisioning.bat (.sh)) is divided in 2 majors steps :
 
   - Step 1 : Image generation
 
@@ -65,7 +87,7 @@ The <b>provisioning process</b> (ROT_Provisioning/OEMiROT/provisioning.bat) is d
      - Setting the final product state
 
 If the product state is set to PROVISIONING or CLOSED, it is still possible to open the debug or to execute a regression
-with the Debug Authentication feature. To do it, scripts (regression.bat & dbg_auth.bat) are available in the ROT_provisioning/DA folder.
+with the Debug Authentication feature. To do it, scripts (regression.bat (.sh) & dbg_auth.bat (.sh)) are available in the ROT_provisioning/DA folder.
 
 For more details, refer to Wiki article available here : https://wiki.st.com/stm32mcu/wiki/Category:Security.
 
@@ -79,7 +101,7 @@ After application startup, check in your "UART console" the menu is well display
 To update the application firmware version, you must:
 
   - Select the function "Start Bootloader" for more details
-  - If the product state is CLOSED, use the script dbg_auth.bat in the ROT_provisioning/DA folder to perform a "Forced download"
+  - If the product state is CLOSED, use the script dbg_auth.bat (.sh) in the ROT_provisioning/DA folder to perform a "Forced download"
   - Connect STM32CubeProgrammer through:
       - USART if the product state is CLOSED.
       - ST-LINK if the product state is OPEN.
@@ -98,7 +120,7 @@ To update the application firmware version, you must:
         - having python in execution path variable
         - deleting main.exe in Utilities\PC_Software\ROT_AppliConfig\dist
 
-  2. This project can also be used as a <b>STiROT_OEMuROT boot path</b> application example. In this case, the provisioning process
-     is done with ROT_Provisioning/STiROT_OEMuROT/provisioning.bat.
+  2. This project can also be used as a <b>STiROT_OEMuROT boot path</b> application example (H7S only). In this case, the provisioning process
+     is done with ROT_Provisioning/STiROT_OEMuROT/provisioning.bat (.sh).
 
 

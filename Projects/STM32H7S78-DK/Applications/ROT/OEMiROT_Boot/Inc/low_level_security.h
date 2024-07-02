@@ -80,9 +80,10 @@ void     TAMP_IRQHandler(void);
 void     IWDG_IRQHandler(void);
 void     RAMECC_IRQHandler(void);
 void     LL_SECU_DisableCleanMpu(void);
-
+#if defined(STM32H7S3xx) || defined(STM32H7S7xx)
 void     LL_SECU_ConfigureSAES(CRYP_HandleTypeDef *hCryp, uint32_t HDPLLevel, uint32_t SaesTimeout,
                                uint32_t AHKIndex);
+#endif /*  STM32H7S3xx || STM32H7S7xx */
 /**
   * @}
   */

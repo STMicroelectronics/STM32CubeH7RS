@@ -20,6 +20,8 @@
 #include "boot_hal_cfg.h"
 #include <string.h>
 
+
+
 /** @addtogroup STM32H7RSxx_HAL_Examples
   * @{
   */
@@ -407,9 +409,13 @@ void HAL_XSPI_MspInit(XSPI_HandleTypeDef *hxspi)
 
     /* Set clock protection on XSPI memory interface */
     HAL_RCCEx_EnableClockProtection(RCC_CLOCKPROTECT_XSPI);
-
+#if defined(STM32H7S3xx) || defined(STM32H7S7xx)
     /* Initialize the XSPIM port 1 (swapped mode) */
     XSPIM_InitPort1();
+#elif defined(STM32H7R3xx) || defined(STM32H7R7xx)
+    /* Initialize the XSPIM port 2 (direct mode) */
+    XSPIM_InitPort2();
+#endif /*  STM32H7S3xx || STM32H7S7xx */
   }
   else if (hxspi->Instance == XSPI1)
   {
@@ -431,9 +437,13 @@ void HAL_XSPI_MspInit(XSPI_HandleTypeDef *hxspi)
 
     /* Set clock protection on XSPI memory interface */
     HAL_RCCEx_EnableClockProtection(RCC_CLOCKPROTECT_XSPI);
-
+#if defined(STM32H7S3xx) || defined(STM32H7S7xx)
     /* Initialize the XSPIM port 2 (swapped mode) */
     XSPIM_InitPort2();
+#elif defined(STM32H7R3xx) || defined(STM32H7R7xx)
+    /* Initialize the XSPIM port 1 (direct mode) */
+    XSPIM_InitPort1();
+#endif /* STM32H7S3xx || STM32H7S7xx */
   }
 }
 

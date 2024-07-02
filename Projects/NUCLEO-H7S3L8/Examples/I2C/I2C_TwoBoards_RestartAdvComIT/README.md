@@ -240,7 +240,7 @@ on HW board in order to support Virtual Com Port (Default HW SB configuration al
     by the Cortex M7 and the GPDMA/HPDMA), there is no need for cache maintenance.
     If the application needs to put DMA buffers in AXI SRAM (starting from @0x24000000), the user has to:
     - either define a non-cacheable region in the MPU and linker configuration file to locate DMA buffers
-      (a proposed dma_buffer section is available from CMSIS Device linker template file and its size must
+      (a proposed noncacheable_buffer section is available from CMSIS Device linker template file and its size must
       be adapted to the application requirements)
     - or to ensure cache maintenance operations to ensure the cache coherence between the CPU and the DMAs.
 
@@ -255,14 +255,14 @@ on HW board in order to support Virtual Com Port (Default HW SB configuration al
 
 Connectivity, I2C, Communication, Transmission, Reception, SCL, SDA, Interrupt, Request, Sequential
 
-### <b>Directory contents</b>
+### <b>Directory contents</b> 
 
-  - I2C/I2C_TwoBoards_RestartAdvComIT/Appli/Inc/stm32h7rsxx_nucleo_conf.h BSP configuration file
+  - I2C/I2C_TwoBoards_RestartAdvComIT/Appli/Inc/stm32h7rsxx_nucleo_conf.h     BSP configuration file
   - I2C/I2C_TwoBoards_RestartAdvComIT/Appli/Inc/stm32h7rsxx_hal_conf.h    HAL configuration file
   - I2C/I2C_TwoBoards_RestartAdvComIT/Appli/Inc/stm32h7rsxx_it.h          I2C interrupt handlers header file
-  - I2C/I2C_TwoBoards_RestartAdvComIT/Appli/Inc/main.h                    Header for main.c module
+  - I2C/I2C_TwoBoards_RestartAdvComIT/Appli/Inc/main.h                  Header for main.c module
   - I2C/I2C_TwoBoards_RestartAdvComIT/Appli/Src/stm32h7rsxx_it.c          I2C interrupt handlers
-  - I2C/I2C_TwoBoards_RestartAdvComIT/Appli/Src/main.c                    Main program
+  - I2C/I2C_TwoBoards_RestartAdvComIT/Appli/Src/main.c                  Main program
   - I2C/I2C_TwoBoards_RestartAdvComIT/Appli/Src/system_stm32h7rsxx.c      STM32H7RSxx system source file
   - I2C/I2C_TwoBoards_RestartAdvComIT/Appli/Src/stm32h7rsxx_hal_msp.c     HAL MSP file
 

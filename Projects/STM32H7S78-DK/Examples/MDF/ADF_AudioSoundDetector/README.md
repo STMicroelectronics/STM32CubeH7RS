@@ -13,7 +13,7 @@ project Templates/Template_XIP/Binary/Boot_XIP.hex file.
 This project calls also SCB_EnableICache() and SCB_EnableDCache() functions in order to enable
 the Layer 1 Core Instruction and Data Caches.
 
-For audio sound recording, digital microphone mounted on the board will be used.
+For audio sound recording, digital microphone mounted on the board will be used (CN1).
 Digital microphone runs with a typical clock frequency around 2.4MHz.
 This clock frequency should be delivered by ADF1.
 PLL3 will be used and configured to generate a frequency of 49.142MHZ on PLL3P.
@@ -62,7 +62,7 @@ STM32H7S78-DK board's LEDs are used to monitor the example status:
     by the Cortex M7 and the GPDMA/HPDMA), there is no need for cache maintenance.
     If the application needs to put DMA buffers in AXI SRAM (starting from @0x24000000), the user has to:
     - either define a non-cacheable region in the MPU and linker configuration file to locate DMA buffers
-      (a proposed dma_buffer section is available from CMSIS Device linker template file and its size must
+      (a proposed noncacheable_buffer section is available from CMSIS Device linker template file and its size must
       be adapted to the application requirements)
     - or to ensure cache maintenance operations to ensure the cache coherence between the CPU and the DMAs.
     This is true also for any other data buffers accessed by the CPU and other masters (DMA2D, LTDC)

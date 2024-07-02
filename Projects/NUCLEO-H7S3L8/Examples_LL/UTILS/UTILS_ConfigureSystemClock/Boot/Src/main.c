@@ -111,7 +111,7 @@ int main(void)
   /* USER CODE BEGIN Init */
   /* System started with default clock used after reset */
   /* Set FLASH latency */
-  LL_FLASH_SetLatency(LL_FLASH_LATENCY_6);
+  LL_FLASH_SetLatency(LL_FLASH_LATENCY_7);
   /* USER CODE END Init */
 
   /* USER CODE BEGIN SysInit */
@@ -160,8 +160,8 @@ int main(void)
   */
 void SystemClock_Config(void)
 {
-  LL_FLASH_SetLatency(LL_FLASH_LATENCY_6);
-  while(LL_FLASH_GetLatency()!= LL_FLASH_LATENCY_6)
+  LL_FLASH_SetLatency(LL_FLASH_LATENCY_7);
+  while(LL_FLASH_GetLatency()!= LL_FLASH_LATENCY_7)
   {
   }
   LL_PWR_SetRegulVoltageScaling(LL_PWR_REGU_VOLTAGE_SCALE0);

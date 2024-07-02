@@ -228,28 +228,32 @@ static void MX_FLASH_Init(void)
   /* USER CODE BEGIN FLASH_Init 1 */
 
   /* USER CODE END FLASH_Init 1 */
-  if (HAL_FLASH_Unlock() != HAL_OK)
+  HAL_FLASHEx_OBGetConfig(&pOBInit);
+  if ((pOBInit.USERConfig2 & OB_I2C_NI3C_I2C) != OB_I2C_NI3C_I3C)
   {
-    Error_Handler();
-  }
-  if (HAL_FLASH_OB_Unlock() != HAL_OK)
-  {
-    Error_Handler();
-  }
-  pOBInit.OptionType = OPTIONBYTE_USER;
-  pOBInit.USERType = OB_USER_I2C_NI3C;
-  pOBInit.USERConfig2 = OB_I2C_NI3C_I3C;
-  if (HAL_FLASHEx_OBProgram(&pOBInit) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  if (HAL_FLASH_OB_Lock() != HAL_OK)
-  {
-    Error_Handler();
-  }
-  if (HAL_FLASH_Lock() != HAL_OK)
-  {
-    Error_Handler();
+    if (HAL_FLASH_Unlock() != HAL_OK)
+    {
+      Error_Handler();
+    }
+    if (HAL_FLASH_OB_Unlock() != HAL_OK)
+    {
+      Error_Handler();
+    }
+    pOBInit.OptionType = OPTIONBYTE_USER;
+    pOBInit.USERType = OB_USER_I2C_NI3C;
+    pOBInit.USERConfig2 = OB_I2C_NI3C_I3C;
+    if (HAL_FLASHEx_OBProgram(&pOBInit) != HAL_OK)
+    {
+      Error_Handler();
+    }
+    if (HAL_FLASH_OB_Lock() != HAL_OK)
+    {
+      Error_Handler();
+    }
+    if (HAL_FLASH_Lock() != HAL_OK)
+    {
+      Error_Handler();
+    }
   }
   /* USER CODE BEGIN FLASH_Init 2 */
 

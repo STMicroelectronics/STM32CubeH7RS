@@ -68,6 +68,28 @@ File | Description
 ### <b>Hardware and Software environment</b>
 
   - This template runs on STM32H7S7xx devices.
+  - It is possible to tailor it for STM32H7R7xx devices by following these steps for each project of ROT application:
+
+    For IAR IDE:
+
+    ```
+    1- Go to "Options" and select "General Options" then in the "Target" field Select "device" to choose your device.
+
+    2- Go to "Options" and select "C/C++ Compiler" then "Preprocessor" tab and change the compilation symbol (STM32H7R7xx instead of STM32H7S7xx).
+
+    3- Open the "prebuild.cmd" file (located in "Firmware/Projects/STM32H7S78-DK/Applications/ROT/OEMiROT_Boot/EWARM") and change the compilation symbol (-DSTM32H7R7xx instead of -DSTM32H7S7xx).
+    ```
+
+    For Keil IDE:
+
+    ```
+    1- Go to "Options" and select "Device" tab to choose your device.
+
+    2- Go to "Options" and select "C/C++ (AC6)" tab then in the "Define" field in "Preprocessor Symbols" and change the compilation symbol (STM32H7R7xx instead of STM32H7S7xx).
+
+    3- Go to "Options" and in the "User" tab change "Run #2" command in the "Before Build/Rebuild" field and add the define of your platform ("-DSTM32H7R7xx" instead of "-DSTM32H7S7xx").
+    ```
+
   - This example has been tested with STMicroelectronics STM32H7S78-DK (MB1736)
     board and can be easily tailored to any other supported device
     and development board.
@@ -75,7 +97,7 @@ File | Description
     Speed: 115200, Data: 8bits, Parity: None, stop bits: 1, Flow control: none.
 
 
-### <b>How to use it?</b>
+### <b>How to use it ?</b>
 
 In order to build the OEMiROT_Boot project, you must do the following:
 
@@ -86,16 +108,18 @@ Then refer to OEMiROT_Appli readme for example of application booted through OEM
 
 ### <b>Notes</b>
 
-1. With STM32CubeIDE, the following configurations are not compatible with the Build Configuration "Debug":
+1. For STM32H7R7xx devices, this template is not supported with STM32CubeIDE
+
+2. For STM32H7S7xx devices, with STM32CubeIDE, the following configurations are not compatible with the Build Configuration "Debug":
    - OEMUROT_ENABLE undefined, OEMIROT_LOAD_AND_RUN set to NO_LOAD_AND_RUN, MCUBOOT_OVERWRITE_ONLY undefined
    - OEMUROT_ENABLE undefined, OEMIROT_LOAD_AND_RUN set to LOAD_AND_RUN_INT_RAM, MCUBOOT_OVERWRITE_ONLY undefined
 
    They can be used with the Build Configuration "Release".
 
-2. With STM32CubeIDE, the following configuration isn't supported:
+3. For STM32H7S7xx devices, with STM32CubeIDE, the following configuration isn't supported:
    - OEMUROT_ENABLE undefined, OEMIROT_LOAD_AND_RUN set to LOAD_AND_RUN_EXT_RAM, MCUBOOT_OVERWRITE_ONLY undefined
 
-3. By default the anti-tamper is enabled for internal tamper events only. It is possible to change this configuration with
+4. By default the anti-tamper is enabled for internal tamper events only. It is possible to change this configuration with
    OEMIROT_TAMPER_ENABLE define in Inc\\boot_hal_cfg.h.
 
    ```

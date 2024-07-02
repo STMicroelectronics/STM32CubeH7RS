@@ -117,9 +117,23 @@ void HAL_UART_MspInit(UART_HandleTypeDef *huart)
 {
 
   GPIO_InitTypeDef GPIO_InitStruct;
+#if defined(STM32H7S3xx) || defined(STM32H7R3xx)
+  RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
+#endif /* STM32H7S3xx or STM32H7R3xx */
+
   if (huart->Instance == COM_UART)
   {
     /* Peripheral Clock Enable */
+#if defined(STM32H7S3xx) || defined(STM32H7R3xx)
+    /** Initializes the peripherals clock */
+    PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USART234578;
+    PeriphClkInit.Usart234578ClockSelection = RCC_USART234578CLKSOURCE_PCLK1;
+    if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
+    {
+      while (1);
+    }
+#endif /* STM32H7S3xx or STM32H7R3xx */
+
     COM_UART_CLK_ENABLE();
 
     /* GPIO Ports Clock Enable */

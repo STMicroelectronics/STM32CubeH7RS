@@ -256,7 +256,7 @@ int main(void)
     }
 
     /* Reset Rx Buffer */
-    memset(RX_Buffer, 0, BUFFER_SIZE );
+    memset(RX_Buffer, 0, sizeof(BUFFER_SIZE));
 
     SCB_InvalidateDCache_by_Addr((void*)0x70000000, BUFFER_SIZE*4);
 
@@ -391,7 +391,7 @@ void SystemClock_Config(void)
   RCC_ClkInitStruct.APB4CLKDivider = RCC_APB4_DIV2;
   RCC_ClkInitStruct.APB5CLKDivider = RCC_APB5_DIV2;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_6) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_7) != HAL_OK)
   {
     Error_Handler();
   }
@@ -646,7 +646,7 @@ void configureMemoryMappedMode()
 
 uint32_t XSPI_HyperRAM_Init(uint32_t InstanceNumber)
 {
-  XSPI_RegularCmdTypeDef  sCommand={0};
+  XSPI_RegularCmdTypeDef  sCommand;
 
   memset(&sCommand, 0, sizeof(sCommand) );
   HAL_XSPI_DeInit(&XSPIHandle[InstanceNumber]);
@@ -720,7 +720,7 @@ uint32_t XSPI_HyperRAM_EnableMemoryMapped(uint32_t InstanceNumber)
 
 static void XSPI_SwitchOctalToHexa(uint32_t InstanceNumber)
 {
-  XSPI_RegularCmdTypeDef sCommand={0};
+  XSPI_RegularCmdTypeDef sCommand;
   uint8_t reg[2];
 
   sCommand.OperationType      = HAL_XSPI_OPTYPE_COMMON_CFG;
@@ -854,7 +854,7 @@ void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
-  __disable_irq();
+ 
   while (1)
   {
       BSP_LED_Toggle(LED_RED);

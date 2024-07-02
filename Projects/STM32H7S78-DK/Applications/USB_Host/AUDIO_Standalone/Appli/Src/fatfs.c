@@ -18,7 +18,6 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "fatfs.h"
-#include "main.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -44,6 +43,7 @@
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
+
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN PFP */
 
@@ -56,7 +56,6 @@
 
 void MX_FATFS_Init(void)
 {
-
   /* USER CODE BEGIN Init */
   /* additional user code for init */
   /* USER CODE END Init */

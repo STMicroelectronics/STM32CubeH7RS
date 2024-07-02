@@ -5,7 +5,7 @@
 
   <Header>### uVision Project, (C) Keil Software</Header>
 
-  <WorkspaceName>C:\H7RS_2\Firmware\Projects\STM32H7S78-DK\Templates\Template_XIP\MDK-ARM\Project.uvmpw</WorkspaceName>
+  <WorkspaceName></WorkspaceName>
 
   <project>
     <PathAndName>.\Boot\Template_XIP_Boot.uvprojx</PathAndName>

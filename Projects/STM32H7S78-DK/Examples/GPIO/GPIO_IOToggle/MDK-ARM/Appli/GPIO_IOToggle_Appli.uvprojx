@@ -14,7 +14,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>STM32H7S7L8Hx</Device>
+          <Device>STM32H7S7L8HxH</Device>
           <Vendor>STMicroelectronics</Vendor>
           <PackID>Keil.STM32H7Rx-7Sx_DFP.0.1.1</PackID>
           <PackURL>https://www.keil.com/pack/</PackURL>
@@ -33,7 +33,7 @@
           <SLE66CMisc></SLE66CMisc>
           <SLE66AMisc></SLE66AMisc>
           <SLE66LinkerMisc></SLE66LinkerMisc>
-          <SFDFile>$$Device:STM32H7S7L8Hx$CMSIS\SVD\STM32H7S.svd</SFDFile>
+          <SFDFile>$$Device:STM32H7S7L8HxH$CMSIS\SVD\STM32H7S.svd</SFDFile>
           <bCustSvd>0</bCustSvd>
           <UseEnv>0</UseEnv>
           <BinPath></BinPath>

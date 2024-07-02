@@ -60,16 +60,20 @@ extern "C" {
 #define MCUBOOT_BOOTSTRAP            /* Allow initial state with images in secondary slots only (empty primary slots) */
 #define MCUBOOT_ENC_SECURITY_CNT     /* Security counters are encrypted: resets of boot_loader_state->enc are needed */
 
+#include "stm32h7rsxx_hal.h"
+#if defined(STM32H7S3xx) || defined(STM32H7S7xx)
 /*
  * Cryptographic settings
  */
 #define MCUBOOT_USE_HAL
 
 #if defined(MCUBOOT_USE_HAL)
-#include "stm32h7rsxx_hal.h"
 #define MCUBOOT_USE_HASH_HAL_V2
 #define PKA_ECDSA_SIGNATURE_ADDRESS 0x0578UL
 #endif /* MCUBOOT_USE_HAL */
+#else
+#define MCUBOOT_USE_MBED_TLS
+#endif /* STM32H7S3xx || STM32H7S7xx */
 
 /*
  * Logging

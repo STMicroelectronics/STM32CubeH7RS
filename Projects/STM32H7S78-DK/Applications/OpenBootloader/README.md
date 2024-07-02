@@ -37,54 +37,160 @@ the OpenBootloader application will wait for commands sent by the host.
 
 #### <b>Notes</b>
 
-1. The current implementation of write in option bytes doesn’t support writing in OEMKEYR option bytes. The OEMKEYR option bytes registers programming can be easily added at the end of the function `OPENBL_OB_Write` in the file `optionbytes_interface.c`.
+1. In case of Mass Erase operation, the OpenBootloader FLASH area must be protected otherwise the OpenBootloader will be erased.
 
-2. In case of Mass Erase operation, the OpenBootloader FLASH area must be protected otherwise the OpenBootloader will be erased.
+2. In the `OpenBootloader_Init()` function in `app_openbootloader.c` file, the user can:
 
-3. In the `OpenBootloader_Init()` function in `app_openbootloader.c` file, the user can:
-       - Select the list of supported commands for a specific interface by defining its own list of commands.
+    - Select the list of supported commands for a specific interface by defining its own list of commands.
 
-       Here is an example of how to customize USART interface commands list, here only read/write commands are supported:
+      Here is an example of how to customize USART interface commands list, here only read/write commands are supported:
 
-        OPENBL_CommandsTypeDef USART_Cmd =
+          OPENBL_CommandsTypeDef USART_Cmd =
+          {
+            NULL,
+            NULL,
+            NULL,
+            OPENBL_USART_ReadMemory,
+            OPENBL_USART_WriteMemory,
+            NULL,
+            NULL,
+            NULL,
+            NULL,
+            NULL,
+            NULL,
+            NULL,
+            NULL,
+            NULL,
+            NULL,
+            NULL,
+            NULL,
+            NULL,
+            NULL,
+            NULL
+          };
+
+          USART_Handle.p_Ops = &USART_Ops;
+          USART_Handle.p_Cmd = &USART_Cmd;           /* Initialize the USART handle with the list of supported commands */
+          OPENBL_USART_SetCommandsList(&USART_Cmd);  /* Register the list of supported commands in MW side */
+
+    - Use the default list of supported commands for a specific interface by reusing the commands list defined in MW side.
+
+      Here is an example of how to use USART interface default commands list:
+
+          /* Register USART interfaces */
+          USART_Handle.p_Ops = &USART_Ops;
+          USART_Handle.p_Cmd = OPENBL_USART_GetCommandsList();  /* Initialize the USART handle with the default list supported commands */
+
+#### <b>How to program external memories?</b>
+
+Open Bootloader application supports external memories programming (init, write...) operations using `STM32CubeProgrammer` and `External Loader`.
+
+As Open Bootloader application relies on the External Loader to access the external memories, there is no need to recompile Open Bootloader application to support different types of external memories.
+
+The External Loader provides some functions like:
+
+- Init
+- Read
+- Write
+- SectorErase
+- MassErase
+
+When the External Loader is programmed in RAM by STM32CubeProgrammer, it is parsed and pointers to the above functions (init, write...) are extracted and their addresses are written in a table in RAM.
+
+The address of this table is sent to Open Bootloader by STM32CubeProgrammer using the initialization Special Command (0xA0).
+The Open Bootloader uses that address to retrieve the functions pointers to call the External Loader init, write... functions when needed.
+For more details about how this is implemented, the user can check the file `external_memory_interface.c`.
+
+Then STM32CubeProgrammer can send commands to Open Bootloader to access the external memories.
+
+A precompiled version of Open Bootloader application that runs in RAM is provided with STM32CubeProgrammer.
+When the user chose to program the external memory using one of the supported protocols (USART, SPI...), STM32CubeProgramer will automatically program the Open Bootloader binary and External Loader binary in RAM to achieve that, so this is transparent to the user.
+
+Here is an example of CLI commands that can be used to read or write in an external memory:
+
+        STM32_Programmer_CLI.exe -c port=usb1 -elbl "MX66UW1G45G_STM32H7S78-DK_XSPIM1-SFIx.stldr" -r32 0x90000000 0x100
+        STM32_Programmer_CLI.exe -c port=usb1 -elbl "MX66UW1G45G_STM32H7S78-DK_XSPIM1-SFIx.stldr" -w "16_Bytes.bin" 0x90000000
+
+To support a different external memory than the one available in the STM32H7S78-DK board, the user can compile and use his own External Loader.
+There is no need to recompile Open Bootloader application unless the user needs to tailor it to its need.
+
+The user can also use his own host to program external memories, all what is needed is to provide to Open Bootloader the address where the table that contains the pointers of External Loader functions was programmed in RAM using the initialization Special Command (0xA0).
+
+Depending on whether the user compiled his own External Loader, or he is using the precompiled External Loader present in STM32CubeProgrammer directory,
+there are two ways to extract the address of the External Loader functions (init, write...) and write them in RAM:
+
+1. User has compiled is own External Loader
+
+When compiling his own External Loader, the user can modify its code to extract the address of needed functions (init, red, write...) and write them in RAM.
+
+Here is an example of code that will place the functions addresses in RAM using IAR IDE:
+
+        /* Define a structure with functions pointers */
+        typedef struct
         {
-          NULL,
-          NULL,
-          NULL,
-          OPENBL_USART_ReadMemory,
-          OPENBL_USART_WriteMemory,
-          NULL,
-          NULL,
-          NULL,
-          NULL,
-          NULL,
-          NULL,
-          NULL,
-          NULL,
-          NULL,
-          NULL,
-          NULL,
-          NULL,
-          NULL,
-          NULL,
-          NULL
+          int (*Init)        (void);
+          int (*Write)       (uint32_t Address, uint32_t Size, uint8_t* buffer);
+          int (*SectorErase) (uint32_t EraseStartAddress ,uint32_t EraseEndAddress);
+          int (*MassErase)   (uint32_t Parallelism );
+        } FunctionTable;
+
+        /* Declare the function table */
+        #pragma location = "MY_FUNCTIONS"
+
+        KeepInCompilation const FunctionTable myFunctionTable =
+        {
+          .Init        = Init,
+          .Write       = Write,
+          .SectorErase = SectorErase,
+          .MassErase   = MassErase
         };
 
-        USART_Handle.p_Ops = &USART_Ops;
-        USART_Handle.p_Cmd = &USART_Cmd;           /* Initialize the USART handle with the list of supported commands */
-        OPENBL_USART_SetCommandsList(&USART_Cmd);  /* Register the list of supported commands in MW side */
+Then in the `icf` file of the IAR project this line can be added to ensure the placement of the structure in the needed address:
 
-       - Use the default list of supported commands for a specific interface by reusing the commands list defined in MW side.
+        place in 0x20009000  { readonly section MY_FUNCTIONS };
 
-       Here is an example of how to use USART interface default commands list:
+2. User is using precompiled External Loader from STM32CubeProgrammer directory
 
-        /* Register USART interfaces */
-        USART_Handle.p_Ops = &USART_Ops;
-        USART_Handle.p_Cmd = OPENBL_USART_GetCommandsList();  /* Initialize the USART handle with the default list supported commands */
+In this case, the address of the needed functions can be extracted from the compiled External Loader using `objdump.exe` tool.
+
+This tool can be found for example in the installation directory of `STM32CubeIDE` in this path:
+
+        STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.200.202301161003\tools\arm-none-eabi\bin
+
+The below command will print all the content header related information of the file:
+
+        objdump.exe -x MX66UW1G45G_STM32H7S78-DK_XSPIM1-SFIx.stldr
+
+From that content, the user needs to find the below functions and their addresses:
+
+        20000516 g     F P1-P2 ro       00000050 Init
+        20000566 g     F P1-P2 ro       00000032 MassErase
+        20000598 g     F P1-P2 ro       00000036 Write
+        200005ce g     F P1-P2 ro       00000050 SectorErase
+
+In this example the `Read` function is not needed as the memory is used in mapped mode.
+But as the Open Bootloader will look for it in the table, it must be put to null and not just removed.
+
+Once done, the user can use his own host to write in the RAM the addresses of the functions and send it to Open Bootloader using the initialization Special Command (0xA0).
+
+The Open Bootloader expects to find in RAM the address of the functions in this order (extract from `external_memory_interface.c`):
+
+       #define INIT_INDEX                    0x00U
+       #define READ_INDEX                    0x01U
+       #define WRITE_INDEX                   0x02U
+       #define SECTOR_ERASE_INDEX            0x03U
+       #define MASS_ERASE_INDEX              0x04U
+
+       /* Functions pointers initialization */
+       ExtMem_Init      = (int (*)(void))(*(ext_mem_base_address + INIT_INDEX));
+       ExtMem_Read      = (int (*)(uint32_t, uint32_t, uint8_t *))(*(ext_mem_base_address + READ_INDEX));
+       ExtMem_Write     = (int (*)(uint32_t, uint32_t, uint8_t *))(*(ext_mem_base_address + WRITE_INDEX));
+       ExtMem_Erase     = (int (*)(uint32_t, uint32_t))(*(ext_mem_base_address + SECTOR_ERASE_INDEX));
+       ExtMem_MassErase = (int (*)(void))(*(ext_mem_base_address + MASS_ERASE_INDEX));
 
 ### <b>Keywords</b>
 
-OpenBootloader, USART, FDCAN, I2C, I3C, SPI, USB
+OpenBootloader, USART, FDCAN, I2C, I3C, SPI, USB, external memories
 
 ### <b>Directory contents</b>
 
@@ -141,7 +247,7 @@ OpenBootloader, USART, FDCAN, I2C, I3C, SPI, USB
 
 ### <b>Hardware and Software environment</b>
 
-  - This application runs on STM32H7S78 devices without security enabled (TZEN=0).
+  - This application runs on STM32H7S78 devices.
 
   - This application supports two workspaces:
     - STM32H7S78-DK_Flash workspace application running in FLASH.
@@ -157,27 +263,27 @@ OpenBootloader, USART, FDCAN, I2C, I3C, SPI, USB
 
   - STM32H7S78-DK set-up to use USART:
     - To use the USART4 for communication you have to connect:
-      - Tx pin of your host adapter to PA1 (CN10: 1) pin of the STM32H7S78-DK board
-      - Rx pin of your host adapter to PA0 (CN10: 2) pin of the STM32H7S78-DK board
-    - These pins are already connected to the board embedded ST-Link
+      - Tx pin of your host adapter to PD1 pin of the STM32H7S78-DK board
+      - Rx pin of your host adapter to PD0 pin of the STM32H7S78-DK board
+    - These pins are already connected to the board embedded ST-Link (VCP)
 
   - STM32H7S78-DK set-up to use I2C:
     - Set I2C address to 0xB0
     - To use the I2C1 for communication you have to connect:
       - SCL (CN15: 10) pin of your host adapter to PB6 pin of the STM32H7S78-DK board
-      - SDA (CN15: 9) pin of your host adapter to PB7 pin of the STM32H7S78-DK board
+      - SDA (CN15: 9) pin of your host adapter to PB9 pin of the STM32H7S78-DK board
 
   - STM32H7S78-DK set-up to use I3C:
     - To use the I3C1 for communication you have to connect:
     - To use the I3C1 for communication you have to connect:
       - SCL (CN15: 10) pin of your host adapter to PB6 pin of the STM32H7S78-DK board
-      - SDA (CN15: 9) pin of your host adapter to PB7 pin of the STM32H7S78-DK board
+      - SDA (CN15: 9) pin of your host adapter to PB9 pin of the STM32H7S78-DK board
 
   - STM32H7S78-DK set-up to use SPI
       - To use the SPI4 for communication you have to connect:
         - SCK  pin of your host adapter to PE12 (CN3: 12) pin
-        - MISO pin of your host adapter to PE14 (CN3: 9) pin
-        - MOSI pin of your host adapter to PE13 (CN3: 8) pin
+        - MISO pin of your host adapter to PE13 (CN3: 9) pin
+        - MOSI pin of your host adapter to PE14 (CN3: 8) pin
 
   - STM32H7S78-DK set-up to use USB:
     - USB FS CN17

@@ -5,7 +5,7 @@
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>Readme</title>
-  <style type="text/css">
+  <style>
       code{white-space: pre-wrap;}
       span.smallcaps{font-variant: small-caps;}
       span.underline{text-decoration: underline;}
@@ -208,11 +208,24 @@
 </table>
 <h3 id="hardware-and-software-environment"><b>Hardware and Software environment</b></h3>
 <ul>
-<li>This template runs on STM32H7S7xx devices.</li>
-<li>This example has been tested with STMicroelectronics STM32H7S78-DK (MB1736) board and can be easily tailored to any other supported device and development board.</li>
-<li>To get debug print in your UART console you have to configure it using these parameters: Speed: 115200, Data: 8bits, Parity: None, stop bits: 1, Flow control: none.</li>
+<li><p>This template runs on STM32H7S7xx devices.</p></li>
+<li><p>It is possible to tailor it for STM32H7R7xx devices by following these steps for each project of ROT application:</p>
+<p>For IAR IDE:</p>
+<pre><code>1- Go to &quot;Options&quot; and select &quot;General Options&quot; then in the &quot;Target&quot; field Select &quot;device&quot; to choose your device.
+
+2- Go to &quot;Options&quot; and select &quot;C/C++ Compiler&quot; then &quot;Preprocessor&quot; tab and change the compilation symbol (STM32H7R7xx instead of STM32H7S7xx).
+
+3- Open the &quot;prebuild.cmd&quot; file (located in &quot;Firmware/Projects/STM32H7S78-DK/Applications/ROT/OEMiROT_Boot/EWARM&quot;) and change the compilation symbol (-DSTM32H7R7xx instead of -DSTM32H7S7xx).</code></pre>
+<p>For Keil IDE:</p>
+<pre><code>1- Go to &quot;Options&quot; and select &quot;Device&quot; tab to choose your device.
+
+2- Go to &quot;Options&quot; and select &quot;C/C++ (AC6)&quot; tab then in the &quot;Define&quot; field in &quot;Preprocessor Symbols&quot; and change the compilation symbol (STM32H7R7xx instead of STM32H7S7xx).
+
+3- Go to &quot;Options&quot; and in the &quot;User&quot; tab change &quot;Run #2&quot; command in the &quot;Before Build/Rebuild&quot; field and add the define of your platform (&quot;-DSTM32H7R7xx&quot; instead of &quot;-DSTM32H7S7xx&quot;).</code></pre></li>
+<li><p>This example has been tested with STMicroelectronics STM32H7S78-DK (MB1736) board and can be easily tailored to any other supported device and development board.</p></li>
+<li><p>To get debug print in your UART console you have to configure it using these parameters: Speed: 115200, Data: 8bits, Parity: None, stop bits: 1, Flow control: none.</p></li>
 </ul>
-<h3 id="how-to-use-it"><b>How to use it?</b></h3>
+<h3 id="how-to-use-it"><b>How to use it ?</b></h3>
 <p>In order to build the OEMiROT_Boot project, you must do the following:</p>
 <ul>
 <li>Open your preferred toolchain</li>
@@ -221,13 +234,14 @@
 <p>Then refer to OEMiROT_Appli readme for example of application booted through OEMiROT boot path (or through STiROT_OEMuROT boot path).</p>
 <h3 id="notes"><b>Notes</b></h3>
 <ol type="1">
-<li><p>With STM32CubeIDE, the following configurations are not compatible with the Build Configuration “Debug”:</p>
+<li><p>For STM32H7R7xx devices, this template is not supported with STM32CubeIDE</p></li>
+<li><p>For STM32H7S7xx devices, with STM32CubeIDE, the following configurations are not compatible with the Build Configuration “Debug”:</p>
 <ul>
 <li>OEMUROT_ENABLE undefined, OEMIROT_LOAD_AND_RUN set to NO_LOAD_AND_RUN, MCUBOOT_OVERWRITE_ONLY undefined</li>
 <li>OEMUROT_ENABLE undefined, OEMIROT_LOAD_AND_RUN set to LOAD_AND_RUN_INT_RAM, MCUBOOT_OVERWRITE_ONLY undefined</li>
 </ul>
 <p>They can be used with the Build Configuration “Release”.</p></li>
-<li><p>With STM32CubeIDE, the following configuration isn’t supported:</p>
+<li><p>For STM32H7S7xx devices, with STM32CubeIDE, the following configuration isn’t supported:</p>
 <ul>
 <li>OEMUROT_ENABLE undefined, OEMIROT_LOAD_AND_RUN set to LOAD_AND_RUN_EXT_RAM, MCUBOOT_OVERWRITE_ONLY undefined</li>
 </ul></li>

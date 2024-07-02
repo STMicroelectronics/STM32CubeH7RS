@@ -43,7 +43,9 @@ extern "C" {
 #endif /* RTC_CLOCK_SOURCE_LSE */
 
 /* ICache */
+#ifdef ICACHE
 #define OEMIROT_ICACHE_ENABLE /*!< Instruction cache enable */
+#endif /* ICache */
 
 /* Static protections */
 #if  !defined(OEMUROT_ENABLE)
@@ -93,7 +95,9 @@ extern "C" {
 
 /* Run time protections */
 #define OEMIROT_MPU_PROTECTION    /*!< OEMiROT_Boot uses MPU to prevent execution outside of OEMiROT_Boot code  */
+#if defined(STM32H7S3xx) || defined(STM32H7S7xx)
 #define OEMIROT_MCE_PROTECTION    /*!< OEMiROT_Boot uses MCE to prevent accesses to not encrypted code in external flash  */
+#endif /* STM32H7S3xx || STM32H7S7xx */
 
 /* Exported types ------------------------------------------------------------*/
 typedef enum

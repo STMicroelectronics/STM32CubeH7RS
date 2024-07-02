@@ -69,7 +69,7 @@ ErrorStatus OPENBL_ExtMem_Init(uint32_t address)
   ErrorStatus status                 = ERROR;
 
   /* The items of this structure will be automatically getting from the external loader */
-  OPENBL_MemoryTypeDef external_memory_descriptor = { 0x0 };
+  OPENBL_MemoryTypeDef external_memory_descriptor = { 0x0U };
 
   /* Ensure that the external memory structure is registered once in Middleware side */
   if (ext_mem_initialized == 0U)

@@ -27,6 +27,7 @@
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
+typedef StaticSemaphore_t osStaticSemaphoreDef_t;
 /* USER CODE BEGIN PTD */
 
 /* USER CODE END PTD */
@@ -55,8 +56,11 @@ const osThreadAttr_t MainThread_attributes = {
 };
 /* Definitions for BinarySemaphore */
 osSemaphoreId_t BinarySemaphoreHandle;
+osStaticSemaphoreDef_t Static;
 const osSemaphoreAttr_t BinarySemaphore_attributes = {
-  .name = "BinarySemaphore"
+  .name = "BinarySemaphore",
+  .cb_mem = &Static,
+  .cb_size = sizeof(Static),
 };
 /* USER CODE BEGIN PV */
 
@@ -286,7 +290,7 @@ static void SYSCLKConfig_STOP(void)
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_SYSCLK;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.SYSCLKDivider = RCC_SYSCLK_DIV1;
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_6) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_7) != HAL_OK)
   {
     Error_Handler();
   }

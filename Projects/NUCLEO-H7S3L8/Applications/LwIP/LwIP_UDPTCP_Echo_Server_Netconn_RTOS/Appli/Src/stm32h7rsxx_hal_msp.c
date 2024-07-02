@@ -122,6 +122,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
     /* Enable the USART3 global Interrupt */
     HAL_NVIC_EnableIRQ(USART3_IRQn);
   /* USER CODE END USART3_MspInit 1 */
+
   }
 
 }

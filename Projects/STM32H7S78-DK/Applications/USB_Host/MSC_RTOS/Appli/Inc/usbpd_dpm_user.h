@@ -207,12 +207,12 @@ USBPD_HandleTypeDef DPM_Ports[USBPD_PORT_COUNT] =
   * @{
   */
 void                USBPD_DPM_WaitForTime(uint32_t Time);
-void                USBPD_DPM_UserCableDetection(uint8_t PortNum, USBPD_CAD_EVENT State);
 #if (osCMSIS < 0x20000U)
-void USBPD_DPM_UserExecute(void const *argument);
+void                USBPD_DPM_UserExecute(void const *argument);
 #else
-void USBPD_DPM_UserExecute(void *argument);
+void                USBPD_DPM_UserExecute(void *argument);
 #endif /* osCMSIS < 0x20000U */
+void                USBPD_DPM_UserCableDetection(uint8_t PortNum, USBPD_CAD_EVENT State);
 
 /**
   * @}

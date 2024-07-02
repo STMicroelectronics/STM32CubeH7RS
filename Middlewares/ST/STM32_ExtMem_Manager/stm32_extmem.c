@@ -751,7 +751,7 @@ EXTMEM_StatusTypeDef EXTMEM_MemoryMappedMode(uint32_t MemId, EXTMEM_StateTypeDef
        break;
     }
 #endif /* EXTMEM_DRIVER_USER == 1 */
-    case EXTMEM_SDCARD : 
+    case EXTMEM_SDCARD :
       retr = EXTMEM_ERROR_NOTSUPPORTED;
     break;
     default:{
@@ -777,18 +777,34 @@ EXTMEM_StatusTypeDef EXTMEM_GetMapAddress(uint32_t MemId, uint32_t *BaseAddress)
 #if EXTMEM_DRIVER_NOR_SFDP == 1 || EXTMEM_DRIVER_PSRAM == 1
       case EXTMEM_PSRAM:
       case EXTMEM_NOR_SFDP:{
-        if (((XSPI_HandleTypeDef *)extmem_list_config[MemId].Handle)->Instance == XSPI1)
+#if defined(XSPI1)       
+       if (((XSPI_HandleTypeDef *)extmem_list_config[MemId].Handle)->Instance == XSPI1)
         {
           *BaseAddress = XSPI1_BASE;
        }
+#if defined(XSPI2)
        else if (((XSPI_HandleTypeDef *)extmem_list_config[MemId].Handle)->Instance == XSPI2)
        {
           *BaseAddress = XSPI2_BASE;
        }
+#if defined(XSPI3)
+       else if (((XSPI_HandleTypeDef *)extmem_list_config[MemId].Handle)->Instance == XSPI3)
+       {
+          *BaseAddress = XSPI3_BASE;
+       }
+#endif /* XSPI3 */
+#endif /* XSPI2 */
+#else  /* XSPI1 */
+       if (((XSPI_HandleTypeDef *)extmem_list_config[MemId].Handle)->Instance == OCTOSPI1)
+       {
+          *BaseAddress = OCTOSPI1_BASE;
+       }
+#endif  /* XSPI1 */
        else
        { 
           retr = EXTMEM_ERROR_DRIVER;
        }
+
        break;
       }
 #endif /* EXTMEM_DRIVER_NOR_SFDP == 1 || EXTMEM_DRIVER_PSRAM == 1 */

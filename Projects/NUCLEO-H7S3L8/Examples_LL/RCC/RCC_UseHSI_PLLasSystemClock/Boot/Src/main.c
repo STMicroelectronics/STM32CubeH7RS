@@ -70,7 +70,7 @@ typedef struct
 static RCC_PLL_ConfigTypeDef aPLL_ConfigHSI[RCC_PLL_CONFIG_NB] =
 {
   {RCC_FREQUENCY_LOW, 4, 25, 50, LL_FLASH_LATENCY_0},
-  {RCC_FREQUENCY_HIGH, 32, 300, 1, LL_FLASH_LATENCY_6}
+  {RCC_FREQUENCY_HIGH, 32, 300, 1, LL_FLASH_LATENCY_7}
 };
 
 /* PLL Config index */
@@ -199,8 +199,8 @@ int main(void)
   */
 void SystemClock_Config(void)
 {
-  LL_FLASH_SetLatency(LL_FLASH_LATENCY_6);
-  while(LL_FLASH_GetLatency()!= LL_FLASH_LATENCY_6)
+  LL_FLASH_SetLatency(LL_FLASH_LATENCY_7);
+  while(LL_FLASH_GetLatency()!= LL_FLASH_LATENCY_7)
   {
   }
   LL_PWR_SetRegulVoltageScaling(LL_PWR_REGU_VOLTAGE_SCALE0);

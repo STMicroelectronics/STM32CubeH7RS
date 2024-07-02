@@ -104,6 +104,11 @@ In order to make the program work, you must do the following:
      the Template_XIP_Boot.hex in internal Flash.
   5. Run the example
 
+NB: For this target, following switches are set in C/C++ preprocessor settings:
+
+ - STM32_EXTMEMLOADER_EWARMTARGET
+ - STM32_EXTMEMLOADER_STM32CUBETARGET_NA
+ - STM32_EXTMEMLOADER_STM32CUBEOPENBLTARGET_NA
 
 #### <b>MDK-ARM</b>
   1. Open your toolchain
@@ -121,6 +126,12 @@ In order to make the program work, you must do the following:
      the Boot_XIP.hex in internal Flash.
   5. Run the example
 
+NB: For this target, following switches are set in C/C++
+preprocessor settings:
+
+ - STM32_EXTMEMLOADER_MDKARMTARGET
+ - STM32_EXTMEMLOADER_STM32CUBETARGET_NA
+ - STM32_EXTMEMLOADER_STM32CUBEOPENBLTARGET_NA
 
 #### <b>STM32CubeIDE</b>
   1. Open your toolchain
@@ -145,9 +156,85 @@ In order to make the program work, you must do the following:
 
 #### <b>STM32CubeProgrammer</b>
 
-> The ExtMemLoader project uses an environment variable to copy the generated stdlr file inside 
+> The ExtMemLoader project uses an environment variable to copy the generated stdlr file inside
 > the cube programmer tool.
-> This variable is defined by the tool during its installation but if the version used does not 
+> This variable is defined by the tool during its installation but if the version used does not
 > include this functionality, the environment variable can be declared manually.
 >
 > STM32_PRG_PATH=C:/Program Files/STMicroelectronics/STM32Cube/STM32CubeProgrammer/bin
+
+When targeting to build ExtMemLoader to be used in Cubepogrammer, please ensure
+the following switches are set in C/C++ preprocessor settings:
+
+ - STM32_EXTMEMLOADER_EWARMTARGET_NA
+ - STM32_EXTMEMLOADER_STM32CUBETARGET
+ - STM32_EXTMEMLOADER_STM32CUBEOPENBLTARGET_NA
+
+
+#### <b>External memory programming using BootLoader Interfaces</b>
+
+> When using a bootloader interface such as USB or USART, the standard
+ExtMemLoader cannot be used.
+>Instead, a specific ExtMemLoader must be built for use with OpenBootloader. To
+accomplish this, you should carry out the following steps:
+>
+>- Modify the target switches in the C/C++ preprocessor settings to:
+>
+>   - STM32_EXTMEMLOADER_EWARMTARGET_NA
+>   - STM32_EXTMEMLOADER_STM32CUBETARGET
+>   - STM32_EXTMEMLOADER_STM32CUBEOPENBLTARGET
+>- Choose the appropriate file for your linker script based on the file extension (.sct, .ld, or .icf). The file should be renamed to match the following pattern, depending on the extension:
+>   * stm32h7rsxx_extmemloader_stm32cubeopenbl.sct
+>   * stm32h7rsxx_extmemloader_stm32cubeopenbl.ld
+>   * stm32h7rsxx_extmemloader_stm32cubeopenbl.icf
+>- The initialization section of extmemloader_init() should be updated as follows:
+>
+> #if !defined STM32_EXTMEMLOADER_STM32CUBEOPENBLTARGET)
+>
+>      /* Init system */
+>      SystemInit();
+>
+>      /* disable all the IRQ */
+>
+>      __disable_irq();
+>
+>      /* MCU Configuration--------------------------------------------------------*/
+>
+>      /* Enable the CPU Cache */
+>
+>      /* Enable I-Cache---------------------------------------------------------*/
+>
+>      SCB_EnableICache();
+>
+>      /* Enable D-Cache---------------------------------------------------------*/
+>
+>      SCB_EnableDCache();
+>
+>      /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
+>
+>      HAL_Init();
+>
+>      /* USER CODE BEGIN Init */
+>
+>      /* USER CODE END Init */
+>
+>      /* Configure the system clock  */
+>
+>      SystemClock_Config();
+>
+>      #else
+>      /* Reset of all peripherals, Initializes the Flash interface. */
+>
+>      __HAL_RCC_SBS_CLK_ENABLE();
+>
+>      /* System interrupt init*/
+>
+>      /* Enable the XSPIM_P2 interface */
+>
+>      HAL_PWREx_EnableXSPIM2();
+>
+>      /* high speed low voltage config */
+>
+>      HAL_SBS_EnableIOSpeedOptimize(SBS_IO_XSPI2_HSLV);
+>
+>      #endif

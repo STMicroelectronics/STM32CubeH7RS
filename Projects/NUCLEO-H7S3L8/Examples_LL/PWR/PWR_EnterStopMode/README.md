@@ -35,7 +35,7 @@ press on Reset button.
     by the Cortex M7 and the GPDMA/HPDMA), there is no need for cache maintenance.
     If the application needs to put DMA buffers in AXI SRAM (starting from @0x24000000), the user has to:
     - either define a non-cacheable region in the MPU and linker configuration file to locate DMA buffers
-      (a proposed dma_buffer section is available from CMSIS Device linker template file and its size must
+      (a proposed noncacheable_buffer section is available from CMSIS Device linker template file and its size must
       be adapted to the application requirements)
     - or to ensure cache maintenance operations to ensure the cache coherence between the CPU and the DMAs.
     This is true also for any other data buffers accessed by the CPU and other masters (DMA2D, LTDC)
@@ -69,10 +69,6 @@ File | Description
   - This example has been tested with STMicroelectronics NUCLEO-H7S3L8
     board and can be easily tailored to any other supported device
     and development board.
-
-  - User Option Bytes requirement (with STM32CubeProgrammer tool)
-
-    - XSPI2_HSLV=1     I/O XSPIM_P2 High speed option enabled
 
   - NUCLEO-H7S3L8 Set-up
     - LD1 connected to PD.10 pin

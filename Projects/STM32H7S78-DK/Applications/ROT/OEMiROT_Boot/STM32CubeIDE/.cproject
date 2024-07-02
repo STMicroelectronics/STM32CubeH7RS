@@ -14,7 +14,7 @@
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactExtension="elf" artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug" cleanCommand="rm -rf" description="" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.538887030" name="Debug" parent="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug" postbuildStep="&quot;../postbuild.sh&quot; &quot;${ConfigName}&quot;" prebuildStep="arm-none-eabi-gcc -E -P -xc -DBL2 -I../../../Linker -I../../Inc -o./output.ld ../stm32h7rsxx_bl2.ld &amp;&amp; arm-none-eabi-gcc -E -P -xc -DBL2 -DSTM32H7S7xx -I../../../Linker -I../../Inc -I../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Inc -I../../../../../../../Drivers/CMSIS/Device/ST/STM32H7RSxx/Include -I../../../../../../../Drivers/CMSIS/Core/Include -o../image_macros_preprocessed_bl2.c ../../Src/image_macros_to_preprocess_bl2.c">
+				<configuration artifactExtension="elf" artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug" cleanCommand="rm -rf" description="" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.538887030" name="Debug" parent="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug" postbuildStep="&quot;../postbuild.sh&quot; &quot;${ConfigName}&quot;" prebuildStep="arm-none-eabi-gcc -E -P -xc -DBL2 -I../../../Linker -I../../Inc -I../../../../../../../Drivers/CMSIS/Include -I../../../../../../../Drivers/CMSIS/Device/ST/STM32H7RSxx/Include -I../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Inc -o./output.ld ../stm32h7rsxx_bl2.ld &amp;&amp; arm-none-eabi-gcc -E -P -xc -DBL2 -DSTM32H7S7xx -I../../../Linker -I../../Inc -I../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Inc -I../../../../../../../Drivers/CMSIS/Device/ST/STM32H7RSxx/Include -I../../../../../../../Drivers/CMSIS/Core/Include -o../image_macros_preprocessed_bl2.c ../../Src/image_macros_to_preprocess_bl2.c">
 					<folderInfo id="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.538887030." name="/" resourcePath="">
 						<toolChain id="com.st.stm32cube.ide.mcu.gnu.managedbuild.toolchain.exe.debug.1929642909" name="MCU ARM GCC" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.toolchain.exe.debug">
 							<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_mcu.495028001" name="MCU" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_mcu" useByScannerDiscovery="true" value="STM32H7S7L8HxH" valueType="string"/>
@@ -57,7 +57,9 @@
 									<listOptionValue builtIn="false" value="../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Inc/Legacy"/>
 									<listOptionValue builtIn="false" value="../../../../../../../Drivers/CMSIS/Device/ST/STM32H7RSxx/Include"/>
 									<listOptionValue builtIn="false" value="../../../../../../../Drivers/CMSIS/Include"/>
-									<listOptionValue builtIn="false" value="../../../../../../../Drivers/BSP/STM32H7S78-DK"/>
+									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/mbed-crypto/include"/>
+									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/mbed-crypto/include/mbedtls"/>
+									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/mbed-crypto/include/psa"/>
 									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/mcuboot/bl2/include"/>
 									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/mcuboot/bl2/ext/mcuboot"/>
 									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/mcuboot/bl2/ext/mcuboot/include"/>
@@ -157,7 +159,9 @@
 									<listOptionValue builtIn="false" value="../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Inc/Legacy"/>
 									<listOptionValue builtIn="false" value="../../../../../../../Drivers/CMSIS/Device/ST/STM32H7RSxx/Include"/>
 									<listOptionValue builtIn="false" value="../../../../../../../Drivers/CMSIS/Include"/>
-									<listOptionValue builtIn="false" value="../../../../../../../Drivers/BSP/STM32H7S78-DK"/>
+									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/mbed-crypto/include"/>
+									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/mbed-crypto/include/mbedtls"/>
+									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/mbed-crypto/include/psa"/>
 									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/mcuboot/bl2/include"/>
 									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/mcuboot/bl2/ext/mcuboot"/>
 									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/mcuboot/bl2/ext/mcuboot/include"/>

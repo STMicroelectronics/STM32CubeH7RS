@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="">
 <head>
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>Readme</title>
-  <style type="text/css">
+<style type="text/css">
       code{white-space: pre-wrap;}
       span.smallcaps{font-variant: small-caps;}
       span.underline{text-decoration: underline;}
@@ -21,19 +21,60 @@
 <div class="col-sm-12 col-lg-8">
 <h2 id="templates_xip-example-description"><b>Templates_XIP Example Description</b></h2>
 <ul>
-<li>This project provides a reference template based on the STM32Cube HAL API that can be used to build any firmware application to execute from external Flash (Sub-project Appli). It boots from internal Flash and jumps to the application code in external Flash (Sub-project Boot).</li>
-<li>This project is targeted to run on STM32H7S7xx device on STM32H7S78-DK board from STMicroelectronics. At the beginning of the main program, the HAL_Init() function is called to reset all the peripherals and initialize the systick used as 1ms HAL timebase.</li>
-<li>This project runs from the external Flash memory. It is launched from a first boot stage and inherits from this boot project configuration (caches, MPU regions [regions 0, 1 and 2 here], system clock at 600 MHz and external memory interface at the highest speed). Note that the boot part is automatically downloaded from the IDE environment via the board project Templates/Template_XIP/Binary/Boot_XIP.hex file.</li>
-<li>The template project calls also SCB_EnableICache() and SCB_EnableDCache() functions in order to enable the Layer 1 Core Instruction and Data Caches. This is provided as template implementation that the User may integrate in his application in order to enhance the performance.</li>
+<li>This project provides a reference template based on the STM32Cube
+HAL API that can be used to build any firmware application to execute
+from external Flash (Sub-project Appli). It boots from internal Flash
+and jumps to the application code in external Flash (Sub-project
+Boot).</li>
+<li>This project is targeted to run on STM32H7S7xx device on
+STM32H7S78-DK board from STMicroelectronics. At the beginning of the
+main program, the HAL_Init() function is called to reset all the
+peripherals and initialize the systick used as 1ms HAL timebase.</li>
+<li>This project runs from the external Flash memory. It is launched
+from a first boot stage and inherits from this boot project
+configuration (caches, MPU regions [regions 0, 1 and 2 here], system
+clock at 600 MHz and external memory interface at the highest speed).
+Note that the boot part is automatically downloaded from the IDE
+environment via the board project
+Templates/Template_XIP/Binary/Boot_XIP.hex file.</li>
+<li>The template project calls also SCB_EnableICache() and
+SCB_EnableDCache() functions in order to enable the Layer 1 Core
+Instruction and Data Caches. This is provided as template implementation
+that the User may integrate in his application in order to enhance the
+performance.</li>
 </ul>
 <h4 id="notes"><b>Notes</b></h4>
 <ol type="1">
-<li><p>Care must be taken when using HAL_Delay(), this function provides accurate delay (in milliseconds) based on variable incremented in SysTick ISR. This implies that if HAL_Delay() is called from a peripheral ISR process, then the SysTick interrupt must have higher priority (numerically lower) than the peripheral interrupt. Otherwise the caller ISR process will be blocked. To change the SysTick interrupt priority you have to use HAL_NVIC_SetPriority() function.</p></li>
-<li><p>The application needs to ensure that the SysTick time base is always set to 1 millisecond to have correct HAL operation.</p></li>
-<li>Whenever the application is using ITCM/DTCM memories (<span class="citation" data-cites="0x0000000">@0x0000000</span> / <span class="citation" data-cites="0x20000000">@0x20000000</span>: not cacheable and only accessible by the Cortex M7 and the GPDMA/HPDMA), there is no need for cache maintenance. If the application needs to put DMA buffers in AXI SRAM (starting from <span class="citation" data-cites="0x24000000">@0x24000000</span>), the user has to:
+<li><p>Care must be taken when using HAL_Delay(), this function provides
+accurate delay (in milliseconds) based on variable incremented in
+SysTick ISR. This implies that if HAL_Delay() is called from a
+peripheral ISR process, then the SysTick interrupt must have higher
+priority (numerically lower) than the peripheral interrupt. Otherwise
+the caller ISR process will be blocked. To change the SysTick interrupt
+priority you have to use HAL_NVIC_SetPriority() function.</p></li>
+<li><p>The application needs to ensure that the SysTick time base is
+always set to 1 millisecond to have correct HAL operation.</p></li>
+<li><p>Whenever the application is using ITCM/DTCM memories (<span
+class="citation" data-cites="0x0000000">@0x0000000</span> / <span
+class="citation" data-cites="0x20000000">@0x20000000</span>: not
+cacheable and only accessible by the Cortex M7 and the GPDMA/HPDMA),
+there is no need for cache maintenance. If the application needs to put
+DMA buffers in AXI SRAM (starting from <span class="citation"
+data-cites="0x24000000">@0x24000000</span>), the user has to:</p>
 <ul>
-<li>either define a non-cacheable region in the MPU and linker configuration file to locate DMA buffers (a proposed noncacheable_buffer section is available from CMSIS Device linker template file and its size must be adapted to the application requirements)</li>
-<li>or to ensure cache maintenance operations to ensure the cache coherence between the CPU and the DMAs. This is true also for any other data buffers accessed by the CPU and other masters (DMA2D, LTDC). The addresses and the size of cacheable buffers (shared between CPU and other masters) must be properly defined to be aligned to data cache line size (32 bytes) and of a size of being multiple of this cache line size. Please refer to the AN4838 “Managing memory protection unit (MPU) in STM32 MCUs”. Please refer to the AN4839 “Level 1 cache on STM32F7 Series”.</li>
+<li>either define a non-cacheable region in the MPU and linker
+configuration file to locate DMA buffers (a proposed noncacheable_buffer
+section is available from CMSIS Device linker template file and its size
+must be adapted to the application requirements)</li>
+<li>or to ensure cache maintenance operations to ensure the cache
+coherence between the CPU and the DMAs. This is true also for any other
+data buffers accessed by the CPU and other masters (DMA2D, LTDC). The
+addresses and the size of cacheable buffers (shared between CPU and
+other masters) must be properly defined to be aligned to data cache line
+size (32 bytes) and of a size of being multiple of this cache line size.
+Please refer to the AN4838 “Managing memory protection unit (MPU) in
+STM32 MCUs”. Please refer to the AN4839 “Level 1 cache on STM32F7
+Series”.</li>
 </ul></li>
 </ol>
 <h3 id="keywords"><b>Keywords</b></h3>
@@ -42,8 +83,8 @@
 <h4 id="sub-project-boot"><b>Sub-project Boot</b></h4>
 <table>
 <colgroup>
-<col style="width: 50%"></col>
-<col style="width: 50%"></col>
+<col style="width: 50%" />
+<col style="width: 50%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -101,8 +142,8 @@
 <h4 id="sub-project-appli"><b>Sub-project Appli</b></h4>
 <table>
 <colgroup>
-<col style="width: 50%"></col>
-<col style="width: 50%"></col>
+<col style="width: 50%" />
+<col style="width: 50%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -145,12 +186,80 @@
 </tr>
 </tbody>
 </table>
-<h3 id="hardware-and-software-environment"><b>Hardware and Software environment</b></h3>
+<h4 id="sub-project-extmemloader"><b>Sub-project ExtMemLoader</b></h4>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>File</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Templates/Template_XIP/ExtMemLoader/Inc/extmem_manager.h</td>
+<td>Header for extmem_manager.c module</td>
+</tr>
+<tr class="even">
+<td>Templates/Template_XIP/ExtMemLoader/Inc/extmemloader_init.h</td>
+<td>Header for system initialization</td>
+</tr>
+<tr class="odd">
+<td>Templates/Template_XIP/ExtMemLoader/Inc/stm32_extmem_conf.h</td>
+<td>External memory manager Configuration file</td>
+</tr>
+<tr class="even">
+<td>Templates/Template_XIP/ExtMemLoader/Inc/stm32_extmemloader_conf.h</td>
+<td>Header with externam memory device information</td>
+</tr>
+<tr class="odd">
+<td>Templates/Template_XIP/ExtMemLoader/Inc/stm32h7rsxx_hal_conf.h</td>
+<td>HAL Configuration file</td>
+</tr>
+<tr class="even">
+<td>Templates/Template_XIP/ExtMemLoader/Src/extmem_manager.c</td>
+<td>code to initialize external memory</td>
+</tr>
+<tr class="odd">
+<td>Templates/Template_XIP/ExtMemLoader/Src/extmemloader_init.c</td>
+<td>code to perform system initialization</td>
+</tr>
+<tr class="even">
+<td>Templates/Template_XIP/ExtMemLoader/Src/stm32h7rsxx_hal_msp.c</td>
+<td>HAL MSP module</td>
+</tr>
+<tr class="odd">
+<td>Templates/Template_XIP/ExtMemLoader/Src/system_stm32h7rsxx.c</td>
+<td>STM32H7RSxx system source file</td>
+</tr>
+<tr class="even">
+<td>Templates/Template_XIP/ExtMemLoader/Config/extmemloader.board</td>
+<td>Configuration file</td>
+</tr>
+<tr class="odd">
+<td>Templates/Template_XIP/ExtMemLoader/Config/extmemloader.flash</td>
+<td>Configuration file</td>
+</tr>
+<tr class="even">
+<td>Templates/Template_XIP/ExtMemLoader/Config/extmemloader.mac</td>
+<td>Configuration file</td>
+</tr>
+</tbody>
+</table>
+<h3 id="hardware-and-software-environment"><b>Hardware and Software
+environment</b></h3>
 <ul>
 <li><p>This template runs on STM32H7S7xx devices.</p></li>
-<li><p>This template has been tested with STMicroelectronics STM32H7S78-DK boards and can be easily tailored to any other supported device and development board.</p></li>
-<li><p>On STM32H7S78-DK board, the BOOT0 mechanical slide switch must be set to SW1.</p></li>
-<li><p>User Option Bytes requirement (with STM32CubeProgrammer tool):</p>
+<li><p>This template has been tested with STMicroelectronics
+STM32H7S78-DK boards and can be easily tailored to any other supported
+device and development board.</p></li>
+<li><p>On STM32H7S78-DK board, the BOOT0 mechanical slide switch must be
+set to SW1.</p></li>
+<li><p>User Option Bytes requirement (with STM32CubeProgrammer
+tool):</p>
 <ul>
 <li>XSPI1_HSLV=1 I/O XSPIM_P1 High speed option enabled</li>
 <li>XSPI2_HSLV=1 I/O XSPIM_P2 High speed option enabled</li>
@@ -169,14 +278,25 @@
 <ul>
 <li>Select first “Template_XIP_Boot” workspace</li>
 <li>Rebuild all files from sub-project Boot</li>
-<li>If no modification is done on boot project, this step could be skipped.</li>
+<li>If no modification is done on boot project, this step could be
+skipped.</li>
 </ul>
 </blockquote>
 <ol start="3" type="1">
 <li>Select then “Template_XIP_Appli” workspace</li>
-<li>Rebuild all files from sub-project Appli and load your images into memories: This sub-project will first load the Appli part in External memory available on STM32H7S78-DK board, then load the Template_XIP_Boot.hex in internal Flash.</li>
+<li>Rebuild all files from sub-project Appli and load your images into
+memories: This sub-project will first load the Appli part in External
+memory available on STM32H7S78-DK board, then load the
+Template_XIP_Boot.hex in internal Flash.</li>
 <li>Run the example</li>
 </ol>
+<p>NB: For this target, following switches are set in C/C++ preprocessor
+settings:</p>
+<ul>
+<li>STM32_EXTMEMLOADER_EWARMTARGET</li>
+<li>STM32_EXTMEMLOADER_STM32CUBETARGET_NA</li>
+<li>STM32_EXTMEMLOADER_STM32CUBEOPENBLTARGET_NA</li>
+</ul>
 <h4 id="mdk-arm"><b>MDK-ARM</b></h4>
 <ol type="1">
 <li>Open your toolchain</li>
@@ -187,14 +307,25 @@
 <ul>
 <li>Select first “Template_XIP_Boot” workspace</li>
 <li>Rebuild all files from sub-project Boot</li>
-<li>If no modification is done on boot project, this step could be skipped.</li>
+<li>If no modification is done on boot project, this step could be
+skipped.</li>
 </ul>
 </blockquote>
 <ol start="3" type="1">
 <li>Select then “Template_XIP_Appli” workspace</li>
-<li>Rebuild all files from sub-project Appli and load your images into memories: This sub-project will first load the Appli part in External memory available on STM32H7S78-DK board, then load the Boot_XIP.hex in internal Flash.</li>
+<li>Rebuild all files from sub-project Appli and load your images into
+memories: This sub-project will first load the Appli part in External
+memory available on STM32H7S78-DK board, then load the Boot_XIP.hex in
+internal Flash.</li>
 <li>Run the example</li>
 </ol>
+<p>NB: For this target, following switches are set in C/C++ preprocessor
+settings:</p>
+<ul>
+<li>STM32_EXTMEMLOADER_MDKARMTARGET</li>
+<li>STM32_EXTMEMLOADER_STM32CUBETARGET_NA</li>
+<li>STM32_EXTMEMLOADER_STM32CUBEOPENBLTARGET_NA</li>
+</ul>
 <h4 id="stm32cubeide"><b>STM32CubeIDE</b></h4>
 <ol type="1">
 <li>Open your toolchain</li>
@@ -205,22 +336,93 @@
 <ul>
 <li>Select the “Template_XIP_Boot” project</li>
 <li>Build the project</li>
-<li>If the project is not compiled, Appli debugging will manage its compilation for debugging</li>
-<li>With the debug icon select the configuration “Template_XIP_Boot Debug”. This operation loads the boot in internal Flash.</li>
+<li>If the project is not compiled, Appli debugging will manage its
+compilation for debugging</li>
+<li>With the debug icon select the configuration “Template_XIP_Boot
+Debug”. This operation loads the boot in internal Flash.</li>
 </ul>
 </blockquote>
 <ol start="3" type="1">
 <li>Select the “Template_XIP_Appli” project</li>
 <li>Build the project</li>
-<li>With the Debug icon select the configuration “Template_XIP_Appli Debug”. This sub-project will first load the Boot binary in internal Flash, then load the Appli binary in External memory available on STM32H7S78-DK board</li>
+<li>With the Debug icon select the configuration “Template_XIP_Appli
+Debug”. This sub-project will first load the Boot binary in internal
+Flash, then load the Appli binary in External memory available on
+STM32H7S78-DK board</li>
 <li>Run the example</li>
 </ol>
 <h4 id="stm32cubeprogrammer"><b>STM32CubeProgrammer</b></h4>
 <blockquote>
-<p>The ExtMemLoader project uses an environment variable to copy the generated stdlr file inside the cube programmer tool. This variable is defined by the tool during its installation but if the version used does not include this functionality, the environment variable can be declared manually.</p>
-<p>STM32_PRG_PATH=C:/Program Files/STMicroelectronics/STM32Cube/STM32CubeProgrammer/bin</p>
+<p>The ExtMemLoader project uses an environment variable to copy the
+generated stdlr file inside the cube programmer tool. This variable is
+defined by the tool during its installation but if the version used does
+not include this functionality, the environment variable can be declared
+manually.</p>
+<p>STM32_PRG_PATH=C:/Program
+Files/STMicroelectronics/STM32Cube/STM32CubeProgrammer/bin</p>
 </blockquote>
-</div>
-</div>
+<p>When targeting to build ExtMemLoader to be used in Cubepogrammer,
+please ensure the following switches are set in C/C++ preprocessor
+settings:</p>
+<ul>
+<li>STM32_EXTMEMLOADER_EWARMTARGET_NA</li>
+<li>STM32_EXTMEMLOADER_STM32CUBETARGET</li>
+<li>STM32_EXTMEMLOADER_STM32CUBEOPENBLTARGET_NA</li>
+</ul>
+<h4
+id="external-memory-programming-using-bootloader-interfaces"><b>External
+memory programming using BootLoader Interfaces</b></h4>
+<blockquote>
+<p>When using a bootloader interface such as USB or USART, the standard
+ExtMemLoader cannot be used. Instead, a specific ExtMemLoader must be
+built for use with OpenBootloader. To accomplish this, you should carry
+out the following steps:</p>
+<ul>
+<li><p>Modify the target switches in the C/C++ preprocessor settings
+to:</p>
+<ul>
+<li>STM32_EXTMEMLOADER_EWARMTARGET_NA</li>
+<li>STM32_EXTMEMLOADER_STM32CUBETARGET</li>
+<li>STM32_EXTMEMLOADER_STM32CUBEOPENBLTARGET</li>
+</ul></li>
+<li><p>Choose the appropriate file for your linker script based on the
+file extension (.sct, .ld, or .icf). The file should be renamed to match
+the following pattern, depending on the extension:</p>
+<ul>
+<li>stm32h7rsxx_extmemloader_stm32cubeopenbl.sct</li>
+<li>stm32h7rsxx_extmemloader_stm32cubeopenbl.ld</li>
+<li>stm32h7rsxx_extmemloader_stm32cubeopenbl.icf</li>
+</ul></li>
+<li><p>The initialization section of extmemloader_init() should be
+updated as follows:</p>
+<p>#if !defined(STM32_EXTMEMLOADER_STM32CUBEOPENBLTARGET)</p>
+<p>/* Init system */ SystemInit();</p>
+<p>/* disable all the IRQ */</p>
+<p>__disable_irq();</p>
+<p>/* MCU Configuration——————————————————–*/</p>
+<p>/* Enable the CPU Cache */</p>
+<p>/* Enable I-Cache———————————————————*/</p>
+<p>SCB_EnableICache();</p>
+<p>/* Enable D-Cache———————————————————*/</p>
+<p>SCB_EnableDCache();</p>
+<p>/* Reset of all peripherals, Initializes the Flash interface and the
+Systick. */</p>
+<p>HAL_Init();</p>
+<p>/* USER CODE BEGIN Init */</p>
+<p>/* USER CODE END Init */</p>
+<p>/* Configure the system clock */</p>
+<p>SystemClock_Config();</p>
+<p>#else /* Reset of all peripherals, Initializes the Flash interface.
+*/</p>
+<p>__HAL_RCC_SBS_CLK_ENABLE();</p>
+<p>/* System interrupt init*/</p>
+<p>/* Enable the XSPIM_P2 interface */</p>
+<p>HAL_PWREx_EnableXSPIM2();</p>
+<p>/* high speed low voltage config */</p>
+<p>HAL_SBS_EnableIOSpeedOptimize(SBS_IO_XSPI1_HSLV);</p>
+<p>HAL_SBS_EnableIOSpeedOptimize(SBS_IO_XSPI2_HSLV);</p>
+<p>#endif</p></li>
+</ul>
+</blockquote>
 </body>
 </html>

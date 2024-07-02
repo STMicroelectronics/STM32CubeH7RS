@@ -32,10 +32,10 @@ XSPI_HandleTypeDef hxspi;
 DMA_HandleTypeDef hdmatx;
 
 /* Private defines -----------------------------------------------------------*/
-#define REGION_EXTERNAL_MEMORY_XSPI2_ADDRESS XSPI2_BASE
-#define REGION_EXTERNAL_MEMORY_XSPI2_SIZEMAX MPU_REGION_SIZE_256MB
+#define REGION_EXTERNAL_MEMORY_DMA_NUMBER   (MPU_REGION_NUMBER10)
 
-#define REGION_EXTERNAL_MEMORY_DMA_NUMBER MPU_REGION_NUMBER10
+#define REGION_EXTERNAL_MEMORY_NUMBER       (MPU_REGION_NUMBER11)
+#define REGION_EXTERNAL_MEMORY_SIZE         (MPU_REGION_SIZE_256MB)
 
 /* Private macros ------------------------------------------------------------*/
 #define REGION_MIN_SIZE(_A_,_B_) (((_A_) > (_B_)) ? (_B_) : (_A_))
@@ -64,6 +64,11 @@ static STIROT_ILOADER_ErrorStatus FLASH_EXT_XSPI_Init(uint32_t Address)
   {
     hxspi.Instance = XSPI2;
   }
+  else
+  {
+    /* FMC not currently supported by the STM32_ExtMem_Manager middleware */
+    Error_Handler();
+  }
 
   /* XSPI initialization */
   /* ClockPrescaler set to 3, so initial XSPI clock = 200MHz / (1+3) = 50MHz */
@@ -88,6 +93,12 @@ static STIROT_ILOADER_ErrorStatus FLASH_EXT_XSPI_Init(uint32_t Address)
     return STIROT_ILOADER_ERROR;
   }
 
+  /*
+   * Map the XSPI 1 to the external flash (port 2) on the STM32H7S78-DK board:
+   *  XSPIM shall be used in swapped mode
+   * Map the XSPI 2 to the external flash (port 2) on the STM32H7S78-DK board:
+   *  XSPIM default configuration, nothing to do
+   */
   if (hxspi.Instance == XSPI1)
   {
     /* Configure the output port 2 for XSPI */
@@ -150,25 +161,54 @@ static void FLASH_EXT_XSPI_DMA_Init(void)
 static void FLASH_EXT_MPU_EnableRegion(uint8_t RegionID, uint32_t RegionSize)
 {
   uint32_t primask_bit;
+  uint32_t address = 0U;
+  MPU_Region_InitTypeDef region = {0U};
 
   switch (RegionID)
   {
     case REGION_EXTERNAL_MEMORY_DMA_NUMBER:
+    {
       /* Enter critical section to lock the system and avoid any issue around MPU mechanism */
       primask_bit = __get_PRIMASK();
       __disable_irq();
 
       /* Disable the DMA region, to allow its use */
-      MPU->RNR = REGION_EXTERNAL_MEMORY_DMA_NUMBER;
-      MPU->RASR = (MPU->RASR  & (~MPU_RASR_ENABLE_Msk));
+      region.Number = RegionID;
+      region.Enable = MPU_REGION_DISABLE;
+      HAL_MPU_ConfigRegion(&region);
 
-      /* Exit critical section to lock the system and avoid any issue around MPU mechanisme */
+      /* Exit critical section to lock the system and avoid any issue around MPU mechanism */
       __set_PRIMASK(primask_bit);
-      break;
+    }
+    break;
+
+    case REGION_EXTERNAL_MEMORY_NUMBER:
+    {
+      /* Enable the access to the external memory */
+      address = (hxspi.Instance == XSPI1) ? XSPI1_BASE :
+                (hxspi.Instance == XSPI2) ? XSPI2_BASE :
+                0xFFFFFFFFU;
+
+      region.Enable = MPU_REGION_ENABLE;
+      region.Number = RegionID;
+      region.BaseAddress = address;
+      region.Size = RegionSize;
+      region.SubRegionDisable = 0x0;
+      region.TypeExtField = MPU_TEX_LEVEL0;
+      region.AccessPermission = MPU_REGION_PRIV_RW;
+      region.DisableExec = MPU_INSTRUCTION_ACCESS_DISABLE;
+      region.IsShareable = MPU_ACCESS_SHAREABLE;
+      region.IsCacheable = MPU_ACCESS_NOT_CACHEABLE;
+      region.IsBufferable = MPU_ACCESS_NOT_BUFFERABLE;
+      HAL_MPU_ConfigRegion(&region);
+    }
+    break;
 
     default:
+    {
       /* Nothing to unexpected region identifier */
-      break;
+    }
+    break;
   }
 }
 
@@ -203,6 +243,9 @@ STIROT_ILOADER_ErrorStatus FLASH_EXT_Init(uint32_t Address)
   {
     Error_Handler();
   }
+
+  /* Enable the access to the external memory */
+  FLASH_EXT_MPU_EnableRegion(REGION_EXTERNAL_MEMORY_NUMBER, REGION_EXTERNAL_MEMORY_SIZE);
 
   /* Enable the dma */
   FLASH_EXT_MPU_EnableRegion(REGION_EXTERNAL_MEMORY_DMA_NUMBER, 0U);
@@ -316,7 +359,7 @@ STIROT_ILOADER_ErrorStatus FLASH_EXT_Write(uint32_t WriteAddress, const uint8_t 
 #if defined(CONTROL_FLASH_WRITEOPERATION)
   {
     uint32_t index = 0U;
-    uint8_t *address = (uint8_t *)REGION_EXTERNAL_MEMORY_XSPI2_ADDRESS;
+    uint8_t *address = (uint8_t *)WriteAddress;
 
     /* check the SW write operation */
     for (index = 0U; index < Length; index++)

@@ -23,15 +23,24 @@
  extern "C" {
 #endif
 
+/* Includes ------------------------------------------------------------------*/
+
+/* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
 /* USER CODE END Includes */
 
-void MX_FATFS_Init(void);
+/* Private defines -----------------------------------------------------------*/
+/* USER CODE BEGIN Private defines */
 
+/* USER CODE END Private defines */
+
+/* Exported functions prototypes ---------------------------------------------*/
+void MX_FATFS_Init(void);
 /* USER CODE BEGIN Prototypes */
 
 /* USER CODE END Prototypes */
+
 #ifdef __cplusplus
 }
 #endif

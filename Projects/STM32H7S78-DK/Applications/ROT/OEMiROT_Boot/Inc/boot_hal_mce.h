@@ -24,6 +24,7 @@
 extern "C" {
 #endif
 
+#if defined(STM32H7S3xx) || defined(STM32H7S7xx)
 /* Includes ------------------------------------------------------------------*/
 #include <stdbool.h>
 /* Exported functions ------------------------------------------------------- */
@@ -31,8 +32,10 @@ extern "C" {
 /** @defgroup BOOT_MCE_Exported_Functions Exported Functions
   * @{
   */
+
 bool boot_is_in_primary(uint8_t fa_id, uint32_t offset_in_flash, size_t len);
 bool boot_is_in_primary_and_erased(uint8_t fa_id, uint32_t offset_in_flash, size_t len, uint8_t erased_val);
+#endif /* STM32H7S3xx || STM32H7S7xx */
 /**
   * @}
   */

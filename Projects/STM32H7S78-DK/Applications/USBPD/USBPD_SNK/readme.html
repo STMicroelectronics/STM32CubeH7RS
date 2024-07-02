@@ -22,9 +22,7 @@
 <h2 id="usbpd_snk-application-description"><b>USBPD_SNK Application Description</b></h2>
 <p>This application is a USBPD type C Consumer using FreeRTOS. USBPD Consumer: This application initialize the type C port 1 in sink mode with only one PDO at 5V.</p>
 <h4 id="expected-success-behavior"><b>Expected success behavior</b></h4>
-<p>Connect UCPD cube Monitor on the VCP associated to our board (only available if USB cable is connected) The UCPD Cube Monitor will be used to trace all the messages exchange between the ports partner.</p>
-<h4 id="error-behaviors"><b>Error behaviors</b></h4>
-<p>Errors are detected and the corresponding message is displayed on the UCPD Cube Monitor.</p>
+<p>Connect a USBPD power source to the type C port 1. A USBPD contract should be negotiated between the ports partner.</p>
 <h4 id="assumptions-if-any"><b>Assumptions if any</b></h4>
 <p>User is familiar with USB-PD 3.1 “Universal Serial BUS Power Delivery” Specification.</p>
 <h4 id="known-limitations"><b>Known limitations</b></h4>
@@ -35,7 +33,6 @@
 <ul>
 <li><p>This example runs on STM32H7S78-DK.</p></li>
 <li><p>This example has been tested with STMicroelectronics STM32H7S78-DK (MB1736) board and can be easily tailored to any other supported device and development board.</p></li>
-<li><p>Connect ST-Link cable to the PC USB port to display data on the CubeMx Monitor.</p></li>
 </ul>
 <h3 id="how-to-use-it"><b>How to use it ?</b></h3>
 <p>In order to make the program work, you must do the following :</p>
@@ -43,7 +40,6 @@
 <li>Open your preferred toolchain</li>
 <li>Rebuild all files and load your image into target memory</li>
 <li>Run the application</li>
-<li>Run CubeMx Monitor and open trace tools</li>
 <li>Connect a type C source device on the Type-C connector 1</li>
 </ul>
 <p><b>Note</b></p>

@@ -23,6 +23,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32h7rsxx_hal.h"
+#include "usbpd.h"
 
 /** @addtogroup STM32H7RSxx_HAL_Driver
   * @{
@@ -116,7 +117,7 @@ HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
   if (Status == HAL_OK)
   {
 #if (USE_HAL_TIM_REGISTER_CALLBACKS == 1U)
-    HAL_TIM_RegisterCallback(&htim6, HAL_TIM_PERIOD_ELAPSED_CB_ID, TimeBase_TIM_PeriodElapsedCallback);
+  HAL_TIM_RegisterCallback(&htim6, HAL_TIM_PERIOD_ELAPSED_CB_ID, TimeBase_TIM_PeriodElapsedCallback);
 #endif /* USE_HAL_TIM_REGISTER_CALLBACKS */
     /* Start the TIM time Base generation in interrupt mode */
     Status = HAL_TIM_Base_Start_IT(&htim6);
@@ -164,6 +165,28 @@ void HAL_ResumeTick(void)
   /* Enable TIM6 update interrupt */
   __HAL_TIM_ENABLE_IT(&htim6, TIM_IT_UPDATE);
 }
+
+/**
+  * @brief  Period elapsed callback in non blocking mode
+  * @note   This function is called  when TIM6 interrupt took place, inside
+  * HAL_TIM6_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
+  * a global variable "uwTick" used as application time base.
+  * @param  htim TIM handle
+  * @retval None
+  */
+#if (USE_HAL_TIM_REGISTER_CALLBACKS == 1U)
+void TimeBase_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+  /* Prevent unused argument(s) compilation warning */
+  UNUSED(htim);
+
+  HAL_IncTick();
+
+  USBPD_DPM_TimerCounter();
+
+  GUI_TimerCounter();
+}
+#endif /* USE_HAL_TIM_REGISTER_CALLBACKS */
 
 /**
   * @}

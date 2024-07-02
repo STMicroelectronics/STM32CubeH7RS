@@ -84,8 +84,8 @@ void HAL_PCD_MspDeInit(PCD_HandleTypeDef *hpcd)
     __HAL_RCC_USB_OTG_FS_CLK_DISABLE();
 
     /** USB GPIO Configuration
-        PA11     ------> USB_DM
-        PA12     ------> USB_DP
+        PM11     ------> USB_DM
+        PM12     ------> USB_DP
       */
     HAL_GPIO_DeInit(GPIOM, GPIO_PIN_11 | GPIO_PIN_12);
 

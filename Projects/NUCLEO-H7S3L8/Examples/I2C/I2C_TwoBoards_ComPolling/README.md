@@ -1,13 +1,14 @@
 ## <b>I2C_TwoBoards_ComPolling Example Description</b>
 
-How to handle I2C data buffer transmission/reception between two boards,
+How to handle I2C data buffer transmission/reception between two boards, 
 in polling mode.
 
     Board: NUCLEO-H7S3L8 (embeds a STM32H7S3L8Hx device)
     SCL Pin: PB8 (CN7, pin2)
     SDA Pin: PB9 (CN7, pin4)
+    
 
-At the beginning of the main program the HAL_Init() function is called to reset
+At the beginning of the main program the HAL_Init() function is called to reset 
 all the peripherals, initialize the Flash interface and the systick.
 
 This project runs from the external Flash memory. It is launched from a first boot stage and inherits from this boot project
@@ -17,22 +18,23 @@ Note that the boot part is automatically downloaded from the IDE environment via
 This project calls also SCB_EnableICache() and SCB_EnableDCache() functions in order to enable
 the Layer 1 Core Instruction and Data Caches.
 
+
 The I2C peripheral configuration is ensured by the HAL_I2C_Init() function.
 This later is calling the HAL_I2C_MspInit()function which core is implementing
-the configuration of the needed I2C resources according to the used hardware (CLOCK,
+the configuration of the needed I2C resources according to the used hardware (CLOCK, 
 GPIO). You may update this function to change I2C configuration.
 
 The I2C communication is then initiated.
 
 The project is split in two parts: the Master Board and the Slave Board.
 
-- Master Board:
+- Master Board: 
   The HAL_I2C_Master_Receive() and the HAL_I2C_Master_Transmit() functions 
   allow respectively the reception and the transmission of a predefined data buffer
   in Master mode using polling.
 
-- Slave Board:
-  The HAL_I2C_Slave_Receive() and the HAL_I2C_Slave_Transmit() functions
+- Slave Board: 
+  The HAL_I2C_Slave_Receive() and the HAL_I2C_Slave_Transmit() functions 
   allow respectively the reception and the transmission of a predefined data buffer
   in Slave mode using polling.
 
@@ -46,7 +48,7 @@ For this example the aTxBuffer is predefined and the aRxBuffer size is same as a
 
 In a first step after the user press the USER push-button on the Master Board,
 I2C Master starts the communication by sending aTxBuffer through HAL_I2C_Master_Transmit()
-to I2C Slave which receives aRxBuffer through HAL_I2C_Slave_Receive().
+to I2C Slave which receives aRxBuffer through HAL_I2C_Slave_Receive(). 
 
 The second step starts when the user press the USER push-button on the Master Board,
 the I2C Slave sends aTxBuffer through HAL_I2C_Slave_Transmit()
@@ -55,18 +57,18 @@ to the I2C Master which receives aRxBuffer through HAL_I2C_Master_Receive().
 The end of this two steps are monitored through the HAL_I2C_GetState() function
 result.
 
-Finally, aTxBuffer and aRxBuffer are compared through Buffercmp() in order to
-check buffers correctness.
+Finally, aTxBuffer and aRxBuffer are compared through Buffercmp() in order to 
+check buffers correctness.  
 
 NUCLEO-H7S3L8's LEDs can be used to monitor the transfer status:
 
  - LD1 is ON when the transmission process is complete.
  - LD1 is OFF when the reception process is complete.
- - LD3 is ON when there is an error in transmission/reception process.
+ - LD3 is ON when there is an error in transmission/reception process.  
 
 #### <b>Notes</b>
 
- 1. Timeout is set to 10 Seconds which means that if no communication occurs
+ 1. Timeout is set to 10 Seconds which means that if no communication occurs 
     during 10 Seconds, a Timeout Error will be generated.
 
  2. Care must be taken when using HAL_Delay(), this function provides accurate delay (in milliseconds)
@@ -82,7 +84,7 @@ NUCLEO-H7S3L8's LEDs can be used to monitor the transfer status:
     by the Cortex M7 and the GPDMA/HPDMA), there is no need for cache maintenance.
     If the application needs to put DMA buffers in AXI SRAM (starting from @0x24000000), the user has to:
     - either define a non-cacheable region in the MPU and linker configuration file to locate DMA buffers
-      (a proposed dma_buffer section is available from CMSIS Device linker template file and its size must
+      (a proposed noncacheable_buffer section is available from CMSIS Device linker template file and its size must
       be adapted to the application requirements)
     - or to ensure cache maintenance operations to ensure the cache coherence between the CPU and the DMAs.
 
@@ -97,16 +99,16 @@ NUCLEO-H7S3L8's LEDs can be used to monitor the transfer status:
 
 Connectivity, Communication, I2C, Polling, Master, Slave, Transmission, Reception, Fast mode plus
 
-### <b>Directory contents</b>
+### <b>Directory contents</b> 
 
   - I2C/I2C_TwoBoards_ComPolling/Appli/Inc/stm32h7rsxx_nucleo_conf.h     BSP configuration file
-  - I2C/I2C_TwoBoards_ComPolling/Appli/Inc/stm32h7rsxx_hal_conf.h        HAL configuration file
-  - I2C/I2C_TwoBoards_ComPolling/Appli/Inc/stm32h7rsxx_it.h              Interrupt handlers header file
-  - I2C/I2C_TwoBoards_ComPolling/Appli/Inc/main.h                        Header for main.c module
-  - I2C/I2C_TwoBoards_ComPolling/Appli/Src/stm32h7rsxx_it.c              Interrupt handlers
-  - I2C/I2C_TwoBoards_ComPolling/Appli/Src/main.c                        Main program
-  - I2C/I2C_TwoBoards_ComPolling/Appli/Src/system_stm32h7rsxx.c          STM32H7RSxx system source file
-  - I2C/I2C_TwoBoards_ComPolling/Appli/Src/stm32h7rsxx_hal_msp.c         HAL MSP file
+  - I2C/I2C_TwoBoards_ComPolling/Appli/Inc/stm32h7rsxx_hal_conf.h    	 HAL configuration file
+  - I2C/I2C_TwoBoards_ComPolling/Appli/Inc/stm32h7rsxx_it.h        	     Interrupt handlers header file
+  - I2C/I2C_TwoBoards_ComPolling/Appli/Inc/main.h                  		 Header for main.c module
+  - I2C/I2C_TwoBoards_ComPolling/Appli/Src/stm32h7rsxx_it.c          	 Interrupt handlers
+  - I2C/I2C_TwoBoards_ComPolling/Appli/Src/main.c                  	     Main program
+  - I2C/I2C_TwoBoards_ComPolling/Appli/Src/system_stm32h7rsxx.c      	 STM32H7RSxx system source file
+  - I2C/I2C_TwoBoards_ComPolling/Appli/Src/stm32h7rsxx_hal_msp.c     	 HAL MSP file
 
 ### <b>Hardware and Software environment</b>
 

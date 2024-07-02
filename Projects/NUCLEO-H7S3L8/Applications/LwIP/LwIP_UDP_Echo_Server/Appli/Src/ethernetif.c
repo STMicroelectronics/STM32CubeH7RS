@@ -113,7 +113,6 @@ ETH_DMADescTypeDef DMATxDscrTab[ETH_TX_DESC_CNT] __attribute__((section(".TxDesc
 
 #endif
 
-/* USER CODE BEGIN 2 */
 #if defined ( __ICCARM__ ) /*!< IAR Compiler */
 #pragma location = 0x24020100
 extern u8_t memp_memory_RX_POOL_base[];
@@ -127,6 +126,9 @@ __attribute__((section(".Rx_PoolSection"))) u8_t memp_memory_RX_POOL_base[];
 #elif defined ( __GNUC__ ) /* GNU Compiler */
 __attribute__((section(".Rx_PoolSection"))) extern u8_t memp_memory_RX_POOL_base[];
 #endif
+
+/* USER CODE BEGIN 2 */
+
 /* USER CODE END 2 */
 
 /* Global Ethernet handle */
@@ -234,7 +236,12 @@ static void low_level_init(struct netif *netif)
   LAN8742_RegisterBusIO(&LAN8742, &LAN8742_IOCtx);
 
   /* Initialize the LAN8742 ETH PHY */
-  LAN8742_Init(&LAN8742);
+  if(LAN8742_Init(&LAN8742) != LAN8742_STATUS_OK)
+  {
+    netif_set_link_down(netif);
+    netif_set_down(netif);
+    return;
+  }
 
   if (hal_eth_init_status == HAL_OK)
   {

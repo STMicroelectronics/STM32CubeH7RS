@@ -27,6 +27,7 @@
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
+typedef StaticSemaphore_t osStaticMutexDef_t;
 /* USER CODE BEGIN PTD */
 
 /* USER CODE END PTD */
@@ -64,8 +65,11 @@ const osThreadAttr_t Thread2_attributes = {
 };
 /* Definitions for Mutex */
 osMutexId_t MutexHandle;
+osStaticMutexDef_t Static;
 const osMutexAttr_t Mutex_attributes = {
-  .name = "Mutex"
+  .name = "Mutex",
+  .cb_mem = &Static,
+  .cb_size = sizeof(Static),
 };
 /* USER CODE BEGIN PV */
 

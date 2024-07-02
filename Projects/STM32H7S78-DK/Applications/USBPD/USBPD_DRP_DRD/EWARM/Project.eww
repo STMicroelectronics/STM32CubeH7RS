@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workspace>
+    <project>
+        <path>$WS_DIR$\Boot\STM32H7S78-DK_Boot.ewp</path>
+    </project>
+    <project>
+        <path>$WS_DIR$\Appli\USBPD_DRP_DRD_Appli.ewp</path>
+    </project>
+    <batchBuild />
+</workspace>

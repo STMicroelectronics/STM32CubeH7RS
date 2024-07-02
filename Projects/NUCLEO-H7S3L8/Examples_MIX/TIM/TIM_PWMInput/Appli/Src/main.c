@@ -343,7 +343,7 @@ void UserButton_Callback()
 
 /**
   * @brief  Input Capture callback in non blocking mode
-  * @param  htim : TIM IC handle
+  * @param  htim TIM IC handle
   * @retval None
   */
 void TimerCaptureCompare_Ch2_Callback()

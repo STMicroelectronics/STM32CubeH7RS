@@ -193,7 +193,7 @@ void SystemClock_Config(void)
   RCC_ClkInitStruct.APB4CLKDivider = RCC_APB4_DIV2;
   RCC_ClkInitStruct.APB5CLKDivider = RCC_APB5_DIV2;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_6) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_7) != HAL_OK)
   {
     Error_Handler();
   }
@@ -216,6 +216,11 @@ static void MX_FLASH_Init(void)
   /* USER CODE BEGIN FLASH_Init 1 */
 
   /* USER CODE END FLASH_Init 1 */
+  HAL_FLASHEx_OBGetConfig(&pOBInit);
+  if ((pOBInit.USERConfig1 & OB_XSPI1_HSLV_ENABLE) != OB_XSPI1_HSLV_ENABLE||
+(pOBInit.USERConfig1 & OB_XSPI2_HSLV_ENABLE) != OB_XSPI2_HSLV_ENABLE||
+(pOBInit.USERConfig2 & OB_I2C_NI3C_I2C) != OB_I2C_NI3C_I2C)
+{
   if (HAL_FLASH_Unlock() != HAL_OK)
   {
     Error_Handler();
@@ -241,6 +246,7 @@ static void MX_FLASH_Init(void)
   {
     Error_Handler();
   }
+}
   /* USER CODE BEGIN FLASH_Init 2 */
 
   /* USER CODE END FLASH_Init 2 */

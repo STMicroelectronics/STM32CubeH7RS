@@ -771,7 +771,7 @@
                 </option>
                 <option>
                     <name>IlinkIcfFile</name>
-                    <state>$PROJ_DIR$\stm32h7rsxx_flash.icf</state>
+                    <state>$PROJ_DIR$\stm32h7rsxx_openbootloader_flash.icf</state>
                 </option>
                 <option>
                     <name>IlinkIcfFileSlave</name>
@@ -1853,7 +1853,7 @@
                 </option>
                 <option>
                     <name>IlinkIcfFile</name>
-                    <state>$PROJ_DIR$\stm32h7rsxx_ram.icf</state>
+                    <state>$PROJ_DIR$\stm32h7rsxx_openbootloader_ram.icf</state>
                 </option>
                 <option>
                     <name>IlinkIcfFileSlave</name>

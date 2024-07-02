@@ -5,6 +5,9 @@ setlocal EnableDelayedExpansion
 
 call ../env.bat
 
+:: Select device type (H7S or H7R)
+set device_type=H7S
+
 :: Getting the CubeProgammer_cli path
 set connect_no_reset=-c port=SWD speed=fast ap=1 mode=Hotplug
 set connect_reset=-c port=SWD speed=fast ap=1 mode=Hotplug -hardRst
@@ -25,7 +28,12 @@ IF !errorlevel! NEQ 0 goto :error
 set "action=Configure OBKeys HDPL1-OEMiROT data area"
 echo %action%
 %stm32programmercli% %connect_reset%
-%stm32programmercli% %connect_no_reset% -sdp ./Binary/OEMiROT_Data.obk
+if  "%device_type%" == "H7S" (
+    %stm32programmercli% %connect_no_reset% -sdp ./Binary/OEMiROT_Data.obk
+) else (
+    :: Use a non-encrypted obk file for H7R (DoEncryption = 0)
+    %stm32programmercli% %connect_no_reset% -sdp ./Binary/OEMiROT_Data_OPEN.obk
+)
 IF !errorlevel! NEQ 0 goto :error
 
 echo Successful obkey provisioning

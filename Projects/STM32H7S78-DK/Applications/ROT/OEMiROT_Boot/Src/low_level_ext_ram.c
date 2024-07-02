@@ -37,6 +37,7 @@ uint32_t RCCEx_GetXspiCLKFreq(uint32_t PeriphClk);
 /* Functions Definition ------------------------------------------------------*/
 #if  (OEMIROT_LOAD_AND_RUN == LOAD_AND_RUN_EXT_RAM)
 
+
 /**
   * @brief  Return the peripheral clock frequency for a given peripheral
   * @note   Return 0 if peripheral clock identifier not managed by this API or
@@ -110,7 +111,9 @@ HAL_StatusTypeDef Ext_Ram_Initialize(void)
 {
 #if  (OEMIROT_LOAD_AND_RUN == LOAD_AND_RUN_EXT_RAM)
   HAL_StatusTypeDef status;
+#if !defined(STM32H7R3xx) && !defined(STM32H7R7xx)
   XSPIM_CfgTypeDef xspi_manager_cfg = {0};
+#endif /* !STM32H7R3xx && !STM32H7R7xx */
 
   status = Ext_Ram_SetHslv();
   if (status != HAL_OK)
@@ -140,14 +143,17 @@ HAL_StatusTypeDef Ext_Ram_Initialize(void)
   {
     return status;
   }
-
+#if !defined(STM32H7R3xx) && !defined(STM32H7R7xx)
   /* Connect Instance2(XSPI2/MCE2) to port1 */
   xspi_manager_cfg.IOPort = HAL_XSPIM_IOPORT_1;
   xspi_manager_cfg.nCSOverride = HAL_XSPI_CSSEL_OVR_DISABLED;
+
+
   if (HAL_XSPIM_Config(&XSPI_RUN_HANDLE, &xspi_manager_cfg, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
   {
     return HAL_ERROR;
   }
+#endif /* !STM32H7R3xx && !STM32H7R7xx */
 
   /* Initialize the EXTMEM */
   if (EXT_RAM_XSPI_INSTANCE == XSPI1)

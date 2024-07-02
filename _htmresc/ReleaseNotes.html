@@ -1,29 +1,20 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
-<head>
-<title>_htmresc\ReleaseNotes.html</title>
-</head>
-
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US"><head>
+<title>_htmresc\ReleaseNotes.html</title></head>
 <body style="font-size: 10pt; font-family: Verdana;">
 
-<!-- Below, replace YY with the name of the STM32 serie, x.y.z with the exact version and dd-month-year with the current date. Remove this comment line when done. -->
-<h3 style="color: blue; text-decoration: underline;">STM32CubeH7RS Firmware Package V1.0.0 / 28-February-2024</h3>
+<br>
+<h3 style="color: blue; text-decoration: underline;">STM32CubeH7RS Firmware Package V1.1.0 / 05-June-2024</h3>
 
 <div style="margin-left: 18pt;">
 <p>
 <b><u>Main Changes</u></b>
-</p>
+</p>First Official Maintenance&nbsp;release of STM32CubeH7RS FW package<br><b style="color: rgb(0, 0, 0); font-family: Verdana; font-size: 13.3333px; font-style: normal; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; white-space: normal;"><br>Drivers</b><span style="color: rgb(0, 0, 0); font-family: Verdana; font-size: 13.3333px; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; white-space: normal; display: inline ! important; float: none;"></span><p style="color: rgb(0, 0, 0); font-family: Verdana; font-size: 13.3333px; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; white-space: normal;">- CMSIS Device Drivers update with new linker file for Openbootloader</p><p style="color: rgb(0, 0, 0); font-family: Verdana; font-size: 13.3333px; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; white-space: normal;">- HAL/LL Drivers update : bug correction</p><p style="color: rgb(0, 0, 0); font-family: Verdana; font-size: 13.3333px; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; white-space: normal;"><b>Middlewares</b></p><p style="color: rgb(0, 0, 0); font-family: Verdana; font-size: 13.3333px; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; white-space: normal;">- MW ExtMem_manager V1.1.0 support</p><p style="color: rgb(0, 0, 0); font-family: Verdana; font-size: 13.3333px; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; white-space: normal;">- MW&nbsp;ExtMem_Loader V1.1.0 support</p><p style="color: rgb(0, 0, 0); font-family: Verdana; font-size: 13.3333px; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; white-space: normal;">- Add MW mbed-crypto support</p><b style="color: rgb(0, 0, 0); font-family: Verdana; font-size: 13.3333px; font-style: normal; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; white-space: normal;">Projects</b><span style="color: rgb(0, 0, 0); font-family: Verdana; font-size: 13.3333px; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; white-space: normal; display: inline ! important; float: none;"></span><p style="color: rgb(0, 0, 0); font-family: Verdana; font-size: 13.3333px; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; white-space: normal;">- Add new&nbsp;examples</p><p style="color: rgb(0, 0, 0); font-family: Verdana; font-size: 13.3333px; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; white-space: normal;">- Add MDK-ARM &amp; CubeIDE converted projects</p>- Update flash latency to 7 when CPU clock is running à 300MHz<p style="color: rgb(0, 0, 0); font-family: Verdana; font-size: 13.3333px; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; white-space: normal;">- Update stm32h7rsxx_hal_timebase_tim.c in USBPD application<br></p>- Enable CSI prior to configure IO HSLV<br><br>- Avoid writing systematic User OB in Flash at each startup<br><span style="color: rgb(3, 35, 75); font-family: -apple-system,BlinkMacSystemFont,Helvetica,arial,sans-serif; font-size: 12.15px; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; white-space: normal; background-color: rgb(255, 255, 255); display: inline ! important; float: none;"></span>
 
-<!-- Below, add as many <p></p> paragraph sections as required to describe the main changes.
-This is expected to be similar to the "Main Changes" section of the package release note. Remove these comment lines when done. -->
-<p>
-First official release of STM32CubeH7RS FW package
-</p>
 
 <p>
 
 </p>
 
 </div>
-</body>
-</html>
+</body></html>

@@ -140,9 +140,6 @@ int main(void)
   sMemMappedCfg.TimeoutPeriodClock  = 0x34;
   __HAL_MCE_ENABLE_IT(&hmce1, MCE_IT_ILLEGAL_ACCESS_ERROR);
   hmce1.Instance = MCE1;
-  ContextAESConfig.Nonce [0] = Nonce[0];
-  ContextAESConfig.Nonce [1] = Nonce[1];
-  ContextAESConfig.Version   = 0xFEDC;
   ContextAESConfig.pKey      = Key;
   /* Set MCE AES context configuration */
   if (HAL_MCE_ConfigAESContext(&hmce1, &ContextAESConfig, MCE_CONTEXT1)!= HAL_OK)
@@ -248,7 +245,7 @@ void SystemClock_Config(void)
   RCC_ClkInitStruct.APB4CLKDivider = RCC_APB4_DIV2;
   RCC_ClkInitStruct.APB5CLKDivider = RCC_APB5_DIV2;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_6) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_7) != HAL_OK)
   {
     Error_Handler();
   }
@@ -707,9 +704,11 @@ void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
-  __disable_irq();
+ 
   while (1)
   {
+      BSP_LED_Toggle(LED_RED);
+    HAL_Delay(100);
   }
   /* USER CODE END Error_Handler_Debug */
 }

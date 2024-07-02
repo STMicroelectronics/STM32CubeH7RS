@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * @file    stm32_sal_xspi.h
+  * @file    stm32_sal_xspi_api.h
   * @author  MCD Application Team
   * @brief   This file contains the software adaptation layer XSPI functions
   *          prototypes.
@@ -18,8 +18,8 @@
   */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __SAL_XSPI_H
-#define __SAL_XSPI_H
+#ifndef __STM32_SAL_XSPI_API_H
+#define __STM32_SAL_XSPI_API_H
 
 #ifdef __cplusplus
  extern "C" {
@@ -60,7 +60,8 @@ HAL_StatusTypeDef SAL_XSPI_Init(SAL_XSPI_ObjectTypeDef* SalXspi, void* HALHandle
  * @param DataSize size of the data ti read
  * @return @ref HAL_StatusTypeDef
  **/
-HAL_StatusTypeDef SAL_XSPI_GetSFDP(SAL_XSPI_ObjectTypeDef* SalXspi, uint32_t Address, uint8_t* Data, uint32_t DataSize);
+HAL_StatusTypeDef SAL_XSPI_GetSFDP(SAL_XSPI_ObjectTypeDef* SalXspi, uint32_t Address, 
+                                   uint8_t* Data, uint32_t DataSize);
 
 /**
  * @brief this function read data form the flash
@@ -83,6 +84,18 @@ HAL_StatusTypeDef SAL_XSPI_Read(SAL_XSPI_ObjectTypeDef* SalXspi, uint8_t Command
 HAL_StatusTypeDef SAL_XSPI_GetId(SAL_XSPI_ObjectTypeDef* SalXspi, uint8_t* Data, uint32_t DataSize);
 
 /**
+ * @brief this function send a command + data
+ * @param SalXspi SAL XSPI handle
+ * @param Command command to execute
+ * @param Data Data pointer
+ * @param DataSize size of the data to write
+ * @return @ref HAL_StatusTypeDef
+ **/
+HAL_StatusTypeDef SAL_XSPI_CommandSendData(SAL_XSPI_ObjectTypeDef* SalXspi, uint8_t Command,
+                                           uint8_t* Data, uint16_t DataSize);
+
+
+/**
  * @brief this function send a command on read the data
  * @param SalXspi SAL XSPI handle
  * @param Command command to execute
@@ -90,8 +103,20 @@ HAL_StatusTypeDef SAL_XSPI_GetId(SAL_XSPI_ObjectTypeDef* SalXspi, uint8_t* Data,
  * @param DataSize size of the data to read
  * @return @ref HAL_StatusTypeDef
  **/
-HAL_StatusTypeDef SAL_XSPI_SendCommand(SAL_XSPI_ObjectTypeDef* SalXspi, uint8_t Command,
-                                       uint8_t* Data, uint16_t DataSize);
+HAL_StatusTypeDef SAL_XSPI_SendReadCommand(SAL_XSPI_ObjectTypeDef *SalXspi, uint8_t Command,
+                                           uint8_t *Data, uint16_t DataSize);
+
+ /**
+ * @brief this function send a command with address and read the data
+ * @param SalXspi SAL XSPI handle
+ * @param Command command to execute
+ * @param Address Address value
+ * @param Data Data pointer
+ * @param DataSize size of the data to read
+ * @return @ref HAL_StatusTypeDef
+ **/
+HAL_StatusTypeDef SAL_XSPI_CommandSendReadAddress(SAL_XSPI_ObjectTypeDef *SalXspi, uint8_t Command,
+                                           uint32_t Address, uint8_t *Data, uint16_t DataSize);
 
 /**
  * @brief this function controls the status register
@@ -103,7 +128,8 @@ HAL_StatusTypeDef SAL_XSPI_SendCommand(SAL_XSPI_ObjectTypeDef* SalXspi, uint8_t 
  * @param Timeout timeout parameter
  * @return @ref HAL_StatusTypeDef
  **/
-HAL_StatusTypeDef SAL_XSPI_CheckStatusRegister(SAL_XSPI_ObjectTypeDef* SalXspi, uint8_t Command, uint32_t Address, uint8_t MatchValue, uint8_t MatchMask, uint32_t Timeout);
+HAL_StatusTypeDef SAL_XSPI_CheckStatusRegister(SAL_XSPI_ObjectTypeDef* SalXspi, 
+                                               uint8_t Command, uint32_t Address, uint8_t MatchValue, uint8_t MatchMask, uint32_t Timeout);
 
 /**
  * @brief this function write data at an Address
@@ -123,7 +149,7 @@ HAL_StatusTypeDef SAL_XSPI_Write(SAL_XSPI_ObjectTypeDef* SalXspi, uint8_t Comman
  * @param Address address to write the data
  * @return @ref HAL_StatusTypeDef
  **/
-HAL_StatusTypeDef SAL_XSPI_SendCommandAddress(SAL_XSPI_ObjectTypeDef* SalXspi, uint8_t Command, uint32_t Address);
+HAL_StatusTypeDef SAL_XSPI_CommandSendAddress(SAL_XSPI_ObjectTypeDef* SalXspi, uint8_t Command, uint32_t Address);
 
 /**
  * @brief this function set the clock according the clock in and the expected clock
@@ -173,6 +199,14 @@ HAL_StatusTypeDef SAL_XSPI_EnableMapMode(SAL_XSPI_ObjectTypeDef *SalXspi, uint8_
 HAL_StatusTypeDef SAL_XSPI_DisableMapMode(SAL_XSPI_ObjectTypeDef *SalXspi);
 
 /**
+ * @brief this function udapte the memory according the SFPD signature value
+ * @param SalXspi SAL XSPI handle
+ * @param DataOrder
+ * @return @ref HAL_StatusTypeDef
+ **/
+HAL_StatusTypeDef SAL_XSPI_UpdateMemoryType(SAL_XSPI_ObjectTypeDef *SalXspi, SAL_XSPI_DataOrderTypeDef DataOrder);
+
+/**
   * @}
   */
 
@@ -188,6 +222,6 @@ HAL_StatusTypeDef SAL_XSPI_DisableMapMode(SAL_XSPI_ObjectTypeDef *SalXspi);
 }
 #endif
 
-#endif /* __SAL_XSPI_H */
+#endif /* __STM32_SAL_XSPI_API_H */
 
 

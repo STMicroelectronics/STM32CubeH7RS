@@ -23,6 +23,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32h7rsxx_hal.h"
+#include "usbpd.h"
 
 /** @addtogroup STM32H7RSxx_HAL_Driver
   * @{
@@ -180,6 +181,8 @@ void TimeBase_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   UNUSED(htim);
 
   HAL_IncTick();
+
+  USBPD_DPM_TimerCounter();
 }
 #endif /* USE_HAL_TIM_REGISTER_CALLBACKS */
 /**

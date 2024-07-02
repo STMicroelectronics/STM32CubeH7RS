@@ -258,7 +258,7 @@ static void GetLSIFrequency(void)
 
 /**
   * @brief  Input Capture callback in non blocking mode
-  * @param  htim : TIM IC handle
+  * @param  htim TIM IC handle
   * @retval None
 */
 void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)

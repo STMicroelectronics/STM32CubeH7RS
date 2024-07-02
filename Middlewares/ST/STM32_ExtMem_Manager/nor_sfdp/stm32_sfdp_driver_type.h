@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * @file    stm32_sfdp_type.h
+  * @file    stm32_sfdp_driver_type.h
   * @author  MCD Application Team
   * @brief   This file contains the sfdp driver definition.
   ******************************************************************************
@@ -17,14 +17,14 @@
   */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __STM32_SFDP_TYPE_H
-#define __STM32_SFDP_TYPE_H
+#ifndef __STM32_SFDP_DRIVER_TYPE_H
+#define __STM32_SFDP_DRIVER_TYPE_H
 
 #ifdef __cplusplus
  extern "C" {
 #endif
 
-   
+
 /* Includes ------------------------------------------------------------------*/
 /** @addtogroup NOR_SFDP
   * @ingroup EXTMEM_DRIVER
@@ -67,7 +67,6 @@ typedef struct {
 
   /* Read management */
   uint8_t ReadInstruction;                           /*!< read command */
-  uint8_t ReadDTRInstruction;                        /*!< read DTR command */
 
   /* Erase management */
   uint8_t EraseType1Size;                            /*!< erase 1 size */
@@ -92,13 +91,22 @@ typedef struct {
  */
 typedef struct {
   struct {
-  SAL_XSPI_ObjectTypeDef        SALObject;         /*!< Instance of the memory */
-  EXTMEM_LinkConfig_TypeDef       Config;          /*!< memory configuration */
-  uint8_t                         FlashSize;       /*!< Flash size in power of two */
-  uint32_t                        PageSize;        /*!< Page size */
+    uint32_t                MaxFreq;              /*!< Maximum frequency supported by the memory
+                                                     @note if the value is equal to zero, the parameters is ignored */
+    uint8_t                 DtrReadDummyCycle;    /*!< Number of dummy cycle for DTR read command
+                                                     @note used only for JEDEC basic with DTR option */
+  } sfdp_public;
+  struct {
+  SAL_XSPI_ObjectTypeDef    SALObject;             /*!< Instance of the memory */
+  EXTMEM_LinkConfig_TypeDef Config;                /*!< memory configuration */
+  uint8_t                   ManuID;                /*!< manufacturer ID */
+  uint8_t                   FlashSize;             /*!< Flash size in power of two */
+  uint32_t                  PageSize;              /*!< Page size */
   EXTMEM_DRIVER_NOR_SFDP_InfoTypeDef  DriverInfo;  /*!< driver information */
-  uint32_t                        Sfdp_table_mask; /*!< sfdp table mask */
-  uint32_t                        Reset_info;      /*!< this bit is a copy of JEDEC Basic 16 Reset/Rescue info */
+  uint32_t                  Sfdp_table_mask;       /*!< sfdp table mask */
+  uint32_t                  Reset_info;            /*!< this bit is a copy of JEDEC Basic 16 Reset/Rescue info */
+  uint8_t                   Sfdp_param_number;     /*!< Number of param from the SFDP header table */
+  uint8_t                   Sfdp_AccessProtocol;   /*!< Access protocol from the SFDP header table */
   } sfpd_private;
 } EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef;
 
@@ -124,4 +132,4 @@ typedef struct {
 }
 #endif
 
-#endif /* __STM32_SFDP_TYPE_H */
+#endif /* __STM32_SFDP_DRIVER_TYPE_H */

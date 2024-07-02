@@ -76,7 +76,6 @@ static uint8_t SD_IsDetected(void);
 
 void MX_FATFS_Init(void)
 {
-
   /* USER CODE BEGIN Init */
   /* additional user code for init */
   if (FATFS_LinkDriver(&SD_Driver, SDPath) == 0)

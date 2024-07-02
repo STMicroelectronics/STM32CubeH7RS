@@ -72,7 +72,7 @@
   * @{
   */
 
-EXTMEM_DRIVER_SDCARD_StatusTypeDef EXTMEM_DRIVER_SDCARD_Init(void *IP, EXTMEM_DRIVER_SDCARD_ObjectTypeDef* SDCARDObject)
+EXTMEM_DRIVER_SDCARD_StatusTypeDef EXTMEM_DRIVER_SDCARD_Init(void *Peripheral, EXTMEM_DRIVER_SDCARD_ObjectTypeDef* SDCARDObject)
 {
   EXTMEM_DRIVER_SDCARD_StatusTypeDef retr = EXTMEM_DRIVER_SDCARD_OK;
 
@@ -81,14 +81,14 @@ EXTMEM_DRIVER_SDCARD_StatusTypeDef EXTMEM_DRIVER_SDCARD_Init(void *IP, EXTMEM_DR
   switch(SDCARDObject->sdcard_public.Link)
   {
     case EXTMEM_DRIVER_SDCARD_LINKSD :
-      if( HAL_OK != SAL_SD_Init(&SDCARDObject->sdcard_private.SALObject.SDObject, IP, &SDCARDObject->sdcard_private.Info))
+      if( HAL_OK != SAL_SD_Init(&SDCARDObject->sdcard_private.SALObject.SDObject, Peripheral, &SDCARDObject->sdcard_private.Info))
       {
         retr = EXTMEM_DRIVER_SDCARD_ERROR;
       }
     break;
 #if EXTMEM_SAL_MMC == 1
     case EXTMEM_DRIVER_SDCARD_LINKMMC:
-      if( HAL_OK != SAL_MMC_Init(&SDCARDObject->SALObject.MMCObject, IP))
+      if( HAL_OK != SAL_MMC_Init(&SDCARDObject->SALObject.MMCObject, Peripheral))
       {
         retr = EXTMEM_DRIVER_SDCARD_ERROR;
       }

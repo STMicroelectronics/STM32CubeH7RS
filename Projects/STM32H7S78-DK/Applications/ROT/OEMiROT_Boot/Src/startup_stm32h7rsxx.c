@@ -23,6 +23,8 @@
  */
 
 #include "stm32h7rsxx.h"
+
+
 /*----------------------------------------------------------------------------
   Exception / Interrupt Handler Function Prototype
  *----------------------------------------------------------------------------*/
@@ -89,8 +91,10 @@ DEFAULT_IRQ_HANDLER(EXTI13_IRQHandler)
 DEFAULT_IRQ_HANDLER(EXTI14_IRQHandler)
 DEFAULT_IRQ_HANDLER(EXTI15_IRQHandler)
 DEFAULT_IRQ_HANDLER(RTC_IRQHandler)
+#if defined(STM32H7S3xx) || defined(STM32H7S7xx)
 DEFAULT_IRQ_HANDLER(SAES_IRQHandler)
 DEFAULT_IRQ_HANDLER(CRYP_IRQHandler)
+#endif /* STM32H7S3xx || STM32H7S7xx */
 DEFAULT_IRQ_HANDLER(PKA_IRQHandler)
 DEFAULT_IRQ_HANDLER(HASH_IRQHandler)
 DEFAULT_IRQ_HANDLER(RNG_IRQHandler)
@@ -158,9 +162,11 @@ DEFAULT_IRQ_HANDLER(DMA2D_IRQHandler)
 DEFAULT_IRQ_HANDLER(JPEG_IRQHandler)
 DEFAULT_IRQ_HANDLER(GFXMMU_IRQHandler)
 DEFAULT_IRQ_HANDLER(I3C1_IRQHandler)
+#if defined(STM32H7S3xx) || defined(STM32H7S7xx)
 DEFAULT_IRQ_HANDLER(MCE1_IRQHandler)
 DEFAULT_IRQ_HANDLER(MCE2_IRQHandler)
 DEFAULT_IRQ_HANDLER(MCE3_IRQHandler)
+#endif /* STM32H7S3xx || STM32H7S7xx */
 DEFAULT_IRQ_HANDLER(XSPI1_IRQHandler)
 DEFAULT_IRQ_HANDLER(XSPI2_IRQHandler)
 DEFAULT_IRQ_HANDLER(FMC_IRQHandler)
@@ -272,8 +278,13 @@ const pFunc __VECTOR_TABLE[] __VECTOR_TABLE_ATTRIBUTE =
   EXTI14_IRQHandler,                /*  30: EXTI Line14 interrupt */
   EXTI15_IRQHandler,                /*  31: EXTI Line15 interrupt */
   RTC_IRQHandler,                   /*  32: RTC wakeup and alarm interrupts through EXTI Line detection */
+#if defined(STM32H7S3xx) || defined(STM32H7S7xx)
   SAES_IRQHandler,                  /*  33: SAES global interrupt */
   CRYP_IRQHandler,                  /*  34: CRYP global interrupt */
+#elif defined(STM32H7R3xx) || defined(STM32H7R7xx)
+  0,                                /*  33: Reserved */
+  0,                                /*  34: Reserved */
+#endif /* STM32H7S3xx || STM32H7S7xx */
   PKA_IRQHandler,                   /*  35: PKA global interrupt */
   HASH_IRQHandler,                  /*  36: HASH global interrupt */
   RNG_IRQHandler,                   /*  37: RNG global interrupt */
@@ -341,9 +352,15 @@ const pFunc __VECTOR_TABLE[] __VECTOR_TABLE_ATTRIBUTE =
   JPEG_IRQHandler,                  /*  99: JPEG global interrupt */
   GFXMMU_IRQHandler,                /* 100: GFXMMU global interrupt */
   I3C1_IRQHandler,                  /* 101: I3C1 wakeup interrupt */
+#if defined(STM32H7S3xx) || defined(STM32H7S7xx)
   MCE1_IRQHandler,                  /* 102: MCE1 global interrupt */
   MCE2_IRQHandler,                  /* 103: MCE2 global interrupt */
   MCE3_IRQHandler,                  /* 104: MCE3 global interrupt */
+#elif defined(STM32H7R3xx) || defined(STM32H7R7xx)
+  0,                                /* 102: Reserved */
+  0,                                /* 103: Reserved */
+  0,                                /* 104: Reserved */
+#endif /* STM32H7S3xx || STM32H7S7xx */
   XSPI1_IRQHandler,                 /* 105: XSPI1 global interrupt */
   XSPI2_IRQHandler,                 /* 106: XSPI2 global interrupt */
   FMC_IRQHandler,                   /* 107: FMC global interrupt */

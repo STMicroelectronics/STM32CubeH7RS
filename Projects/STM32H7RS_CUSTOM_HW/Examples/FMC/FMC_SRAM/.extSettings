@@ -3,4 +3,4 @@
 Define=
 HALModule=
 [Groups]
-Doc=../readme.md;
+Doc=../README.md;

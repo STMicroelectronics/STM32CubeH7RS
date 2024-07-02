@@ -1,0 +1,7 @@
+[ProjectFiles]
+HeaderPath=..\..\..\..\..\..\Drivers\BSP\STM32H7S78-DK
+[Others]
+Define=
+HALModule=GPIO
+[Groups]
+Drivers/BSP/STM32H7S78-DK=../../../../../../Drivers/BSP/STM32H7S78-DK/stm32h7s78_discovery.c;

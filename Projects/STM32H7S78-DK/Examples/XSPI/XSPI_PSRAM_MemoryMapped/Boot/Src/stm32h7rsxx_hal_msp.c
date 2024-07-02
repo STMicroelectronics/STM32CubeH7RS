@@ -62,6 +62,7 @@
   */
 void HAL_MspInit(void)
 {
+  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
 
   /* Configure the system Power Supply */
 
@@ -81,6 +82,26 @@ void HAL_MspInit(void)
 
   /* Enable the XSPIM_P1 interface */
   HAL_PWREx_EnableXSPIM1();
+
+  /* The CSI is used by the compensation cells and must be enabled before enabling the
+     compensation cells.
+     For more details refer to RM0477 [SBS I/O compensation cell management] chapter.
+  */
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_CSI;
+  RCC_OscInitStruct.CSIState = RCC_CSI_ON;
+  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  /* Configure the compensation cell */
+  HAL_SBS_ConfigCompensationCell(SBS_IO_XSPI1_CELL, SBS_IO_CELL_CODE, 0U, 0U);
+
+  /* Enable compensation cell */
+  HAL_SBS_EnableCompensationCell(SBS_IO_XSPI1_CELL);
+
+  /* wait ready before enabled IO */
+  while(HAL_SBS_GetCompensationCellReadyStatus(SBS_IO_XSPI1_CELL_READY) != 1U);
 
   /* high speed low voltage config */
   HAL_SBS_EnableIOSpeedOptimize(SBS_IO_XSPI1_HSLV);

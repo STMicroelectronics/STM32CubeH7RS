@@ -45,6 +45,7 @@ void MX_FATFS_Init(void);
 int32_t MX_FATFS_Process(void);
 int32_t MX_FATFS_DeInit(void);
 /* USER CODE END Prototypes */
+
 #ifdef __cplusplus
 }
 #endif

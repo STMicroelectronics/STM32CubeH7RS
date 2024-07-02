@@ -61,13 +61,13 @@ typedef enum  {
 /**
  * @brief this function initialize the driver PSRAM
  *
- * @param IP ptr on the ip handle
+ * @param Peripheral ptr on the Peripheral handle
  * @param Config link configuration
  * @param ClockInput timeout value
  * @param PsramObject object PSRAM
  * @return @ref EXTMEM_DRIVER_PSRAM_StatusTypeDef
  **/
-EXTMEM_DRIVER_PSRAM_StatusTypeDef EXTMEM_DRIVER_PSRAM_Init(void *IP, EXTMEM_LinkConfig_TypeDef Config,
+EXTMEM_DRIVER_PSRAM_StatusTypeDef EXTMEM_DRIVER_PSRAM_Init(void *Peripheral, EXTMEM_LinkConfig_TypeDef Config,
                                                            uint32_t ClockInput,
                                                            EXTMEM_DRIVER_PSRAM_ObjectTypeDef *PsramObject);
 
