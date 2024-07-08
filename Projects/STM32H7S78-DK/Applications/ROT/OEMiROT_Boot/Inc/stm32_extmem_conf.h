@@ -17,8 +17,8 @@
   */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef EXTMEM_CONF_H_
-#define EXTMEM_CONF_H_
+#ifndef __STM32_EXTMEM_CONF__H__
+#define __STM32_EXTMEM_CONF__H__
 
 #ifdef __cplusplus
 extern "C" {
@@ -32,12 +32,14 @@ extern "C" {
   * this section is used to select the driver\n
   *              #define EXTMEM_DRIVER_NOR_SFDP   1\n
   *              #define EXTMEM_DRIVER_PSRAM      1\n
-  *              #define EXTMEM_DRIVER_SDCARD     1\n
+  *              #define EXTMEM_DRIVER_SDCARD     0\n
+  *              #define EXTMEM_DRIVER_USER       0
   * @{
   */
 #define EXTMEM_DRIVER_NOR_SFDP   1
 #define EXTMEM_DRIVER_PSRAM      1
 #define EXTMEM_DRIVER_SDCARD     0
+#define EXTMEM_DRIVER_USER       0
 
 /**
   * @}
@@ -49,8 +51,9 @@ extern "C" {
   *              #define EXTMEM_SAL_SD     1\n
   * @{
   */
-
 #define EXTMEM_SAL_XSPI      1
+#define EXTMEM_SAL_SD        0
+
 /**
   * @}
   */
@@ -61,7 +64,9 @@ extern "C" {
 #include "stm32_extmem_type.h"
 
 /** @defgroup EXTMEN_CONF_SAL_imported_variable External Memory configuration list of the imported variables
-  * this section is used to import the HAL handle variable.
+  * this section is used to import the HAL handle variable. Handle Can be one of the following:
+  *             extern XSPI_HandleTypeDef \n
+  *             extern SD_HandleTypeDef
   * @{
   */
 
@@ -95,6 +100,7 @@ enum
 
 /* Exported configuration --------------------------------------------------------*/
 /** @defgroup EXTMEM_CONF_Exported_configuration EXTMEM_CONF exported configuration definition
+  * Memory type can be EXTMEM_SDCARD, EXTMEM_NOR_SFDP, EXTMEM_PSRAM
   * @{
   */
 #if defined(EXTMEM_C)
@@ -106,10 +112,12 @@ EXTMEM_DefinitionTypeDef extmem_list_config[] =
     .MemType = EXTMEM_NOR_SFDP,
     .Handle = (void *) &XSPI_HANDLE,
     .ConfigType = EXTMEM_LINK_CONFIG_8LINES,
+#if !defined ( __GNUC__ )
     .NorSfdpObject =
     {
-      {{0}},
+      0u
     }
+#endif /* __GNUC__ */
   },
   /* MEMORY_PSRAM_0 */
   {
@@ -183,4 +191,4 @@ EXTMEM_DefinitionTypeDef extmem_list_config[] =
 }
 #endif
 
-#endif /* EXTMEM_CONF_H_ */
+#endif /* __STM32_EXTMEM_CONF__H__ */
