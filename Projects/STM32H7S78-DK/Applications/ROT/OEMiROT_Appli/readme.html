@@ -106,10 +106,10 @@
 <li><p>in Firmware/Projects/STM32H7S78-DK/ROT_Provisioning/env.bat (.sh):</p>
 <p>replace these following two lines:</p>
 <pre><code>set stm32ExtLoaderFlash=-elbl %stm32tool_path%/ExternalLoader/MX66UW1G45G_STM32H7S78-DK_XSPIM1-SFIx.stldr
-set stm32ExtLoaderFlash=-elbl %stm32tool_path%/ExternalLoader/MX66UW1G45G_STM32H7S78-DK_XSPIM1.stldr</code></pre>
+set stm32ExtLoaderFlashOpen=-el %stm32tool_path%/ExternalLoader/MX66UW1G45G_STM32H7S78-DK_XSPIM1.stldr</code></pre>
 <p>by these lines:</p>
 <pre><code>set stm32ExtLoaderFlash=-elbl %stm32tool_path%/ExternalLoader/MX66UW1G45G_STM32H7S78-DK-SFIx.stldr
-set stm32ExtLoaderFlash=-elbl %stm32tool_path%/ExternalLoader/MX66UW1G45G_STM32H7S78-DK.stldr</code></pre></li>
+set stm32ExtLoaderFlashOpen=-el %stm32tool_path%/ExternalLoader/MX66UW1G45G_STM32H7S78-DK.stldr</code></pre></li>
 </ul></li>
 </ul></li>
 <li><u>start the provisioning process</u>. During the provisioning process, the linker files as well as the postbuild command of the project will be automatically updated.</li>
