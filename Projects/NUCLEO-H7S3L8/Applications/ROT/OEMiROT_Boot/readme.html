@@ -247,8 +247,9 @@
 <ol type="1">
 <li><p>This template can be used when using H7S board in STM32CubeIde</p></li>
 <li><p>For STM32H7R3xx devices, this template is not supported with STM32CubeIDE</p></li>
-<li><p>For STM32H7S3xx and STM32H7R3xx devices, with all toolchains, OEMIROT_LOAD_AND_RUN should always be set to NO_LOAD_AND_RUN. Update it in Inc\flash_layout.h:</p>
+<li><p>For STM32H7S3xx and STM32H7R3xx devices, with all toolchains, OEMIROT_LOAD_AND_RUN should be set to NO_LOAD_AND_RUN or LOAD_AND_RUN_INT_RAM. Update it in Inc\\flash_layout.h:</p>
 <pre><code>#define OEMIROT_LOAD_AND_RUN NO_LOAD_AND_RUN /*!&lt; Flag configuring the feature &quot;Load and Run&quot; */</code></pre></li>
+<pre><code>#define OEMIROT_LOAD_AND_RUN LOAD_AND_RUN_INT_RAM /*!&lt; Flag configuring the feature &quot;Load and Run&quot; */</code></pre></li>
 <li><p>By default the anti-tamper is enabled for internal tamper events only. It is possible to change this configuration with OEMIROT_TAMPER_ENABLE define in Inc\boot_hal_cfg.h.</p>
 <pre><code>#define NO_TAMPER            (0)                   /*!&lt; No tamper activated */
 #define INTERNAL_TAMPER_ONLY (1)                   /*!&lt; Only Internal tamper activated */

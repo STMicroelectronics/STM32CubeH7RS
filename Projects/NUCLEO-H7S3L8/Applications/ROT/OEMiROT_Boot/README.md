@@ -127,10 +127,11 @@ Then refer to OEMiROT_Appli readme for example of application booted through OEM
 
 2. For STM32H7R3xx devices, this template is not supported with STM32CubeIDE
 
-3. For STM32H7S3xx and STM32H7R3xx devices, with all toolchains, OEMIROT_LOAD_AND_RUN should always be set to NO_LOAD_AND_RUN. Update it in Inc\\flash_layout.h:
+3. For STM32H7S3xx and STM32H7R3xx devices, with all toolchains, OEMIROT_LOAD_AND_RUN should be set to NO_LOAD_AND_RUN or LOAD_AND_RUN_INT_RAM. Update it in Inc\\flash_layout.h:
 
     ```
     #define OEMIROT_LOAD_AND_RUN NO_LOAD_AND_RUN /*!< Flag configuring the feature "Load and Run" */
+    #define OEMIROT_LOAD_AND_RUN LOAD_AND_RUN_INT_RAM /*!< Flag configuring the feature "Load and Run" */
     ```
 
 4. By default the anti-tamper is enabled for internal tamper events only. It is possible to change this configuration with
