@@ -27,6 +27,7 @@
 #include "boot_hal_iloader.h"
 #include "stm32_extmem_conf.h"
 #include "stm32_sfdp_driver_api.h"
+#include "stm32h7rsxx.h"
 
 XSPI_HandleTypeDef hxspi;
 DMA_HandleTypeDef hdmatx;
@@ -42,6 +43,7 @@ DMA_HandleTypeDef hdmatx;
 /* Private function prototypes -----------------------------------------------*/
 static STIROT_ILOADER_ErrorStatus FLASH_EXT_XSPI_Init(uint32_t Address);
 static void FLASH_EXT_MPU_EnableRegion(uint8_t RegionID, uint32_t RegionSize);
+static int32_t FLASH_EXT_SetHslv(void);
 
 void EXTMEM_MemCopy(uint32_t *destination_Address, const uint8_t *ptrData, uint32_t DataSize);
 
@@ -213,6 +215,55 @@ static void FLASH_EXT_MPU_EnableRegion(uint8_t RegionID, uint32_t RegionSize)
 }
 
 /**
+  * @brief  Configure "HSLV" for the external flash support
+  * @param  None
+  * @retval ARM_DRIVER error status
+  */
+static int32_t FLASH_EXT_SetHslv(void)
+{
+  FLASH_OBProgramInitTypeDef flash_option_bytes = {0};
+  uint32_t user_config = OB_XSPI1_HSLV_ENABLE | OB_XSPI2_HSLV_ENABLE;
+
+  /* Set the OB needed for "XSPI High-speed at low voltage" */
+  /* Both XSPI must be configured when XSPIM is used */
+  HAL_FLASHEx_OBGetConfig(&flash_option_bytes);
+
+  if ((flash_option_bytes.USERConfig1 & user_config) != user_config)
+  {
+    if (HAL_FLASH_Unlock() != HAL_OK)
+    {
+      return HAL_ERROR;
+    }
+    if (HAL_FLASH_OB_Unlock() != HAL_OK)
+    {
+      return HAL_ERROR;
+    }
+    flash_option_bytes.OptionType = OPTIONBYTE_USER;
+    flash_option_bytes.USERType = OB_USER_XSPI1_HSLV | OB_USER_XSPI2_HSLV;
+    flash_option_bytes.USERConfig1 = user_config;
+    if (HAL_FLASHEx_OBProgram(&flash_option_bytes) != HAL_OK)
+    {
+      return HAL_ERROR;
+    }
+    if (HAL_FLASH_OB_Lock() != HAL_OK)
+    {
+      return HAL_ERROR;
+    }
+    if (HAL_FLASH_Lock() != HAL_OK)
+    {
+      return HAL_ERROR;
+    }
+  }
+
+  /* Configure "high speed low voltage" */
+  /* Both XSPI must be configured when XSPIM is used */
+  HAL_SBS_EnableIOSpeedOptimize(SBS_IO_XSPI1_HSLV);
+  HAL_SBS_EnableIOSpeedOptimize(SBS_IO_XSPI2_HSLV);
+
+  return HAL_OK;
+}
+
+/**
   * @brief  This function initializes OSPI interface
   * @param  Address XSPI address
   * @retval STIROT_ILOADER_ErrorStatus STIROT_ILOADER_SUCCESS if successful, STIROT_ILOADER_ERROR otherwise.
@@ -224,6 +275,11 @@ STIROT_ILOADER_ErrorStatus FLASH_EXT_Init(uint32_t Address)
   __IO uint32_t xspiRcc = 0U;
 
   xspiAddress = Address & 0xF0000000U;
+
+  if (FLASH_EXT_SetHslv() != HAL_OK)
+  {
+    return STIROT_ILOADER_ERROR;
+  }
 
   /* Initialize the external memory */
   if (FLASH_EXT_XSPI_Init(xspiAddress) != STIROT_ILOADER_SUCCESS)
