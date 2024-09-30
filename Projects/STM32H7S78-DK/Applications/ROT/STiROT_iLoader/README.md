@@ -1,26 +1,39 @@
-## <b>STiROT_iLoader Description</b>
+## <b>STiROT_iLoader Application Description</b>
 
-This project provides a STiROT boot path immutable loader example. Boot is performed through STiROT boot path after
-write-protection check on the flash.
+This project provides an immutable loader example required for <b>STiROT boot path</b> or <b>STiROT_OEMuROT boot path</b>.
 
-This project is targeted to build an immutable loader. This immutable loader is interfaced between
-the external non-volatile memory and the internal volatile memory.  
-The immutable loader is used by STiROT:
+STiRoT, which is an immutable code, is designed to be independent from external flash memory. Therefore,
+the control of the authenticity and integrity of the user application is done by STiRoT from the internal RAM.
+STiRoT runs in isolation level 1 (HDPL1).
+STiROT_iLoader project is provided to do the interface between the internal RAM and the external flash memory. This
+project can be adapted to the external flash memory selected by the customer. The iLoader binary is programmed
+in user flash memory during the provisioning process.
+STiROT_iLoader runs in isolation level 3 (HDPL3) and has therefore no access to the STiRoT configuration data
+(including the encryption and authentication keys) stored in HDPL1 OBKeys.
 
-- on a boot sequence, to load a firmware from the external non-volatile memory to the internal volatile memory
-- on an update sequence, to save a valid update in the external non-volatile memory and/or erase a bad request.
+Depending on its state machine, STiRoT requests STiROT_iLoader:
 
-This loader is interfaced with STiROT via two communication channels:
+- To copy the user application code image from the external flash memory to the internal RAM. The purpose
+is to detect if a new user application image must be installed or to verify if an existing user application
+image can be executed.
+- To copy the user application code from the internal RAM memory to the external flash memory at the end
+of the installation process. During the copy, the user application code image is reencrypted by MCE
+peripheral. The encryption key is configured and locked inside MCE by STiRoT.
 
-- RSSCMD register: write channel, it notifies STiROT on the load status in the internal volatile memory
-- shared RAM: read channel, STiROT writes in it to share configuration with the loader:
-  - the operation to be performed by the immutable loader (load or save)
-  - the definition of the memory slots
+A reset is generated after each STiROT_iLoader action to continue the secure firmware update and the secure boot
+process.
 
-The external non-volatile memory is used with the MCE to encrypt/decrypt its content. The MCE configuration is done by STiROT.  
-The immutable loader must not configure it.  
-The immutable loader is interfaced with XSPI to the external non-volatile memory. To write in the external non-volatile memory
-the DMA write must be used.  
+From security point of view STiROT_iLoader project must be trusted and is therefore under flash memory write
+protection (immutability).
+
+The communication between STiROT and STiLoader is performed trough two channels:
+
+- RSSCMD register: write channel, STiROT_iLoader provides STiROT with a status on the last operation performed
+- shared RAM: read channel, STiROT notifies STiROT_iLoader:
+  - the operation to be performed (load or save)
+  - the configuration of the memory slots
+
+XSPI and DMA IPs are activated to access external flash memory.
 
 ### <b>Keywords</b>
 
@@ -53,66 +66,24 @@ File | Description
 ### <b>Hardware and Software environment</b>
 
   - This template runs on STM32H7S7xx devices.
-
   - This template has been tested with STMicroelectronics STM32H7S78-DK
     boards and can be easily tailored to any other supported device
     and development board.
 
 ### <b>How to use it ?</b>
 
-This project is targeted to boot through <b>STiROT boot path</b>.
+<u>Before compiling the project, you should first start the provisioning process</u>. STiROT_iLoader compilation, flash programming
+and memory protection configuration are part of the provisioning process.
 
-<u>Before compiling the project, you should first start the provisioning process</u>. During the provisioning process, the linker files
-as well as the postbuild command of the project will be automatically updated.
+Before starting the provisioning process, select the application project to use (application example or template),
+through STiROT_boot_path_project variable in ROT_Provisioning/env.bat or env.sh.
+Then start provisioning process by running provisioning.bat (.sh) from ROT_Provisioning/STiROT,
+and follow its instructions. Refer to ROT_Provisioning/STiROT readme for more information on the provisioning process for STiROT boot path.
 
-The <b>provisioning process</b> (ROT_Provisioning/STiROT/provisioning.bat) is divided in 3 majors steps:
-
-  - Step 0 : Preliminary stage
-
-     - OEMiLoader firmware generation:
-        - prebuild automatically updates:
-          - env.bat: to be usable then by the provisioning script
-          - stm32h7s7xx_flash.icf: to align size and offset on H7RS sector constraint (0x2000)
-
-  - Step 1 : Configuration management
-
-     - STiROT_Config.obk generation
-        - Pre-update with OEMiLoader dependencies
-        - From TrustedPackageCreator (tab H7S-OBkey)
-     - DA_Config.obk generation with TrustedPackageCreator (tab H7S-OBkey)
-     - Automatic update of the option bytes flash programming script with regards of the defined configuration
-     - Automatic update of the project files (.icf, .ewp) with regards of the defined configuration
-
-  - Step 2 : Image generation
-
-     - Code firmware image generation: automatically generated at the end of the project compilation (postbuild command of Project)
-
-  - Step 3 : Provisioning
-
-     - Programming the OBkeys
-     - Programming the option bytes
-     - Flashing the images (code, immutable Loader)
-     - Setting the product state
-
-As soon as the immutable loader is flashed, its memory area becomes write-protected.
-
-If the product state is set to CLOSED, it is still possible to open the debug or to execute a regression
+If the product state is set to CLOSED, it is still possible to open the debug or to execute a full regression
 with the Debug Authentication feature. To do it, scripts (regression.bat & dbg_auth.bat) are available in the ROT_provisioning/DA folder.
 
-For more details, refer to Wiki article available here : https://wiki.st.com/stm32mcu/wiki/Category:Security
+For more details, refer to STM32H7RS Wiki articles:
 
-To update the immutable loader firmware, you must:
-
-  - Perform a regression
-  - Repeat the provisioning script
-
-#### <b>Notes:</b>
-
-  1. Two versions of ROT_AppliConfig are available: windows executable and python version. By default, the windows executable is selected. It
-     is possible to switch to python version by:
-        - installing python (Python 3.10 or newer) with the required modules listed in requirements.txt.
-        ```
-        pip install -r requirements.txt
-        ```
-        - having python in execution path variable
-        - deleting main.exe in Utilities\PC_Software\ROT_AppliConfig\dist
+  - [STiRoT for STM32H7S](https://wiki.st.com/stm32mcu/wiki/Security:STiRoT_for_STM32H7S).
+  - [How to start with STiRoT on STM32H7S](https://wiki.st.com/stm32mcu/wiki/Security:How_to_start_with_STiRoT_on_STM32H7S).

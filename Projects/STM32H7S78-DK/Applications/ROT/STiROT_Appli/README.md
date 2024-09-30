@@ -1,11 +1,9 @@
 ## <b>STiROT_Appli application Description</b>
 
-This project provides a STiROT boot path application example. Boot is performed through STiROT boot path after authenticity and integrity checks of the project firmware image.
+This project provides a STiROT boot path application example. Boot is performed through <b>STiROT boot path</b> after authenticity and integrity checks of the application firmware image.
 
-This project is targeted to build an <u> application</u>. When the application is started the MPU
-is already configured (by STiROT) to limit the execution area to the project firmware execution slot. This is done in order to avoid
-any malicious code execution from an unauthorised area (RAM, out of execution slot in user flash ...). Once started, it is up to the
-application to adapt the security configuration to its needs.
+As example, this application will display a menu when started.
+
 
 ### <b>Keywords</b>
 
@@ -17,7 +15,6 @@ File | Description
  --- | ---
   ROT/STiROT_Appli/Src/com.c                       |  UART low level interface
   ROT/STiROT_Appli/Src/main.c                      |  Main program
-  ROT/STiROT_Appli/Src/startup_stm32h7s7xx.s       |  Startup file
   ROT/STiROT_Appli/Src/stm32h7rsxx_it.c            |  Interrupt handlers
   ROT/STiROT_Appli/Src/system_stm32h7rsxx.c        |  STM32H7Sxx system source file
   ROT/STiROT_Appli/Src/test_versions.c             |  Print application version
@@ -39,47 +36,16 @@ File | Description
 
 ### <b>How to use it ?</b>
 
-This project is targeted to boot through <b>STiROT boot path</b>.
+<u>Before compiling the project, you should first start the provisioning process</u>. During the provisioning process, the linker files
+will be automatically updated.
 
-<u>Before compiling the project, you should first:</u>
-
-- <u>update the environment variables</u> with your own paths (located in ../../../ROT_Provisioning/env.bat)
-- <u>start the provisioning process</u>. During the provisioning process, the linker files
-as well as the postbuild command of the project will be automatically updated.
-
-The <b>provisioning process</b> (ROT_Provisioning/STiROT/provisioning.bat) is divided in 3 major steps:
-
-  - Step 0 : Preliminary stage
-
-     - OEMiLoader firmware generation:
-        - prebuild automatically updates:
-          - env.bat: to be usable then by the provisioning script
-          - stm32h7s7xx_flash.icf: to align size and offset on H7RS sector constraint (0x2000)
-
-  - Step 1 : Configuration management
-
-     - STiROT_Config.obk generation
-        - Pre-update with OEMiLoader dependencies
-        - From TrustedPackageCreator (OBkey tab in Security panel)
-     - DA_Config.obk generation with TrustedPackageCreator (OBkey tab in Security panel)
-     - Automatic update of the option bytes flash programming script with regards of the defined configuration
-     - Automatic update of the project files (.icf, .ewp) with regards of the defined configuration
-
-  - Step 2 : Image generation
-
-     - Code firmware image generation: automatically generated at the end of the project compilation (postbuild command of Project)
-
-  - Step 3 : Provisioning
-
-     - Programming the OBkeys
-     - Programming the option bytes
-     - Flashing the images (code, immutable Loader)
-     - Setting the product state
+Before starting the provisioning process, select the application project to use (application example or template),
+through stirot_boot_path_project variable in ROT_Provisioning/env.bat or env.sh.
+Then start provisioning process by running provisioning.bat (.sh) from ROT_Provisioning/STiROT,
+and follow its instructions. Refer to ROT_Provisioning/STiROT readme for more information on the provisioning process for STiROT boot path.
 
 If the product state is set to CLOSED, it is still possible to open the debug or to execute a full regression
 with the Debug Authentication feature. To do it, scripts (regression.bat & dbg_auth.bat) are available in the ROT_provisioning/DA folder.
-
-For more details, refer to Wiki article available here : https://wiki.st.com/stm32mcu/wiki/Category:Security
 
 After application startup, check in your "UART console" the menu is well displayed:
 ```
@@ -89,19 +55,19 @@ After application startup, check in your "UART console" the menu is well display
    Selection :
 ```
 
+For more details, refer to STM32H7RS Wiki articles:
+
+  - [STiRoT for STM32H7S](https://wiki.st.com/stm32mcu/wiki/Security:STiRoT_for_STM32H7S).
+  - [How to start with STiRoT on STM32H7S](https://wiki.st.com/stm32mcu/wiki/Security:How_to_start_with_STiRoT_on_STM32H7S).
+
+
 #### <b>Notes:</b>
 
-  1. The most efficient way to develop and debug an application is to boot directly on user flash in the Open product state by setting with
-     STM32CubeProgrammer the PRODUCT_STATE to OPEN.
+1. The most efficient way to develop and debug an application is to boot directly on user flash in the Open product state.
 
-  2. Two versions of ROT_AppliConfig are available: windows executable and python version. By default, the windows executable is selected. It
-     is possible to switch to python version by:
-        - installing python (Python 3.10 or newer) with the required modules listed in requirements.txt.
-        ```
-        pip install -r requirements.txt
-        ```
-        - having python in execution path variable
-        - deleting main.exe in Utilities\PC_Software\ROT_AppliConfig\dist
+2. Be aware that a default MPU configuration is already applied by STiROT when jumping in your application. To ensure the security of the
+device, the MPU is configured to allow only the user application code area to be executed, minimizing the risk of unauthorized code execution.
+It is the user application responsibility to reconfigure the MPU to fit with its security needs.
 
 
 
