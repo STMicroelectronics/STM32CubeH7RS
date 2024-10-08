@@ -24,15 +24,15 @@
                 </option>
                 <option>
                     <name>ExePath</name>
-                    <state>Debug\Exe</state>
+                    <state>STM32H7S78-DK\Exe</state>
                 </option>
                 <option>
                     <name>ObjPath</name>
-                    <state>Debug\Obj</state>
+                    <state>STM32H7S78-DK\Obj</state>
                 </option>
                 <option>
                     <name>ListPath</name>
-                    <state>Debug\List</state>
+                    <state>STM32H7S78-DK\List</state>
                 </option>
                 <option>
                     <name>GEndianMode</name>
