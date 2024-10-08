@@ -79,7 +79,10 @@ Then start provisioning process by running ROT_Provisioning/STiROT/provisioning.
 If the product state is set to CLOSED, it is still possible to execute a regression
 with the Debug Authentication feature. To do it, scripts (regression.bat) are available in the ROT_provisioning/DA folder.
 
-For more details, refer to Wiki article available here : https://wiki.st.com/stm32mcu/wiki/Category:Security
+For more details, refer to STM32H7RS Wiki articles:
+
+  - [STiRoT for STM32H7S](https://wiki.st.com/stm32mcu/wiki/Security:STiRoT_for_STM32H7S).
+  - [How to start with STiRoT on STM32H7S](https://wiki.st.com/stm32mcu/wiki/Security:How_to_start_with_STiRoT_on_STM32H7S).
 
 #### <b>Notes:</b>
 
