@@ -3,7 +3,7 @@
 set "project_dir=%~dp0"
 
 :start
-copy "%project_dir%\Debug\Exe\Project.bin" "%project_dir%\..\Binary\STiROT_iLoader.bin"
+copy "%project_dir%\STM32H7S78-DK\Exe\Project.bin" "%project_dir%\..\Binary\STiROT_iLoader.bin"
 
 echo IAR> "%project_dir%\..\Binary\_ide"
 exit 0
