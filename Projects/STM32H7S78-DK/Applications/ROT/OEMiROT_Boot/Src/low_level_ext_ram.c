@@ -147,6 +147,7 @@ HAL_StatusTypeDef Ext_Ram_Initialize(void)
   /* Connect Instance2(XSPI2/MCE2) to port1 */
   xspi_manager_cfg.IOPort = HAL_XSPIM_IOPORT_1;
   xspi_manager_cfg.nCSOverride = HAL_XSPI_CSSEL_OVR_DISABLED;
+  xspi_manager_cfg.Req2AckTime = 4U;
 
 
   if (HAL_XSPIM_Config(&XSPI_RUN_HANDLE, &xspi_manager_cfg, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)

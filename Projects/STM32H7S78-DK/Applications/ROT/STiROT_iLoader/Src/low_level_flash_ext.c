@@ -107,7 +107,7 @@ static STIROT_ILOADER_ErrorStatus FLASH_EXT_XSPI_Init(uint32_t Address)
     /* Connect Instance1(XSPI1/MCE1) to port2(NOR Flash)*/
     sXspiManagerCfg.IOPort         = HAL_XSPIM_IOPORT_2;
     sXspiManagerCfg.nCSOverride    = HAL_XSPI_CSSEL_OVR_NCS1;
-    sXspiManagerCfg.Req2AckTime    = 10U;
+    sXspiManagerCfg.Req2AckTime    = 4U;
 
     if (HAL_XSPIM_Config(&hxspi, &sXspiManagerCfg, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
     {

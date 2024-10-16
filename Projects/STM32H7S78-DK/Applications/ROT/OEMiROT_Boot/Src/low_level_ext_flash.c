@@ -482,6 +482,7 @@ static int32_t Ext_Flash_Initialize(ARM_Flash_SignalEvent_t cb_event)
   /* Connect Instance1(XSPI1/MCE1) to port2 */
   xspi_manager_cfg.IOPort = HAL_XSPIM_IOPORT_2;
   xspi_manager_cfg.nCSOverride = HAL_XSPI_CSSEL_OVR_DISABLED;
+  xspi_manager_cfg.Req2AckTime = 4U;
 
 
   if (HAL_XSPIM_Config(&XSPI_HANDLE, &xspi_manager_cfg, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
