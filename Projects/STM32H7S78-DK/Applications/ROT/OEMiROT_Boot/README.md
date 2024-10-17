@@ -74,30 +74,10 @@ File | Description
 ### <b>Hardware and Software environment</b>
 
   - This example runs on STM32H7S7xx devices.
+
   - This example has been tested with STMicroelectronics STM32H7S78-DK (MB1736) board and can be easily tailored for
     STM32H7R7xx devices by following these steps
-    (more details in the wiki article [<b>How to create ROT examples for STM32H7RS</b>](https://wiki.st.com/stm32mcu/wiki/Security:How_to_create_ROT_examples_for_STM32H7RS)):
-
-    For IAR IDE:
-
-    ```
-    1- Go to "Options", select "General Options", in the "Target" field select "device" then ST > STM32H7 > STM32H7R7 to choose ST STM32H7R7L8 device.
-
-    2- Go to "Options", select "C/C++ Compiler" then "Preprocessor" tab, change the compilation symbol ("STM32H7R7xx" instead of "STM32H7S7xx").
-
-    3- Open the "prebuild.cmd" file (located in "Firmware/Projects/STM32H7S78-DK/Applications/ROT/OEMiROT_Boot/EWARM") and change the compilation symbol ("-DSTM32H7R7xx" instead of "-DSTM32H7S7xx").
-    ```
-
-    For Keil IDE:
-
-    ```
-    1- Go to "Options", select "Device" tab then STMicroelectronics > STM32H7 series > STM32H7R7 to choose STM32H7R7L8 device.
-
-    2- Go to "Options", select "C/C++ (AC6)" tab, in the "Define" field in "Preprocessor Symbols" change the compilation symbol ("STM32H7R7xx" instead of "STM32H7S7xx").
-
-    3- Go to "Options", select the "User" tab, change "Run #2" command in the "Before Build/Rebuild" field by updating the define matching with your platform ("-DSTM32H7R7xx" instead of "-DSTM32H7S7xx").
-       This is applicable only for OEMiROT_Boot project.
-    ```
+    (more details in the wiki article [<b>How to create ROT examples for STM32H7RS</b>](https://wiki.st.com/stm32mcu/wiki/Security:How_to_create_ROT_examples_for_STM32H7RS)).
 
   - To get debug print in your UART console you have to configure it using these parameters:
     Speed: 115200, Data: 8bits, Parity: None, stop bits: 1, Flow control: none.
@@ -105,12 +85,19 @@ File | Description
 
 ### <b>How to use it ?</b>
 
-In order to build the OEMiROT_Boot project, you must do the following:
+<u>Before compiling the project, you should first start the provisioning process</u>. During the provisioning process,
+the OEMUROT_ENABLE switch will be automatically configured according to bootpath.
 
- - Open your preferred toolchain
- - Rebuild the project
+Before starting the provisioning process, select the application project to use (application example or template),
+through oemirot_boot_path_project variable in ROT_Provisioning/env.bat or env.sh.
+Then start provisioning process by running provisioning.bat (.sh) from ROT_Provisioning/OEMiROT or ROT_Provisioning/STiROT_OEMuROT,
+and follow its instructions. Refer to ROT_Provisioning/OEMiROT or ROT_Provisioning/STiROT_OEMuROT readme for more information on
+the provisioning process for OEMiROT boot path or STiROT_OEMuROT boot path.
 
-Then refer to OEMiROT_Appli readme for example of application booted through OEMiROT boot path (or through
+If the product state is set to PROVISIONING or CLOSED, it is still possible to open the debug or to execute a regression
+with the Debug Authentication feature. To do it, scripts (regression.bat (.sh) & dbg_auth.bat (.sh)) are available in the ROT_provisioning/DA folder.
+
+Refer to OEMiROT_Appli readme for example of application booted through OEMiROT boot path (or through
 STiROT_OEMuROT boot path).
 
 For more details, refer to STM32H7RS Wiki articles:
@@ -119,27 +106,26 @@ For more details, refer to STM32H7RS Wiki articles:
   - [How to start with OEMiRoT on STM32H7S](https://wiki.st.com/stm32mcu/wiki/Security:How_to_start_with_OEMiRoT_on_STM32H7S).
   - [How to start with STiRoT OEMuRoT on STM32H7S](https://wiki.st.com/stm32mcu/wiki/Security:How_to_start_with_STiRoT_OEMuRoT_on_STM32H7S).
 
+#### <b>Notes:</b>
+
+By default the anti-tamper is enabled for internal tamper events only. It is possible to change this configuration with
+OEMIROT_TAMPER_ENABLE define in Inc\\boot_hal_cfg.h.
+
+```
+#define NO_TAMPER            (0)                   /*!< No tamper activated */
+#define INTERNAL_TAMPER_ONLY (1)                   /*!< Only Internal tamper activated */
+#define ALL_TAMPER           (2)                   /*!< Internal and External tamper activated */
+#define OEMIROT_TAMPER_ENABLE INTERNAL_TAMPER_ONLY /*!< TAMPER configuration flag  */
+```
+
+If OEMIROT_TAMPER_ENABLE is changed to ALL_TAMPER, the anti-tamper protection is enabled with active tamper pins usage.
+It is needed to connect TAMP_IN2 (PB9 on CN3 pin 10) and TAMP_OUT8 (PC1 on CN11 pin 6) on the STM32H7S78-DK board,
+to allow the application to run. In case the tamper pins are opened or shorted, then the application is reset and blocked.
+Moreover, no warning message about anti-tamper detection will be displayed if the product state is set to CLOSED or LOCKED,
+even with OEMIROT_DEV_MODE enabled.
+
 ### <b>Restrictions:</b>
 
-1. For STM32H7R7xx devices, with STM32CubeIDE, this example is not supported due to 64Kbytes internal flash limitation.
+For STM32H7S7xx devices, with STM32CubeIDE, the following configuration is not supported due to 64Kbytes internal flash limitation:
 
-   Moreover, STM32H7R7xx devices do not support STiROT_OEMuROT boot path.
-
-2. For STM32H7S7xx devices, with STM32CubeIDE, the following configuration is not supported due to 64Kbytes internal flash limitation:
    - OEMUROT_ENABLE undefined, MCUBOOT_OVERWRITE_ONLY undefined.
-
-3. By default the anti-tamper is enabled for internal tamper events only. It is possible to change this configuration with
-   OEMIROT_TAMPER_ENABLE define in Inc\\boot_hal_cfg.h.
-
-   ```
-   #define NO_TAMPER            (0)                   /*!< No tamper activated */
-   #define INTERNAL_TAMPER_ONLY (1)                   /*!< Only Internal tamper activated */
-   #define ALL_TAMPER           (2)                   /*!< Internal and External tamper activated */
-   #define OEMIROT_TAMPER_ENABLE INTERNAL_TAMPER_ONLY /*!< TAMPER configuration flag  */
-   ```
-
-   If OEMIROT_TAMPER_ENABLE is changed to ALL_TAMPER, the anti-tamper protection is enabled with active tamper pins usage.
-   It is needed to connect TAMP_IN2 (PB9 on CN3 pin 10) and TAMP_OUT8 (PC1 on CN11 pin 6) on the STM32H7S78-DK board,
-   to allow the application to run. In case the tamper pins are opened or shorted, then the application is reset and blocked.
-   Moreover, no warning message about anti-tamper detection will be displayed if the product state is set to CLOSED or LOCKED,
-   even with OEMIROT_DEV_MODE enabled.

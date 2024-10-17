@@ -30,25 +30,10 @@ File | Description
 ### <b>Hardware and Software environment</b>
 
   - This example runs on STM32H7S7xx devices.
+
   - This example has been tested with STMicroelectronics STM32H7S78-DK (MB1736) board and can be easily tailored for
     STM32H7R7xx devices by following these steps
-    (more details in the wiki article [<b>How to create ROT examples for STM32H7RS</b>](https://wiki.st.com/stm32mcu/wiki/Security:How_to_create_ROT_examples_for_STM32H7RS)):
-
-    For IAR IDE:
-
-    ```
-    1- Go to "Options", select "General Options", in the "Target" field select "device" then ST > STM32H7 > STM32H7R7 to choose ST STM32H7R7L8 device.
-
-    2- Go to "Options", select "C/C++ Compiler" then "Preprocessor" tab, change the compilation symbol ("STM32H7R7xx" instead of "STM32H7S7xx").
-    ```
-
-    For Keil IDE:
-
-    ```
-    1- Go to "Options", select "Device" tab then STMicroelectronics > STM32H7 series > STM32H7R7 to choose STM32H7R7L8 device.
-
-    2- Go to "Options", select "C/C++ (AC6)" tab, in the "Define" field in "Preprocessor Symbols" change the compilation symbol ("STM32H7R7xx" instead of "STM32H7S7xx").
-    ```
+    (more details in the wiki article [<b>How to create ROT examples for STM32H7RS</b>](https://wiki.st.com/stm32mcu/wiki/Security:How_to_create_ROT_examples_for_STM32H7RS)).
 
   - To print the application menu in your UART console you have to configure it using these parameters:
     Speed: 115200, Data: 8bits, Parity: None, stop bits: 1, Flow control: none.

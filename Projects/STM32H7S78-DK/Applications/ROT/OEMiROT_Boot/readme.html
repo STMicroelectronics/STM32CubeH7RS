@@ -247,32 +247,30 @@ environment</b></h3>
 <li><p>This example has been tested with STMicroelectronics
 STM32H7S78-DK (MB1736) board and can be easily tailored for STM32H7R7xx
 devices by following these steps (more details in the wiki article <a href="https://wiki.st.com/stm32mcu/wiki/Security:How_to_create_ROT_examples_for_STM32H7RS"><b>How
-to create ROT examples for STM32H7RS</b></a>):</p>
-<p>For IAR IDE:</p>
-<pre><code>1- Go to &quot;Options&quot;, select &quot;General Options&quot;, in the &quot;Target&quot; field select &quot;device&quot; then ST &gt; STM32H7 &gt; STM32H7R7 to choose ST STM32H7R7L8 device.
-
-2- Go to &quot;Options&quot;, select &quot;C/C++ Compiler&quot; then &quot;Preprocessor&quot; tab, change the compilation symbol (&quot;STM32H7R7xx&quot; instead of &quot;STM32H7S7xx&quot;).
-
-3- Open the &quot;prebuild.cmd&quot; file (located in &quot;Firmware/Projects/STM32H7S78-DK/Applications/ROT/OEMiROT_Boot/EWARM&quot;) and change the compilation symbol (&quot;-DSTM32H7R7xx&quot; instead of &quot;-DSTM32H7S7xx&quot;).</code></pre>
-<p>For Keil IDE:</p>
-<pre><code>1- Go to &quot;Options&quot;, select &quot;Device&quot; tab then STMicroelectronics &gt; STM32H7 series &gt; STM32H7R7 to choose STM32H7R7L8 device.
-
-2- Go to &quot;Options&quot;, select &quot;C/C++ (AC6)&quot; tab, in the &quot;Define&quot; field in &quot;Preprocessor Symbols&quot; change the compilation symbol (&quot;STM32H7R7xx&quot; instead of &quot;STM32H7S7xx&quot;).
-
-3- Go to &quot;Options&quot;, select the &quot;User&quot; tab, change &quot;Run #2&quot; command in the &quot;Before Build/Rebuild&quot; field by updating the define matching with your platform (&quot;-DSTM32H7R7xx&quot; instead of &quot;-DSTM32H7S7xx&quot;).
-   This is applicable only for OEMiROT_Boot project.</code></pre></li>
+to create ROT examples for STM32H7RS</b></a>).</p></li>
 <li><p>To get debug print in your UART console you have to configure it
 using these parameters: Speed: 115200, Data: 8bits, Parity: None, stop
 bits: 1, Flow control: none.</p></li>
 </ul>
 <h3 id="how-to-use-it"><b>How to use it ?</b></h3>
-<p>In order to build the OEMiROT_Boot project, you must do the
-following:</p>
-<ul>
-<li>Open your preferred toolchain</li>
-<li>Rebuild the project</li>
-</ul>
-<p>Then refer to OEMiROT_Appli readme for example of application booted
+<p><u>Before compiling the project, you should first start the
+provisioning process</u>. During the provisioning process, the
+OEMUROT_ENABLE switch will be automatically configured according to
+bootpath.</p>
+<p>Before starting the provisioning process, select the application
+project to use (application example or template), through
+oemirot_boot_path_project variable in ROT_Provisioning/env.bat or
+env.sh. Then start provisioning process by running provisioning.bat
+(.sh) from ROT_Provisioning/OEMiROT or ROT_Provisioning/STiROT_OEMuROT,
+and follow its instructions. Refer to ROT_Provisioning/OEMiROT or
+ROT_Provisioning/STiROT_OEMuROT readme for more information on the
+provisioning process for OEMiROT boot path or STiROT_OEMuROT boot
+path.</p>
+<p>If the product state is set to PROVISIONING or CLOSED, it is still
+possible to open the debug or to execute a regression with the Debug
+Authentication feature. To do it, scripts (regression.bat (.sh) &amp;
+dbg_auth.bat (.sh)) are available in the ROT_provisioning/DA folder.</p>
+<p>Refer to OEMiROT_Appli readme for example of application booted
 through OEMiROT boot path (or through STiROT_OEMuROT boot path).</p>
 <p>For more details, refer to STM32H7RS Wiki articles:</p>
 <ul>
@@ -283,19 +281,8 @@ to start with OEMiRoT on STM32H7S</a>.</li>
 <li><a href="https://wiki.st.com/stm32mcu/wiki/Security:How_to_start_with_STiRoT_OEMuRoT_on_STM32H7S">How
 to start with STiRoT OEMuRoT on STM32H7S</a>.</li>
 </ul>
-<h3 id="restrictions"><b>Restrictions:</b></h3>
-<ol type="1">
-<li><p>For STM32H7R7xx devices, with STM32CubeIDE, this example is not
-supported due to 64Kbytes internal flash limitation.</p>
-<p>Moreover, STM32H7R7xx devices do not support STiROT_OEMuROT boot
-path.</p></li>
-<li><p>For STM32H7S7xx devices, with STM32CubeIDE, the following
-configuration is not supported due to 64Kbytes internal flash
-limitation:</p>
-<ul>
-<li>OEMUROT_ENABLE undefined, MCUBOOT_OVERWRITE_ONLY undefined.</li>
-</ul></li>
-<li><p>By default the anti-tamper is enabled for internal tamper events
+<h4 id="notes"><b>Notes:</b></h4>
+<p>By default the anti-tamper is enabled for internal tamper events
 only. It is possible to change this configuration with
 OEMIROT_TAMPER_ENABLE define in Inc\boot_hal_cfg.h.</p>
 <pre><code>#define NO_TAMPER            (0)                   /*!&lt; No tamper activated */
@@ -309,8 +296,14 @@ on the STM32H7S78-DK board, to allow the application to run. In case the
 tamper pins are opened or shorted, then the application is reset and
 blocked. Moreover, no warning message about anti-tamper detection will
 be displayed if the product state is set to CLOSED or LOCKED, even with
-OEMIROT_DEV_MODE enabled.</p></li>
-</ol>
+OEMIROT_DEV_MODE enabled.</p>
+<h3 id="restrictions"><b>Restrictions:</b></h3>
+<p>For STM32H7S7xx devices, with STM32CubeIDE, the following
+configuration is not supported due to 64Kbytes internal flash
+limitation:</p>
+<ul>
+<li>OEMUROT_ENABLE undefined, MCUBOOT_OVERWRITE_ONLY undefined.</li>
+</ul>
 </section>
 </div>
 </body>

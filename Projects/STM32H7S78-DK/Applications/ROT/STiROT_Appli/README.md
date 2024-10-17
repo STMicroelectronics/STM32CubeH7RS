@@ -28,9 +28,11 @@ File | Description
 ### <b>Hardware and Software environment</b>
 
   - This example runs on STM32H7Sxx devices.
-  - This example has been tested with STMicroelectronics STM32H7S78-DK (MB1736A)
+
+  - This example has been tested with STMicroelectronics STM32H7S78-DK (MB1736)
     board and can be easily tailored to any other supported device
     and development board.
+
   - To print the application menu in your UART console you have to configure it using these parameters:
     Speed: 115200, Data: 8bits, Parity: None, stop bits: 1, Flow control: none.
 
@@ -63,9 +65,7 @@ For more details, refer to STM32H7RS Wiki articles:
 
 #### <b>Notes:</b>
 
-1. The most efficient way to develop and debug an application is to boot directly on user flash in the Open product state.
-
-2. Be aware that a default MPU configuration is already applied by STiROT when jumping in your application. To ensure the security of the
+Be aware that a default MPU configuration is already applied by STiROT when jumping in your application. To ensure the security of the
 device, the MPU is configured to allow only the user application code area to be executed, minimizing the risk of unauthorized code execution.
 It is the user application responsibility to reconfigure the MPU to fit with its security needs.
 
