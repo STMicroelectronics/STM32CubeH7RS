@@ -46,9 +46,10 @@ be automatically updated according to OEMiRoT configuration, and user answers.
 
 The **provisioning process** (OEMiROT/provisioning.bat/.sh) is divided into 3 majors steps:
 
-- Step 1: Preliminary stage
-- Step 2: Configuration management
-- Step 3: Images generation
+- Step 0: Preliminary stage
+- Step 1: Configuration management
+- Step 2: Image generations
+- Step 3: Provisioning
 
 The provisioning script is relying on ob_flash_programming, obkey_provisioning and obkey_provisioning_open scripts.
 

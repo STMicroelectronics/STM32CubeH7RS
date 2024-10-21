@@ -51,9 +51,8 @@ The **provisioning process** (STiRoT_OEMuRoT/provisioning.bat/.sh) is divided in
 
 - Step 0: Preliminary stage
 - Step 1: Configuration management
-- Step 2: OEMuROT image generation
-- Step 3: OEMuROT application image generation
-- Step 4: Provisioning
+- Step 2: Image generations
+- Step 3: Provisioning
 
 The provisioning script is relying on ob_flash_programming, obkey_provisioning, update_ob_setup,
 update_oemurot_appli_setup and update_stirot_iloader_setup scripts.

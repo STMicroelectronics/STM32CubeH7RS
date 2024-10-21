@@ -49,7 +49,7 @@ The **provisioning process** (STiROT/provisioning.bat/.sh) is divided into 3 maj
 
 - Step 0: Preliminary stage
 - Step 1: Configuration management
-- Step 2: STiROT application image generation
+- Step 2: Image generation
 - Step 3: Provisioning
 
 The provisioning script is relying on ob_flash_programming, obkey_provisioning, update_appli_setup,
