@@ -39,10 +39,6 @@ CODE_OFFSET = 0x0;               /* This define is updated automatically by OEMi
 CODE_SIZE = 0x200000;            /* This define is updated automatically by OEMiROT_Boot postbuild */
 PARTITION_START = 0x70000000;    /* This define is updated automatically by OEMiROT_Boot postbuild */
 IMAGE_HEADER_SIZE = 0x400;       /* mcuboot header size */
-CONF_FLAG_START = 0x30007FA0;
-CONF_FLAG_SIZE = 0x20;
-RAMECC_HANDLE_START = 0x30007FC0;
-RAMECC_HANDLE_SIZE = 0x40;
 
 /* Highest address of the user mode stack */
 _estack = ORIGIN(RAM) + LENGTH(RAM); /* end of "RAM" Ram type memory */
@@ -50,13 +46,34 @@ _estack = ORIGIN(RAM) + LENGTH(RAM); /* end of "RAM" Ram type memory */
 _Min_Heap_Size = 0x200; /* required amount of heap */
 _Min_Stack_Size = 0x400; /* required amount of stack */
 
+__FLASH_BEGIN  = PARTITION_START + CODE_OFFSET + IMAGE_HEADER_SIZE;
+__FLASH_SIZE   = CODE_SIZE - IMAGE_HEADER_SIZE;
+__EXTRAM_BEGIN = 0x70000000;
+__EXTRAM_SIZE  = 0x00400000;
+
+
+__RAM          = 0x30004000;
+__RAM_SIZE     = 0x4000;
+__RAM_NONCACHEABLEBUFFER_SIZE = 0x400;
+__RAM_CONF_FLAG_SIZE          = 0x20;
+__RAM_RAMECC_HANDLE_SIZE     = 0x40;
+__RAM_NONCACHEABLEBUFFER      = __RAM + __RAM_SIZE - __RAM_NONCACHEABLEBUFFER_SIZE - __RAM_CONF_FLAG_SIZE - __RAM_RAMECC_HANDLE_SIZE;
+__RAM_CONF_FLAG               = __RAM_NONCACHEABLEBUFFER + __RAM_NONCACHEABLEBUFFER_SIZE;
+__RAM_RAMECC_HANDLE          = __RAM_NONCACHEABLEBUFFER + __RAM_CONF_FLAG_SIZE;
+
 /* Memories definition */
 MEMORY
 {
-  RAM           (xrw)    : ORIGIN = 0x30004000,   LENGTH = 16K - CONF_FLAG_SIZE - RAMECC_HANDLE_SIZE
-  FLASH          (rx)    : ORIGIN = PARTITION_START + CODE_OFFSET + IMAGE_HEADER_SIZE,   LENGTH = CODE_SIZE - IMAGE_HEADER_SIZE
-  CONF_FLAG      (rw)    : ORIGIN = CONF_FLAG_START,   LENGTH = CONF_FLAG_SIZE
-  RAMECC_HANDLE (rw)     : ORIGIN = RAMECC_HANDLE_START,   LENGTH = RAMECC_HANDLE_SIZE
+  RAM                    (xrw) : ORIGIN = __RAM,    LENGTH = __RAM_SIZE -__RAM_NONCACHEABLEBUFFER_SIZE -__RAM_CONF_FLAG_SIZE -__RAM_RAMECC_HANDLE_SIZE
+  RAM_NONCACHEABLEBUFFER (xrw) : ORIGIN = __RAM_NONCACHEABLEBUFFER,  LENGTH = __RAM_NONCACHEABLEBUFFER_SIZE
+  CONF_FLAG              (rw)  : ORIGIN = __RAM_CONF_FLAG,   LENGTH = __RAM_CONF_FLAG_SIZE
+  RAMECC_HANDLE         (rw)  : ORIGIN = __RAM_RAMECC_HANDLE,   LENGTH = __RAM_RAMECC_HANDLE_SIZE
+
+  ITCM      (xrw) : ORIGIN = 0x00000000,    LENGTH = 4K
+  DTCM       (rw) : ORIGIN = 0x20000000,    LENGTH = 4K
+
+  FLASH     (xrw) : ORIGIN = __FLASH_BEGIN, LENGTH = __FLASH_SIZE
+  EXTRAM     (rw) : ORIGIN = __EXTRAM_BEGIN,LENGTH = __EXTRAM_SIZE
 }
 
 /* Sections */
@@ -112,7 +129,7 @@ SECTIONS
     . = ALIGN(4);
   } >FLASH
 
-  .preinit_array (READONLY) : /* The READONLY keyword is only supported in GCC11 and later, remove it if using GCC10 or earlier. */
+  .preinit_array  (READONLY) : /* The READONLY keyword is only supported in GCC11 and later, remove it if using GCC10 or earlier. */
   {
     . = ALIGN(4);
     PROVIDE_HIDDEN (__preinit_array_start = .);
@@ -189,6 +206,13 @@ SECTIONS
     __bss_end__ = _ebss;
   } >RAM
 
+  RW_NONCACHEABLE :
+  {
+    __NONCACHEABLEBUFFER_BEGIN = .;/* create symbol for start of section */
+    KEEP(*(noncacheable_buffer))
+    __NONCACHEABLEBUFFER_END = .;  /* create symbol for start of section */
+  } > RAM_NONCACHEABLEBUFFER
+
   /* User_heap_stack section, used to check that there is enough "RAM" Ram  type memory left */
   ._user_heap_stack :
   {
@@ -198,7 +222,7 @@ SECTIONS
     . = . + _Min_Heap_Size;
     . = . + _Min_Stack_Size;
     . = ALIGN(8);
-  } >RAM
+  } >DTCM
 
   /* Remove information from the compiler libraries */
   /DISCARD/ :
