@@ -338,6 +338,34 @@ const OEMIROT_MPU_InitTypeDef region_cfg_appli[] =
   /* the region will be activated later by NSS jump service. Following regions */
   /*  in this list are configured and activated at this stage. */
 
+  /* Region 14: Allows execution of appli ("Data") */
+  {
+    MPU_REGION_APP,
+#if  (OEMIROT_LOAD_AND_RUN != NO_LOAD_AND_RUN)
+    PRIMARY_RUN_PARTITION_START,
+#else /* not (OEMIROT_LOAD_AND_RUN != NO_LOAD_AND_RUN) */
+    EXT_FLASH_BASE_ADDRESS + IMAGE_PRIMARY_PARTITION_OFFSET,
+#endif /* OEMIROT_LOAD_AND_RUN != NO_LOAD_AND_RUN */
+#if (OEMIROT_LOAD_AND_RUN == LOAD_AND_RUN_INT_RAM)
+    MPU_REGION_SIZE_128KB,            /* FLASH_PARTITION_SIZE */
+    0x00U,                            /* All subregions activated */
+#else /* not (OEMIROT_LOAD_AND_RUN == LOAD_AND_RUN_INT_RAM) */
+    MPU_REGION_SIZE_2MB,              /* FLASH_PARTITION_SIZE */
+    0x00U,                            /* All subregions activated */
+#endif /* OEMIROT_LOAD_AND_RUN == LOAD_AND_RUN_INT_RAM */
+    MPU_REGION_PRIV_RO,
+    MPU_INSTRUCTION_ACCESS_ENABLE,
+    MPU_ACCESS_SHAREABLE,
+    MPU_ACCESS_CACHEABLE,
+    MPU_ACCESS_BUFFERABLE,
+    MPU_TEX_LEVEL1,
+#ifdef FLOW_CONTROL
+    FLOW_STEP_MPU_A_EN_R14,
+    FLOW_CTRL_MPU_A_EN_R14,
+    FLOW_STEP_MPU_A_CH_R14,
+    FLOW_CTRL_MPU_A_CH_R14,
+#endif /* FLOW_CONTROL */
+  },
   /* Region 1: Allows RW access to the external flash */
   {
     MPU_REGION_NUMBER1,
@@ -393,34 +421,6 @@ const OEMIROT_MPU_InitTypeDef region_cfg_appli[] =
     FLOW_CTRL_MPU_A_EN_R5,
     FLOW_STEP_MPU_A_CH_R5,
     FLOW_CTRL_MPU_A_CH_R5,
-#endif /* FLOW_CONTROL */
-  },
-  /* Region 14: Allows execution of appli ("Data") */
-  {
-    MPU_REGION_APP,
-#if  (OEMIROT_LOAD_AND_RUN != NO_LOAD_AND_RUN)
-    PRIMARY_RUN_PARTITION_START,
-#else /* not (OEMIROT_LOAD_AND_RUN != NO_LOAD_AND_RUN) */
-    EXT_FLASH_BASE_ADDRESS + IMAGE_PRIMARY_PARTITION_OFFSET,
-#endif /* OEMIROT_LOAD_AND_RUN != NO_LOAD_AND_RUN */
-#if (OEMIROT_LOAD_AND_RUN == LOAD_AND_RUN_INT_RAM)
-    MPU_REGION_SIZE_128KB,            /* FLASH_PARTITION_SIZE */
-    0x00U,                            /* All subregions activated */
-#else /* not (OEMIROT_LOAD_AND_RUN == LOAD_AND_RUN_INT_RAM) */
-    MPU_REGION_SIZE_2MB,              /* FLASH_PARTITION_SIZE */
-    0x00U,                            /* All subregions activated */
-#endif /* OEMIROT_LOAD_AND_RUN == LOAD_AND_RUN_INT_RAM */
-    MPU_REGION_PRIV_RO,
-    MPU_INSTRUCTION_ACCESS_ENABLE,
-    MPU_ACCESS_SHAREABLE,
-    MPU_ACCESS_CACHEABLE,
-    MPU_ACCESS_BUFFERABLE,
-    MPU_TEX_LEVEL1,
-#ifdef FLOW_CONTROL
-    FLOW_STEP_MPU_A_EN_R14,
-    FLOW_CTRL_MPU_A_EN_R14,
-    FLOW_STEP_MPU_A_CH_R14,
-    FLOW_CTRL_MPU_A_CH_R14,
 #endif /* FLOW_CONTROL */
   },
 };
@@ -927,6 +927,10 @@ static void mpu_appli_cfg(void)
          execution rights given to primary code slot */
       if (i == 0)
       {
+        if (region_cfg_appli[i].Number != MPU_REGION_APP)
+        {
+          Error_Handler();
+        }
         mpu_configure_region(&region_cfg_appli[i], MPU_REGION_DISABLE);
       }
       else
@@ -948,6 +952,10 @@ static void mpu_appli_cfg(void)
          execution rights given to primary code slot */
       if (i == 0)
       {
+        if (region_cfg_appli[i].Number != MPU_REGION_APP)
+        {
+          Error_Handler();
+        }
         status = mpu_check_region_config(&region_cfg_appli[i], MPU_REGION_DISABLE);
       }
       else

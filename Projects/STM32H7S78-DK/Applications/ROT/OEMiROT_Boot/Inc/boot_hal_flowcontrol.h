@@ -359,23 +359,23 @@ extern "C" {
 #endif /* OEMIROT_LOAD_AND_RUN != NO_LOAD_AND_RUN */
 
 #ifdef OEMIROT_MPU_PROTECTION
+#define FLOW_STEP_MPU_A_EN_R14      0x001f7083U        /*!< Step MPU Region 14 Appli enable value */
+#define FLOW_STEP_MPU_A_CH_R14      0x001fbbb7U        /*!< Step MPU Region 14 Appli check value */
 #define FLOW_STEP_MPU_A_EN_R1       0x000ac741U        /*!< Step MPU Region 1 Appli enable value */
 #define FLOW_STEP_MPU_A_CH_R1       0x000b3642U        /*!< Step MPU Region 1 Appli check value */
 #define FLOW_STEP_MPU_A_EN_R2       0x000b2437U        /*!< Step MPU Region 2 Appli enable value */
 #define FLOW_STEP_MPU_A_CH_R2       0x000b448eU        /*!< Step MPU Region 2 Appli check value */
 #define FLOW_STEP_MPU_A_EN_R5       0x001e0aaaU        /*!< Step MPU Region 5 Appli enable value */
 #define FLOW_STEP_MPU_A_CH_R5       0x001e67ffU        /*!< Step MPU Region 5 Appli check value */
-#define FLOW_STEP_MPU_A_EN_R14      0x001f7083U        /*!< Step MPU Region 14 Appli enable value */
-#define FLOW_STEP_MPU_A_CH_R14      0x001fbbb7U        /*!< Step MPU Region 14 Appli check value */
 #else
+#define FLOW_STEP_MPU_A_EN_R14      0x00000000U        /*!< No effect on control flow */
+#define FLOW_STEP_MPU_A_CH_R14      0x00000000U        /*!< No effect on control flow */
 #define FLOW_STEP_MPU_A_EN_R1       0x00000000U        /*!< No effect on control flow */
 #define FLOW_STEP_MPU_A_CH_R1       0x00000000U        /*!< No effect on control flow */
 #define FLOW_STEP_MPU_A_EN_R2       0x00000000U        /*!< No effect on control flow */
 #define FLOW_STEP_MPU_A_CH_R2       0x00000000U        /*!< No effect on control flow */
 #define FLOW_STEP_MPU_A_EN_R5       0x00000000U        /*!< No effect on control flow */
 #define FLOW_STEP_MPU_A_CH_R5       0x00000000U        /*!< No effect on control flow */
-#define FLOW_STEP_MPU_A_EN_R14      0x00000000U        /*!< No effect on control flow */
-#define FLOW_STEP_MPU_A_CH_R14      0x00000000U        /*!< No effect on control flow */
 #endif /* OEMIROT_MPU_PROTECTION */
 
 #if defined(MCUBOOT_EXT_LOADER) && defined(OEMIROT_MPU_PROTECTION)
@@ -528,12 +528,12 @@ extern "C" {
 #define FLOW_CTRL_HASH_A_CH1        (FLOW_CTRL_STAGE_2 ^         FLOW_STEP_HASH_A_CH1)
 #define FLOW_CTRL_HASH_A_CH2        (FLOW_CTRL_HASH_A_CH1 ^      FLOW_STEP_HASH_A_CH2)
 
-#define FLOW_CTRL_MPU_A_EN_R1       (FLOW_CTRL_HASH_A_CH2 ^      FLOW_STEP_MPU_A_EN_R1)
+#define FLOW_CTRL_MPU_A_EN_R14      (FLOW_CTRL_HASH_A_CH2 ^      FLOW_STEP_MPU_A_EN_R14)
+#define FLOW_CTRL_MPU_A_EN_R1       (FLOW_CTRL_MPU_A_EN_R14 ^    FLOW_STEP_MPU_A_EN_R1)
 #define FLOW_CTRL_MPU_A_EN_R2       (FLOW_CTRL_MPU_A_EN_R1 ^     FLOW_STEP_MPU_A_EN_R2)
 #define FLOW_CTRL_MPU_A_EN_R5       (FLOW_CTRL_MPU_A_EN_R2 ^     FLOW_STEP_MPU_A_EN_R5)
-#define FLOW_CTRL_MPU_A_EN_R14      (FLOW_CTRL_MPU_A_EN_R5 ^     FLOW_STEP_MPU_A_EN_R14)
 
-#define FLOW_CTRL_MCE_A_EN          (FLOW_CTRL_MPU_A_EN_R14 ^     FLOW_STEP_MCE_A_EN)
+#define FLOW_CTRL_MCE_A_EN          (FLOW_CTRL_MPU_A_EN_R5 ^     FLOW_STEP_MCE_A_EN)
 #define FLOW_CTRL_MCE_A_EN_R0       (FLOW_CTRL_MCE_A_EN ^        FLOW_STEP_MCE_A_EN_R0)
 #define FLOW_CTRL_MCE_A_EN_R1       (FLOW_CTRL_MCE_A_EN_R0 ^     FLOW_STEP_MCE_A_EN_R1)
 #define FLOW_CTRL_MCE_A_EN_R2       (FLOW_CTRL_MCE_A_EN_R1 ^     FLOW_STEP_MCE_A_EN_R2)
@@ -543,12 +543,12 @@ extern "C" {
 #define FLOW_CTRL_STAGE_3_A         FLOW_CTRL_MCE_A_EN_RLCK
 
 /* Flow control Stage 4 Appli */
-#define FLOW_CTRL_MPU_A_CH_R1       (FLOW_CTRL_STAGE_3_A ^       FLOW_STEP_MPU_A_CH_R1)
+#define FLOW_CTRL_MPU_A_CH_R14      (FLOW_CTRL_STAGE_3_A ^       FLOW_STEP_MPU_A_CH_R14)
+#define FLOW_CTRL_MPU_A_CH_R1       (FLOW_CTRL_MPU_A_CH_R14 ^    FLOW_STEP_MPU_A_CH_R1)
 #define FLOW_CTRL_MPU_A_CH_R2       (FLOW_CTRL_MPU_A_CH_R1 ^     FLOW_STEP_MPU_A_CH_R2)
 #define FLOW_CTRL_MPU_A_CH_R5       (FLOW_CTRL_MPU_A_CH_R2 ^     FLOW_STEP_MPU_A_CH_R5)
-#define FLOW_CTRL_MPU_A_CH_R14      (FLOW_CTRL_MPU_A_CH_R5 ^     FLOW_STEP_MPU_A_CH_R14)
 
-#define FLOW_CTRL_MCE_A_CH          (FLOW_CTRL_MPU_A_CH_R14 ^     FLOW_STEP_MCE_A_CH)
+#define FLOW_CTRL_MCE_A_CH          (FLOW_CTRL_MPU_A_CH_R5 ^     FLOW_STEP_MCE_A_CH)
 #define FLOW_CTRL_MCE_A_CH_R0       (FLOW_CTRL_MCE_A_CH ^        FLOW_STEP_MCE_A_CH_R0)
 #define FLOW_CTRL_MCE_A_CH_R1       (FLOW_CTRL_MCE_A_CH_R0 ^     FLOW_STEP_MCE_A_CH_R1)
 #define FLOW_CTRL_MCE_A_CH_R2       (FLOW_CTRL_MCE_A_CH_R1 ^     FLOW_STEP_MCE_A_CH_R2)
