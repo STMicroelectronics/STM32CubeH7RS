@@ -97,23 +97,18 @@ typedef struct
   ================== */
 const OEMIROT_MPU_InitTypeDef region_cfg_init[] =
 {
-  /* Region 0: Allows execution of BL2 ("Code") */
+  /* Region 0: Allows RW access to BL2 SRAM ("Data") */
   {
     MPU_REGION_NUMBER0,
-#if  defined(OEMUROT_ENABLE)
-    BL2_RAM_BASE,
-    MPU_REGION_SIZE_128KB,            /* BL2_CODE_SIZE */
-#else /* OEMUROT_ENABLE */
-    FLASH_BASE + FLASH_AREA_BL2_OFFSET,
-    MPU_REGION_SIZE_64KB,             /* BL2_CODE_SIZE */
-#endif /* OEMUROT_ENABLE */
+    BL2_SRAM_AREA_BASE,
+    MPU_REGION_SIZE_64KB,             /* BL2_SRAM_AREA_END - BL2_SRAM_AREA_BASE + 1 */
     0x00U,                            /* All subregions activated */
-    MPU_REGION_PRIV_RO,
-    MPU_INSTRUCTION_ACCESS_ENABLE,
+    MPU_REGION_PRIV_RW,
+    MPU_INSTRUCTION_ACCESS_DISABLE,
     MPU_ACCESS_NOT_SHAREABLE,
     MPU_ACCESS_CACHEABLE,
-    MPU_ACCESS_NOT_BUFFERABLE,
-    MPU_TEX_LEVEL0,
+    MPU_ACCESS_BUFFERABLE,
+    MPU_TEX_LEVEL1,
 #ifdef FLOW_CONTROL
     FLOW_STEP_MPU_I_EN_R0,
     FLOW_CTRL_MPU_I_EN_R0,
@@ -187,18 +182,23 @@ const OEMIROT_MPU_InitTypeDef region_cfg_init[] =
 #endif /* FLOW_CONTROL */
   },
 #endif /* OEMIROT_MCE_PROTECTION */
-  /* Region 6: Allows RW access to BL2 SRAM ("Data") */
+  /* Region 6: Allows execution of BL2 ("Code") */
   {
     MPU_REGION_NUMBER6,
-    BL2_SRAM_AREA_BASE,
-    MPU_REGION_SIZE_64KB,             /* BL2_SRAM_AREA_END - BL2_SRAM_AREA_BASE + 1 */
+#if  defined(OEMUROT_ENABLE)
+    BL2_RAM_BASE,
+    MPU_REGION_SIZE_128KB,            /* BL2_CODE_SIZE */
+#else /* OEMUROT_ENABLE */
+    FLASH_BASE + FLASH_AREA_BL2_OFFSET,
+    MPU_REGION_SIZE_64KB,             /* BL2_CODE_SIZE */
+#endif /* OEMUROT_ENABLE */
     0x00U,                            /* All subregions activated */
-    MPU_REGION_PRIV_RW,
-    MPU_INSTRUCTION_ACCESS_DISABLE,
+    MPU_REGION_PRIV_RO,
+    MPU_INSTRUCTION_ACCESS_ENABLE,
     MPU_ACCESS_NOT_SHAREABLE,
     MPU_ACCESS_CACHEABLE,
-    MPU_ACCESS_BUFFERABLE,
-    MPU_TEX_LEVEL1,
+    MPU_ACCESS_NOT_BUFFERABLE,
+    MPU_TEX_LEVEL0,
 #ifdef FLOW_CONTROL
     FLOW_STEP_MPU_I_EN_R6,
     FLOW_CTRL_MPU_I_EN_R6,
@@ -404,11 +404,11 @@ const OEMIROT_MPU_InitTypeDef region_cfg_appli[] =
     FLOW_CTRL_MPU_A_CH_R2,
 #endif /* FLOW_CONTROL */
   },
-  /* Region 5: Allows RW access to appli SRAM ("Data") */
+  /* Region 5: Allows RW access to all SRAM ("Data") */
   {
     MPU_REGION_NUMBER5,
-    APP_RAM_START,
-    MPU_REGION_SIZE_16KB,             /* See APP_RAM_SIZE */
+    DEF_DTCM_BASE,
+    MPU_REGION_SIZE_512MB,            /* Whole SRAM accessible for Appli */
     0x00U,                            /* All subregions activated */
     MPU_REGION_PRIV_RW,
     MPU_INSTRUCTION_ACCESS_DISABLE,
