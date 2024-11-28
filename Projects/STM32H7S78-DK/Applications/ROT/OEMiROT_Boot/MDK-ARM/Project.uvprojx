@@ -721,11 +721,6 @@
               <FilePath>..\..\..\..\..\..\Middlewares\Third_Party\mbed-crypto\library\rsa.c</FilePath>
             </File>
             <File>
-              <FileName>rsa_internal.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\Middlewares\Third_Party\mbed-crypto\library\rsa_internal.c</FilePath>
-            </File>
-            <File>
               <FileName>sha256.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\Middlewares\Third_Party\mbed-crypto\library\sha256.c</FilePath>

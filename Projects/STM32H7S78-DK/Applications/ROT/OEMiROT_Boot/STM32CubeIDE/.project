@@ -467,11 +467,6 @@
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mbed-crypto/library/rsa.c</locationURI>
 		</link>
 		<link>
-			<name>Middlewares/mbed-crypto/rsa_internal.c</name>
-			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mbed-crypto/library/rsa_internal.c</locationURI>
-		</link>
-		<link>
 			<name>Middlewares/mbed-crypto/sha256.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mbed-crypto/library/sha256.c</locationURI>
