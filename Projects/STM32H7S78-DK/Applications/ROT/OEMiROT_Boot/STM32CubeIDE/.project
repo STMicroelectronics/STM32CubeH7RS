@@ -407,9 +407,9 @@
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mbed-crypto/library/constant_time.c</locationURI>
 		</link>
 		<link>
-			<name>Middlewares/mbed-crypto/ctr_drbg.c</name>
+			<name>Middlewares/mbed-crypto/hmac_drbg.c</name>
 			<type>1</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mbed-crypto/library/ctr_drbg.c</locationURI>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mbed-crypto/library/hmac_drbg.c</locationURI>
 		</link>
 		<link>
 			<name>Middlewares/mbed-crypto/ecdh.c</name>

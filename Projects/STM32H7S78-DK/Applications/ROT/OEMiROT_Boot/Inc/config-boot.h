@@ -58,7 +58,7 @@ extern "C" {
 #define MBEDTLS_ECP_NIST_OPTIM                        /* undefine this macro to disable NIST curves optimisation */
 #define MBEDTLS_PLATFORM_ENTROPY
 #define MBEDTLS_ENTROPY_C
-#define MBEDTLS_CTR_DRBG_C
+#define MBEDTLS_HMAC_DRBG_C
 
 
 /* STD functions */

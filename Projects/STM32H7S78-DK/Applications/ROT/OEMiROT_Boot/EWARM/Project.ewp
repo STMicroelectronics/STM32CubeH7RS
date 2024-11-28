@@ -1272,7 +1272,7 @@
                     <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\mbed-crypto\library\constant_time.c</name>
                 </file>
                 <file>
-                    <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\mbed-crypto\library\ctr_drbg.c</name>
+                    <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\mbed-crypto\library\hmac_drbg.c</name>
                 </file>
                 <file>
                     <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\mbed-crypto\library\ecdh.c</name>

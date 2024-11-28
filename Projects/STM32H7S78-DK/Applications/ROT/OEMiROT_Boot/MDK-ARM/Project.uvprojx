@@ -661,9 +661,9 @@
               <FilePath>..\..\..\..\..\..\Middlewares\Third_Party\mbed-crypto\library\constant_time.c</FilePath>
             </File>
             <File>
-              <FileName>ctr_drbg.c</FileName>
+              <FileName>hmac_drbg.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\Middlewares\Third_Party\mbed-crypto\library\ctr_drbg.c</FilePath>
+              <FilePath>..\..\..\..\..\..\Middlewares\Third_Party\mbed-crypto\library\hmac_drbg.c</FilePath>
             </File>
             <File>
               <FileName>ecdh.c</FileName>
