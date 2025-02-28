@@ -25,9 +25,9 @@
 <p>The application creates 4 Tasks and 1 Queue:</p>
 <ul>
 <li><p>‘ProducerThread’: Sends message (incrementing value “ProducerValue”) to the queue.</p></li>
-<li><p>‘ConsumerThread’: Gets message from the queue Checks if it’s the correct message (ProducerValue == ConsumerValue) LED_GREEN ON</p></li>
-<li><p>‘GenThread’: Waits for the message on the queue to reach a specific “GenerationValue” Sets ReceiveThread’ flag to 1</p></li>
-<li><p>‘ReceiveThread’: Waits for the thread flag settings LED_YELLOW ON</p></li>
+<li><p>‘ConsumerThread’: Gets message from the queue. Checks if it’s the correct message (ProducerValue == ConsumerValue). LED_GREEN ON.</p></li>
+<li><p>‘GenThread’: Waits for the message on the queue to reach a specific “GenerationValue”. Sets ReceiveThread flag to 1.</p></li>
+<li><p>‘ReceiveThread’: Waits for the thread flag settings. LED_YELLOW ON.</p></li>
 </ul>
 <h4 id="expected-success-behavior"><b>Expected success behavior</b></h4>
 <ul>
@@ -53,13 +53,13 @@
 <h3 id="hardware-and-software-environment"><b>Hardware and Software environment</b></h3>
 <ul>
 <li>This application runs on NUCLEO-H7S3L8 device.</li>
-<li><p>This application has been tested with STMicroelectronics NUCLEO-H7S3L8 board MB1737 Rev. B01 and can be easily tailored to any other supported device and development board.</p></li>
+<li><p>This application has been tested with STMicroelectronics NUCLEO-H7S3L8 board MB1737 Rev. B02 and can be easily tailored to any other supported device and development board.</p></li>
 <li><p>This application uses USART3 to display output, the hyperterminal configuration is as follows:</p>
 <ul>
 <li>BaudRate = 115200 baud</li>
 <li>Word Length = 8 Bits</li>
 <li>Stop Bit = 1</li>
-<li>Parity = none</li>
+<li>Parity = None</li>
 <li>Flow control = None</li>
 </ul></li>
 </ul>
@@ -67,7 +67,7 @@
 <p>This application runs from the external Flash memory (FreeRTOS_Queues_ThreadFlags Appli). It boots from internal Flash (Template_XIP_Boot) then jumps to the application code in external Flash.</p>
 <p>To configure STM32CubeIDE Debug Configuration, you must do the following :</p>
 <pre><code>1. Upload the template XIP
-2. Add the adequate external loader (MX25UW25645G_STM32H7R38-NUCLEO.stldr file) in Project-&gt;Debugger Configuration
+2. Add the adequate external loader (MX25UW25645G_STM32H7S3L8-NUCLEO.stldr file) in Project-&gt;Debugger Configuration
 3. Add in the startup the template_XIP_Boot in Project-&gt;Debugger Configuration
 4. Move up the application in the startup</code></pre>
 <p>In order to make the program work, you must do the following :</p>

@@ -4,6 +4,9 @@ This project provides a STiROT boot path application example. Boot is performed 
 
 As example, this application will display a menu when started.
 
+The system clock is set to 380 MHz to be functional with all hardware configurations (ECC_ON_SRAM enabled, no internal regulator)
+and with the full range of temperature (Tj up to 125°). In other circumstances, the system clock can be increased up to 600 Mhz.
+
 
 ### <b>Keywords</b>
 
@@ -57,7 +60,7 @@ After application startup, check in your "UART console" the menu is well display
    Selection :
 ```
 
-For more details, refer to STM32H7RS Wiki articles:
+For more details, refer to STM32H7S Wiki articles:
 
   - [STiRoT for STM32H7S](https://wiki.st.com/stm32mcu/wiki/Security:STiRoT_for_STM32H7S).
   - [How to start with STiRoT on STM32H7S](https://wiki.st.com/stm32mcu/wiki/Security:How_to_start_with_STiRoT_on_STM32H7S).

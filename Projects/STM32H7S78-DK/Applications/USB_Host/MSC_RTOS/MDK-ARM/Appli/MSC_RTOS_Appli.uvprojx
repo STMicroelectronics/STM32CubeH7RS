@@ -16,9 +16,9 @@
         <TargetCommonOption>
           <Device>STM32H7S7L8HxH</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STM32H7Rx-7Sx_DFP.0.1.0</PackID>
+          <PackID>Keil.STM32H7RSxx_DFP.1.0.0</PackID>
           <PackURL>https://www.keil.com/pack/</PackURL>
-          <Cpu>IRAM(0x20000000-0x2002FFFF) IRAM2(0x24000000-0x24071BFF) IROM(0x8000000-0x800FFFF) CLOCK(12000000) FPU3(DFPU) CPUTYPE("Cortex-M7") ELITTLE TZ</Cpu>
+          <Cpu>IRAM(0x20000000-0x2000FFFF) IRAM2(0x24000000-0x24071BFF) IROM(0x8000000-0x800FFFF) CLOCK(12000000) FPU3(DFPU) CPUTYPE("Cortex-M7") ELITTLE TZ</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
           <FlashDriverDll></FlashDriverDll>
@@ -81,7 +81,7 @@
           </BeforeMake>
           <AfterMake>
             <RunUserProg1>0</RunUserProg1>
-            <RunUserProg2>0</RunUserProg2>
+            <RunUserProg2>1</RunUserProg2>
             <UserProg1Name></UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
@@ -138,7 +138,7 @@
           </Flash1>
           <bUseTDR>1</bUseTDR>
           <Flash2>BIN\UL2V8M.DLL</Flash2>
-          <Flash3>"" ()</Flash3>
+          <Flash3></Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
           <pFcarmGrp></pFcarmGrp>
@@ -247,7 +247,7 @@
               <IRAM>
                 <Type>0</Type>
                 <StartAddress>0x20000000</StartAddress>
-                <Size>0x30000</Size>
+                <Size>0x10000</Size>
               </IRAM>
               <IROM>
                 <Type>1</Type>
@@ -340,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32H7S7xx,USE_FULL_LL_DRIVER,USBPD_PORT_COUNT=1,_RTOS,_SRC,USBPDCORE_LIB_NO_PD,TCPP0203_SUPPORT</Define>
               <Undefine></Undefine>
-              <IncludePath>../../Appli/Inc;../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Inc;../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Inc/Legacy;../../../../../../../Middlewares/Third_Party/FreeRTOS/Source/include;../../../../../../../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;..\..\..\..\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\portable\GCC\ARM_CM4F;../../../../../../../Drivers/CMSIS/RTOS2/Include;../../../../../../../Middlewares/Third_Party/FatFs/source;../../../../../../../Middlewares/ST/STM32_USBPD_Library/Core/inc;../../../../../../../Middlewares/ST/STM32_USBPD_Library/Devices/STM32H7RSXX/inc;../../../../../../../Middlewares/ST/STM32_USB_Host_Library/Core/Inc;../../../../../../../Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Inc;../../../../../../../Drivers/CMSIS/Device/ST/STM32H7RSxx/Include;../../../../../../../Drivers/CMSIS/Include;../../../../../../../Drivers/BSP/STM32H7S78-DK;./../../../../../Drivers/BSP/Components/tcpp0203;..\..\..\..\..\..\..\Middlewares\Third_Party\FatFs\source\drivers\usb_host</IncludePath>
+              <IncludePath>../../Appli/Inc;../../../../../../../Drivers/BSP/STM32H7S78-DK;./../../../../../Drivers/BSP/Components/tcpp0203;../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Inc;../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Inc/Legacy;../../../../../../../Middlewares/Third_Party/FreeRTOS/Source/include;../../../../../../../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;../../../../../../../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F;../../../../../../../Drivers/CMSIS/RTOS2/Include;../../../../../../../Middlewares/Third_Party/FatFs/source;../../../../../../../Middlewares/Third_Party/FatFs/source/drivers/template;../../../../../../../Middlewares/ST/STM32_USBPD_Library/Core/inc;../../../../../../../Middlewares/ST/STM32_USBPD_Library/Devices/STM32H7RSXX/inc;../../../../../../../Middlewares/ST/STM32_USB_Host_Library/Core/Inc;../../../../../../../Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Inc;../../../../../../../Drivers/CMSIS/Device/ST/STM32H7RSxx/Include;../../../../../../../Drivers/CMSIS/Include;..\..\..\..\..\..\..\Middlewares\Third_Party\FatFs\source\drivers\usb_host</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -415,6 +415,11 @@
               <FilePath>../../Appli/Src/fatfs.c</FilePath>
             </File>
             <File>
+              <FileName>usbpd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../Appli/Src/usbpd.c</FilePath>
+            </File>
+            <File>
               <FileName>usbpd_dpm_user.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../Appli/Src/usbpd_dpm_user.c</FilePath>
@@ -473,11 +478,6 @@
               <FileName>file_operations.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Appli\Src\file_operations.c</FilePath>
-            </File>
-            <File>
-              <FileName>usbpd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Appli\Src\usbpd.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -560,24 +560,9 @@
               <FilePath>../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_ll_rcc.c</FilePath>
             </File>
             <File>
-              <FileName>stm32h7rsxx_ll_utils.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_ll_utils.c</FilePath>
-            </File>
-            <File>
               <FileName>stm32h7rsxx_ll_exti.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_ll_exti.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32h7rsxx_hal_tim.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_hal_tim.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32h7rsxx_hal_tim_ex.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_hal_tim_ex.c</FilePath>
             </File>
             <File>
               <FileName>stm32h7rsxx_hal_i2c.c</FileName>
@@ -600,6 +585,16 @@
               <FilePath>../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_hal_smbus_ex.c</FilePath>
             </File>
             <File>
+              <FileName>stm32h7rsxx_hal_tim.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_hal_tim.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32h7rsxx_hal_tim_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_hal_tim_ex.c</FilePath>
+            </File>
+            <File>
               <FileName>stm32h7rsxx_hal_hcd.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_hal_hcd.c</FilePath>
@@ -608,6 +603,11 @@
               <FileName>stm32h7rsxx_ll_usb.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_ll_usb.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32h7rsxx_ll_utils.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_ll_utils.c</FilePath>
             </File>
             <File>
               <FileName>stm32h7rsxx_hal_adc.c</FileName>
@@ -752,7 +752,7 @@
             <File>
               <FileName>port.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\portable\GCC\ARM_CM4F\port.c</FilePath>
+              <FilePath>../../../../../../../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c</FilePath>
             </File>
           </Files>
         </Group>

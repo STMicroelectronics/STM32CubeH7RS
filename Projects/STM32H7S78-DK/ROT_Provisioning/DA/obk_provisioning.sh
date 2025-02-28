@@ -6,7 +6,6 @@ if [ $# -ge 1 ]; then script_mode=$1; else mode=MANUAL; fi
 
 # CubeProgammer connection
 connect_no_reset="-c port=SWD speed=fast ap=1 mode=Hotplug"
-connect_reset="-c port=SWD speed=fast ap=1 mode=Hotplug -hardRst"
 
 # =============================================== Configure OB Keys ========================================================
 # Verify if obk file exists
@@ -19,14 +18,14 @@ fi
 # Provisioning the obk file
 action="Provisioning the obk file"
 echo $action
-"$stm32programmercli" $connect_reset
+"$stm32programmercli" $connect_no_reset
 "$stm32programmercli" $connect_no_reset -sdp ./Binary/$da_file.obk
 if [ $? -ne 0 ]; then error; return 1; fi
 
 # Reset the board after provisioning
 action="Reset the board after provisioning"
 echo $action
-"$stm32programmercli" $connect_reset
+"$stm32programmercli" $connect_no_reset
 if [ $? -ne 0 ]; then error; return 1; fi
 
 echo Provisioning success

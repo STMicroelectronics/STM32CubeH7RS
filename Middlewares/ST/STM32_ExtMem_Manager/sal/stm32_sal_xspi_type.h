@@ -53,14 +53,14 @@ typedef enum {
 
 typedef enum {
   PHY_LINK_1S1S1S,    /*!< physical link configure in 1S1S1S */
-  PHY_LINK_1S1S2S,    /*!< physical link configure in 1S1S1S */
-  PHY_LINK_1S2S2S,    /*!< physical link configure in 1S1S1S */
+  PHY_LINK_1S1S2S,    /*!< physical link configure in 1S1S2S */
+  PHY_LINK_1S2S2S,    /*!< physical link configure in 1S2S2S */
   PHY_LINK_1S1D1D,    /*!< physical link configure in 1S1D1D */
   PHY_LINK_4S4S4S,    /*!< physical link configure in 4S4S4S */
   PHY_LINK_4S4D4D,    /*!< physical link configure in 4S4D4D */
   PHY_LINK_4D4D4D,    /*!< physical link configure in 4D4D4D */
   PHY_LINK_1S8S8S,    /*!< physical link configure in 1S8S8S */
-  PHY_LINK_8S8D8D,    /*!< physical link configure in 8D8D8D */
+  PHY_LINK_8S8D8D,    /*!< physical link configure in 8S8D8D */
   PHY_LINK_8D8D8D,    /*!< physical link configure in 8D8D8D */
 
   PHY_LINK_RAM8,      /*!< physical link configure for RAM  8lines of data */

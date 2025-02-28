@@ -225,7 +225,7 @@ static void MX_UCPD1_Init(void)
   LL_APB1_GRP2_EnableClock(LL_APB1_GRP2_PERIPH_UCPD1);
 
   LL_AHB4_GRP1_EnableClock(LL_AHB4_GRP1_PERIPH_GPIOM);
-  /**UCPD1 GPIO Configuration
+  /** UCPD1 GPIO Configuration
   PM1   ------> UCPD1_CC2
   PM0   ------> UCPD1_CC1
   */

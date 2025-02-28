@@ -2,8 +2,8 @@ var timeouts_8h =
 [
     [ "lwip_cyclic_timer", "structlwip__cyclic__timer.html", null ],
     [ "SYS_TIMEOUTS_SLEEPTIME_INFINITE", "timeouts_8h.html#a9e2b2593e709ff54c7e3c0b003f6f1b0", null ],
-    [ "lwip_cyclic_timer_handler", "timeouts_8h.html#a985c5d366b62bd179195e093ffcb7ecd", null ],
-    [ "sys_timeout_handler", "timeouts_8h.html#a2ab5bb8173f492563f70a519011b0ac1", null ],
+    [ "lwip_cyclic_timer_handler", "timeouts_8h.html#a3835d5c43cf31662a2b9c99e72788e25", null ],
+    [ "sys_timeout_handler", "timeouts_8h.html#a1d3fe3fbdbddbb9e85f05c85d7181c25", null ],
     [ "sys_check_timeouts", "group__lwip__nosys.html#ga83cffdf69ab60fd0eba9d17d363f9883", null ],
     [ "sys_restart_timeouts", "timeouts_8h.html#a6913959cf264dbe876b7e7c4db1cc13e", null ],
     [ "sys_timeout", "timeouts_8h.html#a8deed391626ec8b5423998e33782d7a8", null ],

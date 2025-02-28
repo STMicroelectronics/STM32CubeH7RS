@@ -7,24 +7,23 @@ call ../env.bat
 
 :: Getting the CubeProgammer_cli path
 set connect_no_reset=-c port=SWD speed=fast ap=1 mode=Hotplug
-set connect_reset=-c port=SWD speed=fast ap=1 mode=Hotplug -hardRst
 
 :: =============================================== Configure OB Keys =========================================================================
 set "action=Configure OBKeys HDPL1-DA config area"
 echo %action%
-%stm32programmercli% %connect_reset%
+%stm32programmercli% %connect_no_reset%
 %stm32programmercli% %connect_no_reset% -sdp ./../DA/Binary/%da_file%.obk
 IF !errorlevel! NEQ 0 goto :error
 
 set "action=Configure OBKeys HDPL1-STiROT config area"
 echo %action%
-%stm32programmercli% %connect_reset%
+%stm32programmercli% %connect_no_reset%
 %stm32programmercli% %connect_no_reset% -sdp ./Binary/STiROT_Config.obk
 IF !errorlevel! NEQ 0 goto :error
 
 set "action=Configure OBKeys HDPL1-STiROT data area"
 echo %action%
-%stm32programmercli% %connect_reset%
+%stm32programmercli% %connect_no_reset%
 %stm32programmercli% %connect_no_reset% -sdp ./Binary/STiROT_Data.obk
 IF !errorlevel! NEQ 0 goto :error
 

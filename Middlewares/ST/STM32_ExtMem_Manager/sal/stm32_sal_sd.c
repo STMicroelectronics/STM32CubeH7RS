@@ -100,7 +100,7 @@ HAL_StatusTypeDef SAL_SD_Init(SAL_SD_ObjectTypeDef* SalSD, void* HALHandle, EXTM
   Info->BlockNbr  = SalSD->hSD->SdCard.BlockNbr;
   Info->BlockSize = SalSD->hSD->SdCard.BlockSize;
 
-#if 0  /* It seems that operation is already in the HAL initialisation */
+#if 0  /* It seems that operation is already in the HAL initialization */
    /* Enable Wide Operation */
    HAL_SD_ConfigWideBusOperation(&hsd_sdmmc[Instance], SDMMC_BUS_WIDE_4B);
 #endif    

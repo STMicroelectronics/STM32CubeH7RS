@@ -17,8 +17,8 @@
   ******************************************************************************
   */
 
-#ifndef USBH_DISKIO_CONFIG_H
-#define USBH_DISKIO_CONFIG_H
+#ifndef __USBH_DISKIO_CONFIG_H
+#define __USBH_DISKIO_CONFIG_H
 
 
 #ifdef __cplusplus
@@ -41,4 +41,4 @@ extern USBH_HandleTypeDef hUsbHostHS;
 }
 #endif
 
-#endif /* USBH_DISKIO_CONFIG_H */
+#endif /* __USBH_DISKIO_CONFIG_H */

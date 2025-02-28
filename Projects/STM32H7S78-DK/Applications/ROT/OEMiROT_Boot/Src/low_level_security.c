@@ -568,9 +568,6 @@ void LL_SECU_UpdateRunTimeProtections(void)
 void LL_SECU_CheckStaticProtections(void)
 {
   static FLASH_OBProgramInitTypeDef flash_option_bytes = {0};
-#ifdef OEMIROT_ENABLE_SET_OB
-  HAL_StatusTypeDef ret = HAL_ERROR;
-#endif  /* OEMIROT_ENABLE_SET_OB  */
 #ifdef  OEMIROT_WRP_PROTECT_ENABLE
   uint32_t val;
 #endif /* OEMIROT_WRP_PROTECT_ENABLE */
@@ -588,11 +585,6 @@ void LL_SECU_CheckStaticProtections(void)
   /* Get Option Bytes status */
   (void) HAL_FLASHEx_OBGetConfig(&flash_option_bytes);
 
-#ifdef OEMIROT_ENABLE_SET_OB
-  /* Clean the option configuration */
-  flash_option_bytes.OptionType = 0;
-#endif /*   OEMIROT_ENABLE_SET_OB */
-
 #ifdef  OEMIROT_WRP_PROTECT_ENABLE
   /* Check flash write protection */
   start = FLASH_AREA_BL2_OFFSET / WRP_PAGE_SIZE;
@@ -608,16 +600,8 @@ void LL_SECU_CheckStaticProtections(void)
   {
     BOOT_LOG_DBG("Flash write protection group 0x%lx: OB 0x%lx",
                  val, flash_option_bytes.WRPSector);
-#ifndef OEMIROT_ENABLE_SET_OB
     BOOT_LOG_ERR("Unexpected value for write protection");
     Error_Handler();
-#else
-    flash_option_bytes.WRPState = OB_WRPSTATE_ENABLE;
-    flash_option_bytes.WRPSector = val;
-
-    BOOT_LOG_ERR("Unexpected value for write protection : set wrp1");
-    flash_option_bytes.OptionType |= OPTIONBYTE_WRP;
-#endif /* OEMIROT_ENABLE_SET_OB */
   }
 #endif /* OEMIROT_WRP_PROTECT_ENABLE */
 
@@ -635,15 +619,8 @@ void LL_SECU_CheckStaticProtections(void)
                  flash_option_bytes.HDPStartPage,
                  flash_option_bytes.HDPEndPage);
 
-#ifndef OEMIROT_ENABLE_SET_OB
     BOOT_LOG_ERR("Unexpected value for hide protection");
     Error_Handler();
-#else
-    BOOT_LOG_ERR("Unexpected value for hide protection : set hdp1");
-    flash_option_bytes.HDPStartPage = start;
-    flash_option_bytes.HDPEndPage = end;
-    flash_option_bytes.OptionType |= OPTIONBYTE_HDP;
-#endif  /*  OEMIROT_ENABLE_SET_OB */
   }
 #endif /* OEMIROT_HDP_PROTECT_ENABLE */
 
@@ -655,31 +632,6 @@ void LL_SECU_CheckStaticProtections(void)
     Error_Handler();
   }
 #endif /* OEMIROT_USER_SRAM_ECC */
-
-#ifdef OEMIROT_ENABLE_SET_OB
-
-  /* Configure Options Bytes */
-  if (flash_option_bytes.OptionType != 0)
-  {
-    /* Unlock the Flash to enable the flash control register access */
-    HAL_FLASH_Unlock();
-
-    /* Unlock the Options Bytes */
-    HAL_FLASH_OB_Unlock();
-
-    if ((flash_option_bytes.OptionType) != 0)
-    {
-      /* Program the Options Bytes */
-      ret = HAL_FLASHEx_OBProgram(&flash_option_bytes);
-      if (ret != HAL_OK)
-      {
-        BOOT_LOG_ERR("Error while setting OB config");
-        Error_Handler();
-      }
-    }
-
-  }
-#endif /* OEMIROT_ENABLE_SET_OB */
 
   /* Check Non-Volatile State */
   if (!IS_OB_NVSTATE(flash_option_bytes.NVState))
@@ -1448,7 +1400,7 @@ uint32_t LL_SECU_GetProductState(uint32_t NvState, uint32_t OemProvdState, uint3
 void LL_SECU_ConfigureSAES(CRYP_HandleTypeDef *hCryp, uint32_t HDPLLevel, uint32_t SaesTimeout,
                            uint32_t AHKIndex)
 {
-  uint32_t timeout = 0U;
+  uint32_t tickstart = 0U;
   HAL_StatusTypeDef status = HAL_ERROR;
   FLASH_KeyConfigTypeDef keyCfg = { 0U };
 
@@ -1465,6 +1417,15 @@ void LL_SECU_ConfigureSAES(CRYP_HandleTypeDef *hCryp, uint32_t HDPLLevel, uint32
   __HAL_RCC_SAES_FORCE_RESET();
   /* release the SAES Peripheral Clock Reset */
   __HAL_RCC_SAES_RELEASE_RESET();
+  /* Wait for BUSY=0 after SAES Peripheral Clock Reset */
+  tickstart = HAL_GetTick();
+  while (READ_BIT(((CRYP_TypeDef *)(hCryp->Instance))->SR, SAES_SR_BUSY) != 0U)
+  {
+    if ((HAL_GetTick() - tickstart) >= SaesTimeout)
+    {
+      Error_Handler();
+    }
+  }
 
   if (HAL_CRYP_DeInit(hCryp) != HAL_OK)
   {
@@ -1493,15 +1454,12 @@ void LL_SECU_ConfigureSAES(CRYP_HandleTypeDef *hCryp, uint32_t HDPLLevel, uint32
   }
 
   /* Wait the key transfer is completed*/
-  timeout = HAL_GetTick() + timeout;
+  tickstart = HAL_GetTick();
   while (((SAES->SR & SAES_SR_BUSY) != 0U) && ((SAES->SR & SAES_SR_KEYVALID) == 0U))
   {
-    if (timeout != HAL_MAX_DELAY)
+    if ((HAL_GetTick() - tickstart) >= SaesTimeout)
     {
-      if (HAL_GetTick() >= SaesTimeout)
-      {
-        Error_Handler();
-      }
+      Error_Handler();
     }
   }
 

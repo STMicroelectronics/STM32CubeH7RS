@@ -19,12 +19,12 @@
 <body>
 <div class="row">
 <div class="col-sm-12 col-lg-8">
-<h2 id="lwip_tcp_echo_server-application-description"><b>LwIP_TCP_Echo_Server application Description</b></h2>
+<h2 id="lwip_tcp_echo_server-application-description"><b>LwIP_TCP_Echo_Server Application Description</b></h2>
 <p>This application guides STM32Cube HAL API users to run TCP Echo Server application based on Raw API of LwIP TCP/IP stack.</p>
 <h4 id="expected-success-behavior"><b>Expected success behavior</b></h4>
 <ul>
 <li>The board IP address is printed on the HyperTerminal</li>
-<li>The messages received by the Server are printed on the HyerTerminal</li>
+<li>The messages received by the Server are printed on the HyperTerminal</li>
 <li>If the <a href="https://github.com/PavelBansky/EchoTool/releases/tag/v1.5.0.0">echotool</a> utility is used the message sent by the Server are displayed on the PC console.</li>
 </ul>
 <h4 id="expected-error-behavior"><b>Expected error behavior</b></h4>
@@ -54,11 +54,11 @@
 <li><p>This application runs on STM32H7S3L8 devices.</p></li>
 <li>This application has been tested with the following environments:
 <ul>
-<li>NUCLEO-H7S3L8 revision B01 board</li>
+<li>NUCLEO-H7S3L8 revision B02 board</li>
 <li>echotool: (http://bansky.net/echotool/) is used as echo server that sends back every incoming data.</li>
 <li>DHCP server: PC utility TFTPD32 (http://tftpd32.jounin.net/) is used as a DHCP server</li>
 </ul></li>
-<li>NUCLEO-H7S3L8 revision B01 Set-up
+<li>NUCLEO-H7S3L8 revision B02 Set-up
 <ul>
 <li>Connect the NUCLEO board to remote PC (through a crossover ethernet cable) or to your local network (through a straight ethernet cable)</li>
 </ul></li>
@@ -85,7 +85,7 @@
 <p>To configure STM32CubeIDE Debug Configuration, you must do the following :</p>
 <ul>
 <p>1. Upload the template XIP</p>
-<p>2. Add the adequate external loader (MX25UW25645G_STM32H7R38-NUCLEO.stldr file) in Project->Debugger Configuration</p>
+<p>2. Add the adequate external loader (MX25UW25645G_STM32H7S3L8-NUCLEO.stldr file) in Project->Debugger Configuration</p>
 <p>3. Add in the startup the template_XIP_Boot in Project->Debugger Configuration</p>
 <p>4. Move up the application in the startup</p>
 </ul>

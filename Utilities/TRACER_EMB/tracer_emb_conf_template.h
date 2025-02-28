@@ -105,6 +105,9 @@ extern "C" {
 #define TRACER_EMB_TX_DMA_ACTIVE_FLAG                LL_DMA_IsActiveFlag_TC7
 #define TRACER_EMB_TX_DMA_CLEAR_FLAG                 LL_DMA_ClearFlag_TC7
 #define TRACER_EMB_TX_DMA_PRIORITY                   0
+
+/*Uncomment this define only if a particular location of TRACER_ContextTypedef_t structrure is needed */
+/* #define TRACER_EMB_STRUCTURE_MEMORY_LOCATION         "memory_zone" */
 #endif  /* TRACER_EMB_DMA_MODE == 1UL */
 
 #ifdef __cplusplus

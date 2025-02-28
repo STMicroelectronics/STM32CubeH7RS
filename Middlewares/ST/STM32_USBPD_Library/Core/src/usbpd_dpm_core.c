@@ -435,10 +435,11 @@ USBPD_StatusTypeDef USBPD_DPM_InitOS(void)
   /* Create the queue corresponding to PE task */
   for (uint32_t index = 0; index < USBPD_PORT_COUNT; index++)
   {
-    OS_CREATE_QUEUE(PEQueueId[index], "QPE", 1, OS_ELEMENT_SIZE);
 
     if (index == USBPD_PORT_0)
     {
+      /* Create the queue corresponding to PE task */
+      OS_CREATE_QUEUE(PEQueueId[index], QPE_0, 1, OS_ELEMENT_SIZE);
       /* Tasks definition */
       OS_DEFINE_TASK(PE_0, USBPD_PE_Task, OS_PE_PRIORITY,  OS_PE_STACK_SIZE,  USBPD_PORT_0);
       OS_CREATE_TASK(DPM_PEThreadId_Table[USBPD_PORT_0], PE_0, USBPD_PE_Task,
@@ -447,6 +448,8 @@ USBPD_StatusTypeDef USBPD_DPM_InitOS(void)
 #if USBPD_PORT_COUNT > 1
     if (index == USBPD_PORT_1)
     {
+      /* Create the queue corresponding to PE task */
+      OS_CREATE_QUEUE(PEQueueId[index], QPE_1, 1, OS_ELEMENT_SIZE);
       /* Tasks definition */
       OS_DEFINE_TASK(PE_1, USBPD_PE_Task, OS_PE_PRIORITY,  OS_PE_STACK_SIZE,  USBPD_PORT_1);
       OS_CREATE_TASK(DPM_PEThreadId_Table[USBPD_PORT_1], PE_1, USBPD_PE_Task,
@@ -771,7 +774,7 @@ DEF_TASK_FUNCTION(USBPD_PE_Task)
        well done */
     if ((DPM_Params[_port].PE_SwapOngoing == 0) && (USBPD_ERROR == USBPD_TCPM_VBUS_IsVsafe5V(_port)))
     {
-      (void)osMessagePut(AlarmMsgBox, (_port << 8 | 2), osWaitForever);
+      OS_PUT_MESSAGE_QUEUE(AlarmMsgBox, (_port << 8 | 2), osWaitForever);
     }
 #endif /* USBPD_TCPM_MODULE_ENABLED */
   }
@@ -793,6 +796,7 @@ DEF_TASK_FUNCTION(USBPD_ALERT_Task)
     osEvent event = osMessageGet(queue, osWaitForever);
     port = (event.value.v >> 8);
 #else
+    uint32_t event;
     (void)osMessageQueueGet(queue, &event, NULL, osWaitForever);
     port = (event >> 8);
 #endif /* osCMSIS < 0x20000U */

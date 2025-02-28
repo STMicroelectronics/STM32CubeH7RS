@@ -59,6 +59,10 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define LED_RED_Pin GPIO_PIN_7
 #define LED_RED_GPIO_Port GPIOB
+#define USART3_TX_Pin_Pin GPIO_PIN_8
+#define USART3_TX_Pin_GPIO_Port GPIOD
+#define USART3_RX_Pin_Pin GPIO_PIN_9
+#define USART3_RX_Pin_GPIO_Port GPIOD
 #define LED_YELLOW_Pin GPIO_PIN_13
 #define LED_YELLOW_GPIO_Port GPIOD
 #define LED_GREEN_Pin GPIO_PIN_10

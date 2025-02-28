@@ -5,7 +5,7 @@
 
   <Header>### uVision Project, (C) Keil Software</Header>
 
-  <WorkspaceName></WorkspaceName>
+  <WorkspaceName>FreeRTOS_Queues_ThreadFlags</WorkspaceName>
 
   <project>
     <PathAndName>.\Appli\FreeRTOS_Queues_ThreadFlags_Appli.uvprojx</PathAndName>

@@ -49,7 +49,7 @@ containing an infinite loop and preventing to return to main program (the IWDG
 reload counter is not refreshed).
 As a result, when the IWDG counter reaches 0, the IWDG reset occurs.
 
-If the IWDG reset is generated, after the system resumes from reset, LD1 turns on for 4 seconds.
+If the IWDG reset is generated, after the system resumes from reset, LD1 turns on for 4 seconds approximately 3 seconds after the USER push-button is pressed.
 If the EXTI Line event does not occur, the IWDG counter is indefinitely refreshed in the main
 program infinite loop, and there is no IWDG reset.
 

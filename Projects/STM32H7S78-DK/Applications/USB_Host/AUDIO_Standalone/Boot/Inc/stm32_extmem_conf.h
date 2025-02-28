@@ -23,7 +23,7 @@
 #define __STM32_EXTMEM_CONF__H__
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/

@@ -24,14 +24,15 @@ This application guides STM32Cube HAL API users to run a tftp server application
    - LED_ORANGE is ON indicating the ethernet cable is not connected
    - LED_RED is toggling to indicate a critical error has occurred
    - The error message is printed on the HyperTerminal
-   - Timeout Message is displayed on TFTPD32 SW tool
+   - Timeout message is displayed on TFTPD32 SW tool
 
 #### <b>Assumptions if any</b>
 
 - The Application is using the DHCP to acquire IP address, thus a DHCP server should be reachable by the board in the LAN used to test the application.
 
 #### <b>Known limitations</b>
-None.
+
+- The filename used to send or receive to/from uSD should not contain any special characters and its maximum length is set to 30 characters.
 
 ### <b>Notes</b>
 
@@ -87,20 +88,21 @@ Connectivity, LwIP, XIP, Ethernet, TFTP Server, TCP/IP, DHCP, send, receive, SD 
   - This application runs on STM32H7S7xx devices.
 
   - This application has been tested with the following environments:
-     - STM32H7S78-DK MB1736 Rev. C01 board
-     - DHCP server:  PC utility TFTPD32 (http://tftpd32.jounin.net/) is used as a DHCP server
+    - STM32H7S78-DK MB1736 Rev. D01 board
+    - DHCP server:  PC utility TFTPD32 (http://tftpd32.jounin.net/) is used as a DHCP server
 
-  - STM32H7S78-DK MB1736 Rev. C01 Set-up
+  - STM32H7S78-DK MB1736 Rev. D01 Set-up
   - Connect the board to remote PC (through a crossover ethernet cable) or to your local network (through a straight ethernet cable)
- 
+
   - This application uses UART4 to display logs, the hyperterminal configuration is as follows:
-     - BaudRate = 115200 baud
-     - Word Length = 8 Bits
-     - Stop Bit = 1
-     - Parity = None
-     - Flow control = None
+    - BaudRate = 115200 baud
+    - Word Length = 8 Bits
+    - Stop Bit = 1
+    - Parity = None
+    - Flow control = None
 
   - On STM32H7S78-DK board, the BOOT0 mechanical slide switch must be set to SW1.
+  - On STM32H7S78-DK board, the JP6 pin [2-3] must be ON.
 
   - The following User Option Bytes are set in this template:
 
@@ -126,3 +128,4 @@ In order to make the program work, you must do the following :
  - Rebuild all files and load your image into target memory
  - Run the application
  - Use PC utility TFTPD32 to perform file transfers, refer to UM1713 for details about this tool usage.
+

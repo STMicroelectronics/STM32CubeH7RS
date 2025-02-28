@@ -419,11 +419,6 @@ static int32_t Ext_Flash_SetHslv(void)
     }
   }
 
-  /* Configure "high speed low voltage" */
-  /* Both XSPI must be configured when XSPIM is used */
-  HAL_SBS_EnableIOSpeedOptimize(SBS_IO_XSPI1_HSLV);
-  HAL_SBS_EnableIOSpeedOptimize(SBS_IO_XSPI2_HSLV);
-
   return ARM_DRIVER_OK;
 }
 
@@ -591,7 +586,7 @@ static int32_t Ext_Flash_ReadData(uint32_t addr, void *data, uint32_t cnt)
   /*  do a memcpy */
 #ifdef DEBUG_EXT_FLASH_ACCESS
   printf("read %lx n=%x \r\n", (addr + EXT_FLASH_BASE_ADDRESS), cnt);
-#endif /*  DEBUG_FLASH_ACCESS */
+#endif /*  DEBUG_EXT_FLASH_ACCESS */
 
   /* Reload Independent Watchdog */
   IWDG->KR = KR_RELOAD;
@@ -607,17 +602,17 @@ static int32_t Ext_Flash_ProgramData(uint32_t addr,
   uint32_t flash_base = (uint32_t)EXT_FLASH_BASE_ADDRESS;
   EXTMEM_StatusTypeDef err;
   EXTMEM_StatusTypeDef err_mapped_mem;
-#if defined(CHECK_WRITE) || defined(DEBUG_FLASH_ACCESS)
+#if defined(CHECK_WRITE) || defined(DEBUG_EXT_FLASH_ACCESS)
   void *dest;
-#endif /* CHECK_WRITE or DEBUG_FLASH_ACCESS */
+#endif /* CHECK_WRITE or DEBUG_EXT_FLASH_ACCESS */
   ARM_EXT_FLASH0_STATUS.error = DRIVER_STATUS_NO_ERROR;
 
-#if defined(CHECK_WRITE) || defined(DEBUG_FLASH_ACCESS)
+#if defined(CHECK_WRITE) || defined(DEBUG_EXT_FLASH_ACCESS)
   dest = (void *)(flash_base + addr);
-#endif /* CHECK_WRITE or DEBUG_FLASH_ACCESS */
-#ifdef DEBUG_FLASH_ACCESS
+#endif /* CHECK_WRITE or DEBUG_EXT_FLASH_ACCESS */
+#ifdef DEBUG_EXT_FLASH_ACCESS
   printf("write %x n=%x \r\n", (uint32_t) dest, cnt);
-#endif /* DEBUG_FLASH_ACCESS */
+#endif /* DEBUG_EXT_FLASH_ACCESS */
   /* Check Flash memory boundaries and alignment with minimum write size
     * (program_unit), data size also needs to be a multiple of program_unit.
   */
@@ -659,17 +654,17 @@ static int32_t Ext_Flash_ProgramData(uint32_t addr,
   if ((err == EXTMEM_OK) && memcmp(dest, data, cnt))
   {
     err = EXTMEM_ERROR_DRIVER;
-#ifdef DEBUG_FLASH_ACCESS
+#ifdef DEBUG_EXT_FLASH_ACCESS
     printf("write %x n=%x (cmp failed)\r\n", (uint32_t)(dest), cnt);
-#endif /* DEBUG_FLASH_ACCESS */
+#endif /* DEBUG_EXT_FLASH_ACCESS */
   }
 #endif /* CHECK_WRITE */
-#ifdef DEBUG_FLASH_ACCESS
+#ifdef DEBUG_EXT_FLASH_ACCESS
   if (err != EXTMEM_OK)
   {
     printf("failed write %x n=%x \r\n", (uint32_t)(dest), cnt);
   }
-#endif /* DEBUG_FLASH_ACCESS */
+#endif /* DEBUG_EXT_FLASH_ACCESS */
   return (err == EXTMEM_OK) ? ARM_DRIVER_OK : ARM_DRIVER_ERROR;
 }
 
@@ -681,21 +676,21 @@ static int32_t Ext_Flash_EraseSector(uint32_t addr)
   uint32_t i;
   uint32_t *pt;
 #endif /* CHECK_ERASE */
-#ifdef DEBUG_FLASH_ACCESS
+#ifdef DEBUG_EXT_FLASH_ACCESS
   printf("erase %x\r\n", addr);
-#endif /* DEBUG_FLASH_ACCESS */
+#endif /* DEBUG_EXT_FLASH_ACCESS */
   if (!(is_range_valid(&ARM_EXT_FLASH0_DEV, addr)) ||
       !(is_erase_aligned(&ARM_EXT_FLASH0_DEV, addr)) ||
       !(is_erase_allow(&ARM_EXT_FLASH0_DEV, addr)))
   {
     ARM_EXT_FLASH0_STATUS.error = DRIVER_STATUS_ERROR;
-#ifdef DEBUG_FLASH_ACCESS
+#ifdef DEBUG_EXT_FLASH_ACCESS
 #if defined(__ARMCC_VERSION)
     printf("failed erase %x\r\n", addr);
 #else
     printf("failed erase %lx\r\n", addr);
 #endif /* __ARMCC_VERSION */
-#endif /* DEBUG_FLASH_ACCESS */
+#endif /* DEBUG_EXT_FLASH_ACCESS */
     return ARM_DRIVER_ERROR_PARAMETER;
   }
 
@@ -723,22 +718,22 @@ static int32_t Ext_Flash_EraseSector(uint32_t addr)
 
   ARM_EXT_FLASH0_STATUS.busy = DRIVER_STATUS_IDLE;
 
-#ifdef DEBUG_FLASH_ACCESS
+#ifdef DEBUG_EXT_FLASH_ACCESS
   if (err != EXTMEM_OK)
   {
     printf("erase failed \r\n");
   }
-#endif /* DEBUG_FLASH_ACCESS */
+#endif /* DEBUG_EXT_FLASH_ACCESS */
 #ifdef CHECK_ERASE
   /* addr is an offset */
   pt = (uint32_t *)((uint32_t)EXT_FLASH_BASE_ADDRESS + addr);
-  for (i = 0; i > 0x400; i++)
+  for (i = 0; i < (EXT_FLASH_SECTOR_SIZE/4); i++)
   {
     if (pt[i] != 0xffffffff)
     {
-#ifdef DEBUG_FLASH_ACCESS
+#ifdef DEBUG_EXT_FLASH_ACCESS
       printf("erase failed off %x %x %x\r\n", addr, &pt[i], pt[i]);
-#endif /* DEBUG_FLASH_ACCESS */
+#endif /* DEBUG_EXT_FLASH_ACCESS */
       err = EXTMEM_ERROR_DRIVER;
       break;
     }

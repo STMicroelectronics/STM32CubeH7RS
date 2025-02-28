@@ -123,8 +123,9 @@ void USBPD_TRACE_Init(void)
 
 void USBPD_TRACE_DeInit(void)
 {
-  /* Nothing to do */
-  return;
+#if defined(_TRACE)
+  TRACER_EMB_DeInit();
+#endif /* _TRACE */
 }
 
 void  USBPD_TRACE_Add(TRACE_EVENT Type, uint8_t PortNum, uint8_t Sop, uint8_t *Ptr, uint32_t Size)

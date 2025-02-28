@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2023 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -28,13 +28,13 @@
 void Error_Handler(void);
 
 /* Private define ------------------------------------------------------------ */
-#define AUDIO_BLOCK_SIZE  512
-#define AUDIO_BLOCK_NBR   33
-#define FILEMGR_LIST_DEPDTH                     24
-#define FILEMGR_FILE_NAME_SIZE                  40
-#define FILEMGR_MAX_LEVEL                        4
-#define FILETYPE_DIR                             0
-#define FILETYPE_FILE                            1
+#define AUDIO_BLOCK_SIZE        512
+#define AUDIO_BLOCK_NBR         33
+#define FILEMGR_LIST_DEPDTH     24
+#define FILEMGR_FILE_NAME_SIZE  40
+#define FILEMGR_MAX_LEVEL       4
+#define FILETYPE_DIR            0
+#define FILETYPE_FILE           1
 /* Private typedef ----------------------------------------------------------- */
 typedef struct AUDIO_Info_t {
   uint32_t ChunkID;       /* 0  */
@@ -60,14 +60,14 @@ typedef struct _FILELIST_LineTypeDef {
 typedef struct _FILELIST_FileTypeDef {
   FILELIST_LineTypeDef  file[FILEMGR_LIST_DEPDTH] ;
   uint16_t              ptr;
-}FILELIST_FileTypeDef;
+} FILELIST_FileTypeDef;
 
 typedef enum {
   APPLICATION_IDLE = 0,
   APPLICATION_START,
   APPLICATION_READY,
   APPLICATION_DISCONNECT,
-}AUDIO_ApplicationTypeDef;
+} AUDIO_ApplicationTypeDef;
 
 typedef struct
 {

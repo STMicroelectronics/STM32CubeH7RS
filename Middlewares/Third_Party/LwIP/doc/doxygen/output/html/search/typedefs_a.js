@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['raw_5finput_5fstate_5ft',['raw_input_state_t',['../raw__priv_8h.html#aebbdbaee89c38ad9c007a1d1a336e687',1,'raw_priv.h']]],
-  ['raw_5frecv_5ffn',['raw_recv_fn',['../raw_8h.html#a17edd059f34f45a770fe2fa458ecf4dd',1,'raw.h']]]
+  ['service_5fget_5ftxt_5ffn_5ft_0',['service_get_txt_fn_t',['../mdns_8h.html#a3b9ee5953214665e585e5bcaf6b8ea83',1,'mdns.h']]],
+  ['sys_5ftimeout_5fhandler_1',['sys_timeout_handler',['../timeouts_8h.html#a1d3fe3fbdbddbb9e85f05c85d7181c25',1,'timeouts.h']]]
 ];

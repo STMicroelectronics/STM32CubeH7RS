@@ -10,13 +10,13 @@
       <TargetName>HID_Standalone_Appli</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6180000::V6.18::ARMCLANG</pCCUsed>
+      <pCCUsed>6190000::V6.19::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>STM32H7S3L8Hx</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STM32H7Rx-7Sx_DFP.0.1.0</PackID>
+          <PackID>Keil.STM32H7RSxx_DFP.1.0.0</PackID>
           <PackURL>https://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000-0x2000FFFF) IRAM2(0x24000000-0x24071BFF) IROM(0x8000000-0x800FFFF) CLOCK(12000000) FPU3(DFPU) CPUTYPE("Cortex-M7") ELITTLE TZ</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -276,8 +276,8 @@
               </OCR_RVCT3>
               <OCR_RVCT4>
                 <Type>1</Type>
-                <StartAddress>0x8000000</StartAddress>
-                <Size>0x10000</Size>
+                <StartAddress>0x70000000</StartAddress>
+                <Size>0x10000000</Size>
               </OCR_RVCT4>
               <OCR_RVCT5>
                 <Type>1</Type>
@@ -307,7 +307,7 @@
               <OCR_RVCT10>
                 <Type>0</Type>
                 <StartAddress>0x24000000</StartAddress>
-                <Size>0x71c00</Size>
+                <Size>0x72000</Size>
               </OCR_RVCT10>
             </OnChipMemories>
             <RvctStartVector></RvctStartVector>
@@ -340,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32H7S3xx,USE_FULL_LL_DRIVER,USBPD_PORT_COUNT=1,_SNK,USBPDCORE_LIB_NO_PD,TCPP0203_SUPPORT</Define>
               <Undefine></Undefine>
-              <IncludePath>../../Appli/Inc;../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Inc;../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Inc/Legacy;../../../../../../../Middlewares/ST/STM32_USBPD_Library/Core/inc;../../../../../../../Middlewares/ST/STM32_USBPD_Library/Devices/STM32H7RSXX/inc;../../../../../../../Middlewares/ST/STM32_USB_Device_Library/Core/Inc;../../../../../../../Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc;../../../../../../../Drivers/CMSIS/Device/ST/STM32H7RSxx/Include;../../../../../../../Drivers/CMSIS/Include;../../../../../../../Drivers/BSP/STM32H7RSxx_Nucleo;./../../../../../Drivers/BSP/Components/tcpp0203</IncludePath>
+              <IncludePath>../../Appli/Inc;../../../../../../../Drivers/BSP/STM32H7RSxx_Nucleo;./../../../../../Drivers/BSP/Components/tcpp0203;../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Inc;../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Inc/Legacy;../../../../../../../Middlewares/ST/STM32_USBPD_Library/Core/inc;../../../../../../../Middlewares/ST/STM32_USBPD_Library/Devices/STM32H7RSXX/inc;../../../../../../../Middlewares/ST/STM32_USB_Device_Library/Core/Inc;../../../../../../../Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc;../../../../../../../Drivers/CMSIS/Device/ST/STM32H7RSxx/Include;../../../../../../../Drivers/CMSIS/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -543,16 +543,6 @@
               <FileName>stm32h7rsxx_ll_exti.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_ll_exti.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32h7rsxx_hal_tim.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_hal_tim.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32h7rsxx_hal_tim_ex.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_hal_tim_ex.c</FilePath>
             </File>
             <File>
               <FileName>stm32h7rsxx_hal_i2c.c</FileName>

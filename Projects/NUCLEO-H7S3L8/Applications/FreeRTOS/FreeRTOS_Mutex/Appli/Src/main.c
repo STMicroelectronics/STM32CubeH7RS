@@ -357,10 +357,10 @@ void Thread1_Entry(void *argument)
 
 /* USER CODE BEGIN Header_Thread2_Entry */
 /**
-* @brief Function implementing the Thread2 thread.
-* @param argument: Not used
-* @retval None
-*/
+  * @brief Function implementing the Thread2 thread.
+  * @param argument: Not used
+  * @retval None
+  */
 /* USER CODE END Header_Thread2_Entry */
 void Thread2_Entry(void *argument)
 {
@@ -488,8 +488,6 @@ void assert_failed(uint8_t *file, uint32_t line)
   /* USER CODE BEGIN 6 */
   /* User can add his own implementation to report the file name and line number,
      ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
-
-
 
   /* Infinite loop */
   while (1)

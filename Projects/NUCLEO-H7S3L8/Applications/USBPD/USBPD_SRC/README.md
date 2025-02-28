@@ -27,13 +27,22 @@ Connectivity, USBPD, FreeRTOS, UART/USART, USB_PD_Lib, UCPD, Type C
 
   - This example runs on NUCLEO-H7S3L8.
 
-  - This example has been tested with STMicroelectronics NUCLEO-H7S3L8 (MB1737)
-    board and can be easily tailored to any other supported device
-    and development board.
+  - This example has been tested with STMicroelectronics NUCLEO-H7S3L8 boards revision MB1737-H7S3L8-B02
+    and can be easily tailored to any other supported device and development board.
 
   - Connect ST-Link cable to the PC USB port to display data on the CubeMx Monitor.
-	
+
 ### <b>How to use it ?</b>
+
+This application runs from the external Flash memory (USBPD_SRC Appli).
+It boots from internal Flash (Template_XIP_Boot) then jumps to the application code in external Flash.
+
+To configure STM32CubeIDE Debug Configuration, you must do the following :
+
+    1. Upload the template XIP
+    2. Add the adequate external loader (MX25UW25645G_STM32H7S3L8-NUCLEO.stldr file) in Project->Debugger Configuration
+    3. Add in the startup the template_XIP_Boot in Project->Debugger Configuration
+    4. Move up the application in the startup
 
 In order to make the program work, you must do the following :
 

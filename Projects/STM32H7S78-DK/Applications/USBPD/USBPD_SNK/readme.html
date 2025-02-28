@@ -32,9 +32,16 @@
 <h3 id="hardware-and-software-environment"><b>Hardware and Software environment</b></h3>
 <ul>
 <li><p>This example runs on STM32H7S78-DK.</p></li>
-<li><p>This example has been tested with STMicroelectronics STM32H7S78-DK (MB1736) board and can be easily tailored to any other supported device and development board.</p></li>
+<li><p>This example has been tested with STMicroelectronics STM32H7S78-DK MB1736 revision D01 board and can be easily tailored to any other supported device and development board.</p></li>
 </ul>
 <h3 id="how-to-use-it"><b>How to use it ?</b></h3>
+<p>To configure STM32CubeIDE Debug Configuration, you must do the following :</p>
+<ul>
+<li>1. Upload the template XIP</li>
+<li>2. Add the adequate external loader (MX66UW1G45G_STM32H7S78-DK.stldr file) in Project->Debugger Configuration</li>
+<li>3. Add in the startup the template_XIP_Boot in Project->Debugger Configuration</li>
+<li>4. Move up the application in the startup</li>
+</ul>
 <p>In order to make the program work, you must do the following :</p>
 <ul>
 <li>Open your preferred toolchain</li>

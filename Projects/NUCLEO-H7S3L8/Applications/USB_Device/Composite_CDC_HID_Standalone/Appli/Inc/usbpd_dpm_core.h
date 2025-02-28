@@ -18,8 +18,8 @@
   */
 /* USER CODE END Header */
 
-#ifndef __USBPD_DPM_CORE_H_
-#define __USBPD_DPM_CORE_H_
+#ifndef __USBPD_DPM_CORE_H
+#define __USBPD_DPM_CORE_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -76,4 +76,4 @@ __WEAK void         USBPD_DPM_ErrorHandler(void);
 }
 #endif
 
-#endif /* __USBPD_DPM_CORE_H_ */
+#endif /* __USBPD_DPM_CORE_H */

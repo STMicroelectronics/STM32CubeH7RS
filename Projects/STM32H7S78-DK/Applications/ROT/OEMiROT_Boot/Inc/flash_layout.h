@@ -78,10 +78,10 @@ extern "C" {
 #define EXT_FLASH_TOTAL_SIZE            (0x08000000)          /* External Flash: 128 MBytes */
 #if defined(STM32H7S3xx) || defined(STM32H7S7xx)
 #define EXT_FLASH_BASE_ADDRESS          (0x90000000)          /* External Flash (XSPI1 + MCE1 - AES) */
-#define EXT_RAM_BASE_ADDRESS            (0x70000000)          /* External Flash (XSPI2 + MCE2 - Noekeon) */
+#define EXT_RAM_BASE_ADDRESS            (0x70000000)          /* External SRAM (XSPI2 + MCE2 - Noekeon) */
 #else
-#define EXT_FLASH_BASE_ADDRESS          (0x70000000)          /* External Flash (XSPI1) */
-#define EXT_RAM_BASE_ADDRESS            (0x90000000)          /* External Flash (XSPI2) */
+#define EXT_FLASH_BASE_ADDRESS          (0x70000000)          /* External Flash (XSPI2) */
+#define EXT_RAM_BASE_ADDRESS            (0x90000000)          /* External SRAM (XSPI1) */
 #endif /* STM32H7S3xx || STM32H7S7xx */
 #define FLASH_AREA_IMAGE_SECTOR_SIZE    EXT_FLASH_SECTOR_SIZE /* External Flash: 4 KB */
 

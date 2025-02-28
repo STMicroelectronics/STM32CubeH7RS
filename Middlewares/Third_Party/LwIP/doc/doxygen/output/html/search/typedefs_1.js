@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['bridgeif_5finitdata_5ft',['bridgeif_initdata_t',['../group__bridgeif.html#gac47f8ce66bc6dad5dd9829467f93a1bb',1,'bridgeif.h']]]
+  ['dns_5ffound_5fcallback_0',['dns_found_callback',['../dns_8h.html#ab5a9dec5b22802f91876c53e99f427ae',1,'dns.h']]]
 ];

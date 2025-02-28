@@ -29,7 +29,9 @@ rot_update_script="$project_dir/../../../../../Applications/ROT/OEMiROT_Boot/aut
 source "$rot_update_script"
 
 # Copy application build in Binary location
-cp "$project_dir/$config/STM32H7S78-DK_Template_OEMiROT_Appli.bin" "$project_dir/../../Appli/Binary/rot_app.bin"
+bin_location="$project_dir/../../Appli/Binary"
+mkdir -p "$bin_location"
+cp "$project_dir/$config/STM32H7S78-DK_Template_OEMiROT_Appli.bin" "$bin_location/rot_app.bin"
 if [ $? != 0 ]; then error; fi
 
 echo "Creating $project image" > "$current_log_file"

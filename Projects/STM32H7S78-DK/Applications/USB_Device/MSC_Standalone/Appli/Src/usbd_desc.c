@@ -62,15 +62,15 @@
   * @{
   */
 
-#define USBD_VID     1155
-#define USBD_LANGID_STRING     1033
+#define USBD_VID                     1155
+#define USBD_LANGID_STRING           1033
 #define USBD_MANUFACTURER_STRING     "STMicroelectronics"
-#define USBD_PID     22304
-#define USBD_PRODUCT_STRING     "STM32 Mass Storage"
-#define USBD_CONFIGURATION_STRING     "MSC Config"
-#define USBD_INTERFACE_STRING     "MSC Interface"
+#define USBD_PID                     22304
+#define USBD_PRODUCT_STRING          "STM32 Mass Storage"
+#define USBD_CONFIGURATION_STRING    "MSC Config"
+#define USBD_INTERFACE_STRING        "MSC Interface"
 
-#define USB_SIZ_BOS_DESC            0x0C
+#define USB_SIZ_BOS_DESC             0x0C
 
 /* USER CODE BEGIN PRIVATE_DEFINES */
 
@@ -121,6 +121,7 @@ uint8_t * USBD_MSC_ProductStrDescriptor(USBD_SpeedTypeDef speed, uint16_t *lengt
 uint8_t * USBD_MSC_SerialStrDescriptor(USBD_SpeedTypeDef speed, uint16_t *length);
 uint8_t * USBD_MSC_ConfigStrDescriptor(USBD_SpeedTypeDef speed, uint16_t *length);
 uint8_t * USBD_MSC_InterfaceStrDescriptor(USBD_SpeedTypeDef speed, uint16_t *length);
+
 #if (USBD_LPM_ENABLED == 1)
 uint8_t * USBD_MSC_USR_BOSDescriptor(USBD_SpeedTypeDef speed, uint16_t *length);
 #endif /* (USBD_LPM_ENABLED == 1) */

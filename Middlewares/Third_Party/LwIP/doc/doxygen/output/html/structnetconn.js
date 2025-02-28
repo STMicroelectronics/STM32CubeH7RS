@@ -6,7 +6,7 @@ var structnetconn =
     [ "flags", "structnetconn.html#a96cb9a3830248699bd07a1a447e5630c", null ],
     [ "linger", "structnetconn.html#a25ed06d944da0b0b9e7db5265be3fa3d", null ],
     [ "op_completed", "structnetconn.html#a982506698a59f185ff3f16d1675ea4ae", null ],
-    [ "pcb", "structnetconn.html#a2af6773c9f6ee91e7f462dd8acc07de6", null ],
+    [ "pcb", "structnetconn.html#ad08c5613a3a6fa9fe569b4acf30973f8", null ],
     [ "pending_err", "structnetconn.html#a2a54e90fa370cf0df46dfd0b97f1cce7", null ],
     [ "recv_avail", "structnetconn.html#a05b15a28b0803bea3729b1da2047541e", null ],
     [ "recv_bufsize", "structnetconn.html#a6febc9717418ddba16f16e988061cfac", null ],

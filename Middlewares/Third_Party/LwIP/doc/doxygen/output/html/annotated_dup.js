@@ -2,7 +2,6 @@ var annotated_dup =
 [
     [ "_lwiperf_settings", "struct__lwiperf__settings.html", null ],
     [ "_lwiperf_state_tcp", "struct__lwiperf__state__tcp.html", null ],
-    [ "altcp_allocator_s", "structaltcp__allocator__s.html", "structaltcp__allocator__s" ],
     [ "api_msg", "structapi__msg.html", "structapi__msg" ],
     [ "autoip", "structautoip.html", "structautoip" ],
     [ "bridgeif_initdata_s", "structbridgeif__initdata__s.html", "structbridgeif__initdata__s" ],

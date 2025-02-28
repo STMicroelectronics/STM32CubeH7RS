@@ -29,6 +29,7 @@ User is familiar with USB 2.0 "Universal Serial BUS" Specification and MSC class
 The remote wakeup feature is not yet implemented (used to bring the USB suspended bus back to the active condition).
 
 ### <b>Notes</b>
+
 - It is mandatory to check that the jumper below is connected for USB_HS:
     JP2
 
@@ -46,9 +47,9 @@ Connectivity, USB_Device, USB, SDMMC, MSC, Mass Storage, SD Card, Full Speed, Hi
 
 ### <b>Hardware and Software environment</b>
 
-  - This example runs on STM32H7S78-DK.
+  - This application runs on STM32H7S78-DK.
 
-  - This example has been tested with STMicroelectronics STM32H7S78-DK boards Revision MB1736-H7S7L8-C01
+  - This application has been tested with STMicroelectronics STM32H7S78-DK boards Revision MB1736-H7S7L8-D01
     and can be easily tailored to any other supported device and development board.
 
 ### <b>How to use it ?</b>
@@ -71,8 +72,7 @@ In order to make the program work, you must do the following :
   3. Select then "MSC_Standalone_Appli" workspace
   4. Rebuild all files from MSC_Standalone Appli and load your images into memories: First load the MSC_Standalone.hex in internal Flash , then load
      the Appli part in External memory available on STM32H7S78-DK board.
-  5. Run the example
-
+  5. Run the application
 
 #### <b>MDK-ARM</b>
   1. Open your toolchain
@@ -87,8 +87,7 @@ In order to make the program work, you must do the following :
   3. Select then "MSC_Standalone_Appli" workspace
   4. Rebuild all files from MSC_Standalone Appli and load your images into memories: First load the MSC_Standalone.hex in internal Flash , then load
      the Appli part in External memory available on STM32H7S78-DK board.
-  5. Run the example
-
+  5. Run the application
 
 #### <b>STM32CubeIDE</b>
   1. Open your toolchain
@@ -107,7 +106,7 @@ In order to make the program work, you must do the following :
   4. Build the project
   5. With the Debug icon select the configuration “MSC_Standalone_Appli Debug”. First load the Boot binary in internal Flash, then load the Appli binary in
      External memory available on STM32H7S78-DK board
-  6. Run the example
+  6. Run the application
 
 To configure STM32CubeIDE Debug Configuration, you must do the following :
 
@@ -121,4 +120,4 @@ For "MSC_Standalone_Appli" project :
 
 <b>Note</b>
 
-   The application uses the internal HSE clock as system clock source.
+ - The application uses the internal HSE clock as system clock source.

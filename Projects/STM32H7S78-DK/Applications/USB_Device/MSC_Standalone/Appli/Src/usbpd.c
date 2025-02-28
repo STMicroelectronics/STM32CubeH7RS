@@ -52,8 +52,6 @@ void MX_USBPD_Init(void)
   }
 
   /* USER CODE BEGIN EnableIRQ */
-  /* Enable IRQ which has been disabled by FreeRTOS services */
-//  __enable_irq();
   /* USER CODE END EnableIRQ */
 
 }

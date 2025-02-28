@@ -58,7 +58,7 @@ extern "C" {
   * the dynamic allocation of DMA buffers in the HEAP that must not be cached for DMA to access the data directly.
   * The following address corresponds to the location of the HEAP.
   */
-#define DMABUFFER_AREA          0x2405E00
+#define DMABUFFER_AREA          0x24071C00
 #define DMABUFFER_AREA_SIZE     MPU_REGION_SIZE_4KB
 /* USER CODE END EC */
 

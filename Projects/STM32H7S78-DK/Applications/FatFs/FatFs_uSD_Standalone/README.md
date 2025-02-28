@@ -37,7 +37,7 @@ It is possible to dynamically hot plug/unplug the uSD card, as the application w
 
 - A file named STM32.TXT should be visible in the root directory of the SD card.
 - A BLUE LED light marks the success of the file operations.
-- A RED LED light is ON when the SD card is unplugged before the application start.
+- A RED LED toggles when SD card is unplugged.
 
 #### <b>Expected error behavior</b>
 
@@ -45,10 +45,12 @@ It is possible to dynamically hot plug/unplug the uSD card, as the application w
 - Error handler is called at the spot where the error occurred.
 
 #### <b>Assumptions if any</b>
+
 - The SD card should be plugged to run the application.
 - The board must be reset in case the SD Card is plugged after application start.
 
 #### <b>Known limitations</b>
+
 None
 
 #### <b>Notes</b>
@@ -75,7 +77,7 @@ FatFs, SDMMC, SD Card, File system, FAT Volume, Format, Mount, Read, Write
 
   - This application runs on STM32H7RSxx devices
 
-  - This application has been tested with STM32H7S78-DK boards Revision MB1736-H7S7L8-C01 and can be
+  - This application has been tested with STM32H7S78-DK boards Revision MB1736-H7S7L8-D01 and can be
     easily tailored to any other supported device and development board.
 
   STM32H7S78-DK Set-up :

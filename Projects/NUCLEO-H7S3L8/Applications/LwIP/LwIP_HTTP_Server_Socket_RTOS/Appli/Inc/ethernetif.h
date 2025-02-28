@@ -18,11 +18,11 @@
   */
 /* USER CODE END Header */
 
-#ifndef __ETHERNETIF_H__
-#define __ETHERNETIF_H__
+#ifndef __ETHERNETIF_H
+#define __ETHERNETIF_H
 
 #include "lwip/err.h"
-#include "lwip/netif.h"
+#include "lwip/netifapi.h"
 #include "cmsis_os2.h"
 
 /* Within 'USER CODE' section, code will be kept by default at each generation */
@@ -42,4 +42,4 @@ u32_t sys_now(void);
 /* USER CODE BEGIN 1 */
 
 /* USER CODE END 1 */
-#endif
+#endif /*__ETHERNETIF_H */

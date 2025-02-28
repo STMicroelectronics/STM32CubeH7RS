@@ -15,14 +15,6 @@
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
-          <name>BrowseInfoPath</name>
-          <state>FatFs_uSD_RTOS_Appli\BrowseInfo</state>
-        </option>
-        <option>
-          <name>BuildFilesPath</name>
-          <state>FatFs_uSD_RTOS_Appli\</state>
-        </option>
-        <option>
           <name>ExePath</name>
           <state>FatFs_uSD_RTOS_Appli/Exe</state>
         </option>
@@ -120,7 +112,7 @@
         <option>
           <name>CoreVariant</name>
           <version>31</version>
-          <state>41</state>
+          <state>59</state>
         </option>
         <option>
           <name>GFPUDeviceSlave</name>
@@ -129,7 +121,7 @@
         <option>
           <name>FPU2</name>
           <version>0</version>
-          <state>7</state>
+          <state>6</state>
         </option>
         <option>
           <name>NrRegs</name>
@@ -143,7 +135,7 @@
         <option>
           <name>GFPUCoreSlave2</name>
           <version>31</version>
-          <state>41</state>
+          <state>59</state>
         </option>
         <option>
           <name>OGCMSISPackSelectDevice</name>
@@ -184,7 +176,7 @@
         </option>
         <option>
           <name>DSPExtension</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>TrustZone</name>
@@ -213,9 +205,14 @@
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
+          <name>CCOptimizationNoSizeConstraints</name>
+          <state>0</state>
+        </option>
+        <option>
           <name>CCDefines</name>
           <state>USE_HAL_DRIVER</state>
           <state>STM32H7S7xx</state>
+          <state></state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -345,6 +342,7 @@
           <state>$PROJ_DIR$/../../../../../../../Drivers/CMSIS/RTOS2/Include</state>
           <state>$PROJ_DIR$/../../../../../../../Middlewares/Third_Party/FatFs/source</state>
           <state>$PROJ_DIR$/../../../../../../../Middlewares/Third_Party/FatFs/source/drivers/sd</state>
+          <state>$PROJ_DIR$/../../../../../../../Middlewares/Third_Party/FatFs/source/drivers/template</state>
           <state>$PROJ_DIR$/../../../../../../../Drivers/CMSIS/Device/ST/STM32H7RSxx/Include</state>
           <state>$PROJ_DIR$/../../../../../../../Drivers/CMSIS/Include</state>
         </option>
@@ -671,6 +669,11 @@
       </data>
     </settings>
     <settings>
+      <name>BICOMP</name>
+      <archiveVersion>0</archiveVersion>
+      <data></data>
+    </settings>
+    <settings>
       <name>BUILDACTION</name>
       <archiveVersion>1</archiveVersion>
       <data>
@@ -759,7 +762,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$PROJ_DIR$\stm32h7rsxx_RAMxspi1_ROMxspi2.icf</state>
+          <state>$PROJ_DIR$/stm32h7rsxx_RAMxspi1_ROMxspi2.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -1066,6 +1069,11 @@
       </data>
     </settings>
     <settings>
+      <name>BILINK</name>
+      <archiveVersion>0</archiveVersion>
+      <data></data>
+    </settings>
+    <settings>
       <name>Coder</name>
       <archiveVersion>0</archiveVersion>
       <data></data>
@@ -1076,7 +1084,7 @@
     <group>
       <name>EWARM</name>
       <file>
-        <name>$PROJ_DIR$\..\startup_stm32h7s7xx.s</name>
+        <name>$PROJ_DIR$/../startup_stm32h7s7xx.s</name>
       </file>
     </group>
     <group>
@@ -1084,22 +1092,22 @@
       <group>
         <name>Appli</name>
         <file>
-          <name>$PROJ_DIR$\..\..\Appli\Src\main.c</name>
+          <name>$PROJ_DIR$/../../Appli/Src/main.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\Appli\Src\freertos.c</name>
+          <name>$PROJ_DIR$/../../Appli/Src/freertos.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\Appli\Src\fatfs.c</name>
+          <name>$PROJ_DIR$/../../Appli/Src/fatfs.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\Appli\Src\stm32h7rsxx_it.c</name>
+          <name>$PROJ_DIR$/../../Appli/Src/stm32h7rsxx_it.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\Appli\Src\stm32h7rsxx_hal_msp.c</name>
+          <name>$PROJ_DIR$/../../Appli/Src/stm32h7rsxx_hal_msp.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\Appli\Src\stm32h7rsxx_hal_timebase_tim.c</name>
+          <name>$PROJ_DIR$/../../Appli/Src/stm32h7rsxx_hal_timebase_tim.c</name>
         </file>
       </group>
     </group>
@@ -1107,19 +1115,19 @@
   <group>
     <name>Doc</name>
     <file>
-      <name>$PROJ_DIR$\..\..\README.md</name>
+      <name>$PROJ_DIR$/../../README.md</name>
     </file>
   </group>
   <group>
     <name>Drivers</name>
     <group>
-      <name>CMSIS</name>
-      <file>
-        <name>$PROJ_DIR$\..\..\Appli\Src\system_stm32h7rsxx.c</name>
-      </file>
-    </group>
-    <group>
       <name>STM32H7RSxx_HAL_Driver</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_hal_tim.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_hal_tim_ex.c</name>
+      </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_hal_cortex.c</name>
       </file>
@@ -1169,10 +1177,16 @@
         <name>$PROJ_DIR$/../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_hal_sd_ex.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_hal_tim.c</name>
+        <name>$PROJ_DIR$/../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_hal_mmc.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_hal_tim_ex.c</name>
+        <name>$PROJ_DIR$/../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_hal_mmc_ex.c</name>
+      </file>
+    </group>
+    <group>
+      <name>CMSIS</name>
+      <file>
+        <name>$PROJ_DIR$/../../Appli/Src/system_stm32h7rsxx.c</name>
       </file>
     </group>
   </group>
@@ -1223,16 +1237,10 @@
         <name>$PROJ_DIR$/../../../../../../../Middlewares/Third_Party/FatFs/source/diskio.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../Middlewares/Third_Party/FatFs/source/ffsystem_template.c</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../../../Middlewares/Third_Party/FatFs/source/ff.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../../Middlewares/Third_Party/FatFs/source/ff_gen_drv.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../Middlewares/Third_Party/FatFs/source/ffsystem_cmsis_os.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../../Middlewares/Third_Party/FatFs/source/ffunicode.c</name>

@@ -97,7 +97,7 @@ The output application is a raw binary and the IDEs does not offer the ability t
 the download in an easy way. The following procedure must be applied to load and debug
 the program :
  - Use a programming tool such as STM32CubeProgrammer to download the generated binary at the load address
-   (here the external loader corresponding to NOR flash and load address is 0x7000000)
+   (here the external loader corresponding to NOR flash and load address is 0x70000000)
  - Reset the board
  - follow the procedure corresponding to your IDE to debug the project:
     - IAR     : menu Projet->Attach to running target
@@ -128,7 +128,7 @@ the program :
      
      The procedure to debug is as follows:
      - Use STM32CubeProgrammer to download the generated binary at the load address 
-       (here the external loader of the board corresponding to NOR flash and load address is 0x7000000)
+       (here the external loader of the board corresponding to NOR flash and load address is 0x70000000)
        - Reset the board
        - Attachment to the running target depending on the IDE:
          - IAR: menu Projet->Attach to running target

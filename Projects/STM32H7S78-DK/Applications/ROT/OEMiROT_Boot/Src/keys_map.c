@@ -28,7 +28,7 @@
 #include <bootutil/sign_key.h>
 #include "mcuboot_config/mcuboot_config.h"
 #include "flash_layout.h"
-#include "config-boot.h"
+#include "mbedtls_config.h"
 #include "low_level_obkeys.h"
 
 #if defined(MCUBOOT_SIGN_RSA)

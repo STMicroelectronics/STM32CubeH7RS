@@ -1,5 +1,5 @@
 var altcp__alloc_8c =
 [
-    [ "altcp_tls_alloc", "group__altcp__tls.html#ga09e6ca8f144ee94ef21d7e5760aa4391", null ],
-    [ "altcp_tls_new", "group__altcp__tls.html#ga028316a8257cf8dcace9cd063de79c0a", null ]
+    [ "altcp_tls_alloc", "group__altcp__tls.html#gab0bdfd2ede0df4d47b6e12ccac2b14bc", null ],
+    [ "altcp_tls_new", "group__altcp__tls.html#gab6a717446af931949bc3e0daceb090c8", null ]
 ];

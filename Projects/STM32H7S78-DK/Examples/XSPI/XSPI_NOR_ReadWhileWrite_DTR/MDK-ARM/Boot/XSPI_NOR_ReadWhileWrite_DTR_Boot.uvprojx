@@ -10,13 +10,13 @@
       <TargetName>XSPI_NOR_ReadWhileWrite_DTR_Boot</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6190000::V6.19::ARMCLANG</pCCUsed>
+      <pCCUsed>6210000::V6.21::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>STM32H7S7L8HxH</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STM32H7Rx-7Sx_DFP.0.1.1</PackID>
+          <PackID>Keil.STM32H7RSxx_DFP.1.0.0</PackID>
           <PackURL>https://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000-0x2000FFFF) IRAM2(0x24000000-0x24071BFF) IROM(0x8000000-0x800FFFF) CLOCK(12000000) FPU3(DFPU) CPUTYPE("Cortex-M7") ELITTLE TZ</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -81,7 +81,7 @@
           </BeforeMake>
           <AfterMake>
             <RunUserProg1>0</RunUserProg1>
-            <RunUserProg2>1</RunUserProg2>
+            <RunUserProg2>0</RunUserProg2>
             <UserProg1Name></UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
@@ -138,7 +138,7 @@
           </Flash1>
           <bUseTDR>1</bUseTDR>
           <Flash2>BIN\UL2V8M.DLL</Flash2>
-          <Flash3></Flash3>
+          <Flash3>"" ()</Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
           <pFcarmGrp></pFcarmGrp>
@@ -207,7 +207,7 @@
             <Ro2Chk>0</Ro2Chk>
             <Ro3Chk>0</Ro3Chk>
             <Ir1Chk>1</Ir1Chk>
-            <Ir2Chk>1</Ir2Chk>
+            <Ir2Chk>0</Ir2Chk>
             <Ra1Chk>0</Ra1Chk>
             <Ra2Chk>0</Ra2Chk>
             <Ra3Chk>0</Ra3Chk>
@@ -340,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32H7S7xx</Define>
               <Undefine></Undefine>
-              <IncludePath>../../Boot/Inc;../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Inc;../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Inc/Legacy;../../../../../../../Drivers/CMSIS/Device/ST/STM32H7RSxx/Include;../../../../../../../Drivers/CMSIS/Include;../../../../../../../Drivers/BSP/STM32H7S78-DK</IncludePath>
+              <IncludePath>../../Boot/Inc;../../../../../../../Drivers/BSP/STM32H7S78-DK;../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Inc;../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Inc/Legacy;../../../../../../../Middlewares/ST/STM32_ExtMem_Manager;../../../../../../../Middlewares/ST/STM32_ExtMem_Manager/boot;../../../../../../../Middlewares/ST/STM32_ExtMem_Manager/sal;../../../../../../../Middlewares/ST/STM32_ExtMem_Manager/nor_sfdp;../../../../../../../Middlewares/ST/STM32_ExtMem_Manager/psram;../../../../../../../Middlewares/ST/STM32_ExtMem_Manager/sdcard;../../../../../../../Middlewares/ST/STM32_ExtMem_Manager/user;../../../../../../../Drivers/CMSIS/Device/ST/STM32H7RSxx/Include;../../../../../../../Drivers/CMSIS/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -371,7 +371,7 @@
             <TextAddressRange></TextAddressRange>
             <DataAddressRange></DataAddressRange>
             <pXoBase></pXoBase>
-            <ScatterFile>stm32h7s7xx_flash.sct</ScatterFile>
+            <ScatterFile>.\stm32h7s7xx_flash.sct</ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
             <Misc>--diag_suppress L6312,L6314</Misc>
@@ -398,6 +398,11 @@
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../Boot/Src/main.c</FilePath>
+            </File>
+            <File>
+              <FileName>extmem_manager.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../Boot/Src/extmem_manager.c</FilePath>
             </File>
             <File>
               <FileName>stm32h7rsxx_it.c</FileName>
@@ -485,16 +490,6 @@
               <FilePath>../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_hal_exti.c</FilePath>
             </File>
             <File>
-              <FileName>stm32h7rsxx_hal_tim.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_hal_tim.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32h7rsxx_hal_tim_ex.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_hal_tim_ex.c</FilePath>
-            </File>
-            <File>
               <FileName>stm32h7rsxx_hal_xspi.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_hal_xspi.c</FilePath>
@@ -522,6 +517,56 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>Middlewares/STM32_ExtMem_Manager</GroupName>
+          <Files>
+            <File>
+              <FileName>stm32_extmem.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../Middlewares/ST/STM32_ExtMem_Manager/stm32_extmem.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32_boot_xip.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../Middlewares/ST/STM32_ExtMem_Manager/boot/stm32_boot_xip.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32_sal_xspi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../Middlewares/ST/STM32_ExtMem_Manager/sal/stm32_sal_xspi.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32_sal_sd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../Middlewares/ST/STM32_ExtMem_Manager/sal/stm32_sal_sd.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32_sfdp_data.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../Middlewares/ST/STM32_ExtMem_Manager/nor_sfdp/stm32_sfdp_data.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32_sfdp_driver.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../Middlewares/ST/STM32_ExtMem_Manager/nor_sfdp/stm32_sfdp_driver.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32_psram_driver.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../Middlewares/ST/STM32_ExtMem_Manager/psram/stm32_psram_driver.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32_sdcard_driver.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../Middlewares/ST/STM32_ExtMem_Manager/sdcard/stm32_sdcard_driver.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32_user_driver.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../Middlewares/ST/STM32_ExtMem_Manager/user/stm32_user_driver.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>::CMSIS</GroupName>
         </Group>
       </Groups>
@@ -531,8 +576,8 @@
   <RTE>
     <apis/>
     <components>
-      <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="4.3.0" condition="CMSIS Core">
-        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="4.5.0"/>
+      <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="5.6.0" condition="CMSIS Core">
+        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.9.0"/>
         <targetInfos>
           <targetInfo name="XSPI_NOR_ReadWhileWrite_DTR_Boot"/>
         </targetInfos>

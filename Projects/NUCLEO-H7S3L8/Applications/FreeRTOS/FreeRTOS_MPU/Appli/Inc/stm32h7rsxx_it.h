@@ -22,12 +22,12 @@
 #define __STM32H7RSxx_IT_H
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "stm32h7rsxx.h"
+
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/

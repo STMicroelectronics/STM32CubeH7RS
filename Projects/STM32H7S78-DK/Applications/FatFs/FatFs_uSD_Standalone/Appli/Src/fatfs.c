@@ -52,7 +52,7 @@ typedef enum {
   APPLICATION_RUNNING,
   APPLICATION_SD_UNPLUGGED,
   APPLICATION_SD_PLUGGED,
-}FS_FileOperationsTypeDef;
+} FS_FileOperationsTypeDef;
 
 FATFS SDFatFs;    /* File system object for SD logical drive */
 FIL SDFile;       /* File  object for SD */
@@ -129,8 +129,8 @@ int32_t MX_FATFS_Process(void)
 
     break;
   case APPLICATION_RUNNING:
-      process_res = FS_FileOperations();
-      Appli_state = APPLICATION_IDLE;
+    process_res = FS_FileOperations();
+    Appli_state = APPLICATION_IDLE;
     break;
 
   case APPLICATION_SD_UNPLUGGED:
@@ -138,6 +138,7 @@ int32_t MX_FATFS_Process(void)
     process_res = APP_SD_UNPLUGGED;
     break;
   case APPLICATION_SD_PLUGGED:
+    MX_SDMMC1_SD_Init();
     Appli_state = APPLICATION_RUNNING;
     break;
 
@@ -178,7 +179,7 @@ static int32_t FS_FileOperations(void)
     {
 
       /* Write data to the text file */
-      res = f_write(&SDFile, (const void *)wtext, sizeof(wtext), (void *)&byteswritten);
+      res = f_write(&SDFile, (void *)wtext, sizeof(wtext), (void *)&byteswritten);
 
       if((byteswritten > 0) && (res == FR_OK))
       {
@@ -189,7 +190,7 @@ static int32_t FS_FileOperations(void)
         if(f_open(&SDFile, "STM32.TXT", FA_READ) == FR_OK)
         {
           /* Read data from the text file */
-          res = f_read(&SDFile, ( void *)rtext, sizeof(rtext), (void *)&bytesread);
+          res = f_read(&SDFile, (void *)rtext, sizeof(rtext), (void *)&bytesread);
 
           if((bytesread > 0) && (res == FR_OK))
           {
@@ -212,20 +213,20 @@ static int32_t FS_FileOperations(void)
 }
 
 /**
- * @brief  Detects if SD card is correctly plugged in the memory slot or not.
- * @retval Returns if SD is detected or not
- */
+  * @brief  Detects if SD card is correctly plugged in the memory slot or not.
+  * @retval Returns if SD is detected or not
+  */
 static uint8_t SD_IsDetected(void)
 {
     uint8_t ret;
 
     if (HAL_GPIO_ReadPin(SD_GPIO_PORT, PinDetect) == GPIO_PIN_RESET)
     {
-      ret = HAL_ERROR;
+      ret = APP_SD_PRESENT;
     }
     else
     {
-      ret = HAL_OK;
+      ret = APP_SD_NO_PRESENT;
     }
       return ret;
 }
@@ -241,14 +242,14 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 
   if(GPIO_Pin == SD_DETECT_Pin)
     {
-       if(SD_IsDetected() == HAL_OK)
+       if(SD_IsDetected() == APP_SD_PRESENT)
        {
-         Appli_state = APPLICATION_RUNNING;
-        }
+          Appli_state = APPLICATION_SD_PLUGGED;
+       }
        else
-        {
+       {
           Appli_state = APPLICATION_SD_UNPLUGGED;
-         }
+       }
      }
 }
 

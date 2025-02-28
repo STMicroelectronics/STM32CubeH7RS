@@ -1,26 +1,46 @@
 ## <b>XSPI_NOR_ReadWhileWrite_DTR Example Description</b>
 
-How to write and read data using XSPI NOR memory.
+How to write and read data on XSPI NOR memory (bank1) when code is executed from bank0
 
-This example describes how to write and read data in Automatic polling mode in an XSPI
-NOR memory and compare the result.
+This example demonstrates the Read While Write feature using Macronix NOR Flash
+which supports simultaneous Read and Write operations (WRBI, WRCT, WRCF)
 
-At the beginning of the main program the HAL_Init() function is called to reset
-all the peripherals, initialize the Flash interface and the systick.
-The SystemClock_Config() function is used to configure the system clock for STM32H7S7xx Devices :
+- Project structure:
+  - Boot Sub-project: Boot from internal Flash and jumps to the application code in external Flash (Appli Sub-project ).
+  - Appli Sub-Project: Firmware application executed from external FLash (Bank0).
+- This project is designed to run on the STM32H7S7xx device on the STM32H7S78-DK board from STMicroelectronics.
+  The HAL_Init() function is called at the beginning of the main program to reset all peripherals and initialize
+  the systick used as a 1ms HAL timebase.
+- This project runs from the external Flash memory. It is launched from a first boot stage and inherits
+  from this boot project configuration (caches, MPU regions [regions 0, 1 and 2 here], system clock at
+  600 MHz and external memory interface at the highest speed).
 
- - The SystemClock_Config() function is used to configure the system clock (SYSCLK)
-to run at 600 Mhz.
- - The template project calls also SCB_EnableICache() and SCB_EnableDCache() functions in order to enable
-the Layer 1 Core Instruction and Data Caches. 
+The boot part is automatically downloaded from the IDE environment via the boot sub-project.
+Binary file: XSPI_NOR_ReadWhileWrite_DTR_Boot.hex
 
-This is provided as template implementation that the User may integrate in his application in order to enhance the performance.
+Program Execution from Bank0:
 
-LED_GREEN is ON when the checked data is correct.
+ 1. Erase Memory (Bank1 area)
+    - Enable Write Operation
+    - Erasing Block(64KB) on bank1
+    - Wait for end of block erase in bank1
 
-LED_RED is ON as soon as a comparison error occurs.
+ 2. Write data on Bank1 using RWW feature
+    - Enable Write Operation on NOR Flash (Global)
+    - Write Buffer Initial command (WRBI)
+    - Write Buffer Continue command (WRCT)
+    - Write Buffer Confirm (WRCF)
+    - Wait for end of programming in bank1
 
-LED_RED toggles as soon as an error is returned by HAL API.
+ 3. Read and compare data previously written
+    - Read data previously written on bank1
+    - Compare results
+
+STM32H7S78-DK board's LEDs are used to monitor the example status:
+ - LED_GREEN is ON when the checked data is correct.
+ - LED_RED is ON when the checked data is correct.
+
+Error_Handler() function is called (infinite loop) if an error is returned by the HAL API..
 
 #### <b>Notes</b>
 
@@ -42,24 +62,45 @@ LED_RED toggles as soon as an error is returned by HAL API.
     - or to ensure cache maintenance operations to ensure the cache coherence between the CPU and the DMAs.
     This is true also for any other data buffers accessed by the CPU and other masters (DMA2D, LTDC)
     The addresses and the size of cacheable buffers (shared between CPU and other masters)
-    must be properly defined to be aligned to data cache line size (32 bytes) and of a size of being multiple
+    must be properly defined to be aligned to data cache line size (32 bytes) and of a size of being multiple
     of this cache line size.
-    Please refer to the AN4838 "Managing memory protection unit (MPU) in STM32 MCUs"
-    Please refer to the AN4839 "Level 1 cache on STM32F7 Series"
+   Please refer to the AN4838 "Managing memory protection unit (MPU) in STM32 MCUs"
+   Please refer to the AN4839 "Level 1 cache on STM32F7 Series"
 
 ### <b>Keywords</b>
 
-Memory, XSPI, Read, Write, auto polling, NOR, DTR Mode
+Memory, XSPI, Read, Write, RWW, XIP, NOR, DTR Mode, DMA
 
 ### <b>Directory contents</b>
 
-  - XSPI/XSPI_NOR_ReadWhileWrite_DTR/Boot/Inc/stm32h7rsxx_hal_conf.h    HAL configuration file
-  - XSPI/XSPI_NOR_ReadWhileWrite_DTR/Boot/Inc/stm32h7rsxx_it.h          Interrupt handlers header file
-  - XSPI/XSPI_NOR_ReadWhileWrite_DTR/Boot/Inc/main.h                    Header for main.c module
-  - XSPI/XSPI_NOR_ReadWhileWrite_DTR/Boot/Src/stm32h7rsxx_it.c          Interrupt handlers
-  - XSPI/XSPI_NOR_ReadWhileWrite_DTR/Boot/Src/main.c                    Main program
-  - XSPI/XSPI_NOR_ReadWhileWrite_DTR/Boot/Src/stm32h7rsxx_hal_msp.c     HAL MSP module
-  - XSPI/XSPI_NOR_ReadWhileWrite_DTR/Boot/Src/system_stm32h7rsxx.c      STM32H7RSxx system source file
+#### <b>Sub-project Boot</b>
+
+File | Description
+ --- | ---
+  - XSPI/XSPI_NOR_ReadWhileWrite_DTR/Boot/Inc/main.h                       |  Header for main.c module
+  - XSPI/XSPI_NOR_ReadWhileWrite_DTR/Boot/Inc/extmem_manager.h             |  Header for extmem_manager.c module
+  - XSPI/XSPI_NOR_ReadWhileWrite_DTR/Boot/Inc/stm32h7rsxx_hal_conf.h       |  HAL Configuration file
+  - XSPI/XSPI_NOR_ReadWhileWrite_DTR/Boot/Inc/stm32h7rsxx_it.h             |  Interrupt handlers header file
+  - XSPI/XSPI_NOR_ReadWhileWrite_DTR/Boot/Inc/stm32h7s78_discovery_conf.h  |  BSP Configuration file
+  - XSPI/XSPI_NOR_ReadWhileWrite_DTR/Boot/Inc/stm32_extmem_conf.h          |  External memory manager Configuration file
+  - XSPI/XSPI_NOR_ReadWhileWrite_DTR/Boot/Src/main.c                       |  Main program
+  - XSPI/XSPI_NOR_ReadWhileWrite_DTR/Boot/Src/extmem_manager.c             |  code to initialize external memory
+  - XSPI/XSPI_NOR_ReadWhileWrite_DTR/Boot/Src/stm32h7rsxx_hal_msp.c        |  HAL MSP module
+  - XSPI/XSPI_NOR_ReadWhileWrite_DTR/Boot/Src/stm32h7rsxx_it.c             |  Interrupt handlers
+  - XSPI/XSPI_NOR_ReadWhileWrite_DTR/Boot/Src/system_stm32h7rsxx.c         |  STM32H7RSxx system source file
+
+#### <b>Sub-project Appli</b>
+
+File | Description
+ --- | ---
+  - XSPI/XSPI_NOR_ReadWhileWrite_DTR/Appli/Inc/main.h                      |  Header for main.c module
+  - XSPI/XSPI_NOR_ReadWhileWrite_DTR/Appli/Inc/stm32h7rsxx_hal_conf.h      |  HAL Configuration file
+  - XSPI/XSPI_NOR_ReadWhileWrite_DTR/Appli/Inc/stm32h7rsxx_it.h            |  Interrupt handlers header file
+  - XSPI/XSPI_NOR_ReadWhileWrite_DTR/Appli/Inc/stm32h7s78_discovery_conf.h |  BSP Configuration file
+  - XSPI/XSPI_NOR_ReadWhileWrite_DTR/Appli/Src/main.c                      |  Main program
+  - XSPI/XSPI_NOR_ReadWhileWrite_DTR/Appli/Src/stm32h7rsxx_hal_msp.c       |  HAL MSP module
+  - XSPI/XSPI_NOR_ReadWhileWrite_DTR/Appli/Src/stm32h7rsxx_it.c            |  Interrupt handlers
+  - XSPI/XSPI_NOR_ReadWhileWrite_DTR/Appli/Src/system_stm32h7rsxx.c        |  STM32H7RSxx system source file
 
 ### <b>Hardware and Software environment</b>
 
@@ -67,7 +108,8 @@ Memory, XSPI, Read, Write, auto polling, NOR, DTR Mode
     board and can be easily tailored to any other supported device
     and development board.
 
-  - On STM32H7S78-DK board, the BOOT0 mechanical slide switch must be set to SW1.
+  - On STM32H7S78-DK board, the BOOT0 mechanical slide switch (SW1) must be set to default configuration 0
+    (Boot from user flash memory at address 0x0800 0000)
 
   - User Option Bytes requirement (with STM32CubeProgrammer tool):
 
@@ -79,6 +121,55 @@ Memory, XSPI, Read, Write, auto polling, NOR, DTR Mode
 
 In order to make the program work, you must do the following:
 
- - Open your preferred toolchain
- - Rebuild all files and load your image into target memory
+**EWARM**
+
+ 1. Open Multi-projects workspace file Project.eww
+
+ <b>Optional:</b>
+  - Select first "XSPI_NOR_ReadWhileWrite_DTR_Boot" workspace
+  - Rebuild all files from sub-project Boot
+  - If no modification is done on boot project, this step could be skipped.
+
+ 2. Select first "XSPI_NOR_ReadWhileWrite_DTR_Appli" workspace
+ 3. Rebuild all files from sub-project Appli and load your images into memories: This sub-project
+    will first load the Appli part in External memory available on STM32H7S78-DK board, then load
+    the XSPI_NOR_ReadWhileWrite_DTR_Boot.hex in internal Flash.
+ 4. Run the example
+
+**MDK-ARM**:
+
+ - Rebuild all files from sub-project Appli and load your images into memories: This sub-project will first load Boot_XIP.hex in internal Flash,
+   than load Appli part in External memory available on NUCLEO-H7S3L8 board.
  - Run the example
+ 
+**CubeIDE**:
+
+ - Compile the example/application; the elf file is required to configure the debug profile (the "active configuration" must be "debug", else only assembly debug is available)
+ - Open the menu [Run]->[Debug configuration] and double click on  [STM32 C/C++ Application] (it creates a default debug configuration for the current project selected)
+ - In [Debugger] tab, section "External  loaders" add the external loader corresponding to your Board/Memory as described below:
+ - In "External loaders" section, click on [Add]
+ - Select the loader among the available list (**MX25UW25645G_NUCLEO-H7S3L8.stldr** or **MX66UW1G45G_STM32H7S78-DK.stldr**)
+ - Option "Enabled" checked and Option "Initialize" unchecked
+ - In "Misc" section, uncheck the option "Verify flash download"
+ - In [Startup] tab, section "Load Image and Symbols":
+   - Click on [Add]
+   - If your project contains a boot project:
+     - click on "Project" and then select the boot project.
+     - click on Build configuration and select "Use active".
+     - then select the following options:
+       - "Perform build" checked.
+       - "Download" checked.
+       - "Load symbols" unchecked.
+   - If your project doesn't contain a boot project:
+     - click on [File System] and select the Boot HEX file corresponding to your board
+
+        Boot_XIP.hex can be found in folder [Binary] on each Template_XIP project
+
+        You may need to force the capability to select a .hex file by typing " * " + pressing the "Enter" key in the file name dialog
+
+     - then select the following options:
+       - "Download"      checked.
+       - "Load symbols" unchecked.
+       - Click Ok
+     - Back in the in the [Startup] tab, move down the boot project for it to be in second position
+ - Our debug configuration is ready to be used.

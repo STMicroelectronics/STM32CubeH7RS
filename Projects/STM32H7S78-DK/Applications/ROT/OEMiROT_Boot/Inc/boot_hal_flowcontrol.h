@@ -378,7 +378,7 @@ extern "C" {
 #define FLOW_STEP_MPU_A_CH_R5       0x00000000U        /*!< No effect on control flow */
 #endif /* OEMIROT_MPU_PROTECTION */
 
-#if defined(MCUBOOT_EXT_LOADER) && defined(OEMIROT_MPU_PROTECTION)
+#if defined(MCUBOOT_EXT_LOADER) && defined(OEMIROT_MPU_PROTECTION) && defined(OEMIROT_JUMP_TO_BL_ENABLE)
 #define FLOW_STEP_MPU_L_EN_R7       0x000c12a7U        /*!< Step Loader Region 7 enable value */
 #define FLOW_STEP_MPU_L_CH_R7       0x000c64e2U        /*!< Step Loader Region 7 check value */
 #define FLOW_STEP_MPU_L_LCK         0x00000000U        /*!< No effect on control flow */
@@ -388,7 +388,7 @@ extern "C" {
 #define FLOW_STEP_MPU_L_CH_R7       0x00000000U        /*!< No effect on control flow */
 #define FLOW_STEP_MPU_L_LCK         0x00000000U        /*!< No effect on control flow */
 #define FLOW_STEP_MPU_L_LCK_CH      0x00000000U        /*!< No effect on control flow */
-#endif /*MCUBOOT_EXT_LOADER*/
+#endif /* MCUBOOT_EXT_LOADER && OEMIROT_MPU_PROTECTION && OEMIROT_JUMP_TO_BL_ENABLE */
 
 #define FLOW_STEP_SAU_L_EN_R0       0x00000000U        /*!< No effect on control flow */
 #define FLOW_STEP_SAU_L_CH_R0       0x00000000U        /*!< No effect on control flow */

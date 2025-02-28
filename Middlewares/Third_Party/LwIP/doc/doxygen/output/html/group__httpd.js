@@ -2,7 +2,7 @@ var group__httpd =
 [
     [ "Options", "group__httpd__opts.html", "group__httpd__opts" ],
     [ "tCGI", "structt_c_g_i.html", null ],
-    [ "tCGIHandler", "group__httpd.html#gafe011a487c5e8d03a6b2f629e14e6b5c", null ],
+    [ "tCGIHandler", "group__httpd.html#ga693032b00bb572d131de09116c822f3b", null ],
     [ "tSSIHandler", "group__httpd.html#gaf88dacc4f18d299084cab75252001319", null ],
     [ "http_set_cgi_handlers", "group__httpd.html#gae1ec09532ff7fc622e1860727bf2c897", null ],
     [ "http_set_ssi_handler", "group__httpd.html#ga8834ecb16d9a7d6c128bdf9514b7879c", null ],

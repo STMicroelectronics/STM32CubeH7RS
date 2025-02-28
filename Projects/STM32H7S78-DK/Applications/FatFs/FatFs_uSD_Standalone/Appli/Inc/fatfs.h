@@ -17,10 +17,10 @@
   */
 /* USER CODE END Header */
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __fatfs_H
-#define __fatfs_H
+#ifndef __FATFS_H
+#define __FATFS_H
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -46,4 +46,4 @@ int32_t MX_FATFS_Process(void);
 #ifdef __cplusplus
 }
 #endif
-#endif /*__fatfs_H */
+#endif /*__FATFS_H */

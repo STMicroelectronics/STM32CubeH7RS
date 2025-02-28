@@ -51,7 +51,7 @@ typedef enum {
   APPLICATION_RUNNING,
   APPLICATION_SD_UNPLUGGED,
   APPLICATION_SD_PLUGGED,
-}FS_FileOperationsTypeDef;
+} FS_FileOperationsTypeDef;
 osThreadId_t StartThreadHandle;
 osThreadId_t ConcurrentThreadHandle;
 
@@ -63,9 +63,9 @@ static osThreadAttr_t uSDThread_attributes = {
 static uint32_t   DiskQueueMsg = 0;
 osMessageQueueId_t DiskEvent;
 
-FATFS SDFatFs;    /* File system object for SD logical drive */
-FIL File1, File2 ;       /* File  object for SD */
-static char SDPath[4];   /* SD logical drive path */
+FATFS SDFatFs;         /* File system object for SD logical drive */
+FIL File1, File2 ;     /* File  object for SD */
+static char SDPath[4]; /* SD logical drive path */
 static const MKFS_PARM OptParm = {FM_ANY, 0, 0, 0, 0};
 static uint32_t disk_op = 0;
 static uint32_t DiskReadyEvent = 0x1;
@@ -97,15 +97,15 @@ void MX_FATFS_Init(void)
   {
     Appli_state = APPLICATION_INIT;
 
-  /* Create the thread(s) */
-  /* definition and creation of USER_Thread */
-  uSDThread_attributes.name = "USER_Thread";
-  StartThreadHandle = osThreadNew(StartThread, NULL, (const osThreadAttr_t *)&uSDThread_attributes);
-  /* definition and creation of USER_ConcurrentThread */
-  uSDThread_attributes.name = "USER_ConcurrentThread";
-  ConcurrentThreadHandle = osThreadNew(ConcurrentThread, NULL, (const osThreadAttr_t *)&uSDThread_attributes);
-  /* Create Disk Queue */
-  DiskEvent = osMessageQueueNew (1U, sizeof(uint16_t), NULL);
+    /* Create the thread(s) */
+    /* definition and creation of USER_Thread */
+    uSDThread_attributes.name = "USER_Thread";
+    StartThreadHandle = osThreadNew(StartThread, NULL, (const osThreadAttr_t *)&uSDThread_attributes);
+    /* definition and creation of USER_ConcurrentThread */
+    uSDThread_attributes.name = "USER_ConcurrentThread";
+    ConcurrentThreadHandle = osThreadNew(ConcurrentThread, NULL, (const osThreadAttr_t *)&uSDThread_attributes);
+    /* Create Disk Queue */
+    DiskEvent = osMessageQueueNew (1U, sizeof(uint16_t), NULL);
 
   }
 
@@ -120,7 +120,7 @@ void MX_FATFS_Init(void)
   */
 int32_t MX_FATFS_DeInit(void)
 {
- /*## FatFS: UnLink the disk I/O driver(s)  ###########################*/
+  /* FatFS: UnLink the disk I/O driver(s) */
   if (FATFS_UnLinkDriver(SDPath) == 0)
   {
     Appli_state = APPLICATION_INIT;
@@ -162,10 +162,10 @@ static void StartThread(void *argument)
 }
 
 /**
-* @brief Function implementing the ConcurrentThread thread.
-* @param argument: Not used
-* @retval None
-*/
+  * @brief Function implementing the ConcurrentThread thread.
+  * @param argument: Not used
+  * @retval None
+  */
 static void ConcurrentThread(void *argument)
 {
   /* USER CODE BEGIN ConcurrentThread */
@@ -179,7 +179,7 @@ static void ConcurrentThread(void *argument)
       switch(DiskQueueMsg)
       {
       case DISK_READY_EVENT:
-	    FS_File2Operations();
+        FS_File2Operations();
         break;
 
       case DISK_REMOVE_EVENT:
@@ -277,10 +277,10 @@ static int32_t FS_File1Operations(void)
   uint32_t byteswritten;  /* File write/read counts */
 
   /* Register the file system object to the FatFs module */
-  if(f_mount(&SDFatFs, (TCHAR const*)SDPath, 1) == FR_OK)
+  if (f_mount(&SDFatFs, (TCHAR const*)SDPath, 1) == FR_OK)
   {
     /* Create and Open a new text file object with write access */
-    if(f_open(&File1, "STM32_1.TXT", FA_CREATE_ALWAYS | FA_WRITE) == FR_OK)
+    if (f_open(&File1, "STM32_1.TXT", FA_CREATE_ALWAYS | FA_WRITE) == FR_OK)
     {
       /* Allow Second task to have access to FatFs */
       osMessageQueuePut(DiskEvent, &DiskReadyEvent, 100, osWaitForever);
@@ -288,19 +288,19 @@ static int32_t FS_File1Operations(void)
       /* Write data to the text file */
       res = f_write(&File1, wtext, sizeof(wtext), (void *)&byteswritten);
 
-      if((byteswritten > 0) && (res == FR_OK))
+      if ((byteswritten > 0) && (res == FR_OK))
       {
         /* Close the open text file */
         f_close(&File1);
         disk_op ++;
         /* If last access to Disk, unlink drive */
-        while(disk_op < 2);
+        while (disk_op < 2);
         osMessageQueuePut(DiskEvent, &DiskRemoveEvent, 100, 0);
         disk_op = 0;
         return 0;
       }
-	}
- }
+    }
+  }
   /* Error */
   return -1;
 }
@@ -311,16 +311,16 @@ static int32_t FS_File1Operations(void)
   */
 static int32_t FS_File2Operations(void)
 {
-  FRESULT res; /* FatFs function common result code */
+  FRESULT res;            /* FatFs function common result code */
   uint32_t byteswritten ; /* File write/read counts */
 
   /* Create and Open a new text file object with write access */
-  if(f_open(&File2, "STM32_2.TXT", FA_CREATE_ALWAYS | FA_WRITE) == FR_OK)
+  if (f_open(&File2, "STM32_2.TXT", FA_CREATE_ALWAYS | FA_WRITE) == FR_OK)
   {
     /* Write data to the text file */
     res = f_write(&File2, wtext, sizeof(wtext), (void *)&byteswritten);
 
-    if((byteswritten > 0) && (res == FR_OK))
+    if ((byteswritten > 0) && (res == FR_OK))
     {
       /* Close the open text file */
       f_close(&File2);
@@ -332,11 +332,10 @@ static int32_t FS_File2Operations(void)
   return -1;
 }
 
-
 /**
- * @brief  Detects if SD card is correctly plugged in the memory slot or not.
- * @retval Returns if SD is detected or not
- */
+  * @brief  Detects if SD card is correctly plugged in the memory slot or not.
+  * @retval Returns if SD is detected or not
+  */
 static uint8_t SD_IsDetected(void)
 {
     uint8_t ret;
@@ -351,7 +350,5 @@ static uint8_t SD_IsDetected(void)
     }
       return ret;
 }
-
-
 
 /* USER CODE END Application */

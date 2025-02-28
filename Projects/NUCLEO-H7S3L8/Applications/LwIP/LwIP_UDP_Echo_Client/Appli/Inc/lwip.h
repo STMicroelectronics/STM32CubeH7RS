@@ -19,10 +19,10 @@
   */
 /* USER CODE END Header */
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __mx_lwip_H
-#define __mx_lwip_H
+#ifndef __LWIP_H
+#define __LWIP_H
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -67,7 +67,7 @@ void DHCP_Periodic_Handle(struct netif *netif);
 #ifdef __cplusplus
 }
 #endif
-#endif /*__ mx_lwip_H */
+#endif /* __LWIP_H */
 
 /**
   * @}

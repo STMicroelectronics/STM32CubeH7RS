@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * @file    stm32_user_type.h
+  * @file    stm32_user_driver_type.h
   * @author  MCD Application Team
   * @brief   This file contains the user driver type definition.
   ******************************************************************************
@@ -17,8 +17,8 @@
   */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __STM32_USER_TYPE_H
-#define __STM32_USER_TYPE_H
+#ifndef __STM32_USER_DRIVER_TYPE_H
+#define __STM32_USER_DRIVER_TYPE_H
 
 #ifdef __cplusplus
  extern "C" {
@@ -68,4 +68,4 @@ typedef struct {
 }
 #endif
 
-#endif /* __STM32_USER_TYPE_H */
+#endif /* __STM32_USER_DRIVER_TYPE_H */

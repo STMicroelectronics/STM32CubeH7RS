@@ -1,14 +1,20 @@
-/*
- * jpeg_utils_conf.h
- *
- * Copyright (C) 1991-1997, Thomas G. Lane.
- * Modified 1997-2011 by Guido Vollbeding.
- * This file is part of the Independent JPEG Group's software.
- * For conditions of distribution and use, see the accompanying README file.
- *
- * This file contains additional configuration options that customize the
- * JPEG HW configuration.  Most users will not need to touch this file.
- */
+/**
+  ******************************************************************************
+  * @file    jpeg_utils_conf.h
+  * @author  MCD Application Team
+  * @brief   jpeg_utils configuration file.
+  ******************************************************************************
+  * @attention
+  *
+  * Copyright (c) 2019 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
+  */
 
  /* Define to prevent recursive inclusion -------------------------------------*/
 

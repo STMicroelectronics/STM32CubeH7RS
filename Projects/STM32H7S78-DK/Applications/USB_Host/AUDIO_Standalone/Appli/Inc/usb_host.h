@@ -19,11 +19,11 @@
 /* USER CODE END Header */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __USB_HOST__H__
-#define __USB_HOST__H__
+#ifndef __USB_HOST_H
+#define __USB_HOST_H
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -92,5 +92,5 @@ void MX_USB_HOST_Process(void);
 }
 #endif
 
-#endif /* __USB_HOST__H__ */
+#endif /* __USB_HOST_H */
 

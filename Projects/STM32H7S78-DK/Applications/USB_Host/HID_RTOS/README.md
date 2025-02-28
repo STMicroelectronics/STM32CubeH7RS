@@ -9,10 +9,10 @@ The application allows for connecting a USB HID device, such as a mouse or keybo
 When a hid device is plugged to STM32H7S78-DK board, a Message will be displayed on the uart HyperTerminal showing the Vendor ID and Product ID of the attached device. After enumeration phase, a message will indicates that the device is ready for use. The host must be able to properly decode HID reports sent by the corresponding device and display those information on the HyperTerminal.
 
 The received HID reports are used by host to identify:
-- in case of a mouse
+- In case of a mouse
   - (x,y) mouse position
   - Pressed mouse buttons
-- in case of a keyboard
+- In case of a keyboard
   - Pressed key
 
 #### <b>Error behaviors</b>
@@ -24,9 +24,11 @@ Errors are detected such as (Unsupported device, Enumeration Fail) and the corre
 User is familiar with USB 2.0 “Universal Serial BUS” Specification and HID class Specification.
 
 #### <b>Known limitations</b>
+
 None.
 
 ### <b>Notes</b>
+
 None.
 
 #### <b>USB usage hints</b>
@@ -40,38 +42,41 @@ Connectivity, USBPD, Thread, UART/USART, USB_NOPD_Lib, UCPD, Type C, USB
 
 ### <b>Hardware and Software environment</b>
 
-  - This application has been tested with STMicroelectronics STM32H7S78-DK. and can be easily tailored to any other supported device and development board.
+  - This application runs on STM32H7RSxx devices
+
+  - This application has been tested with STMicroelectronics STM32H7S78-DK MB1736 revision D01 board and can be
+    easily tailored to any other supported device and development board.
 
 - STM32H7S78-DK Set-up to run application with HS mode
     - Plug the USB HID device into the STM32H7S78-DK board through 'Type C  to A-Female' cable to the connector:
     - USB1 : to use USB OTG IP in high speed (HS)
 
 - STM32H7S78-DK Set-up to run application with FS mode
-    - USB2 : to use USB OTG IP in full speed (FS)
+    - USB2 : To use USB OTG IP in full speed (FS)
     - Remove IDE project folder(EWARM/ MDK-ARM/ STM32CubeIDE)
-    - CubeMX side : follow the following steps
+    - CubeMX side : Follow the following steps
                   - Uncheck UCPD1 in connectivity of Categories
                   - Uncheck USB_OTG_HS in connectivity of Categories
                   - Check USB_OTG_FS and keep the same configuration as USB_OTG_HS
-                  - Use the same old config of USB_HOST in Middlewares and Software Packs of Categories
+                  - Use the same old configuration of USB_HOST in Middlewares and Software Packs of Categories
                   - Put USB_HS_REGEN Disable for PWR in Power and Thermal of Categories
     - EWARM side : - Remove "USE_USB_HS" Define from Preprocessor Symbols in C/C++ Option
-                   - Keep the same old config of option Debugger
+                   - Keep the same old configuration of the Debugger option
     - MDK-ARM side : - Remove "USE_USB_HS" Define from Preprocessor Symbols in C/C++ Option
-                     - Keep the same old config of option Target, Debug and Utilities>Settings
-    - CubeIDE side : - Remove "USE_USB_HS" Define symbols from Preprocessor in C/C++ Build Settings
+                     - Keep the same old configuration of the Target and Debug/Settings options
+    - CubeIDE side : - Remove "USE_USB_HS" Define from Paths and Symbols in C/C++ General Settings
 
     - Connect JP1 jumper on USB2
 
-    Connect ST-Link cable to the PC USB port to display data on the HyperTerminal.
+    - Connect ST-Link cable to the PC USB port to display data on the HyperTerminal.
 
     A virtual COM port will then appear in the HyperTerminal:
-     - Hyperterminal configuration
-       - Data Length = 8 Bits
-       - One Stop Bit
-       - No parity
-       - BaudRate = 115200 baud
-       - Flow control: None
+    - Hyperterminal configuration
+      - Data Length = 8 Bits
+      - One Stop Bit
+      - No parity
+      - BaudRate = 115200 baud
+      - Flow control: None
 
 ### <b>How to use it ?</b>
 
@@ -81,6 +86,7 @@ It boots from internal Flash (HID_RTOS Boot) then jumps to the application code 
 In order to make the program work, you must do the following :
 
 #### <b>IAR</b>
+
   1. Open your toolchain
   2. Open HID_RTOS workspace file Project.eww
 
@@ -92,9 +98,10 @@ In order to make the program work, you must do the following :
 
   3. Select then "HID_RTOS_Appli" workspace
   4. Rebuild all files from HID_RTOS_Appli and load your images into memories: First, load the HID_RTOS_Boot.hex in internal Flash, then, load the Appli part in External memory available on STM32H7S78-DK board.
-  5. Run the example
+  5. Run the application
 
 #### <b>MDK-ARM</b>
+
   1. Open your toolchain
   2. Open HID_RTOS workspace file Project.uvmpw
 
@@ -106,10 +113,10 @@ In order to make the program work, you must do the following :
 
   3. Select then "HID_RTOS_Appli" workspace
   4. Rebuild all files from HID_RTOS_Appli and load your images into memories: First, load the HID_RTOS_Boot.hex in internal Flash, then, load the Appli part in External memory available on STM32H7S78-DK board.
-  5. Run the example
-
+  5. Run the application
 
 #### <b>STM32CubeIDE</b>
+
 To configure STM32CubeIDE Debug Configuration, you must do the following :
 
 For "HID_RTOS_Boot" project :
@@ -134,7 +141,7 @@ For "HID_RTOS_Appli" project :
   3. Select the "HID_RTOS_Appli" project
   4. Build the project
   5. With the Debug icon select the configuration “HID_RTOS_Appli Debug”. First, load the Boot binary in internal Flash, then, load the Appli binary in External memory available on STM32H7S78-DK board
-  6. Run the example
+  6. Run the application
 
 <b>Note</b>
 

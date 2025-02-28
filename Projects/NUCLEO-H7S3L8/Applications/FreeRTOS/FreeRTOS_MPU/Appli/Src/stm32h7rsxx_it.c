@@ -160,6 +160,7 @@ void DebugMon_Handler(void)
 /* For the available peripheral interrupt handler names,                      */
 /* please refer to the startup file (startup_stm32h7rsxx.s).                    */
 /******************************************************************************/
+
 /**
   * @brief This function handles TIM6 global interrupt.
   */
@@ -173,6 +174,7 @@ void TIM6_IRQHandler(void)
 
   /* USER CODE END TIM6_IRQn 1 */
 }
+
 /* USER CODE BEGIN 1 */
 
 /* USER CODE END 1 */

@@ -10,7 +10,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2023 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -25,7 +25,7 @@
 #define STM32H7RSxx_HAL_CONF_H
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Exported types ------------------------------------------------------------*/
@@ -74,6 +74,7 @@
 /* #define HAL_RTC_MODULE_ENABLED   */
 /* #define HAL_SAI_MODULE_ENABLED   */
 /* #define HAL_SD_MODULE_ENABLED   */
+/* #define HAL_SDIO_MODULE_ENABLED   */
 /* #define HAL_SDRAM_MODULE_ENABLED   */
 /* #define HAL_SMARTCARD_MODULE_ENABLED   */
 /* #define HAL_SMBUS_MODULE_ENABLED   */
@@ -218,6 +219,7 @@
 #define USE_HAL_RTC_REGISTER_CALLBACKS        0U
 #define USE_HAL_SAI_REGISTER_CALLBACKS        0U
 #define USE_HAL_SD_REGISTER_CALLBACKS         0U
+#define USE_HAL_SDIO_REGISTER_CALLBACKS       0U
 #define USE_HAL_SDRAM_REGISTER_CALLBACKS      0U
 #define USE_HAL_SMARTCARD_REGISTER_CALLBACKS  0U
 #define USE_HAL_SMBUS_REGISTER_CALLBACKS      0U
@@ -241,6 +243,14 @@
 
 /* ################## CRYP peripheral configuration ########################## */
 
+/**
+  * @brief  For code optimization purpose, uncomment and set to "1U" the USE_HAL_CRYP_ONLY or USE_HAL_SAES_ONLY,
+  *         to use only one peripheral. Both defines cannot be set to "1U" at the same time.
+  */
+
+/* #define USE_HAL_CRYP_ONLY       1U */
+/* #define USE_HAL_SAES_ONLY       0U */
+
 #define USE_HAL_CRYP_SUSPEND_RESUME   0U
 
 /* ################## HASH peripheral configuration ########################## */
@@ -250,6 +260,11 @@
 /* ################## SDMMC peripheral configuration ######################### */
 
 #define USE_SD_TRANSCEIVER            0U
+
+/* ################## SDIO peripheral configuration ######################### */
+
+#define USE_SDIO_TRANSCEIVER          0U
+#define SDIO_MAX_IO_NUMBER            7U
 
 /* Includes ------------------------------------------------------------------*/
 /**
@@ -432,6 +447,10 @@
   #include "stm32h7rsxx_hal_sd.h"
 #endif /* HAL_SD_MODULE_ENABLED */
 
+#ifdef HAL_SDIO_MODULE_ENABLED
+#include "stm32h7rsxx_hal_sdio.h"
+#endif /* HAL_SDIO_MODULE_ENABLED */
+
 #ifdef HAL_SDRAM_MODULE_ENABLED
   #include "stm32h7rsxx_hal_sdram.h"
 #endif /* HAL_SDRAM_MODULE_ENABLED */
@@ -486,11 +505,11 @@
   *         If expr is true, it returns no value.
   * @retval None
   */
-  #define assert_param(expr) ((expr) ? (void)0U : assert_failed((uint8_t *)__FILE__, __LINE__))
+#define assert_param(expr) ((expr) ? (void)0U : assert_failed((uint8_t *)__FILE__, __LINE__))
 /* Exported functions ------------------------------------------------------- */
-  void assert_failed(uint8_t *file, uint32_t line);
+void assert_failed(uint8_t *file, uint32_t line);
 #else
-  #define assert_param(expr) ((void)0U)
+#define assert_param(expr) ((void)0U)
 #endif /* USE_FULL_ASSERT */
 
 #ifdef __cplusplus

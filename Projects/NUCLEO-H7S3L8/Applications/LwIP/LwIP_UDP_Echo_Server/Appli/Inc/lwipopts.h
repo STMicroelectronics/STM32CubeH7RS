@@ -19,8 +19,8 @@
 /* USER CODE END Header */
 
 /* Define to prevent recursive inclusion --------------------------------------*/
-#ifndef __LWIPOPTS__H__
-#define __LWIPOPTS__H__
+#ifndef __LWIPOPTS_H
+#define __LWIPOPTS_H
 
 #include "main.h"
 
@@ -34,7 +34,7 @@
 /* USER CODE END 0 */
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* STM32CubeMX Specific Parameters (not defined in opt.h) ---------------------*/
@@ -61,7 +61,7 @@
 #define MEM_ALIGNMENT 4
 /*----- Default Value for MEM_SIZE: 1600 ---*/
 #define MEM_SIZE 16*1024
-/*----- Default Value for H7 devices: 0x30044000 -----*/
+/*----- Default Value for H7 devices: 0x30004000 -----*/
 #define LWIP_RAM_HEAP_POINTER 0x24040000
 /*----- Value supported for H7 devices: 1 -----*/
 #define LWIP_SUPPORT_CUSTOM_PBUF 1
@@ -111,4 +111,4 @@
 #ifdef __cplusplus
 }
 #endif
-#endif /*__LWIPOPTS__H__ */
+#endif /*__LWIPOPTS_H */

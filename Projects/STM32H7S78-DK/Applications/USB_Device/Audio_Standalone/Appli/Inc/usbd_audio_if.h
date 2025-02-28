@@ -7,7 +7,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2023 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -18,11 +18,11 @@
   */
 /* USER CODE END Header */
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __USBD_AUDIO_IF_H__
-#define __USBD_AUDIO_IF_H__
+#ifndef __USBD_AUDIO_IF_H
+#define __USBD_AUDIO_IF_H
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -134,4 +134,4 @@ void HalfTransfer_CallBack_FS(void);
 }
 #endif
 
-#endif /* __USBD_AUDIO_IF_H__ */
+#endif /* __USBD_AUDIO_IF_H */

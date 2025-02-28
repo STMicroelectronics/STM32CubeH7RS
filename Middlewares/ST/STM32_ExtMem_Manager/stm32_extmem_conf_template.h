@@ -24,12 +24,12 @@
 extern "C" {
 #endif
 
-/** @defgroup EXTMEN_CONF
+/** @defgroup EXTMEM_CONF
   * @{
   */
 
-/** @defgroup EXTMEN_CONF_Driver_selection External Memory configuration selection of the driver
-  * this section is used to select the driver\n
+/** @defgroup EXTMEM_CONF_Driver_selection External Memory configuration selection of the driver.
+  * This section is used to select the driver\n
   *              #define EXTMEM_DRIVER_NOR_SFDP   1\n
   *              #define EXTMEM_DRIVER_PSRAM      1\n
   *              #define EXTMEM_DRIVER_SDCARD     0\n
@@ -45,8 +45,8 @@ extern "C" {
   * @}
   */
 
-/** @defgroup EXTMEN_CONF_SAL_selection External Memory configuration selection of the SAL
-  * this section is used to select the SAL\n
+/** @defgroup EXTMEM_CONF_SAL_selection External Memory configuration selection of the SAL
+  * This section is used to select the software adaptation layer (SAL)\n
   *              #define EXTMEM_SAL_XSPI          1\n
   *              #define EXTMEM_SAL_SD            0
   * @{
@@ -63,7 +63,7 @@ extern "C" {
 #include "stm32_extmem.h"
 #include "stm32_extmem_type.h"
 
-/** @defgroup EXTMEN_CONF_SAL_imported_variable External Memory configuration list of the imported variables
+/** @defgroup EXTMEM_CONF_SAL_imported_variable External Memory configuration list of the imported variables
   * this section is used to import the HAL handle variable. Handle Can be one of the following:
   *             extern XSPI_HandleTypeDef \n
   *             extern SD_HandleTypeDef
@@ -71,12 +71,12 @@ extern "C" {
   */
 
 /*
-  @brief import of the HAL handles for EXTMEMORY_2
+  @brief Import of the HAL handle used for EXTMEMORY_2
 */
 extern XSPI_HandleTypeDef       hxspi2;
 
 /*
-  @brief import of the HAL handles for EXTMEMORY_1
+  @brief Import of the HAL handle used for EXTMEMORY_1
 */
 extern XSPI_HandleTypeDef       hxspi1;
 /**
@@ -95,7 +95,7 @@ enum {
 };
 
 /*
-  @brief management of the boot layer
+  @brief Management of the external memory used as boot layer
 */
 #define EXTMEM_MEMORY_BOOTXIP  EXTMEMORY_1
 /**
@@ -165,16 +165,16 @@ EXTMEM_DefinitionTypeDef extmem_list_config[2] =
   */
 
 /*
- * @brief import of the trace function
+ * @brief Import of the trace function
  */
 extern void EXTMEM_TRACE(uint8_t *Message);
 /*
- * @brief definition of the debug macro
+ * @brief Definition of the debug macro
  */
 #define EXTMEM_MACRO_DEBUG(_MSG_)  EXTMEM_TRACE((uint8_t *)_MSG_)
 
 /*
- * @brief debug level of the different layers
+ * @brief Debug level of the different layers
  */
 #define EXTMEM_DEBUG_LEVEL                   0
 

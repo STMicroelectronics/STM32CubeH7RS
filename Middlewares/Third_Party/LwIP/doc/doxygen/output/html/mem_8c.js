@@ -2,10 +2,10 @@ var mem_8c =
 [
     [ "mem", "structmem.html", "structmem" ],
     [ "MIN_SIZE", "mem_8c.html#a278694c2333c9826f21ddd2c2d220f66", null ],
-    [ "mem_calloc", "mem_8c.html#ab0bdc525971701883f2065e7fb257a24", null ],
+    [ "mem_calloc", "mem_8c.html#a06b2fb3a6f6a6c56a84f769e0bd4c8e7", null ],
     [ "mem_free", "mem_8c.html#a65169147c44e9db60d997819af9b455c", null ],
     [ "mem_init", "mem_8c.html#a44a136e3b70c36abb6f8dc060c778113", null ],
-    [ "mem_malloc", "mem_8c.html#af418ade27d91d41e6143dba2cc246b0f", null ],
-    [ "mem_trim", "mem_8c.html#a7e6b7f11bb50bead9b35515d9a517124", null ],
-    [ "ram_heap", "mem_8c.html#a6da602f2bbf1d555556f9260b3b8ad5f", null ]
+    [ "mem_malloc", "mem_8c.html#ae2190f95ae9c46bb99ec0be4f4e4e5e4", null ],
+    [ "mem_trim", "mem_8c.html#ab0915b39bd096766771ef4cf719bfb40", null ],
+    [ "ram_heap", "mem_8c.html#aeb811c25ce74d9ff398ccbb29874bba9", null ]
 ];

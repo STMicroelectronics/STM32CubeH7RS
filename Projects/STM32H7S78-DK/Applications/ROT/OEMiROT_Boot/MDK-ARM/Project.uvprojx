@@ -16,12 +16,12 @@
         <TargetCommonOption>
           <Device>STM32H7S7L8Hx</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STM32H7Rx-7Sx_DFP.0.1.1</PackID>
+          <PackID>Keil.STM32H7RSxx_DFP.1.0.0</PackID>
           <PackURL>https://www.keil.com/pack/</PackURL>
-          <Cpu>CLOCK(12000000) FPU3(DFPU) CPUTYPE("Cortex-M7") ELITTLE TZ</Cpu>
+          <Cpu>IRAM(0x20000000,0x20000) IROM(0x08000000,0x010000) CPUTYPE("Cortex-M7") FPU3(DFPU) CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
-          <FlashDriverDll></FlashDriverDll>
+          <FlashDriverDll>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC10000 -FN1 -FF0STM32H7Rx_64k -FS08000000 -FL010000 -FP0($$Device:STM32H7S7L8Hx$CMSIS\Flash\STM32H7Rx_64k.FLM))</FlashDriverDll>
           <DeviceId>0</DeviceId>
           <RegisterFile></RegisterFile>
           <MemoryEnv></MemoryEnv>
@@ -33,7 +33,7 @@
           <SLE66CMisc></SLE66CMisc>
           <SLE66AMisc></SLE66AMisc>
           <SLE66LinkerMisc></SLE66LinkerMisc>
-          <SFDFile>$$Device:STM32H7S7L8Hx$CMSIS\SVD\STM32H7RSxx.svd</SFDFile>
+          <SFDFile>$$Device:STM32H7S7L8Hx$CMSIS\SVD\STM32H7S.svd</SFDFile>
           <bCustSvd>0</bCustSvd>
           <UseEnv>0</UseEnv>
           <BinPath></BinPath>
@@ -110,11 +110,11 @@
         </CommonProperty>
         <DllOption>
           <SimDllName>SARMCM3.DLL</SimDllName>
-          <SimDllArguments>-REMAP -MPU</SimDllArguments>
+          <SimDllArguments> -REMAP -MPU</SimDllArguments>
           <SimDlgDll>DCM.DLL</SimDlgDll>
           <SimDlgDllArguments>-pCM7</SimDlgDllArguments>
           <TargetDllName>SARMCM3.DLL</TargetDllName>
-          <TargetDllArguments>-MPU</TargetDllArguments>
+          <TargetDllArguments> -MPU</TargetDllArguments>
           <TargetDlgDll>TCM.DLL</TargetDlgDll>
           <TargetDlgDllArguments>-pCM7</TargetDlgDllArguments>
         </DllOption>
@@ -134,10 +134,10 @@
             <RunIndependent>0</RunIndependent>
             <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
-            <DriverSelection>4101</DriverSelection>
+            <DriverSelection>4096</DriverSelection>
           </Flash1>
           <bUseTDR>1</bUseTDR>
-          <Flash2>BIN\UL2V8M.DLL</Flash2>
+          <Flash2>BIN\UL2CM3.DLL</Flash2>
           <Flash3>"" ()</Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
@@ -179,23 +179,23 @@
             <mOS>0</mOS>
             <uocRom>0</uocRom>
             <uocRam>0</uocRam>
-            <hadIROM>0</hadIROM>
-            <hadIRAM>0</hadIRAM>
+            <hadIROM>1</hadIROM>
+            <hadIRAM>1</hadIRAM>
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
-            <RvdsVP>2</RvdsVP>
+            <RvdsVP>3</RvdsVP>
             <RvdsMve>0</RvdsMve>
             <RvdsCdeCp>0</RvdsCdeCp>
             <nBranchProt>0</nBranchProt>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
-            <StupSel>0</StupSel>
+            <StupSel>8</StupSel>
             <useUlib>1</useUlib>
             <EndSel>0</EndSel>
             <uLtcg>0</uLtcg>
             <nSecure>0</nSecure>
             <RoSelD>3</RoSelD>
-            <RwSelD>4</RwSelD>
+            <RwSelD>3</RwSelD>
             <CodeSel>0</CodeSel>
             <OptFeed>0</OptFeed>
             <NoZi1>0</NoZi1>
@@ -206,12 +206,12 @@
             <Ro1Chk>0</Ro1Chk>
             <Ro2Chk>0</Ro2Chk>
             <Ro3Chk>0</Ro3Chk>
-            <Ir1Chk>0</Ir1Chk>
+            <Ir1Chk>1</Ir1Chk>
             <Ir2Chk>0</Ir2Chk>
             <Ra1Chk>0</Ra1Chk>
             <Ra2Chk>0</Ra2Chk>
             <Ra3Chk>0</Ra3Chk>
-            <Im1Chk>0</Im1Chk>
+            <Im1Chk>1</Im1Chk>
             <Im2Chk>0</Im2Chk>
             <OnChipMemories>
               <Ocm1>
@@ -246,13 +246,13 @@
               </Ocm6>
               <IRAM>
                 <Type>0</Type>
-                <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
+                <StartAddress>0x20000000</StartAddress>
+                <Size>0x20000</Size>
               </IRAM>
               <IROM>
                 <Type>1</Type>
-                <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
+                <StartAddress>0x8000000</StartAddress>
+                <Size>0x10000</Size>
               </IROM>
               <XRAM>
                 <Type>0</Type>
@@ -276,8 +276,8 @@
               </OCR_RVCT3>
               <OCR_RVCT4>
                 <Type>1</Type>
-                <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
+                <StartAddress>0x8000000</StartAddress>
+                <Size>0x10000</Size>
               </OCR_RVCT4>
               <OCR_RVCT5>
                 <Type>1</Type>
@@ -301,8 +301,8 @@
               </OCR_RVCT8>
               <OCR_RVCT9>
                 <Type>0</Type>
-                <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
+                <StartAddress>0x20000000</StartAddress>
+                <Size>0x20000</Size>
               </OCR_RVCT9>
               <OCR_RVCT10>
                 <Type>0</Type>
@@ -338,9 +338,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>USE_HAL_DRIVER,STM32H7S7xx,NDEBUG,MCUBOOT_TARGET_CONFIG=&lt;flash_layout.h&gt;,MBEDTLS_CONFIG_FILE=&lt;config-boot.h&gt;,MCUBOOT_DOUBLE_SIGN_VERIF,FLOW_CONTROL,BL2,DEFAULT_UART_BAUDRATE=115200,OEMIROT_DEV_MODE,BOOT_MAX_ALIGN=16,BL2_USE_SFDP_EXT_FLASH_INFO</Define>
+              <Define>USE_HAL_DRIVER,STM32H7S7xx,NDEBUG,MCUBOOT_TARGET_CONFIG=&lt;flash_layout.h&gt;,MBEDTLS_CONFIG_FILE=&lt;mbedtls_config.h&gt;,MCUBOOT_DOUBLE_SIGN_VERIF,FLOW_CONTROL,BL2,DEFAULT_UART_BAUDRATE=115200,OEMIROT_DEV_MODE,BOOT_MAX_ALIGN=16,BL2_USE_SFDP_EXT_FLASH_INFO</Define>
               <Undefine></Undefine>
-              <IncludePath>..\Inc;..\..\..\..\..\..\Drivers\CMSIS\Include;..\..\..\..\..\..\Drivers\CMSIS/Device\ST\STM32H7RSxx\Include;..\..\..\..\..\..\Drivers\STM32H7RSxx_HAL_Driver\Inc;..\..\..\..\..\..\Drivers\STM32H7RSxx_HAL_Driver\Inc\Legacy;..\..\..\..\..\..\Middlewares\Third_Party\mbed-crypto\include;..\..\..\..\..\..\Middlewares\Third_Party\mbed-crypto\include\mbedtls;..\..\..\..\..\..\Middlewares\Third_Party\mbed-crypto\include\psa;..\..\..\..\..\..\Middlewares\Third_Party\mcuboot\bl2\include;..\..\..\..\..\..\Middlewares\Third_Party\mcuboot\bl2\ext\mcuboot;..\..\..\..\..\..\Middlewares\Third_Party\mcuboot\bl2\ext\mcuboot\include;..\..\..\..\..\..\Middlewares\Third_Party\mcuboot\boot\bootutil\include;..\..\..\..\..\..\Middlewares\Third_Party\mcuboot\boot\bootutil\src;..\..\..\..\..\..\Middlewares\Third_Party\mcuboot\ext\hal\Inc;..\..\..\..\..\..\Middlewares\Third_Party\mcuboot\ext\mbedtls-asn1\include;..\..\..\..\..\..\Middlewares\Third_Party\mcuboot\platform\include;..\..\..\..\..\..\Middlewares\Third_Party\mcuboot\platform\ext\common;..\..\..\..\..\..\Middlewares\Third_Party\mcuboot\platform\ext\driver;..\..\..\..\..\..\Middlewares\ST\STM32_ExtMem_Manager;..\..\..\..\..\..\Middlewares\ST\STM32_ExtMem_Manager\nor_sfdp;..\..\..\..\..\..\Middlewares\ST\STM32_ExtMem_Manager\psram;..\..\..\..\..\..\Middlewares\ST\STM32_ExtMem_Manager\sal</IncludePath>
+              <IncludePath>..\Inc;..\..\..\..\..\..\Drivers\CMSIS\Include;..\..\..\..\..\..\Drivers\CMSIS/Device\ST\STM32H7RSxx\Include;..\..\..\..\..\..\Drivers\STM32H7RSxx_HAL_Driver\Inc;..\..\..\..\..\..\Drivers\STM32H7RSxx_HAL_Driver\Inc\Legacy;..\..\..\..\..\..\Middlewares\Third_Party\mbed-crypto\include;..\..\..\..\..\..\Middlewares\Third_Party\mbed-crypto\include\psa;..\..\..\..\..\..\Middlewares\Third_Party\mbed-crypto\library;..\..\..\..\..\..\Middlewares\Third_Party\mcuboot\bl2\include;..\..\..\..\..\..\Middlewares\Third_Party\mcuboot\bl2\ext\mcuboot;..\..\..\..\..\..\Middlewares\Third_Party\mcuboot\bl2\ext\mcuboot\include;..\..\..\..\..\..\Middlewares\Third_Party\mcuboot\boot\bootutil\include;..\..\..\..\..\..\Middlewares\Third_Party\mcuboot\boot\bootutil\src;..\..\..\..\..\..\Middlewares\Third_Party\mcuboot\ext\hal\Inc;..\..\..\..\..\..\Middlewares\Third_Party\mcuboot\ext\mbedtls-asn1\include;..\..\..\..\..\..\Middlewares\Third_Party\mcuboot\platform\include;..\..\..\..\..\..\Middlewares\Third_Party\mcuboot\platform\ext\common;..\..\..\..\..\..\Middlewares\Third_Party\mcuboot\platform\ext\driver;..\..\..\..\..\..\Middlewares\ST\STM32_ExtMem_Manager;..\..\..\..\..\..\Middlewares\ST\STM32_ExtMem_Manager\nor_sfdp;..\..\..\..\..\..\Middlewares\ST\STM32_ExtMem_Manager\psram;..\..\..\..\..\..\Middlewares\ST\STM32_ExtMem_Manager\sal</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -374,8 +374,10 @@
             <ScatterFile>.\stm32h7rsxx_bl2.sct</ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
-            <Misc>--predefine=-I../Inc/
---predefine=-DBL2</Misc>
+            <Misc>--predefine=-I../Inc/
+
+--predefine=-DBL2
+</Misc>
             <LinkerInputFile></LinkerInputFile>
             <DisabledWarnings>6848,L6314W</DisabledWarnings>
           </LDads>
@@ -661,11 +663,6 @@
               <FilePath>..\..\..\..\..\..\Middlewares\Third_Party\mbed-crypto\library\constant_time.c</FilePath>
             </File>
             <File>
-              <FileName>hmac_drbg.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\Middlewares\Third_Party\mbed-crypto\library\hmac_drbg.c</FilePath>
-            </File>
-            <File>
               <FileName>ecdh.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\Middlewares\Third_Party\mbed-crypto\library\ecdh.c</FilePath>
@@ -731,9 +728,9 @@
               <FilePath>..\..\..\..\..\..\Middlewares\Third_Party\mbed-crypto\library\asn1write.c</FilePath>
             </File>
             <File>
-              <FileName>cipher_wrap.c</FileName>
+              <FileName>bignum_core.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\Middlewares\Third_Party\mbed-crypto\library\cipher_wrap.c</FilePath>
+              <FilePath>..\..\..\..\..\..\Middlewares\Third_Party\mbed-crypto\library\bignum_core.c</FilePath>
             </File>
           </Files>
         </Group>

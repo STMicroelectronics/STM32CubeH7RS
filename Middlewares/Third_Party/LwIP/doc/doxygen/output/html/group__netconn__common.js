@@ -1,9 +1,7 @@
 var group__netconn__common =
 [
-    [ "netconn_addr", "group__netconn__common.html#ga37ec33522cfc26fa57251c33e4cebb3e", null ],
     [ "netconn_get_ipv6only", "group__netconn__common.html#gaf001c7d5fbf97c04eb1d9ac7d14c9c31", null ],
     [ "netconn_new", "group__netconn__common.html#gab2bd1d5e633e14e428cfc0ca908d5e0c", null ],
-    [ "netconn_peer", "group__netconn__common.html#ga1065e769f2276270722a7700182077bc", null ],
     [ "netconn_set_ipv6only", "group__netconn__common.html#gae56911e2d92bebf43d73e116530e41f1", null ],
     [ "netconn_type", "group__netconn__common.html#gaaba260d28d105fb4bce9185fd0300d91", [
       [ "NETCONN_TCP", "group__netconn__common.html#ggaaba260d28d105fb4bce9185fd0300d91a75d14318b91af7a452230189f47e5e1a", null ],

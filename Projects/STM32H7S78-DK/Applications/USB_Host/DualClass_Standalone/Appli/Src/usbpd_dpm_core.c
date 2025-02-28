@@ -40,9 +40,8 @@
 extern uint32_t HAL_GetTick(void);
 
 /* Private function prototypes -----------------------------------------------*/
-DEF_TASK_FUNCTION(USBPD_TaskUser);
-DEF_TASK_FUNCTION(USBPD_CAD_Task);
-DEF_TASK_FUNCTION(USBPD_PE_CableTask);
+void USBPD_CAD_Task(void);
+void USBPD_TaskUser(void);
 
 #if defined(USE_STM32_UTILITY_OS)
 void TimerCADfunction(void *);
@@ -56,9 +55,9 @@ void TimerPE1function(void *pArg);
 #endif /* USE_STM32_UTILITY_OS */
 
 /* Private typedef -----------------------------------------------------------*/
-#define OS_PE_PRIORITY                    osPriorityAboveNormal
-
-#define OS_CAD_PRIORITY                   osPriorityRealtime
+#if defined(USE_STM32_UTILITY_OS)
+UTIL_TIMER_Object_t TimerCAD;
+#endif /* USE_STM32_UTILITY_OS */
 
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
@@ -113,7 +112,7 @@ USBPD_StatusTypeDef USBPD_DPM_InitCore(void)
 
   /* to get how much memory are dynamically allocated by the stack
      the memory return is corresponding to 2 ports so if the application
-     managed only one port divide the value return by 2                   */
+     managed only one port divide the value return by 2 */
   stack_dynamemsize = USBPD_PE_GetMemoryConsumption();
 
   /* done to avoid warning */
@@ -149,50 +148,136 @@ USBPD_StatusTypeDef USBPD_DPM_InitOS(void)
   * @brief  Initialize the OS parts (port power role, PWR_IF, CAD and PE Init procedures)
   * @retval None
   */
-void USBPD_DPM_Run(void)
+ /* NRTOS */
+#if defined(USE_STM32_UTILITY_OS)
+/**
+  * @brief  Task for CAD processing
+  * @retval None
+  */
+void USBPD_CAD_Task(void)
 {
-  if ((HAL_GetTick() - DPM_Sleep_start[USBPD_PORT_COUNT]) >= DPM_Sleep_time[USBPD_PORT_COUNT])
-  {
-    DPM_Sleep_time[USBPD_PORT_COUNT] = USBPD_CAD_Process();
-    DPM_Sleep_start[USBPD_PORT_COUNT] = HAL_GetTick();
-  }
-  USBPD_DPM_UserExecute(NULL);
+  UTIL_TIMER_Stop(&TimerCAD);
+  uint32_t _timing = USBPD_CAD_Process();
+  UTIL_TIMER_SetPeriod(&TimerCAD, _timing);
+  UTIL_TIMER_Start(&TimerCAD);
 }
 
-#if !defined(USBPD_TCPM_MODULE_ENABLED)
+/**
+  * @brief  timer function to wakeup CAD Task
+  * @param pArg Pointer on an argument
+  * @retval None
+  */
+void TimerCADfunction(void *pArg)
+{
+  UTIL_SEQ_SetTask(TASK_CAD, 0);
+}
+
+#if !defined(USBPDCORE_LIB_NO_PD)
+/**
+  * @brief  timer function to wakeup PE_0 Task
+  * @param pArg Pointer on an argument
+  * @retval None
+  */
+void TimerPE0function(void *pArg)
+{
+  UTIL_SEQ_SetTask(TASK_PE_0, 0);
+}
+
+/**
+  * @brief  timer function to wakeup PE_1 Task
+  * @param pArg Pointer on an argument
+  * @retval None
+  */
+void TimerPE1function(void *pArg)
+{
+  UTIL_SEQ_SetTask(TASK_PE_1, 0);
+}
+
+/**
+  * @brief  Task for PE_0 processing
+  * @retval None
+  */
+void USBPD_PE_Task_P0(void)
+{
+  UTIL_TIMER_Stop(&TimerPE0);
+  uint32_t _timing =
+    USBPD_PE_StateMachine_SRC(USBPD_PORT_0);
+  if (_timing != 0xFFFFFFFF)
+  {
+    UTIL_TIMER_SetPeriod(&TimerPE0, _timing);
+    UTIL_TIMER_Start(&TimerPE0);
+  }
+}
+
+/**
+  * @brief  Task for PE_1 processing
+  * @retval None
+  */
+void USBPD_PE_Task_P1(void)
+{
+  UTIL_TIMER_Stop(&TimerPE1);
+  uint32_t _timing =
+    USBPD_PE_StateMachine_SRC(USBPD_PORT_1);
+  if (_timing != 0xFFFFFFFF)
+  {
+    UTIL_TIMER_SetPeriod(&TimerPE1, _timing);
+    UTIL_TIMER_Start(&TimerPE1);
+  }
+}
+#endif
+
+/**
+  * @brief  Task for DPM_USER processing
+  * @retval None
+  */
+void USBPD_TaskUser(void)
+{
+#ifdef _LOW_POWER
+  UTIL_LPM_SetOffMode(LPM_CAD, UTIL_LPM_DISABLE);
+#endif /* _LOW_POWER */
+  USBPD_DPM_UserExecute(NULL);
+}
+#endif /* USE_STM32_UTILITY_OS */
+
+void USBPD_DPM_Run(void)
+{
+#if defined(USE_STM32_UTILITY_OS)
+  UTIL_SEQ_RegTask(TASK_CAD,  0, USBPD_CAD_Task);
+  UTIL_SEQ_SetTask(TASK_CAD,  0);
+  UTIL_TIMER_Create(&TimerCAD, 10, UTIL_TIMER_ONESHOT, TimerCADfunction, NULL);
+
+  UTIL_SEQ_RegTask(TASK_USER, 0, USBPD_TaskUser);
+  UTIL_SEQ_SetTask(TASK_USER,  0);
+
+  do
+  {
+    UTIL_SEQ_Run(~0);
+  } while (1u == 1u);
+#else /* !USE_STM32_UTILITY_OS */
+
+    if ((HAL_GetTick() - DPM_Sleep_start[USBPD_PORT_COUNT]) >= DPM_Sleep_time[USBPD_PORT_COUNT])
+    {
+      DPM_Sleep_time[USBPD_PORT_COUNT] = USBPD_CAD_Process();
+      DPM_Sleep_start[USBPD_PORT_COUNT] = HAL_GetTick();
+    }
+
+    USBPD_DPM_UserExecute(NULL);
+
+#endif /* USE_STM32_UTILITY_OS */
+}
+
 /**
   * @brief  WakeUp CAD task
   * @retval None
   */
 static void USBPD_DPM_CADTaskWakeUp(void)
 {
-#if defined(_RTOS) || defined(USBPD_THREADX)
-  OS_PUT_MESSAGE_QUEUE(CADQueueId, 0xFFFF, 0);
-#endif /* _RTOS || USBPD_THREADX */
+#if defined(USE_STM32_UTILITY_OS)
+  UTIL_SEQ_SetTask(TASK_CAD, 0);
+#else
+  DPM_Sleep_time[USBPD_PORT_COUNT] = 0;
+#endif /* USE_STM32_UTILITY_OS */
 }
-#endif /* !USBPD_TCPM_MODULE_ENABLED */
-
-#if defined(_RTOS) || defined(USBPD_THREADX)
-#if !defined(USBPDCORE_LIB_NO_PD)
-/**
-  * @brief  Main task for CAD layer
-  * @param  argument Not used
-  * @retval None
-  */
-DEF_TASK_FUNCTION(USBPD_CAD_Task)
-{
-  uint32_t _timing;
-#ifdef _LOW_POWER
-  UTIL_LPM_SetOffMode(LPM_CAD, UTIL_LPM_DISABLE);
-#endif /* _LOW_POWER */
-  for (;;)
-  {
-    _timing = USBPD_CAD_Process();
-    OS_GETMESSAGE_QUEUE(CADQueueId, _timing);
-  }
-}
-#endif /* USBPD_TCPM_MODULE_ENABLED */
-#endif /* _RTOS || USBPD_THREADX */
 
 /**
   * @brief  CallBack reporting events on a specified port from CAD layer.

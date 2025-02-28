@@ -670,7 +670,7 @@
       <archiveVersion>1</archiveVersion>
       <data>
         <prebuild></prebuild>
-        <postbuild>"$PROJ_DIR$/../postbuild.bat"</postbuild>
+        <postbuild>"$PROJ_DIR$/postbuild.bat"</postbuild>
       </data>
     </settings>
     <settings>

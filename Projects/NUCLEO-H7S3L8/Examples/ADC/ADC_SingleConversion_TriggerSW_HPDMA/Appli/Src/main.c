@@ -443,7 +443,7 @@ static void MPU_Config(void)
   MPU_InitStruct.TypeExtField = MPU_TEX_LEVEL1;
   MPU_InitStruct.AccessPermission = MPU_REGION_FULL_ACCESS;
   MPU_InitStruct.DisableExec = MPU_INSTRUCTION_ACCESS_ENABLE;
-  MPU_InitStruct.IsShareable = MPU_ACCESS_SHAREABLE;
+  MPU_InitStruct.IsShareable = MPU_ACCESS_NOT_SHAREABLE;
   MPU_InitStruct.IsCacheable = MPU_ACCESS_CACHEABLE;
   MPU_InitStruct.IsBufferable = MPU_ACCESS_BUFFERABLE;
   MPU_AdjustRegionAddressSize(address, size, &MPU_InitStruct);
@@ -472,22 +472,37 @@ static void MPU_Config(void)
   */
 static void MPU_AdjustRegionAddressSize(uint32_t Address, uint32_t Size, MPU_Region_InitTypeDef* pInit)
 {
+  static uint8_t loopcontrol = 0;
+  uint32_t Modulo;
+
+  /* control the loop increment */
+  loopcontrol++;
+
+  if (loopcontrol > 3)
+  {
+    /* the scatter file input is too complex to determine the MPU configuration */
+    Error_Handler();
+  }
+
   /* Compute the MPU region size */
   pInit->Size = ((31 - __CLZ(Size)) - 1);
   if (Size > (1 << (pInit->Size + 1)))
   {
     pInit->Size++;
   }
-  uint32_t Modulo = Address % (1 << (pInit->Size - 1));
+  Modulo = Address % (1 << (pInit->Size + 1));
   if (0 != Modulo)
   {
     /* Align address with MPU region size considering there is no need to increase the size */
-    pInit->BaseAddress = Address - Modulo;
+    MPU_AdjustRegionAddressSize(Address - Modulo, Size + Modulo, pInit);
   }
   else
   {
     pInit->BaseAddress = Address;
   }
+
+  /* control the loop decrement */
+  loopcontrol--;
 }
 
 /******************************************************************************/

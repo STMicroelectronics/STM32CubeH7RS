@@ -41,6 +41,7 @@ erase_all="-e all"
 wrps_disable="0xff"
 hdp_area_start="0x0ff"
 hdp_area_end="0x000"
+hdps=$((($hdp_area_start<<0)|($hdp_area_end<<16)))
 
 # =============================================== Configure Option Bytes ====================================================
 action="Remove Protection and erase All"
@@ -58,24 +59,23 @@ eval "$command"
 if [ $? -ne 0 ]; then error; return 1; fi
 
 # Disable HDP protection on user flash
-# HDP_AREA_START
-"$stm32programmercli" $connect_reset > /dev/null
-ob_add="0x52002230"
-ob_mask="0x000003ff"
-ob_pos="0x00"
-command="\"$stm32programmercli\" $connect_no_reset -obrss $ob_add $ob_mask $hdp_area_start $ob_pos"
+"$stm32programmercli" $connect_reset >> /dev/null
+ob_add=0x52002234
+ob_mask=0x03ff03ff
+ob_pos=0x00
+command="\"$stm32programmercli\" $connect_no_reset -obrss $ob_add $ob_mask $hdps $ob_pos"
 echo "$command"
 eval "$command"
 if [ $? -ne 0 ]; then error; return 1; fi
 
-# HDP_AREA_END
-"$stm32programmercli" $connect_reset > /dev/null
-ob_add="0x52002230"
-ob_mask="0x000003ff"
-ob_pos="0x10"
-command="\"$stm32programmercli\" $connect_no_reset -obrss $ob_add $ob_mask $hdp_area_end $ob_pos"
-echo "$command"
-eval "$command"
+action="Set XSPI1_HSLV configuration (needed to use external memories)"
+echo $action
+"$stm32programmercli" $connect_no_reset -ob XSPI1_HSLV=1
+if [ $? -ne 0 ]; then error; return 1; fi
+
+action="Set XSPI2_HSLV configuration (needed to use external memories)"
+echo $action
+"$stm32programmercli" $connect_no_reset -ob XSPI2_HSLV=1
 if [ $? -ne 0 ]; then error; return 1; fi
 
 "$stm32programmercli" $connect_reset > /dev/null

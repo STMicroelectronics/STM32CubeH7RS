@@ -17,8 +17,8 @@
   */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __USBD_VIDEO_IF_H__
-#define __USBD_VIDEO_IF_H__
+#ifndef __USBD_VIDEO_IF_H
+#define __USBD_VIDEO_IF_H
 
 #ifdef __cplusplus
  extern "C" {
@@ -133,4 +133,4 @@ void HalfTransfer_CallBack(void);
 }
 #endif
 
-#endif /* USBD_VIDEO_IF_H_ */
+#endif /* __USBD_VIDEO_IF_H */

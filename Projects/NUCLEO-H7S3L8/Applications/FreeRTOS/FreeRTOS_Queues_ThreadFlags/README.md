@@ -11,15 +11,15 @@ The application creates 4 Tasks and 1 Queue:
 
   - 'ProducerThread': Sends message (incrementing value "ProducerValue") to the queue.
 
-  - 'ConsumerThread': Gets message from the queue
-                      Checks if it's the correct message (ProducerValue == ConsumerValue)
-                      LED_GREEN ON
+  - 'ConsumerThread': Gets message from the queue.
+                      Checks if it's the correct message (ProducerValue == ConsumerValue).
+                      LED_GREEN ON.
 
-  - 'GenThread': Waits for the message on the queue to reach a specific "GenerationValue"
-                 Sets ReceiveThread' flag to 1
+  - 'GenThread': Waits for the message on the queue to reach a specific "GenerationValue".
+                 Sets ReceiveThread flag to 1
 
-  - 'ReceiveThread': Waits for the thread flag settings
-                     LED_YELLOW ON
+  - 'ReceiveThread': Waits for the thread flag settings.
+                     LED_YELLOW ON.
 
 #### <b>Expected success behavior</b>
 
@@ -56,16 +56,16 @@ FreeRTOS, Threading, Message, Queues, ThreadFlags
 ### <b>Hardware and Software environment</b>
 
   - This application runs on NUCLEO-H7S3L8 device.
-  - This application has been tested with STMicroelectronics NUCLEO-H7S3L8 board MB1737 Rev. B01
+  - This application has been tested with STMicroelectronics NUCLEO-H7S3L8 board MB1737 Rev. B02
     and can be easily tailored to any other supported device and development board.
 
   - This application uses USART3 to display output, the hyperterminal configuration is as follows:
 
-      - BaudRate = 115200 baud
-      - Word Length = 8 Bits
-      - Stop Bit = 1
-      - Parity = none
-      - Flow control = None
+    - BaudRate = 115200 baud
+    - Word Length = 8 Bits
+    - Stop Bit = 1
+    - Parity = None
+    - Flow control = None
 
 
 ### <b>How to use it ?</b>
@@ -76,7 +76,7 @@ It boots from internal Flash (Template_XIP_Boot) then jumps to the application c
 To configure STM32CubeIDE Debug Configuration, you must do the following :
 
     1. Upload the template XIP
-    2. Add the adequate external loader (MX25UW25645G_STM32H7R38-NUCLEO.stldr file) in Project->Debugger Configuration
+    2. Add the adequate external loader (MX25UW25645G_STM32H7S3L8-NUCLEO.stldr file) in Project->Debugger Configuration
     3. Add in the startup the template_XIP_Boot in Project->Debugger Configuration
     4. Move up the application in the startup
 

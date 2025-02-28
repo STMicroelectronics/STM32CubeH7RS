@@ -47,6 +47,11 @@
   ******************************************************************************
   @endverbatim
 
+### 13-December-2024 ###
+========================
+  + Remove outdated doxygen_docs.zip file
+  + Regenerate documentation using Doxygen 1.12.0
+
 ### 18-August-2023 ###
 ========================
   + Add LICENSE.md file at the root directory.

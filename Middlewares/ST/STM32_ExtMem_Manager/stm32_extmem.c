@@ -65,14 +65,14 @@
 
 /* Private Macros ------------------------------------------------------------*/
 /**
-  *  @defgroup EXTMEN_Private_Macros External Memory Private Macros
+  *  @defgroup EXTMEM_Private_Macros External Memory Private Macros
   * @{
   */
 /**
   * @brief EXTMEM debug function
   */
 /**
-  * @brief marco used trace the extmem function call
+  * @brief Macro used to trace EXTMEM function calls
   */
 
 #if defined(EXTMEM_DEBUG_LEVEL) && defined(EXTMEM_MACRO_DEBUG)
@@ -98,7 +98,7 @@
 #endif /* defined(EXTMEM_DEBUG_LEVEL) && defined(EXTMEM_MACRO_DEBUG) */
 
 /**
-  * @brief macro used trace debug information
+  * @brief Macro used to trace EXTMEM debug information
   */
 #define EXTMEM_DEBUG_ENDL(_STRING_) \
   do                                \

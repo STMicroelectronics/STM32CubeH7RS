@@ -19,6 +19,7 @@ current_log_file="$project_dir/../postbuild.log"
 echo "" > "$current_log_file"
 
 code_bin="$project_dir/$config/STM32H7S78-DK_Template_STiROT_Appli.bin"
+mkdir -p "$project_dir/../../Appli/Binary"
 bin_dest="$project_dir/../../Appli/Binary/appli.bin"
 
 error()

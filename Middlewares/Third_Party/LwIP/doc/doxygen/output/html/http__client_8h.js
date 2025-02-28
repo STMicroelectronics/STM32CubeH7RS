@@ -4,7 +4,7 @@ var http__client_8h =
     [ "LWIP_HTTPC_HAVE_FILE_IO", "group__httpc.html#ga055b9a8bf8f4e2c18c621471773fa66c", null ],
     [ "httpc_headers_done_fn", "group__httpc.html#ga1e5b62519d6592c89ed3edfabd917472", null ],
     [ "httpc_result_fn", "group__httpc.html#ga0452eb8007dbb5f139ec992e58e560dd", null ],
-    [ "httpc_result_t", "group__httpc.html#gac6713454283bff8e1187849e8d4bda18", null ],
+    [ "httpc_result_t", "group__httpc.html#gaeef5c7398d07b644c0d5593f3b7d1392", null ],
     [ "ehttpc_result", "group__httpc.html#ga49e34884b272b1e0ddae8da46c31d9a3", [
       [ "HTTPC_RESULT_OK", "group__httpc.html#gga49e34884b272b1e0ddae8da46c31d9a3af3173d4d272c9c0b5a5c9b5b027e3659", null ],
       [ "HTTPC_RESULT_ERR_UNKNOWN", "group__httpc.html#gga49e34884b272b1e0ddae8da46c31d9a3a5026187026abd1d242333ba6ff69ddbd", null ],

@@ -38,7 +38,7 @@
   */
 
 /**
- * @brief driver PSRAM maximum number of command
+ * @brief driver PSRAM maximum number of commands
  */
 #define PSRAM_MAX_COMMAND 3u
 

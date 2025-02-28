@@ -22,6 +22,7 @@ IF [%2] NEQ [AUTO] cmd /k
 exit 0
 
 :error
-echo "dbg_auth script failed"
+echo dbg_auth script failed
+echo WARNING: If you have selected 'Forced download', this is the normal behavior
 IF [%2] NEQ [AUTO] cmd /k
 exit 1

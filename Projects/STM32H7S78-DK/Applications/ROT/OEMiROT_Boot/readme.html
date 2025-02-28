@@ -55,10 +55,10 @@ description. The postbuild command is in charge of preparing the
 provisioning scripts and the application image (firmware application
 managed by OEMiROT) configuration files in ROT_Provisioning/OEMiROT
 folder, according to the flash layout and OEMiROT configuration.</p>
-<p>The system clock is set to 380 MHz in order to be functional with all
-hardware configurations (RAMECC enabled, no internal regulator) and with
-the full range of temperature (Tj up to 125°). In other circumstances,
-the system clock can be increased up to 600 Mhz.</p>
+<p>The system clock is set to 380 MHz to be functional with all hardware
+configurations (ECC_ON_SRAM enabled, no internal regulator) and with the
+full range of temperature (Tj up to 125°). In other circumstances, the
+system clock can be increased up to 600 Mhz.</p>
 <h3 id="keywords"><b>Keywords</b></h3>
 <p>OEMiROT, Boot path, Root Of Trust, Security, mcuboot</p>
 <h3 id="directory-contents"><b>Directory contents</b></h3>
@@ -103,10 +103,6 @@ the system clock can be increased up to 600 Mhz.</p>
 <td>Header file for CMSIS</td>
 </tr>
 <tr>
-<td>OEMiROT_Boot/Inc/config-boot.h</td>
-<td>Mbed-crypto configuration file</td>
-</tr>
-<tr>
 <td>OEMiROT_Boot/Inc/flash_layout.h</td>
 <td>Flash mapping</td>
 </tr>
@@ -143,6 +139,10 @@ the system clock can be increased up to 600 Mhz.</p>
 <td>Header file for low_level_security.c</td>
 </tr>
 <tr>
+<td>OEMiROT_Boot/Inc/mbedtls_config.h</td>
+<td>Mbed-crypto configuration file</td>
+</tr>
+<tr>
 <td>OEMiROT_Boot/Inc/region_defs.h</td>
 <td>RAM and FLASH regions definitions</td>
 </tr>
@@ -168,7 +168,7 @@ the system clock can be increased up to 600 Mhz.</p>
 </tr>
 <tr>
 <td>OEMiROT_Boot/Src/image_macros_to_preprocess_bl2.c</td>
-<td>Images definitions to preprocess for bl2</td>
+<td>Image definitions to preprocess for bl2</td>
 </tr>
 <tr>
 <td>OEMiROT_Boot/Src/keys_map.c</td>

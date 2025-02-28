@@ -29,20 +29,21 @@ extern "C" {
   */
 
 /* Includes ------------------------------------------------------------------*/
-#include "stdint.h"
+#include <stdint.h>
+
 /* Exported constants --------------------------------------------------------*/
 /* Exported types ------------------------------------------------------------*/
-/** @defgroup EXTMEN_Exported_Types External Memory Exported Types
+/** @defgroup EXTMEM_Exported_Types External Memory Exported Types
   * @{
   */
 
 /**
-  * @brief type of memory supported
+  * @brief Middleware version number
   */
 #define EXTMEM_VERSION 0x00010100 /* version v1.1.0 */
 
 /**
-  * @brief type of memory supported
+  * @brief Types of supported memories
   */
 typedef enum
 {
@@ -68,7 +69,7 @@ typedef enum
 } EXTMEM_StatusTypeDef;
 
 /**
-  * @brief enable/disable state of the module
+  * @brief Enable/disable state of the module
   */
 typedef enum
 {
@@ -86,41 +87,41 @@ typedef struct {
   uint32_t EraseType2Size;    /*!< erase 2 size */
   uint32_t EraseType3Size;    /*!< erase 3 size */
   uint32_t EraseType4Size;    /*!< erase 4 size */
-}  EXTMEM_NOR_SFDP_FlashInfoTypeDef;
+} EXTMEM_NOR_SFDP_FlashInfoTypeDef;
 
 
 /**
  * @brief USER memory information structure
  */
 typedef struct {
-  uint8_t MemSize;            /*!< mem size in power of 2 */
+  uint8_t  MemSize;            /*!< mem size in power of 2 */
   uint32_t MpuCache;          /*!< */
 }  EXTMEM_USER_MemInfoTypeDef;
 
 /**
- * @brief flash information structure
+ * @brief SD card information structure
  */
  typedef struct {
-  uint32_t CardType;        /*!< Specifies the card Type                         */
+  uint32_t CardType;        /*!< Specifies the card type                         */
   uint32_t CardVersion;     /*!< Specifies the card version                      */
-  uint32_t Class;           /*!< Specifies the class of the card class           */
-  uint32_t RelCardAdd;      /*!< Specifies the Relative Card Address             */
-  uint32_t BlockNbr;        /*!< Specifies the Card Capacity in blocks           */
+  uint32_t Class;           /*!< Specifies the class of the card                 */
+  uint32_t RelCardAdd;      /*!< Specifies the celative card Address             */
+  uint32_t BlockNbr;        /*!< Specifies the card capacity in blocks           */
   uint32_t BlockSize;       /*!< Specifies one block size in bytes               */
-  uint32_t LogBlockNbr;     /*!< Specifies the Card logical Capacity in blocks   */
+  uint32_t LogBlockNbr;     /*!< Specifies the card logical capacity in blocks   */
   uint32_t LogBlockSize;    /*!< Specifies logical block size in bytes           */
-  uint32_t CardSpeed;       /*!< Specifies the card Speed                        */
- } EXTMEM_DRIVER_SDCARD_InfoTypeDef;
+  uint32_t CardSpeed;       /*!< Specifies the card speed                        */
+} EXTMEM_DRIVER_SDCARD_InfoTypeDef;
 
 /**
- * @brief define how many physiqual lines are connected with the memory
+ * @brief Number of physical I/O line(s) connected with the memory
  */
 typedef enum {
-   EXTMEM_LINK_CONFIG_1LINE,     /*!< config using  1 lines */
-   EXTMEM_LINK_CONFIG_2LINES,    /*!< config using  2 lines */
-   EXTMEM_LINK_CONFIG_4LINES,    /*!< config using  4 lines */
-   EXTMEM_LINK_CONFIG_8LINES,    /*!< config using  8 lines */
-   EXTMEM_LINK_CONFIG_16LINES,   /*!< config using 16 lines */
+   EXTMEM_LINK_CONFIG_1LINE,     /*!< Configuration using  1 line  */
+   EXTMEM_LINK_CONFIG_2LINES,    /*!< Configuration using  2 lines */
+   EXTMEM_LINK_CONFIG_4LINES,    /*!< Configuration using  4 lines */
+   EXTMEM_LINK_CONFIG_8LINES,    /*!< Configuration using  8 lines */
+   EXTMEM_LINK_CONFIG_16LINES,   /*!< Configuration using 16 lines */
 } EXTMEM_LinkConfig_TypeDef;
 
 /**
@@ -133,7 +134,7 @@ typedef enum {
   */
 
 /**
- * @brief this function initialize a memory
+ * @brief This function initializes a memory
  *
  * @param MemId memory id
  * @param ClockInput clock in input of the memory
@@ -142,7 +143,7 @@ typedef enum {
 EXTMEM_StatusTypeDef EXTMEM_Init(uint32_t MemId, uint32_t ClockInput);
 
 /**
- * @brief this function un-initialize a memory
+ * @brief This function un-initializes a memory
  *
  * @param MemId memory id
  * @return @ref EXTMEM_StatusTypeDef
@@ -150,7 +151,7 @@ EXTMEM_StatusTypeDef EXTMEM_Init(uint32_t MemId, uint32_t ClockInput);
 EXTMEM_StatusTypeDef EXTMEM_DeInit(uint32_t MemId);
 
 /**
- * @brief this function read a buffer from the memory
+ * @brief This function reads a buffer from the memory
  *
  * @param MemId memory id
  * @param Address location of the data memory
@@ -161,7 +162,7 @@ EXTMEM_StatusTypeDef EXTMEM_DeInit(uint32_t MemId);
 EXTMEM_StatusTypeDef EXTMEM_Read(uint32_t MemId, uint32_t Address, uint8_t* Data, uint32_t Size);
 
 /**
- * @brief this function write date form the memory into buffer
+ * @brief This function writes data to the memory
  *
  * @param MemId memory id
  * @param Address location of the data memory
@@ -172,7 +173,7 @@ EXTMEM_StatusTypeDef EXTMEM_Read(uint32_t MemId, uint32_t Address, uint8_t* Data
 EXTMEM_StatusTypeDef EXTMEM_Write(uint32_t MemId, uint32_t Address, const uint8_t* Data, uint32_t Size);
 
 /**
- * @brief this function write date in mapped mode 
+ * @brief This function writes data in memory mapped mode 
  *
  * @param MemId memory id
  * @param Address location of the data memory
@@ -190,7 +191,7 @@ EXTMEM_StatusTypeDef EXTMEM_Write(uint32_t MemId, uint32_t Address, const uint8_
 EXTMEM_StatusTypeDef EXTMEM_WriteInMappedMode(uint32_t MemId, uint32_t Address, const uint8_t* const Data, uint32_t Size);
 
 /**
- * @brief this function erase a number of sector
+ * @brief This function erases a number of sector
  *
  * @param MemId memory id
  * @param Address location of the data memory
@@ -200,7 +201,7 @@ EXTMEM_StatusTypeDef EXTMEM_WriteInMappedMode(uint32_t MemId, uint32_t Address, 
 EXTMEM_StatusTypeDef EXTMEM_EraseSector(uint32_t MemId, uint32_t Address, uint32_t Size);
 
 /**
- * @brief this function erase all the memory
+ * @brief This function erases all the memory
  *
  * @param MemId memory id
  * @return @ref EXTMEM_StatusTypeDef
@@ -208,7 +209,7 @@ EXTMEM_StatusTypeDef EXTMEM_EraseSector(uint32_t MemId, uint32_t Address, uint32
 EXTMEM_StatusTypeDef EXTMEM_EraseAll(uint32_t MemId);
 
 /**
- * @brief this function return information about the memory
+ * @brief This function returns information about the memory
  *
  * @param MemId memory id
  * @param Info  structure information of the memory
@@ -217,7 +218,7 @@ EXTMEM_StatusTypeDef EXTMEM_EraseAll(uint32_t MemId);
 EXTMEM_StatusTypeDef EXTMEM_GetInfo(uint32_t MemId, void *Info);
 
 /**
- * @brief this function enable/disable the map mode 
+ * @brief This function enables/disables the memory mapped mode 
  *
  * @param MemId memory id
  * @param State @ref EXTMEM_StateTypeDef
@@ -226,7 +227,7 @@ EXTMEM_StatusTypeDef EXTMEM_GetInfo(uint32_t MemId, void *Info);
 EXTMEM_StatusTypeDef EXTMEM_MemoryMappedMode(uint32_t MemId, EXTMEM_StateTypeDef State);
 
 /**
- * @brief this function get the map address 
+ * @brief This function gets the memory mapped address 
  *
  * @param MemId memory id
  * @param BaseAddress memory map address

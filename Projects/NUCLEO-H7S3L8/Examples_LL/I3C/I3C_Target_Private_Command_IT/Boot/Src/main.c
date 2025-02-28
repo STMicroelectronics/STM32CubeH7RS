@@ -238,16 +238,19 @@ static void MX_FLASH_Init(void)
   /* USER CODE BEGIN FLASH_Init 1 */
 
   /* USER CODE END FLASH_Init 1 */
-  LL_FLASH_Unlock();
-  LL_FLASH_OptionBytes_Unlock();
-  LL_FLASH_OptionBytes_EnableProg();
-  LL_FLASH_OptionBytes_EnableI3C();
+   if (LL_FLASH_OptionBytes_IsI3CEnabled() == 0U)
+  {
+    LL_FLASH_Unlock();
+    LL_FLASH_OptionBytes_Unlock();
+    LL_FLASH_OptionBytes_EnableProg();
+    LL_FLASH_OptionBytes_EnableI3C();
 
-  while (LL_FLASH_IsPendingOperation() != 0U) {}
+    while (LL_FLASH_IsPendingOperation() != 0U) {}
 
-  LL_FLASH_OptionBytes_DisableProg();
-  LL_FLASH_OptionBytes_Lock();
-  LL_FLASH_Lock();
+    LL_FLASH_OptionBytes_DisableProg();
+    LL_FLASH_OptionBytes_Lock();
+    LL_FLASH_Lock();
+  }
   /* USER CODE BEGIN FLASH_Init 2 */
 
   /* USER CODE END FLASH_Init 2 */

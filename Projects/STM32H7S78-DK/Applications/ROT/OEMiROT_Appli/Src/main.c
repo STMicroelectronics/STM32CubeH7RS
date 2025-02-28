@@ -46,10 +46,17 @@ __asm("  .global __ARM_use_no_argv\n");
 /* Private define ------------------------------------------------------------*/
 #define KR_RELOAD                       (uint16_t) 0xAAAA
 
+/* Enable print of boot time (obtained through DWT).
+   DWT usage requires product state is not closed/locked.
+   OEMxRoT logs must be disabled for relevant boot time. */
+/* #define PRINT_BOOT_TIME */
+
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 uint8_t *pUserAppId;
 const uint8_t UserAppId = 'A';
+uint64_t time;
+uint32_t end;
 
 /* Private function prototypes -----------------------------------------------*/
 #if !defined(MCUBOOT_OVERWRITE_ONLY)
@@ -84,7 +91,6 @@ volatile uint32_t ConfirmationFlag[] =
 #pragma default_variable_attributes =
 #endif /* __ICCARM__ */
 
-static void SystemClock_Config(void);
 void FW_APP_PrintMainMenu(void);
 void FW_APP_Run(void);
 void LOADER_Run(void);
@@ -170,10 +176,13 @@ int main(int argc, char **argv)
   /* !!! To boot in a secure way, OEMxROT has configured and activated the
      Memory Protection Unit (not all resources are allocated).
      In order to keep a secure environment execution, you should reconfigure
-     the MPU to make it compatible with your application.
+     the MPU to fulfill the security requirements of your application.
 
      In this application, the MPU configuration set by OEMxROT remains enabled.
      MPU may be reconfigured here, if needed. */
+
+  /* Get boot cycles */
+  end = DWT->CYCCNT;
 
   /* Enable I-Cache */
   SCB_EnableICache();
@@ -183,6 +192,12 @@ int main(int argc, char **argv)
 
   /*  set example to const : this const changes in binary without rebuild */
   pUserAppId = (uint8_t *)&UserAppId;
+
+  /* Update SystemCoreClock variable according to RCC registers values.
+
+     The system clock reconfiguration by the application is not supported
+     when the application runs from an external memory. */
+  SystemCoreClockUpdate();
 
   /* STM32H7RSxx HAL library initialization:
   - Systick timer is configured by default as source of time base, but user
@@ -195,14 +210,16 @@ int main(int argc, char **argv)
   */
   HAL_Init();
 
-  /* Configure the system clock */
-  SystemClock_Config();
-
-  /* System clock already configured, simply SystemCoreClock init */
-  SystemCoreClockUpdate();
+  /* Get Boot Time */
+  time = ((uint64_t)(end) * 1000U  / SystemCoreClock);
 
   /* Configure Communication module */
   COM_Init();
+
+#ifdef PRINT_BOOT_TIME
+  printf("\r\nBoot time : %u ms at %u MHz", (unsigned int)(time), (unsigned int)(SystemCoreClock/1000000U));
+  printf("\r\n");
+#endif
 
   printf("\r\n======================================================================");
   printf("\r\n=              (C) COPYRIGHT 2023 STMicroelectronics                 =");
@@ -222,86 +239,6 @@ int main(int argc, char **argv)
   while (1U)
   {}
 
-}
-
-/**
-  * @brief  System Clock Configuration
-  *         The system Clock is configured as follows :
-  *            System Clock source            = PLL1 (HSI)
-  *            SYSCLK(Hz)                     = 380000000 (CPU Clock and AXI Clock)
-  *            HCLK(Hz)                       = 190000000 (AHBs Clock)
-  *            SYSCLK Prescaler               = 1  (System CPU clock=pll1p_ck)
-  *            AHB Prescaler                  = 2  (AXI/AHB System bus clock=System CPU clock/2)
-  *            APB1 Prescaler                 = 2  (APB1 bus clock=System bus clock/2)
-  *            APB2 Prescaler                 = 2  (APB2 bus clock=System bus clock/2)
-  *            APB4 Prescaler                 = 2  (APB4 bus clock=System bus clock/2)
-  *            APB5 Prescaler                 = 2  (APB5 bus clock=System bus clock/2)
-  *            HSI Frequency(Hz)              = 64000000
-  *            HSI Divider                    = 1
-  *            PLL1_M                         = 32  (for ref1_ck between 1 to 16MHz)
-  *            PLL1_N                         = 380 (64/32 * 380 = 760MHz)
-  *            PLL1_P                         = 2  (pll1p_ck = 760/2 = 380MHz)
-  *            PLL1_Q                         = 2  (pll1q_ck = 760/2 = 380MHz)
-  *            PLL1_R                         = 2  (pll1r_ck = 760/2 = 380MHz)
-  *            PLL1_S                         = 2  (pll1s_ck = 760/2 = 380MHz)
-  *            PLL1_T                         = 2  (pll1t_ck = 760/2 = 380MHz)
-  *            PLL2                           not used
-  *            PLL3                           not used
-  *            Flash Latency(WS)              = 5
-  * @retval None
-  */
-static void SystemClock_Config(void)
-{
-  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
-  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
-
-  /* Enable voltage range 1 for lowest power (compliant with the use of RAM ECC) */
-  if (HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1) != HAL_OK)
-  {
-    /* Initialization error */
-    while (1);
-  }
-
-  /* Activate PLL1 with HSI as source (HSI is ON at reset) */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
-  RCC_OscInitStruct.HSIState = RCC_HSI_ON;
-  RCC_OscInitStruct.HSIDiv = RCC_HSI_DIV1;
-  RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
-  RCC_OscInitStruct.PLL1.PLLState = RCC_PLL_ON;
-  RCC_OscInitStruct.PLL1.PLLSource = RCC_PLLSOURCE_HSI;
-  RCC_OscInitStruct.PLL1.PLLM = 32;
-  RCC_OscInitStruct.PLL1.PLLN = 380; /* PLL1 VCO = 64/32 * 380 = 760MHz */
-  RCC_OscInitStruct.PLL1.PLLP = 2;  /* PLL1 P =380MHz */
-  RCC_OscInitStruct.PLL1.PLLQ = 2;  /* PLL1 Q =380MHz */
-  RCC_OscInitStruct.PLL1.PLLR = 2;  /* PLL1 R =380MHz */
-  RCC_OscInitStruct.PLL1.PLLS = 2;  /* PLL1 S =380MHz */
-  RCC_OscInitStruct.PLL1.PLLT = 2;  /* PLL1 T =380MHz */
-  RCC_OscInitStruct.PLL1.PLLFractional = 0;
-  RCC_OscInitStruct.PLL2.PLLState = RCC_PLL_NONE;
-  RCC_OscInitStruct.PLL3.PLLState = RCC_PLL_NONE;
-  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
-  {
-    /* Initialization error */
-    while (1);
-  }
-
-  /* Select PLL1 as system clock source and configure the SYSCLK, HCLK,
-     PCLK1, PCLK2, PCLK4 and PCLK5 clocks dividers */
-  RCC_ClkInitStruct.ClockType = (RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_HCLK  | \
-                                 RCC_CLOCKTYPE_PCLK1  | RCC_CLOCKTYPE_PCLK2 | \
-                                 RCC_CLOCKTYPE_PCLK4  | RCC_CLOCKTYPE_PCLK5);
-  RCC_ClkInitStruct.SYSCLKSource   = RCC_SYSCLKSOURCE_PLLCLK;
-  RCC_ClkInitStruct.SYSCLKDivider  = RCC_SYSCLK_DIV1;   /* System CPU clock=pll1p_ck (760MHz) */
-  RCC_ClkInitStruct.AHBCLKDivider  = RCC_HCLK_DIV2;     /* AXI/AHB System bus clock=System CPU clock/2 (380MHz) */
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_APB1_DIV2;     /* APB1 bus clock=System bus clock/2 (380MHz) */
-  RCC_ClkInitStruct.APB2CLKDivider = RCC_APB2_DIV2;     /* APB2 bus clock=System bus clock/2 (380MHz) */
-  RCC_ClkInitStruct.APB4CLKDivider = RCC_APB4_DIV2;     /* APB4 bus clock=System bus clock/2 (380MHz) */
-  RCC_ClkInitStruct.APB5CLKDivider = RCC_APB5_DIV2;     /* APB5 bus clock=System bus clock/2 (380MHz) */
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_5) != HAL_OK)
-  {
-    /* Initialization error */
-    while (1);
-  }
 }
 
 /**

@@ -18,8 +18,8 @@
   */
 /* USER CODE END Header */
 
-#ifndef TRACER_EMB_CONF_H
-#define TRACER_EMB_CONF_H
+#ifndef __TRACER_EMB_CONF_H
+#define __TRACER_EMB_CONF_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -91,4 +91,4 @@ extern "C" {
 }
 #endif
 
-#endif /* TRACER_EMB_CONF_H */
+#endif /* __TRACER_EMB_CONF_H */

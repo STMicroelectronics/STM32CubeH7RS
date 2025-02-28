@@ -42,7 +42,7 @@
 									<listOptionValue builtIn="false" value="STM32H7S7xx"/>
 									<listOptionValue builtIn="false" value="DEBUG"/>
 									<listOptionValue builtIn="false" value="MCUBOOT_TARGET_CONFIG=&lt;flash_layout.h&gt;"/>
-									<listOptionValue builtIn="false" value="MBEDTLS_CONFIG_FILE=&lt;config-boot.h&gt;"/>
+									<listOptionValue builtIn="false" value="MBEDTLS_CONFIG_FILE=&lt;mbedtls_config.h&gt;"/>
 									<listOptionValue builtIn="false" value="MCUBOOT_DOUBLE_SIGN_VERIF"/>
 									<listOptionValue builtIn="false" value="FLOW_CONTROL"/>
 									<listOptionValue builtIn="false" value="BL2"/>
@@ -58,7 +58,7 @@
 									<listOptionValue builtIn="false" value="../../../../../../../Drivers/CMSIS/Device/ST/STM32H7RSxx/Include"/>
 									<listOptionValue builtIn="false" value="../../../../../../../Drivers/CMSIS/Include"/>
 									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/mbed-crypto/include"/>
-									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/mbed-crypto/include/mbedtls"/>
+									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/mbed-crypto/library"/>
 									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/mbed-crypto/include/psa"/>
 									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/mcuboot/bl2/include"/>
 									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/mcuboot/bl2/ext/mcuboot"/>
@@ -144,7 +144,7 @@
 									<listOptionValue builtIn="false" value="STM32H7S7xx"/>
 									<listOptionValue builtIn="false" value="NDEBUG"/>
 									<listOptionValue builtIn="false" value="MCUBOOT_TARGET_CONFIG=&lt;flash_layout.h&gt;"/>
-									<listOptionValue builtIn="false" value="MBEDTLS_CONFIG_FILE=&lt;config-boot.h&gt;"/>
+									<listOptionValue builtIn="false" value="MBEDTLS_CONFIG_FILE=&lt;mbedtls_config.h&gt;"/>
 									<listOptionValue builtIn="false" value="MCUBOOT_DOUBLE_SIGN_VERIF"/>
 									<listOptionValue builtIn="false" value="FLOW_CONTROL"/>
 									<listOptionValue builtIn="false" value="BL2"/>
@@ -160,6 +160,7 @@
 									<listOptionValue builtIn="false" value="../../../../../../../Drivers/CMSIS/Device/ST/STM32H7RSxx/Include"/>
 									<listOptionValue builtIn="false" value="../../../../../../../Drivers/CMSIS/Include"/>
 									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/mbed-crypto/include"/>
+									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/mbed-crypto/library"/>
 									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/mbed-crypto/include/mbedtls"/>
 									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/mbed-crypto/include/psa"/>
 									<listOptionValue builtIn="false" value="../../../../../../../Middlewares/Third_Party/mcuboot/bl2/include"/>

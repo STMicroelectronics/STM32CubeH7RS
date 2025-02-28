@@ -55,6 +55,12 @@ extern "C" {
 void            TRACER_EMB_Init(void);
 
 /**
+  * @brief  Deinitialize the TRACE module
+  * @retval None
+  */
+void            TRACER_EMB_DeInit(void);
+
+/**
   * @brief  Add information in debug trace buffer
   * @param  Type    Trace Type based on @ref TRACER_EMB_EVENT
   * @param  PortNum Port number value

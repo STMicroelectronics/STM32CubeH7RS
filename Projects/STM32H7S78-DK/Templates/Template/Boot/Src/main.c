@@ -188,6 +188,12 @@ static void MPU_Config(void)
   /* Disables the MPU */
   HAL_MPU_Disable();
 
+  /* Disables all MPU regions */
+  for(uint8_t i=0; i<__MPU_REGIONCOUNT; i++)
+  {
+    HAL_MPU_DisableRegion(i);
+  }
+
   /** Initializes and configures the Region and the memory to be protected
   */
   MPU_InitStruct.Enable = MPU_REGION_ENABLE;

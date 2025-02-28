@@ -41,6 +41,7 @@ extern "C" {
 #define RTC_ASYNCH_PREDIV  0x7F
 #define RTC_SYNCH_PREDIV   0x00FF
 #endif /* RTC_CLOCK_SOURCE_LSE */
+#define RCC_CSI_TIMEOUT_VALUE 1U  /* 1 ms */
 
 /* ICache */
 #ifdef ICACHE
@@ -89,7 +90,6 @@ extern "C" {
 #define OEMIROT_TAMPER_ENABLE INTERNAL_TAMPER_ONLY            /*!< TAMPER configuration flag  */
 
 #ifdef OEMIROT_DEV_MODE
-/*#define OEMIROT_ENABLE_SET_OB*/ /*!< Option bytes are set by OEMiROT_Boot when not correctly set  */
 #define OEMIROT_ERROR_HANDLER_STOP_EXEC /*!< Error handler stops execution (else it resets) */
 #endif /* OEMIROT_DEV_MODE */
 

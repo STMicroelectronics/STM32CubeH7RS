@@ -244,7 +244,8 @@ typedef void (*TRACE_ENTRY_POINT)(TRACE_EVENT type, uint8_t port, uint8_t sop, u
 #define PE_TPSTRANSITION                 475u   /*!< tPSTransition: min 450ms to max 550ms                     */
 #define PE_TPSTRANSITION_EPR             925u   /*!< tPSTransition: min 830ms to max 1020ms                    */
 
-#define PE_TSENDERRESPONSE               28u    /*!< tSenderResponse: min 27ms to max 33ms                     */
+#define PE_TSENDERRESPONSE               28u    /*!< tSenderResponse: min 27ms to max 33ms (PD3)               */
+#define PE_TSENDERRESPONSE_PD2           25u    /*!< tSenderResponse: min 24ms to max 30ms (PD2)               */
 
 #define PE_TTYPECSINKWAITCAP             400u   /*!< tTypeCSinkWaitCap: min 310ms to max 620ms                 */
 

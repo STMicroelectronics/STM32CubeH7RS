@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * @file    stm32_sdcard_driver.h
+  * @file    stm32_sdcard_driver_api.h
   * @author  MCD Application Team
   * @brief   This file contains the sd card driver definition.
   ******************************************************************************
@@ -17,8 +17,8 @@
   */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __STM32_SDCARD_DRIVER_H
-#define __STM32_SDCARD_DRIVER_H
+#ifndef __STM32_SDCARD_DRIVER_API_H
+#define __STM32_SDCARD_DRIVER_API_H
 
 #ifdef __cplusplus
  extern "C" {
@@ -61,7 +61,7 @@ typedef enum  {
   * @{
   */
 /**
- * @brief this function initializes the driver SDCARD
+ * @brief This function initializes the driver SDCARD
  * @param Peripheral pointer on preipheral object
  * @param SDCARDObject object SDCARD
  * @return @ref EXTMEM_DRIVER_SDCARD_StatusTypeDef
@@ -70,14 +70,14 @@ EXTMEM_DRIVER_SDCARD_StatusTypeDef EXTMEM_DRIVER_SDCARD_Init(void *Peripheral,
                                                       EXTMEM_DRIVER_SDCARD_ObjectTypeDef* SDCARDObject);
 
 /**
- * @brief this function un-initializes the driver SDCARD
+ * @brief This function un-initializes the driver SDCARD
  * @param SDCARDObject object SDCARD
  * @return @ref EXTMEM_DRIVER_SDCARD_StatusTypeDef
  **/
 EXTMEM_DRIVER_SDCARD_StatusTypeDef EXTMEM_DRIVER_SDCARD_DeInit(EXTMEM_DRIVER_SDCARD_ObjectTypeDef* SDCARDObject);
 
 /**
- * @brief this function reads SDCARD memory
+ * @brief This function reads SDCARD memory
  * @param SDCARDObject object SDCARD
  * @param Address memory address
  * @param Data pointer on the data
@@ -87,7 +87,7 @@ EXTMEM_DRIVER_SDCARD_StatusTypeDef EXTMEM_DRIVER_SDCARD_DeInit(EXTMEM_DRIVER_SDC
 EXTMEM_DRIVER_SDCARD_StatusTypeDef EXTMEM_DRIVER_SDCARD_Read(EXTMEM_DRIVER_SDCARD_ObjectTypeDef* SDCARDObject,
                                                              uint32_t Address, uint8_t* Data, uint32_t Size);
 /**
- * @brief this function writes data on the SDCARD memory
+ * @brief This function writes data on the SDCARD memory
  * @param SDCARDObject object SDCARD
  * @param Address memory address
  * @param Data pointer on the data
@@ -98,7 +98,7 @@ EXTMEM_DRIVER_SDCARD_StatusTypeDef EXTMEM_DRIVER_SDCARD_Write(EXTMEM_DRIVER_SDCA
                                                               uint32_t Address, const uint8_t* Data, uint32_t Size);
 
 /**
- * @brief this function erases SDCARD blocks
+ * @brief This function erases SDCARD blocks
  * @param SDCARDObject object SDCARD
  * @param Address memory address
  * @param Size data size to erase
@@ -108,14 +108,14 @@ EXTMEM_DRIVER_SDCARD_StatusTypeDef EXTMEM_DRIVER_SDCARD_EraseBlock(EXTMEM_DRIVER
                                                                    uint32_t Address, uint32_t Size);
 
 /**
- * @brief this function erases the SDCARD memory
+ * @brief This function erases the SDCARD memory
  * @param SDCARDObject object SDCARD
  * @return @ref EXTMEM_DRIVER_SDCARD_StatusTypeDef
  **/
 EXTMEM_DRIVER_SDCARD_StatusTypeDef EXTMEM_DRIVER_SDCARD_Erase(EXTMEM_DRIVER_SDCARD_ObjectTypeDef* SDCARDObject);
 
 /**
- * @brief this function get the SDCARD information
+ * @brief This function gets the SDCARD information
  * @param SDCARDObject SD card object
  * @param Info pointer on SDcard information struct
  * @return @ref EXTMEM_DRIVER_SDCARD_StatusTypeDef
@@ -135,4 +135,4 @@ EXTMEM_DRIVER_SDCARD_StatusTypeDef EXTMEM_DRIVER_SDCARD_GetInfo(EXTMEM_DRIVER_SD
 }
 #endif
 
-#endif /* __STM32_SDCARD_DRIVER_H */
+#endif /* __STM32_SDCARD_DRIVER_API_H */

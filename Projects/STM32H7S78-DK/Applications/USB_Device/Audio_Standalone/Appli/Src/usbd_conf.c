@@ -7,7 +7,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2023 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -70,8 +70,8 @@ void HAL_PCD_MspInit(PCD_HandleTypeDef* pcdHandle)
 
   /* USER CODE END USB_OTG_FS_MspInit 0 */
 
-  /** Initializes the peripherals clock
-  */
+    /** Initializes the peripherals clock
+    */
     PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USBOTGFS;
     PeriphClkInit.UsbOtgFsClockSelection = RCC_USBOTGFSCLKSOURCE_HSI48;
     if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
@@ -79,8 +79,8 @@ void HAL_PCD_MspInit(PCD_HandleTypeDef* pcdHandle)
       Error_Handler();
     }
 
-  /** Enable USB Voltage detector
-  */
+    /** Enable USB Voltage detector
+    */
     HAL_PWREx_EnableUSBVoltageDetector();
 
     /* Peripheral clock enable */
@@ -255,6 +255,7 @@ void HAL_PCD_SuspendCallback(PCD_HandleTypeDef *hpcd)
 
   /* Inform USB library that core enters in suspend Mode. */
   USBD_LL_Suspend((USBD_HandleTypeDef*)hpcd->pData);
+
   /* Enter in STOP mode. */
   /* USER CODE BEGIN 2 */
   if (hpcd->Init.low_power_enable)
@@ -262,16 +263,10 @@ void HAL_PCD_SuspendCallback(PCD_HandleTypeDef *hpcd)
     __HAL_PCD_GATE_PHYCLOCK(hpcd);
     HAL_SuspendTick();
     /* Set SLEEPDEEP bit of Cortex System Control Register. */
-    SCB->SCR |= (uint32_t)(SCB_SCR_SLEEPDEEP_Msk);
-  }
-  /* USER CODE BEGIN HAL_PCD_SuspendCallback_PostTreatment */
+    HAL_PWR_EnterSTANDBYMode();
 
-  /* USER CODE END HAL_PCD_SuspendCallback_PostTreatment */
-
-  if (hpcd->Init.low_power_enable)
-  {
-    /* Set SLEEPDEEP bit and SleepOnExit of Cortex System Control Register. */
-    SCB->SCR |= (uint32_t)((uint32_t)(SCB_SCR_SLEEPDEEP_Msk | SCB_SCR_SLEEPONEXIT_Msk));
+    /* Set SLEEPONEXIT bit of Cortex-M7 System Control Register */
+    HAL_PWR_EnableSleepOnExit();
   }
   /* USER CODE END 2 */
   /* USER CODE BEGIN HAL_PCD_SuspendCallback_PostTreatment */
@@ -300,8 +295,9 @@ void HAL_PCD_ResumeCallback(PCD_HandleTypeDef *hpcd)
   {
     HAL_ResumeTick();
     /* Reset SLEEPDEEP bit of Cortex System Control Register. */
-    SCB->SCR &= (uint32_t)~((uint32_t)(SCB_SCR_SLEEPDEEP_Msk | SCB_SCR_SLEEPONEXIT_Msk));
-
+    LL_LPM_EnableSleep();
+    /* Reset SLEEPONEXIT bit of Cortex-M7 System Control Register */
+    HAL_PWR_DisableSleepOnExit();
   }
   /* USER CODE END 3 */
   __HAL_PCD_UNGATE_PHYCLOCK(hpcd);

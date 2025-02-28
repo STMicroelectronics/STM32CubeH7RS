@@ -4,16 +4,19 @@
 ::                               General
 :: ==============================================================================
 :: Configure tools installation path
-set stm32tool_path=C:\Program Files\STMicroelectronics\STM32Cube\STM32CubeProgrammer\bin
-set stm32tool_path=%stm32tool_path:\=/%
+set stm32programmercli_path=C:\Program Files\STMicroelectronics\STM32Cube\STM32CubeProgrammer\bin
+set stm32programmercli_path=%stm32programmercli_path:\=/%
 
-set stm32programmercli="%stm32tool_path%/STM32_Programmer_CLI.exe"
-set stm32tpccli="%stm32tool_path%/STM32TrustedPackageCreator_CLI.exe"
-set stm32ExtLoaderFlash=-elbl %stm32tool_path%/ExternalLoader/MX66UW1G45G_STM32H7S78-DK_XSPIM1-SFIx.stldr
-set stm32ExtLoaderFlashOpen=-el %stm32tool_path%/ExternalLoader/MX66UW1G45G_STM32H7S78-DK_XSPIM1.stldr
+set stm32programmercli="%stm32programmercli_path%/STM32_Programmer_CLI.exe"
+set stm32tpccli="%stm32programmercli_path%/STM32TrustedPackageCreator_CLI.exe"
+set stm32ExtLoaderFlash=-elbl %stm32programmercli_path%/ExternalLoader/MX66UW1G45G_STM32H7S78-DK_XSPIM1-SFIx.stldr
+set stm32ExtLoaderFlashOpen=-el %stm32programmercli_path%/ExternalLoader/MX66UW1G45G_STM32H7S78-DK_XSPIM1.stldr
 
 :: Configure Virtual Com Port
 set com_port=COM19
+
+:: Select device type (H7S or H7R)
+set device_type=H7S
 
 :: ==============================================================================
 ::                            STiROT bootpath

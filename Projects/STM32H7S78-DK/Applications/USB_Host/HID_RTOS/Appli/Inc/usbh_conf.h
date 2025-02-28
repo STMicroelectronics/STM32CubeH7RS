@@ -19,10 +19,10 @@
 /* USER CODE END Header */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __USBH_CONF__H__
-#define __USBH_CONF__H__
+#ifndef __USBH_CONF_H
+#define __USBH_CONF_H
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 /* Includes ------------------------------------------------------------------*/
 
@@ -90,8 +90,8 @@
 
 /****************************************/
 /* #define for FS and HS identification */
-#define HOST_HS 		0
-#define HOST_FS 		1
+#define HOST_HS         0
+#define HOST_FS         1
 
 #if (USBH_USE_OS == 1)
   #include "cmsis_os.h"
@@ -190,5 +190,5 @@
 }
 #endif
 
-#endif /* __USBH_CONF__H__ */
+#endif /* __USBH_CONF_H */
 

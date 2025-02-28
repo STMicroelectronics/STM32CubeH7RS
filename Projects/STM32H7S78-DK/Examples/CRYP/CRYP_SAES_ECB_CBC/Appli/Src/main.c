@@ -43,7 +43,8 @@
 RNG_HandleTypeDef hrng;
 
 CRYP_HandleTypeDef hcryp;
-uint32_t pKeySAES[4] = {0x2B7E1516,0x28AED2A6,0xABF71588,0x09CF4F3C};
+__ALIGN_BEGIN static const uint32_t pKeySAES[4] __ALIGN_END = {
+                            0x2B7E1516,0x28AED2A6,0xABF71588,0x09CF4F3C};
 
 /* USER CODE BEGIN PV */
 
@@ -153,7 +154,7 @@ int main(void)
     Error_Handler();
   }
   /*Compare results with expected buffer*/
-  if(memcmp(EncryptedText, CiphertextAESECB128, PLAINTEXT_SIZE) != 0)
+  if(memcmp(EncryptedText, CiphertextAESECB128, PLAINTEXT_SIZE * 4) != 0)
   {
     /* Processing Error */
     Error_Handler();
@@ -165,7 +166,7 @@ int main(void)
     Error_Handler();
   }
   /*Compare results with expected buffer*/
-  if(memcmp(DecryptedText, Plaintext, PLAINTEXT_SIZE) != 0)
+  if(memcmp(DecryptedText, Plaintext, PLAINTEXT_SIZE * 4) != 0)
   {
     /* Processing Error */
     Error_Handler();
@@ -191,7 +192,7 @@ int main(void)
     Error_Handler();
   }
   /*Compare results with expected buffer*/
-  if(memcmp(EncryptedText, CiphertextAESCBC256, PLAINTEXT_SIZE) != 0)
+  if(memcmp(EncryptedText, CiphertextAESCBC256, PLAINTEXT_SIZE * 4) != 0)
   {
     /* Processing Error */
     Error_Handler();
@@ -203,7 +204,7 @@ int main(void)
     Error_Handler();
   }
   /*Compare results with expected buffer*/
-  if(memcmp(DecryptedText, Plaintext, PLAINTEXT_SIZE) != 0)
+  if(memcmp(DecryptedText, Plaintext, PLAINTEXT_SIZE * 4) != 0)
   {
     /* Processing Error */
     Error_Handler();
@@ -348,7 +349,7 @@ static void MPU_Config(void)
     MPU_InitStruct.TypeExtField = MPU_TEX_LEVEL1;
     MPU_InitStruct.AccessPermission = MPU_REGION_FULL_ACCESS;
     MPU_InitStruct.DisableExec = MPU_INSTRUCTION_ACCESS_DISABLE;
-    MPU_InitStruct.IsShareable = MPU_ACCESS_SHAREABLE;
+    MPU_InitStruct.IsShareable = MPU_ACCESS_NOT_SHAREABLE;
     MPU_InitStruct.IsCacheable = MPU_ACCESS_CACHEABLE;
     MPU_InitStruct.IsBufferable = MPU_ACCESS_BUFFERABLE;
     MPU_AdjustRegionAddressSize(address, size, &MPU_InitStruct);
@@ -427,7 +428,7 @@ static void MPU_Config(void)
   MPU_InitStruct.TypeExtField = MPU_TEX_LEVEL1;
   MPU_InitStruct.AccessPermission = MPU_REGION_FULL_ACCESS;
   MPU_InitStruct.DisableExec = MPU_INSTRUCTION_ACCESS_ENABLE;
-  MPU_InitStruct.IsShareable = MPU_ACCESS_SHAREABLE;
+  MPU_InitStruct.IsShareable = MPU_ACCESS_NOT_SHAREABLE;
   MPU_InitStruct.IsCacheable = MPU_ACCESS_CACHEABLE;
   MPU_InitStruct.IsBufferable = MPU_ACCESS_BUFFERABLE;
   MPU_AdjustRegionAddressSize(address, size, &MPU_InitStruct);
@@ -456,22 +457,37 @@ static void MPU_Config(void)
   */
 static void MPU_AdjustRegionAddressSize(uint32_t Address, uint32_t Size, MPU_Region_InitTypeDef* pInit)
 {
+  static uint8_t loopcontrol = 0;
+  uint32_t Modulo;
+
+  /* control the loop increment */
+  loopcontrol++;
+
+  if (loopcontrol > 3)
+  {
+    /* the scatter file input is too complex to determine the MPU configuration */
+    Error_Handler();
+  }
+
   /* Compute the MPU region size */
   pInit->Size = ((31 - __CLZ(Size)) - 1);
   if (Size > (1 << (pInit->Size + 1)))
   {
     pInit->Size++;
   }
-  uint32_t Modulo = Address % (1 << (pInit->Size - 1));
+  Modulo = Address % (1 << (pInit->Size + 1));
   if (0 != Modulo)
   {
     /* Align address with MPU region size considering there is no need to increase the size */
-    pInit->BaseAddress = Address - Modulo;
+    MPU_AdjustRegionAddressSize(Address - Modulo, Size + Modulo, pInit);
   }
   else
   {
     pInit->BaseAddress = Address;
   }
+
+  /* control the loop decrement */
+  loopcontrol--;
 }
 /* USER CODE END 4 */
 

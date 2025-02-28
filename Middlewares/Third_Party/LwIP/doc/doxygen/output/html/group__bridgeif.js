@@ -10,7 +10,7 @@ var group__bridgeif =
     ] ],
     [ "BRIDGEIF_INITDATA1", "group__bridgeif.html#ga3d41c7905b61aef3a3b8c61b3af7879f", null ],
     [ "BRIDGEIF_INITDATA2", "group__bridgeif.html#gaaaeb47fbf1dd6c30cb502343fa0d0741", null ],
-    [ "bridgeif_initdata_t", "group__bridgeif.html#gac47f8ce66bc6dad5dd9829467f93a1bb", null ],
+    [ "bridgeif_initdata_t", "group__bridgeif.html#ga61c8f232a5907f3662157746e71d35cc", null ],
     [ "bridgeif_add_port", "group__bridgeif.html#ga51b7d1af22f7023aabd8502aadf77c77", null ],
     [ "bridgeif_fdb_add", "group__bridgeif.html#gad20fea2657431d4a0905be80cb0b4666", null ],
     [ "bridgeif_fdb_remove", "group__bridgeif.html#ga79349b1e9d0f944e8abad5a6cfb1c8e8", null ],

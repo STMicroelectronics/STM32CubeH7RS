@@ -16,9 +16,6 @@ error()
   return 1
 }
 
-# External script
-ob_flash_programming="$project_dir/ob_flash_programming.sh"
-
 # Environment variable for setting postbuild command with AppliCfg
 if [ $isGeneratedByCubeMX == "true" ]; then
    appli_dir="$stirot_boot_path_project"
@@ -43,7 +40,6 @@ else
 fi
 
 # CubeIDE project Appli Full Secure files
-cube_appli_postbuild="$appli_dir/STM32CubeIDE/postbuild.sh"
 ld_file="$appli_proj_dir/STM32CubeIDE/$appli_subdir/STM32H7S7L8HXH_FLASH.ld"
 
 main_h="$appli_dir/Inc/main.h"

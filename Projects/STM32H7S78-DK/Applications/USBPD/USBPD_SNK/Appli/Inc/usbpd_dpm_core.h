@@ -18,8 +18,8 @@
   */
 /* USER CODE END Header */
 
-#ifndef __USBPD_DPM_CORE_H_
-#define __USBPD_DPM_CORE_H_
+#ifndef __USBPD_DPM_CORE_H
+#define __USBPD_DPM_CORE_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -36,13 +36,13 @@ extern "C" {
 
 #define OS_CAD_STACK_SIZE                 1024
 /* USER CODE END Define */
+
 /* Exported typedef ----------------------------------------------------------*/
 /* USER CODE BEGIN typedef */
 
 /* USER CODE END typedef */
 
 /* Exported define -----------------------------------------------------------*/
-
 /* USER CODE BEGIN define */
 
 /* USER CODE END define */
@@ -77,4 +77,4 @@ __WEAK void         USBPD_DPM_ErrorHandler(void);
 }
 #endif
 
-#endif /* __USBPD_DPM_CORE_H_ */
+#endif /* __USBPD_DPM_CORE_H */

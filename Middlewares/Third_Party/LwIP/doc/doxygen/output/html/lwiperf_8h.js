@@ -15,8 +15,8 @@ var lwiperf_8h =
       [ "LWIPERF_TCP_ABORTED_REMOTE", "lwiperf_8h.html#ab72a2d205e43d5243a291f937bbc24d6ae664c0f987584f07fb0f6f8896aada0d", null ]
     ] ],
     [ "lwiperf_abort", "group__iperf.html#gac51c9c44a38bfa1140bd44b793a0a004", null ],
-    [ "lwiperf_start_tcp_client", "group__iperf.html#gad8317f52289d8bb12a14627cd177a565", null ],
-    [ "lwiperf_start_tcp_client_default", "group__iperf.html#ga85a487cf8ecbd0999382c9bff375d0da", null ],
-    [ "lwiperf_start_tcp_server", "group__iperf.html#gad97bf77057e7f96d6d8def812deea202", null ],
-    [ "lwiperf_start_tcp_server_default", "group__iperf.html#gae1f30a02b86c4dd3d47810cd493baf26", null ]
+    [ "lwiperf_start_tcp_client", "group__iperf.html#ga1088722d967f0f465d45fd3b15dde445", null ],
+    [ "lwiperf_start_tcp_client_default", "group__iperf.html#ga8106ed0805f2dc2b1d92e2f5b420f456", null ],
+    [ "lwiperf_start_tcp_server", "group__iperf.html#ga6932fe36fa6fbc7081ad317b71d87bec", null ],
+    [ "lwiperf_start_tcp_server_default", "group__iperf.html#gad4c93f3e77140ef2966a291e564d67c5", null ]
 ];

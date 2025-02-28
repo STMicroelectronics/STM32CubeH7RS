@@ -19,6 +19,14 @@
   ******************************************************************************
   @endverbatim
 
+### V4.0.2/20-12-2024 ###
+============================
++ Remove wrong casting of "buff" in the USBH_read(), USBH_write() and USBH_ioctl() functions
+  - drivers/usb_host/usbh_diskio.c
+
++ Fix wrong cache management in the SD_DMA_write() function
+  - drivers/sd/sd_diskio_dma_rtos.c
+
 ### V4.0.1/18-08-2023 ###
 ============================
 + Add LICENSE.md file at the root directory.

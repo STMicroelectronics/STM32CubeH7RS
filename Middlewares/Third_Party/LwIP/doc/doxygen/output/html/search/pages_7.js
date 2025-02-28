@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['upgrading',['Upgrading',['../upgrading.html',1,'']]]
+  ['optimization_20hints_0',['Optimization hints',['../optimization.html',1,'']]],
+  ['overview_1',['Overview',['../index.html',1,'']]]
 ];

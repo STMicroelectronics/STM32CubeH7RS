@@ -24,6 +24,9 @@ extern "C" {
 #endif
 
 #include <stddef.h>
+#include "mbedtls/entropy.h"
+#include "entropy_poll.h"
+
 void RNG_DeInit(void);
 void RNG_Init(void);
 void RNG_GetBytes(uint8_t *output, size_t length, size_t *output_length);

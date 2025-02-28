@@ -62,6 +62,7 @@ static void MX_FLASH_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+/* Private functions ---------------------------------------------------------*/
 
 /* USER CODE END 0 */
 
@@ -372,6 +373,12 @@ static void MPU_Config(void)
 
   /* Disables the MPU */
   HAL_MPU_Disable();
+
+  /* Disables all MPU regions */
+  for(uint8_t i=0; i<__MPU_REGIONCOUNT; i++)
+  {
+    HAL_MPU_DisableRegion(i);
+  }
 
   /** Initializes and configures the Region and the memory to be protected
   */

@@ -20,14 +20,14 @@
 <div class="row">
 <div class="col-sm-12 col-lg-8">
 <h2 id="hid_standalone-application-description"><b>HID_Standalone Application Description</b></h2>
-<p>This application provides an example of FreeRTOS on NUCLEO-H7S3L8 board, it shows how to develop USB Device Human Interface HID mouse based application.</p>
-<p>The application is designed to emulate an USB HID mouse device, the code provides all required device descriptors framework and associated Class descriptor report to build a compliant USB HID mouse device.</p>
+<p>This application is a part of the USB Device Library package using STM32Cube firmware. It shows how to develop USB Device application based on Human Interface HID mouse on NUCLEO-H7S3L8.</p>
+<p>This is a typical application on how to use the STM32H7S3xx USB OTG Device peripheral where the STM32 MCU is enumerated as a HID device using the native PC Host HID driver to which the NUCLEO-H7S3L8 board is connected, in order to emulate the Mouse directions using User push-button mounted on the NUCLEO-H7S3L8 board.</p>
 <h4 id="expected-success-behavior"><b>Expected success behavior</b></h4>
-<p>When plugged to PC host, the NUCLEO-H7S3L8 must be properly enumerated as an USB HID mouse device. During the enumeration phase, device provides host with the requested descriptors (Device, configuration, string). Those descriptors are used by host driver to identify the device capabilities. Once the NUCLEO-H7S3L8 USB device successfully completed the enumeration phase, the device sends a HID report after a user button press. Each report sent should move the mouse cursor by one step on host side.</p>
+<p>When plugged to PC host, the NUCLEO-H7S3L8 must be properly enumerated as an USB HID mouse device. During the enumeration phase, device provides host with the requested descriptors (device, configuration, string). Those descriptors are used by host driver to identify the device capabilities. Once the NUCLEO-H7S3L8 USB device successfully completed the enumeration phase, the device sends a HID report after a user button press. Each report sent should move the mouse cursor by one step on host side.</p>
 <h4 id="error-behaviors"><b>Error behaviors</b></h4>
-<p>Host PC shows that USB device does not operate as designed (Mouse enumeration failed, the mouse pointer doesn’t move).</p>
+<p>Host PC shows that USB device does not operate as designed (mouse enumeration failed, the mouse pointer doesn’t move).</p>
 <h4 id="assumptions-if-any"><b>Assumptions if any</b></h4>
-<p>User is familiar with USB 2.0 Universal Serial BUS Specification and HID class Specification.</p>
+<p>User is familiar with USB 2.0 Universal Serial BUS specification and HID class specification.</p>
 <h4 id="known-limitations"><b>Known limitations</b></h4>
 <p>The remote wakeup feature is not yet implemented (used to bring the USB suspended bus back to the active condition).</p>
 <h3 id="notes"><b>Notes</b></h3>
@@ -47,8 +47,8 @@
 <p>USB_Device, USB_OTG, HIGH Speed, HID, Mouse</p>
 <h3 id="hardware-and-software-environment"><b>Hardware and Software environment</b></h3>
 <ul>
-<li><p>This example runs on NUCLEO-H7S3L8 revision B01.</p></li>
-<li><p>This example has been tested with STMicroelectronics NUCLEO-H7S3L8 revision B01 board and can be easily tailored to any other supported device and development board.</p></li>
+<li><p>This application runs on STM32H7S3xx devices.</p></li>
+<li><p>This application has been tested with STMicroelectronics NUCLEO-H7S3L8 board revision MB1737-H7S3L8-B02 and can be easily tailored to any other supported device and development board.</p></li>
 </ul>
 <h3 id="how-to-use-it"><b>How to use it ?</b></h3>
 <p>This application runs from the external Flash memory (HID_Standalone Appli).</p>
@@ -71,7 +71,7 @@
 <li>Select then “HID_Standalone_Appli” workspace</li>
 <li>Rebuild all files from HID_Standalone Appli and load your images into memories: First, load the HID_Standalone_Boot.hex in internal Flash, then, load
 the Appli part in External memory available on NUCLEO-H7S3L8 board.</li>
-<li>Run the example</li>
+<li>Run the application</li>
 </ol>
 <h4 id="mdk-arm"><b>MDK-ARM</b></h4>
 <ol type="1">
@@ -90,14 +90,14 @@ the Appli part in External memory available on NUCLEO-H7S3L8 board.</li>
 <li>Select then “HID_Standalone_Appli” workspace</li>
 <li>Rebuild all files from HID_Standalone Appli and load your images into memories: First, load the HID_Standalone_Boot.hex in internal Flash, then, load
 the Appli part in External memory available on NUCLEO-H7S3L8 board.</li>
-<li>Run the example</li>
+<li>Run the application</li>
 </ol>
 <h4 id="stm32cubeide"><b>STM32CubeIDE</b></h4>
 <p>To configure STM32CubeIDE Debug Configuration, you must do the following :<p>
 <p>For "HID_Standalone_Boot" project :</p>
-<p>Add the adequate external loader (MX25UW25645G_STM32H7R38-NUCLEO.stldr file) in Project->Debugger Configuration</p>
+<p>Add the adequate external loader (MX25UW25645G_STM32H7S3L8-NUCLEO.stldr file) in Project->Debugger Configuration</p>
 <p>For "HID_Standalone_Appli" project :</p>
-<p>1. Add the adequate external loader (MX25UW25645G_STM32H7R38-NUCLEO.stldr file) in Project->Debugger Configuration</p>
+<p>1. Add the adequate external loader (MX25UW25645G_STM32H7S3L8-NUCLEO.stldr file) in Project->Debugger Configuration</p>
 <p>2. Add in the startup the HID_Standalone_Boot in Project->Debugger Configuration</p>
 <p>3. Move up the application in the startup</p>
 <ol type="1">
@@ -117,7 +117,7 @@ the Appli part in External memory available on NUCLEO-H7S3L8 board.</li>
 <li>Select the “HID_Standalone_Appli” project</li>
 <li>Build the project</li>
 <li>With the Debug icon select the configuration “HID_Standalone_Appli Debug”. First, load the Boot binary in internal Flash, then, load the Appli binary in External memory available on NUCLEO-H7S3L8 board</li>
-<li>Run the example</li>
+<li>Run the application</li>
 </ol>
 <p><b>Note</b></p>
 <p>The application uses the external HSE clock as system clock source.</p>

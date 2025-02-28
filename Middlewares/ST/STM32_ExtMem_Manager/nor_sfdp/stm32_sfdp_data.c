@@ -27,7 +27,7 @@
 #endif /* EXTMEM_DRIVER_NOR_SFDP_DEBUG_LEVEL != 0 && defined(EXTMEM_MACRO_DEBUG) */
 #include <string.h>
 
-/** @defgroup NOR_SFDP_DATA Data module 
+/** @defgroup NOR_SFDP_DATA Data module
   * @ingroup NOR_SFDP
   * @{
   */
@@ -333,7 +333,7 @@ typedef struct {
         uint32_t Exit4ByteAddressing:10;
         uint32_t Enter4ByteAddressing:8;
       } D16;
-      /* Added one for octal management, this part depends the information size of the flash device */
+      /* Added one for octal management, this part depends on the information size of the flash device */
       struct {
         uint32_t _1S8S8S_DummyClock:5;
         uint32_t _1S8S8S_ModeClock:3;
@@ -1069,7 +1069,7 @@ SFDP_StatusTypeDef CheckSFDP_Signature(EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef *Obj
   */
 
 /**
- * @brief this function reads and checks the SFDP header and adjusts 
+ * @brief This function reads and checks the SFDP header and adjusts
  * @param Object memory Object
  * @param sfdp_header data of the SFDP header
  * @return @ref SFDP_StatusTypeDef
@@ -1079,21 +1079,21 @@ SFDP_StatusTypeDef SFDP_ReadHeader(EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef *Object,
   SFDP_StatusTypeDef retr;
   uint8_t retry_counter = 0;
   SFDP_DEBUG_STR(__func__);
-  
+
   do {
     /* Reset the signature value */
     sfdp_header->Signature = 0;
-    
+
     /* send the SFDP command to read the header */
     if(HAL_OK != SAL_XSPI_GetSFDP(&Object->sfpd_private.SALObject, 0, (uint8_t*)sfdp_header, SFDP_HEADER_SIZE))
     {
       retr = EXTMEM_SFDP_ERROR_SFPDREAD;
       goto error;
     }
-    
+
     /* view the header signature value  */
     SFDP_DEBUG_INT("SFDP signature::", sfdp_header->Signature);
-    
+
     switch(CheckSFDP_Signature(Object, sfdp_header->Signature))
     {
     case EXTMEM_SFDP_OK:
@@ -1134,22 +1134,22 @@ SFDP_StatusTypeDef SFDP_GetHeader(EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef *Object, 
     {PHY_LINK_8D8D8D, 10u},
     {PHY_LINK_8D8D8D, 16u}
   };
-  
+
   /* loop to find the link configuration of the memory */
   for (uint8_t index = 0u;
        (index < (sizeof(table_config)/sizeof(TableConfig_Typedef))) &&
        (retr == EXTMEM_SFDP_ERROR_SIGNATURE)
-           ; index++) 
+           ; index++)
   {
     /* Set the command mode */
     SFDP_DEBUG_STR("try a command configuration");
-    
+
     /* Configure the link */
     Object->sfpd_private.DriverInfo.SpiPhyLink  = table_config[index].PhyLink;
     (void)SAL_XSPI_MemoryConfig(&Object->sfpd_private.SALObject, PARAM_PHY_LINK, &Object->sfpd_private.DriverInfo.SpiPhyLink);
     SAL_XSPI_SET_SFDPDUMMYCYLE(Object->sfpd_private.SALObject, table_config[index].DummyCycle);
 
-    /* Loop on the instruction extension */    
+    /* Loop on the instruction extension */
     for (uint8_t IExt = 0u;
          (IExt < 2u) && (retr == EXTMEM_SFDP_ERROR_SIGNATURE); IExt++)
     {
@@ -1219,8 +1219,8 @@ SFDP_StatusTypeDef SFDP_CollectData(EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef *Object
     }
     if (ptr != NULL)
     {
-      if (HAL_OK != SAL_XSPI_GetSFDP(&Object->sfpd_private.SALObject, 
-                                     sfdp_param_info[index].address, 
+      if (HAL_OK != SAL_XSPI_GetSFDP(&Object->sfpd_private.SALObject,
+                                     sfdp_param_info[index].address,
                                      ptr, size * 4u))
       {
         retr = EXTMEM_SFDP_ERROR_DRIVER;
@@ -1241,7 +1241,7 @@ error:
 
 SFDP_StatusTypeDef SFDP_MemoryReset(EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef *Object)
 {
-  RESET_METHOD reset_methode;
+  RESET_METHOD reset_method;
   SFDP_StatusTypeDef retr = EXTMEM_SFDP_ERROR_NO_PARAMTABLE_BASIC;
   uint32_t sfdp_adress = SFDP_HEADER_SIZE;
   uint8_t find = 0u;
@@ -1253,13 +1253,13 @@ SFDP_StatusTypeDef SFDP_MemoryReset(EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef *Object
     retr = sfdp_get_paraminfo(Object, sfdp_adress, &sfdp_param_info[0]);
     if (EXTMEM_SFDP_OK == retr)
     {
-      /* check if the table is basic table */        
+      /* check if the table is basic table */
       if (SFPD_PARAMID_BASIC_SPIPROTOCOL == sfdp_param_info[0].type)
       {
         /* read the JEDEC basic param */
-        if (HAL_OK != SAL_XSPI_GetSFDP(&Object->sfpd_private.SALObject, 
-                                       sfdp_param_info[0].address, 
-                                       JEDEC_Basic.Params.data_BYTE, 
+        if (HAL_OK != SAL_XSPI_GetSFDP(&Object->sfpd_private.SALObject,
+                                       sfdp_param_info[0].address,
+                                       JEDEC_Basic.Params.data_BYTE,
                                        ((uint32_t)sfdp_param_info[0].size) * 4u))
         {
           retr = EXTMEM_SFDP_ERROR_DRIVER;
@@ -1277,10 +1277,10 @@ SFDP_StatusTypeDef SFDP_MemoryReset(EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef *Object
         /* stop the read, if there is an error or if the table has been found */
         break;
     }
-    /* look for the next table */        
+    /* look for the next table */
     sfdp_adress+= SFDP_PARAM_HEADER_SIZE;
   }
-  
+
   /* if an error has been returned or if the table has not been found */
   if ((EXTMEM_SFDP_OK != retr) || (0u == find))
   {
@@ -1288,38 +1288,38 @@ SFDP_StatusTypeDef SFDP_MemoryReset(EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef *Object
     goto error;
   }
 
-  /* determine how to proced memory reset */
+  /* determine how to proceed memory reset */
   if( 0x0u == JEDEC_Basic.Params.Param_DWORD.D16.SoftResetRescueSequence_Support)
   {
     /* 00_0000b: no software reset instruction is supported */
-    reset_methode = RESET_NONE;
+    reset_method = RESET_NONE;
   }
   else if (0x1u == (0x1u & JEDEC_Basic.Params.Param_DWORD.D16.SoftResetRescueSequence_Support))
   {
     /* xx_xxx1b: drive Fh on all 4 data wires for 8 clocks */
-    reset_methode = RESET_Fh_4DATA_8CLOCK;
+    reset_method = RESET_Fh_4DATA_8CLOCK;
   }
   else if (0x2u == (0x2u & JEDEC_Basic.Params.Param_DWORD.D16.SoftResetRescueSequence_Support))
   {
     /* xx_xx1xb: drive Fh on all 4 data wires for 10 clocks if device is operating in 4-byte address mode */
-    reset_methode = RESET_Fh_4DATA_10CLOCK;
+    reset_method = RESET_Fh_4DATA_10CLOCK;
   }
   else if (0x4u == (0x4u & JEDEC_Basic.Params.Param_DWORD.D16.SoftResetRescueSequence_Support))
   {
     /* xx_x1xxb: drive Fh on all 4 data wires for 16 clocks */
-    reset_methode = RESET_Fh_4DATA_16CLOCK;
+    reset_method = RESET_Fh_4DATA_16CLOCK;
   }
   else if (0x8u == (0x8u & JEDEC_Basic.Params.Param_DWORD.D16.SoftResetRescueSequence_Support))
   {
     /* xx_1xxxb: issue instruction F0h */
-    reset_methode = RESET_INSTRUCTION_F0;
+    reset_method = RESET_INSTRUCTION_F0;
   }
   else if (0x10u == (0x10u & JEDEC_Basic.Params.Param_DWORD.D16.SoftResetRescueSequence_Support))
   {
     /* x1_xxxxb: issue reset enable instruction 66h, then issue reset instruction 99h. The reset enable,
     reset sequence may be issued on 1, 2, or 4 wires depending on the device operating mode.
     */
-    reset_methode = RESET_INSTRUCTION_66_99;
+    reset_method = RESET_INSTRUCTION_66_99;
   }
   else if (0x20u == (0x20u & JEDEC_Basic.Params.Param_DWORD.D16.SoftResetRescueSequence_Support))
   {
@@ -1347,8 +1347,8 @@ SFDP_StatusTypeDef SFDP_MemoryReset(EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef *Object
     retr = EXTMEM_SFDP_ERROR_DRIVER;
     goto error;
   }
-  
-  switch(reset_methode)
+
+  switch(reset_method)
   {
   case RESET_NONE:
     break;
@@ -1382,7 +1382,7 @@ SFDP_StatusTypeDef SFDP_BuildGenericDriver(EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef 
   uint8_t flag4bitAddress = 0u;
   uint32_t dummyCycles, dummyCyclesValue;
   uint8_t FlashSize;
-  
+
   if ((Object->sfpd_private.Sfdp_table_mask & (uint32_t)SFPD_PARAMID_BASIC_SPIPROTOCOL) != (uint32_t)SFPD_PARAMID_BASIC_SPIPROTOCOL)
   {
     /* This table is mandatory to build the driver data */
@@ -1423,8 +1423,8 @@ SFDP_StatusTypeDef SFDP_BuildGenericDriver(EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef 
    * ---------------------------------------------------
    */
   Object->sfpd_private.DriverInfo.PageProgramInstruction = 0x02;
-  
-  
+
+
   /* ---------------------------------------------------
    *  Erase management
    * ---------------------------------------------------
@@ -1530,7 +1530,7 @@ SFDP_StatusTypeDef SFDP_BuildGenericDriver(EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef 
       Object->sfpd_private.DriverInfo.WIPPosition     = JEDEC_SCCR_Map.Param_DWORD.D5.WIPBitLocationRegister;
       Object->sfpd_private.DriverInfo.WIPBusyPolarity = (uint8_t)JEDEC_SCCR_Map.Param_DWORD.D5.WIPpolarity;
       Object->sfpd_private.DriverInfo.WIPPosition     = JEDEC_SCCR_Map.Param_DWORD.D5.WIPBitLocationRegister;
-      
+
       if (0u != JEDEC_SCCR_Map.Param_DWORD.D5.BitAccessedByCommandsUsingAddress)
       {
         /* Address management */
@@ -1601,7 +1601,7 @@ SFDP_StatusTypeDef SFDP_BuildGenericDriver(EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef 
    *  command based on SFPD_PARAMID_BASIC_SPIPROTOCOL
    * ---------------------------------------------------
    */
-  if (Object->sfpd_private.Sfdp_table_mask == (uint32_t)SFPD_PARAMID_BASIC_SPIPROTOCOL) 
+  if (Object->sfpd_private.Sfdp_table_mask == (uint32_t)SFPD_PARAMID_BASIC_SPIPROTOCOL)
   {
     dummyCycles = 0;
     Object->sfpd_private.DriverInfo.SpiPhyLink = PHY_LINK_1S1S1S;
@@ -1641,7 +1641,7 @@ SFDP_StatusTypeDef SFDP_BuildGenericDriver(EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef 
         dummyCycles = JEDEC_Basic.Params.Param_DWORD.D7._4S4S4S_DummyClock + JEDEC_Basic.Params.Param_DWORD.D7._4S4S4S_ModeClock;
         Object->sfpd_private.DriverInfo.ReadInstruction = (uint8_t)JEDEC_Basic.Params.Param_DWORD.D7._4S4S4S_FastReadInstruction;
         Object->sfpd_private.DriverInfo.SpiPhyLink = PHY_LINK_4S4S4S;
-        
+
         retr = JEDEC_Basic_Manage4S4S4SEnableSequence(Object);
         if ( retr != EXTMEM_SFDP_OK)
         {
@@ -1675,7 +1675,7 @@ SFDP_StatusTypeDef SFDP_BuildGenericDriver(EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef 
      when switch in octal DDR mode
      -------------------------------------------------------------------------------------------------------------------
   */
-  if (((uint32_t)SFPD_PARAMID_OCTAL_DDR == (Object->sfpd_private.Sfdp_table_mask & (uint32_t)SFPD_PARAMID_OCTAL_DDR)) 
+  if (((uint32_t)SFPD_PARAMID_OCTAL_DDR == (Object->sfpd_private.Sfdp_table_mask & (uint32_t)SFPD_PARAMID_OCTAL_DDR))
       && (EXTMEM_LINK_CONFIG_8LINES == Object->sfpd_private.Config))
   {
     /* check if we are not already in octal mode */
@@ -1688,17 +1688,17 @@ SFDP_StatusTypeDef SFDP_BuildGenericDriver(EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef 
       /* Execute the flash command sequence to switch in octal DDR */
       if (EXTMEM_SFDP_OK == sfpd_enter_octal_mode(Object))
       {
-        /* switch the memory interface configuration according the Access protocol field */
+        /* switch the memory interface configuration according to the Access protocol field */
         flag4bitAddress = 1u;
         Object->sfpd_private.DriverInfo.SpiPhyLink = PHY_LINK_8D8D8D;
-        
+
         /* update the physical link */
         if (HAL_OK != SAL_XSPI_MemoryConfig(&Object->sfpd_private.SALObject, PARAM_PHY_LINK, &Object->sfpd_private.DriverInfo.SpiPhyLink))
         {
           retr = EXTMEM_SFDP_ERROR_DRIVER;
           goto error;
         }
-        
+
         if (Object->sfpd_private.Sfdp_AccessProtocol == 0xFDu)
         {
           /* set 20 wait state */
@@ -1725,7 +1725,7 @@ SFDP_StatusTypeDef SFDP_BuildGenericDriver(EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef 
       /* check octal information to determine */
       /* 0b00 The Command Extension is the same as the Command. (The Command / Command Extension has the same value for the whole clock period.)*/
       /* 0b01 The Command Extension is the inverse of the Command. The Command Extension acts as a confirmation of the Command */
-      /* 0b11 Command and Command Extension forms a 16 bit command word */
+      /* 0b11 Command and Command Extension forms a 16-bit command word */
       if (JEDEC_Basic.Params.Param_DWORD.D18.OctalDTRCommandExtension > 1u)
       {
         retr = EXTMEM_SFDP_ERROR_NOTYETHANDLED;
@@ -1756,7 +1756,7 @@ SFDP_StatusTypeDef SFDP_BuildGenericDriver(EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef 
             goto error;
         }
 
-        /* flag4bitAddress = 1u; this settings is not needed because variable is no more used */
+        /* flag4bitAddress = 1u; this setting is not needed because variable is no more used */
       }
       /* xxxx_xx1xb: issue write enable instruction 06h, then issue instruction B7h */
       else if (0x2u == (JEDEC_Basic.Params.Param_DWORD.D16.Enter4ByteAddressing & 0x2u))
@@ -1792,17 +1792,17 @@ SFDP_StatusTypeDef SFDP_BuildGenericDriver(EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef 
       else if (0x40u == (JEDEC_Basic.Params.Param_DWORD.D16.Enter4ByteAddressing & 0x40u))
       {
         /* nothing to do */
-        /* flag4bitAddress = 1u; this settings is not needed because variable is no more used */
+        /* flag4bitAddress = 1u; this setting is not needed because variable is no more used */
       }
       /* xx1x_xxxxb: Supports dedicated 4-Byte address instruction set. Consult vendor data sheet for the instruction set definition.*/
       else if (0x20u == (JEDEC_Basic.Params.Param_DWORD.D16.Enter4ByteAddressing & 0x20u))
       {
         /* specific memory  */
-        /* one macromix nothing to do the command are 4Byte specific so nothing to do */
-        /* flag4bitAddress = 1u; this settings is not needed because variable is no more used */
+        /* on Macronix nothing to do the command are 4Byte specific so nothing to do */
+        /* flag4bitAddress = 1u; this setting is not needed because variable is no more used */
       }
         /* xxxx_x1xxb: 8-bit volatile extended address register used to define A[31:24] bits. Read with instruction C8h. Write instruction is C5h with 1 byte of data. Select the active 128 Mbit memory segment by setting the appropriate A[31:24] bits and use 3-Byte addressing.
-           xxxx_1xxxb: 8-bit volatile bank register used to define A[30:A24] bits. MSB (bit[7]) is used to enable/disable 4-byte address mode. When MSB is set to 1, 4-byte address mode is active and A[30:24] bits are don not care. Read with instruction 16h. Write instruction is 17h with 1 byte of data. When MSB is cleared to 0, select the active 128 Mbit segment by setting the appropriate A[30:24] bits and use 3-Byte addressing.
+           xxxx_1xxxb: 8-bit volatile bank register used to define A[30:A24] bits. MSB (bit[7]) is used to enable/disable 4-byte address mode. When MSB is set to 1, 4-byte address mode is active and A[30:24] bits are do not care. Read with instruction 16h. Write instruction is 17h with 1 byte of data. When MSB is cleared to 0, select the active 128 Mbit segment by setting the appropriate A[30:24] bits and use 3-Byte addressing.
            xxx1_xxxxb: A 16-bit nonvolatile configuration register controls 3-Byte/4-Byte address mode. Read instruction is B5h. Bit[0] controls address mode [0=3-Byte;1=4-Byte]. Write configuration register instruction is B1h, data length is 2 bytes.
         */
       else {
@@ -1817,7 +1817,7 @@ SFDP_StatusTypeDef SFDP_BuildGenericDriver(EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef 
         retr = EXTMEM_SFDP_ERROR_DRIVER;
         goto error;
       }
-      
+
       /* Set the read function for 4Bit Address */
       Object->sfpd_private.DriverInfo.ReadInstruction = 0x13U;
     }
@@ -1827,7 +1827,7 @@ SFDP_StatusTypeDef SFDP_BuildGenericDriver(EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef 
       /* check if we can switch to if the config is still 1S8S8S */
       if ((0u != JEDEC_Address4Bit.Param_DWORD.D1.Support_1S8S8S_FastReadCommand)  && (0u != JEDEC_Address4Bit.Param_DWORD.D1.Support_1S8S8S_PageProgramCommand))
       {
-        /* Patch micron write command 0x81 @0x0 0xE7 */
+        /* Patch Micron write command 0x81 @0x0 0xE7 */
         Object->sfpd_private.DriverInfo.SpiPhyLink = PHY_LINK_1S8S8S;
         if (HAL_OK != SAL_XSPI_MemoryConfig(&Object->sfpd_private.SALObject, PARAM_PHY_LINK, &Object->sfpd_private.DriverInfo.SpiPhyLink))
         {
@@ -1840,18 +1840,18 @@ SFDP_StatusTypeDef SFDP_BuildGenericDriver(EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef 
     }
 
     /*
-      need to be study more; it seems that macromix used it to define the command maybe because only one mode is
+      need to be study more; it seems that Macronix used it to define the command maybe because only one mode is
       supported in their case
     */
-    if ((Object->sfpd_private.DriverInfo.SpiPhyLink == PHY_LINK_8D8D8D) || 
+    if ((Object->sfpd_private.DriverInfo.SpiPhyLink == PHY_LINK_8D8D8D) ||
         (Object->sfpd_private.DriverInfo.SpiPhyLink == PHY_LINK_1S1S1S))
     {
       if (0u != JEDEC_Address4Bit.Param_DWORD.D1.Support_1S1S1S_PageProgramCommand) {Object->sfpd_private.DriverInfo.PageProgramInstruction = 0x12u;}
       if (0u != JEDEC_Address4Bit.Param_DWORD.D1.Support_1S1S1S_ReadCommand)        {Object->sfpd_private.DriverInfo.ReadInstruction        = 0x13u;}
       if (0u != JEDEC_Address4Bit.Param_DWORD.D1.Support_1S1S1S_FastReadCommand)    {Object->sfpd_private.DriverInfo.ReadInstruction        = 0x0Cu;}
     }
-    
-    if (Object->sfpd_private.DriverInfo.SpiPhyLink == PHY_LINK_8S8D8D) 
+
+    if (Object->sfpd_private.DriverInfo.SpiPhyLink == PHY_LINK_8S8D8D)
     {
       if (0u != JEDEC_Address4Bit.Param_DWORD.D1.Support_1S8S8S_PageProgramCommand) {Object->sfpd_private.DriverInfo.PageProgramInstruction  = 0x02u;}
       if (0u != JEDEC_Address4Bit.Param_DWORD.D1.Support_1S8S8S_FastReadCommand)    {Object->sfpd_private.DriverInfo.ReadInstruction         = 0xCCu;}
@@ -1865,7 +1865,7 @@ SFDP_StatusTypeDef SFDP_BuildGenericDriver(EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef 
   }
 
   if(((uint32_t)SFPD_PARAMID_XSPI_V1_0 == (Object->sfpd_private.Sfdp_table_mask & (uint32_t)SFPD_PARAMID_XSPI_V1_0))
-      && 
+      &&
       ((PHY_LINK_8D8D8D == Object->sfpd_private.DriverInfo.SpiPhyLink) || (PHY_LINK_8S8D8D == Object->sfpd_private.DriverInfo.SpiPhyLink)))
   {
     uint32_t ClockOut = 0u;
@@ -1875,7 +1875,7 @@ SFDP_StatusTypeDef SFDP_BuildGenericDriver(EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef 
     {
       Object->sfpd_private.DriverInfo.ReadInstruction = (uint8_t)JEDEC_XSPI10.Param_DWORD.D1.ReadFastCommand;
     }
-    
+
     if (JEDEC_XSPI10.Param_DWORD.D6._8D8D8DDefaultPOR_DummyCycle != 0u)
     {
       /* Set the default dummy cycle of this mode */
@@ -1883,11 +1883,11 @@ SFDP_StatusTypeDef SFDP_BuildGenericDriver(EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef 
       (void)SAL_XSPI_MemoryConfig(&Object->sfpd_private.SALObject, PARAM_DUMMY_CYCLES, (void*)&dummyCycles);
     }
 
-    /* adapt the memory freq according its capabilities */
+    /* adapt the memory interface frequency according to its capabilities */
     MaxFreqMhz = sfdp_getfrequencevalue(JEDEC_Basic.Params.Param_DWORD.D20._8D8D8D_MaximunSpeedWithStrobe);
     if (MaxFreqMhz > Object->sfpd_private.DriverInfo.ClockIn)
     {
-      /* Adjust the frequence with the ClokcIn */ 
+      /* Adjust the frequence with the ClockIn */
       MaxFreqMhz = Object->sfpd_private.DriverInfo.ClockIn;
     }
 
@@ -1898,8 +1898,8 @@ SFDP_StatusTypeDef SFDP_BuildGenericDriver(EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef 
       goto error;
     }
     *FreqUpdated = 1u; /* Used to indicate that the clock configuration has been updated */
-    
-    /* get the dummy cycle value according the real output clock */
+
+    /* get the dummy cycle value according to the real output clock */
     if ((ClockOut >= CLOCK_200MHZ) && (JEDEC_XSPI10.Param_DWORD.D4.Operation200Mhz_DummyCycle != 0u))
     {
       dummyCycles = JEDEC_XSPI10.Param_DWORD.D4.Operation200Mhz_DummyCycle;
@@ -1920,10 +1920,10 @@ SFDP_StatusTypeDef SFDP_BuildGenericDriver(EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef 
       dummyCycles = JEDEC_XSPI10.Param_DWORD.D5.Operation100Mhz_DummyCycle;
       dummyCyclesValue = JEDEC_XSPI10.Param_DWORD.D5.Operation100Mhz_ConfigPattern;
     }
-    
+
     /* Write the dummy cycle value in the configuration register using information coming from SCCR Map */
     if((0u != (Object->sfpd_private.Sfdp_table_mask & (uint32_t)SFPD_PARAMID_STATUS_CONTROL_CONFIG_REGISTER_MAP))
-	  && (0u != JEDEC_SCCR_Map.Param_DWORD.D9.BitAvailable))
+        && (0u != JEDEC_SCCR_Map.Param_DWORD.D9.BitAvailable))
     {
       /* Update the frequence with MaxFreqMhz information */
       if( sfpd_set_dummycycle(Object, dummyCyclesValue) == EXTMEM_SFDP_OK)
@@ -1973,7 +1973,7 @@ EXTMEM_DRIVER_NOR_SFDP_StatusTypeDef driver_check_FlagBUSY(EXTMEM_DRIVER_NOR_SFD
   */
 
 /**
- * @brief this function returns the frequence corresponding to a frequecy
+ * @brief This function returns the frequency value corresponding to a frequency
  * @param BitField bit field value
  * @return frequency value
  */
@@ -1990,7 +1990,7 @@ uint32_t sfdp_getfrequencevalue(uint32_t BitField)
 }
 
 /**
- * @brief this function read and check the SFDP header
+ * @brief This function reads and checks the SFDP header
  * @param Object memory Object
  * @param sfdp_adress address of the SFDP table
  * @param sfdp_param_info pointer on parameter info
@@ -2003,7 +2003,7 @@ SFDP_StatusTypeDef sfdp_get_paraminfo(EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef *Obje
   SFDP_DEBUG_STR(__func__);
 
   /* send the SFDP command to read the header */
-  if(HAL_OK != SAL_XSPI_GetSFDP(&Object->sfpd_private.SALObject, sfdp_adress, 
+  if(HAL_OK != SAL_XSPI_GetSFDP(&Object->sfpd_private.SALObject, sfdp_adress,
                                 (uint8_t*)&sfdp_param_header, SFDP_PARAM_HEADER_SIZE))
   {
     retr = EXTMEM_SFDP_ERROR_SFPDREAD;
@@ -2110,16 +2110,16 @@ SFDP_StatusTypeDef sfdp_get_paraminfo(EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef *Obje
 
     if( Param_info->type == SFPD_PARAMID_UNKNOWN)
     {
-      SFDP_DEBUG_STR("-> the table is not conform to JEDEC standard");
+      SFDP_DEBUG_STR("-> the table is not compliant with to JEDEC standard");
     }
   }
-  
+
 error:
   return retr;
 }
 
 /**
- * @brief this function executes the octal DDR table to enter octal DDR mode
+ * @brief This function executes the octal DDR table to enter octal DDR mode
  * @param Object memory Object
  * @return @ref SFDP_StatusTypeDef
  */
@@ -2146,14 +2146,14 @@ SFDP_StatusTypeDef sfpd_enter_octal_mode(EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef *O
        goto error;
      }
 
-    /* wait for busy flag clear */
-    if (EXTMEM_DRIVER_NOR_SFDP_OK != driver_check_FlagBUSY(Object, 100u))
-    {
-      retr = EXTMEM_SFDP_ERROR_DRIVER;
-      goto error;
-    }
+     /* wait for busy flag clear */
+     if (EXTMEM_DRIVER_NOR_SFDP_OK != driver_check_FlagBUSY(Object, 100u))
+     {
+       retr = EXTMEM_SFDP_ERROR_DRIVER;
+       goto error;
+     }
   }
-  
+
   /* D3-D4 command */
   if (0u != JEDEC_OctalDdr.Param_DWORD.D3.LenghtCommand)
   {
@@ -2171,13 +2171,13 @@ SFDP_StatusTypeDef sfpd_enter_octal_mode(EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef *O
        retr = EXTMEM_SFDP_ERROR_OCTALMODE;
        goto error;
      }
-     
-    /* wait for busy flag clear */
-    if (EXTMEM_DRIVER_NOR_SFDP_OK != driver_check_FlagBUSY(Object, 100u))
-    {
-      retr = EXTMEM_SFDP_ERROR_DRIVER;
-      goto error;
-    }
+
+     /* wait for busy flag clear */
+     if (EXTMEM_DRIVER_NOR_SFDP_OK != driver_check_FlagBUSY(Object, 100u))
+     {
+       retr = EXTMEM_SFDP_ERROR_DRIVER;
+       goto error;
+     }
   }
 
   /* D5-D6 command */
@@ -2232,12 +2232,15 @@ SFDP_StatusTypeDef sfpd_enter_octal_mode(EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef *O
     }
   }
 
+  /* Abort any ongoing transfer to avoid performance issue */
+  SAL_XSPI_Abort(&Object->sfpd_private.SALObject);
+
 error:
   return retr;
 }
 
 /**
- * @brief this function writes the config register to set dummy cycle
+ * @brief This function writes the config register to set dummy cycle
  * @param Object memory Object
  * @return @ref SFDP_StatusTypeDef
  */
@@ -2255,29 +2258,29 @@ uint32_t Address;
     retr = EXTMEM_SFDP_ERROR_DRIVER;
     goto error;
   }
-  
+
   /* Compute the Address */
   if (JEDEC_SCCR_Map.Param_DWORD.D9.LocalAddress == 1u)
-  { 
+  {
     Address = JEDEC_SCCR_Map.Param_DWORD.D9.AdressRegisterOrModesSupported << 8;
   }
   else
   {
-    /* patch no really universal */
-    Address = 1; 
+    /* patch not really universal */
+    Address = 1;
   }
-    
+
   /* Read the configuration */
-  if (HAL_OK != SAL_XSPI_CommandSendReadAddress(&Object->sfpd_private.SALObject, 
-                   (uint8_t)JEDEC_SCCR_Map.Param_DWORD.D9.CommandReadAccess, 
-                   Address, 
-                   (uint8_t *)localValue, 
+  if (HAL_OK != SAL_XSPI_CommandSendReadAddress(&Object->sfpd_private.SALObject,
+                   (uint8_t)JEDEC_SCCR_Map.Param_DWORD.D9.CommandReadAccess,
+                   Address,
+                   (uint8_t *)localValue,
                    2u))
   {
     retr = EXTMEM_SFDP_ERROR_DRIVER;
     goto error;
   }
-      
+
   /* send command to write enable */
   if (HAL_OK != SAL_XSPI_CommandSendData(&Object->sfpd_private.SALObject,
                                      Object->sfpd_private.DriverInfo.WriteWELCommand, NULL, 0u))
@@ -2297,14 +2300,14 @@ uint32_t Address;
     retr = EXTMEM_SFDP_ERROR_DRIVER;
     goto error;
   }
-    
+
   /* clear the value */
   localValue[0] = localValue[0] & ~(MaskWaitStateValue[JEDEC_SCCR_Map.Param_DWORD.D9.NumberBitsUsedToSetWaitStates] << JEDEC_SCCR_Map.Param_DWORD.D9.BitLocationLSBPhysicalBitsRegister);
-                                    
+
   /* Apply the value with the mask */
   localValue[0] =  localValue[0] | (uint8_t)(DummyValue << JEDEC_SCCR_Map.Param_DWORD.D9.BitLocationLSBPhysicalBitsRegister);
   localValue[1] = localValue[0];
-     
+
   /* Write de configuration */
   if (HAL_OK != SAL_XSPI_Write(&Object->sfpd_private.SALObject, (uint8_t)JEDEC_SCCR_Map.Param_DWORD.D9.CommandWriteAccess, Address, (uint8_t *)localValue, 2u))
   {
@@ -2324,14 +2327,14 @@ uint32_t Address;
   {
     retr = EXTMEM_SFDP_ERROR_DRIVER;
     goto error;
-  }	
-  
+  }
+
 error :
-  return retr;  
+  return retr;
 }
 
 /**
- * @brief this function is in charge to manages the action corresponding to 
+ * @brief This function is in charge to manages the action corresponding to
           JEDEC_Basic.Params.Param_DWORD.D15.QuadEnableRequierment parameter
  * @param Object memory Object
  * @return @ref SFDP_StatusTypeDef
@@ -2339,44 +2342,44 @@ error :
 SFDP_StatusTypeDef JEDEC_Basic_ManageQuadEnableRequierement(EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef *Object)
 {
   SFDP_StatusTypeDef retr = EXTMEM_SFDP_ERROR_NOTYETHANDLED;
-  uint8_t localValue[2];  
-  
+  uint8_t localValue[2];
+
   /* switch the mode in QSPI if available */
   switch (JEDEC_Basic.Params.Param_DWORD.D15.QuadEnableRequierment & 0x7u)
   {
   case 0x0u: /* 000b: Device does not have a QE bit. Device detects 1-1-4 and 1-4-4 reads based on instruction. IO3/HOLD# functions as hold during instruction phase.*/
     break;
-  case 0x1u: /* 001b: QE is bit 1 of status register 2. It is set via Write Status with two data bytes where bit 1 of the second byte is one. 
-                It is cleared via Write Status with two data bytes where bit 1 of the second byte is zero. Writing only one byte to the status register has the side-effect of clearing status register 2, 
+  case 0x1u: /* 001b: QE is bit 1 of status register 2. It is set via Write Status with two data bytes where bit 1 of the second byte is one.
+                It is cleared via Write Status with two data bytes where bit 1 of the second byte is zero. Writing only one byte to the status register has the side-effect of clearing status register 2,
                 including the QE bit. The 100b code is used if writing one byte to the status register does not modify status register 2.
               */
     break;
-  case 0x2u: {/* 010b: QE is bit 6 of status register 1. It is set via Write Status with one data byte where bit 6 is one. 
-                 It is cleared via Write Status with one data byte where bit 6 is zero..*/
+  case 0x2u: {/* 010b: QE is bit 6 of status register 1. It is set via Write Status with one data byte where bit 6 is one.
+                 It is cleared via Write Status with one data byte where bit 6 is zero. */
     /* 1 - set the write enable */
     if (HAL_OK != SAL_XSPI_SendReadCommand(&Object->sfpd_private.SALObject, Object->sfpd_private.DriverInfo.WriteWELCommand, NULL, 0u))
     {
       retr = EXTMEM_SFDP_ERROR_DRIVER;
       goto error;
     }
-    
+
     /* 2 - read the status register */
     if (HAL_OK != SAL_XSPI_SendReadCommand(&Object->sfpd_private.SALObject, 0x5u, (uint8_t *)&localValue[0], 1u))
     {
       retr = EXTMEM_SFDP_ERROR_DRIVER;
       goto error;
     }
-    
+
     /* 3 - update the status register to enable QPI mode*/
     localValue[0] = localValue[0] | 0x40u;
-    
+
     /* 4 - write the status register with QPI mode to 1 */
     if (HAL_OK != SAL_XSPI_CommandSendData(&Object->sfpd_private.SALObject, 0x1u, (uint8_t *)&localValue[0], 1u))
     {
       retr = EXTMEM_SFDP_ERROR_DRIVER;
       goto error;
     }
-    
+
     /* wait busy flag  */
     if (EXTMEM_DRIVER_NOR_SFDP_OK != driver_check_FlagBUSY(Object, 100))
     {
@@ -2389,27 +2392,27 @@ SFDP_StatusTypeDef JEDEC_Basic_ManageQuadEnableRequierement(EXTMEM_DRIVER_NOR_SF
   }
   case 0x3u: /* 011b: QE is bit 7 of status register 2. It is set via Write status register 2 instruction 3Eh with one data byte where bit 7 is one. It is cleared via Write status register 2 instruction 3Eh with one data byte where bit 7 is zero. The status register 2 is read using instruction 3Fh.*/
     break;
-  case 0x4u:{ /* 100b: QE is bit 1 of status register 2. It is set via Write Status with two data bytes where bit 1 of the second byte is one. 
-                It is cleared via Write Status with two data bytes where bit 1 of the second byte is zero. 
+  case 0x4u:{ /* 100b: QE is bit 1 of status register 2. It is set via Write Status with two data bytes where bit 1 of the second byte is one.
+                It is cleared via Write Status with two data bytes where bit 1 of the second byte is zero.
                 In contrast to the 001b code, writing one byte to the status register does not modify status register 2.*/
-   
+
     /* read the status register */
     if (HAL_OK != SAL_XSPI_SendReadCommand(&Object->sfpd_private.SALObject, 0x5, (uint8_t *)&localValue[0], 2u))
     {
       retr = EXTMEM_SFDP_ERROR_DRIVER;
       goto error;
     }
-    
+
     /* update the status register */
     localValue[1] |= 2u;
-    
+
     /* WEL */
     if (HAL_OK != SAL_XSPI_SendReadCommand(&Object->sfpd_private.SALObject, Object->sfpd_private.DriverInfo.WriteWELCommand, NULL, 0u))
     {
       retr = EXTMEM_SFDP_ERROR_DRIVER;
       goto error;
     }
-    
+
     /* write the status register */
     if (HAL_OK != SAL_XSPI_CommandSendData(&Object->sfpd_private.SALObject, 0x1u, (uint8_t *)&localValue[0], 2u))
     {
@@ -2423,7 +2426,7 @@ SFDP_StatusTypeDef JEDEC_Basic_ManageQuadEnableRequierement(EXTMEM_DRIVER_NOR_SF
       retr = EXTMEM_SFDP_ERROR_DRIVER;
       goto error;
     }
-    
+
     /* Optional : only for control read the status register and check write operation is OK */
     localValue[1] = 0xFF;
     if (HAL_OK != SAL_XSPI_SendReadCommand(&Object->sfpd_private.SALObject, 0x5, (uint8_t *)&localValue[0], 2u))
@@ -2442,12 +2445,12 @@ SFDP_StatusTypeDef JEDEC_Basic_ManageQuadEnableRequierement(EXTMEM_DRIVER_NOR_SF
   default :/* Added for Misra */
     break;
   }
-error :  
+error :
   return retr;
 }
 
 /**
- * @brief this function is in charge to manages the action corresponding to 
+ * @brief This function is in charge to manages the action corresponding to
           JEDEC_Basic.Params.Param_DWORD.D15._4S4S4S_EnableSequence parameter
  * @param Object memory Object
  * @return @ref SFDP_StatusTypeDef
@@ -2456,7 +2459,7 @@ SFDP_StatusTypeDef JEDEC_Basic_Manage4S4S4SEnableSequence(EXTMEM_DRIVER_NOR_SFDP
 {
   SFDP_StatusTypeDef retr = EXTMEM_SFDP_ERROR_NOTYETHANDLED;
   uint8_t instruction = 0x00u;
-    /* 4-4-4 mode enable sequences, This field describes the supported methods to enter 4-4-4 mode from 1-1-1 mode */
+    /* 4-4-4 mode enable sequences; This field describes the supported methods to enter 4-4-4 mode from 1-1-1 mode */
     /* x_xxx1b: set QE per QER description above, then issue instruction 38h */
     if ((JEDEC_Basic.Params.Param_DWORD.D15._4S4S4S_EnableSequence & 0x1u) == 0x1u)
     {
@@ -2491,16 +2494,16 @@ NOTE If device is in 0-4-4 mode, then this mode must be exited before the 4-4-4 
         /* @note on memory W25Q64JV the command 38h does not exist so the control on command execution has been removed */
         retr = EXTMEM_SFDP_OK;
     }
-    
+
     // x1xxb: device uses a read-modify-write sequence of operations: read configuration using instruction 65h followed by address 800003h, clear bit 6, write configuration using instruction 71h followed by address 800003h.. This configuration is volatile.
     // 1xxxb: issue the Soft Reset 66/99 sequence, see 6.4.19
     // NOTE If device is in 0-4-4 mode, then this mode must be exited before the 4-4-4 disable sequence is issued.
-  
+
   return retr;
 }
 
 /**
- * @brief this function check the validity of the memory type  
+ * @brief This function check the validity of the memory type
  * @param Object memory Object
  * @param Signature value of the SFDP signature
  * @return @ref SFDP_StatusTypeDef
@@ -2508,7 +2511,7 @@ NOTE If device is in 0-4-4 mode, then this mode must be exited before the 4-4-4 
 SFDP_StatusTypeDef CheckSFDP_Signature(EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef *Object, uint32_t Signature )
 {
   SFDP_StatusTypeDef retr = EXTMEM_SFDP_ERROR_SIGNATURE;
-  
+
   /* check the magic number */
   switch(Signature)
   {
@@ -2518,7 +2521,7 @@ SFDP_StatusTypeDef CheckSFDP_Signature(EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef *Obj
     break;
   case 0x44505346U :
     SFDP_DEBUG_STR("signature of the header: KO inverted data order");
-    /* Change the Mtype settings */
+    /* Change the memory type settings */
     if (HAL_OK == SAL_XSPI_UpdateMemoryType(&Object->sfpd_private.SALObject, SAL_XSPI_ORDERINVERTED))
     {
       retr = EXTMEM_SFDP_ERROR_SIGNATUREMTYPE;

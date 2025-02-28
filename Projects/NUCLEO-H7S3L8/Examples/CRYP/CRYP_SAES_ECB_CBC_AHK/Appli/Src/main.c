@@ -45,11 +45,11 @@
 RNG_HandleTypeDef hrng;
 
 CRYP_HandleTypeDef hcryp;
-uint32_t pKeySAES[4] = {0x2B7E1516,0x28AED2A6,0xABF71588,0x09CF4F3C};
 
 /* USER CODE BEGIN PV */
 static CRYP_ConfigTypeDef Conf;
 uint32_t pKeySAES256[8] = {0x603DEB10 ,0x15CA71BE ,0x2B73AEF0 ,0x857D7781 ,0x1F352C07 ,0x3B6108D7 ,0x2D9810A3 ,0x0914DFF4};
+uint32_t pKeySAES[4] = {0x2B7E1516,0x28AED2A6,0xABF71588,0x09CF4F3C};
 uint32_t pInitVectSAES[4] = {0x00010203 , 0x04050607 , 0x08090A0B , 0x0C0D0E0F};
 
 uint32_t Plaintext[16] = { 0x6BC1BEE2 ,0x2E409F96 ,0xE93D7E11 ,0x7393172A ,
@@ -165,7 +165,7 @@ int main(void)
     Error_Handler();
   }
   /*Compare results with expected buffer*/
-  if(memcmp(EncryptedText, CiphertextECB128, PLAINTEXT_SIZE) != 0)
+  if(memcmp(EncryptedText, CiphertextECB128, PLAINTEXT_SIZE * 4) != 0)
   {
     /* Processing Error */
     Error_Handler();
@@ -178,7 +178,7 @@ int main(void)
     Error_Handler();
   }
   /*Compare results with expected buffer*/
-  if(memcmp(DecryptedText, Plaintext, PLAINTEXT_SIZE) != 0)
+  if(memcmp(DecryptedText, Plaintext, PLAINTEXT_SIZE * 4) != 0)
   {
     /* Processing Error */
     Error_Handler();
@@ -205,7 +205,7 @@ int main(void)
   /*##-1.1- Encryption Phase #################################################*/
   HAL_CRYP_Encrypt(&hcryp, Plaintext, 16, EncryptedText, TIMEOUT_VALUE);
 
-  if(memcmp(EncryptedText, CiphertextECB256, PLAINTEXT_SIZE) != 0)
+  if(memcmp(EncryptedText, CiphertextECB256, PLAINTEXT_SIZE * 4) != 0)
   {
     /* Processing Error */
     Error_Handler();
@@ -214,7 +214,7 @@ int main(void)
   /*##-1.1- Decryption Phase #################################################*/
   HAL_CRYP_Decrypt(&hcryp,CiphertextECB256 , 16, DecryptedText, TIMEOUT_VALUE);
   /*Compare results with expected buffer*/
-  if(memcmp(DecryptedText, Plaintext, PLAINTEXT_SIZE) != 0)
+  if(memcmp(DecryptedText, Plaintext, PLAINTEXT_SIZE * 4) != 0)
   {
     /* Processing Error */
     Error_Handler();
@@ -242,7 +242,7 @@ int main(void)
   /*##-2- Encryption Phase #################################################*/
   HAL_CRYP_Encrypt(&hcryp, Plaintext, 16, EncryptedText, TIMEOUT_VALUE);
    /*Compare results with expected buffer*/
-  if(memcmp(EncryptedText, CiphertextCBC128, PLAINTEXT_SIZE) != 0)
+  if(memcmp(EncryptedText, CiphertextCBC128, PLAINTEXT_SIZE * 4) != 0)
   {
     /* Processing Error */
     Error_Handler();
@@ -251,7 +251,7 @@ int main(void)
   /*##-2- Decryption Phase #################################################*/
   HAL_CRYP_Decrypt(&hcryp,CiphertextCBC128 , 16, DecryptedText, TIMEOUT_VALUE);
   /*Compare results with expected buffer*/
-  if(memcmp(DecryptedText, Plaintext, PLAINTEXT_SIZE) != 0)
+  if(memcmp(DecryptedText, Plaintext, PLAINTEXT_SIZE * 4) != 0)
   {
     /* Processing Error */
     Error_Handler();
@@ -277,7 +277,7 @@ int main(void)
   /*##-2.1- Encryption Phase #################################################*/
   HAL_CRYP_Encrypt(&hcryp, Plaintext, 16, EncryptedText, TIMEOUT_VALUE);
     /*Compare results with expected buffer*/
-  if(memcmp(EncryptedText, CiphertextCBC256, 64) != 0)
+  if(memcmp(EncryptedText, CiphertextCBC256, PLAINTEXT_SIZE * 4) != 0)
   {
     /* Processing Error */
     Error_Handler();
@@ -286,7 +286,7 @@ int main(void)
   /*##-2.1- Decryption Phase #################################################*/
   HAL_CRYP_Decrypt(&hcryp,CiphertextCBC256 , 16, DecryptedText, TIMEOUT_VALUE);
   /*Compare results with expected buffer*/
-  if(memcmp(DecryptedText, Plaintext,PLAINTEXT_SIZE) != 0)
+  if(memcmp(DecryptedText, Plaintext,PLAINTEXT_SIZE * 4) != 0)
   {
     /* Processing Error */
     Error_Handler();
@@ -351,7 +351,6 @@ static void MX_SAES_CRYP_Init(void)
   hcryp.Instance = SAES;
   hcryp.Init.DataType = CRYP_DATATYPE_32B;
   hcryp.Init.KeySize = CRYP_KEYSIZE_128B;
-  hcryp.Init.pKey = (uint32_t *)pKeySAES;
   hcryp.Init.Algorithm = CRYP_AES_ECB;
   hcryp.Init.DataWidthUnit = CRYP_DATAWIDTHUNIT_WORD;
   hcryp.Init.HeaderWidthUnit = CRYP_HEADERWIDTHUNIT_WORD;
@@ -469,7 +468,7 @@ static void MPU_Config(void)
   MPU_InitStruct.TypeExtField = MPU_TEX_LEVEL1;
   MPU_InitStruct.AccessPermission = MPU_REGION_FULL_ACCESS;
   MPU_InitStruct.DisableExec = MPU_INSTRUCTION_ACCESS_ENABLE;
-  MPU_InitStruct.IsShareable = MPU_ACCESS_SHAREABLE;
+  MPU_InitStruct.IsShareable = MPU_ACCESS_NOT_SHAREABLE;
   MPU_InitStruct.IsCacheable = MPU_ACCESS_CACHEABLE;
   MPU_InitStruct.IsBufferable = MPU_ACCESS_BUFFERABLE;
   MPU_AdjustRegionAddressSize(address, size, &MPU_InitStruct);
@@ -498,23 +497,39 @@ static void MPU_Config(void)
   */
 static void MPU_AdjustRegionAddressSize(uint32_t Address, uint32_t Size, MPU_Region_InitTypeDef* pInit)
 {
+  static uint8_t loopcontrol = 0;
+  uint32_t Modulo;
+
+  /* control the loop increment */
+  loopcontrol++;
+
+  if (loopcontrol > 3)
+  {
+    /* the scatter file input is too complex to determine the MPU configuration */
+    Error_Handler();
+  }
+
   /* Compute the MPU region size */
   pInit->Size = ((31 - __CLZ(Size)) - 1);
   if (Size > (1 << (pInit->Size + 1)))
   {
     pInit->Size++;
   }
-  uint32_t Modulo = Address % (1 << (pInit->Size - 1));
+  Modulo = Address % (1 << (pInit->Size + 1));
   if (0 != Modulo)
   {
     /* Align address with MPU region size considering there is no need to increase the size */
-    pInit->BaseAddress = Address - Modulo;
+    MPU_AdjustRegionAddressSize(Address - Modulo, Size + Modulo, pInit);
   }
   else
   {
     pInit->BaseAddress = Address;
   }
+
+  /* control the loop decrement */
+  loopcontrol--;
 }
+
 /**
   * @brief Program an OB key into flash
   * @param Index   0: 128bits key,  2: 256bits key

@@ -19,7 +19,7 @@
 <body>
 <div class="row">
 <div class="col-sm-12 col-lg-8">
-<h2 id="fatfs_multiaccess-fatfs-with-usd-card-drive-application-description"><b>FatFs_MultiAccess FatFs with uSD card drive application Description</b></h2>
+<h2 id="fatfs_multiaccess-fatfs-with-usd-card-drive-application-description"><b>FatFs_MultiAccess Application Description</b></h2>
 <p>This application provides a description on how to use STM32Cube firmware with FatFs middleware component as a generic FAT file system module, in order to develop an application exploiting FatFs offered features with microSD drive in RTOS mode configuration.</p>
 <p>At the beginning of the main program the HAL_Init() function is called to reset all the peripherals and initialize the Flash interface. The HAL initializes the TIM6 to generate an interrupt each 1ms, it will be used as time base for the HAL drivers. This application uses FreeRTOS, the RTOS initializes the systick to generate an interrupt each 1ms. The systick is then used for FreeRTOS time base.</p>
 <p>The SystemCoreClockUpdate() function is used to configure the system clock for STM32H7RSxx Devices : The CPU at 600 MHz.</p>
@@ -70,7 +70,7 @@
 <h3 id="hardware-and-software-environment"><b>Hardware and Software environment</b></h3>
 <ul>
 <li><p>This application runs on STM32H7RSxx devices</p></li>
-<li><p>This application has been tested with STM32H7S78-DK boards Revision MB1736-H7S7L8-C01 and can be easily tailored to any other supported device and development board.</p></li>
+<li><p>This application has been tested with STM32H7S78-DK boards Revision MB1736-H7S7L8-D01 and can be easily tailored to any other supported device and development board.</p></li>
 </ul>
 <p>STM32H7S78-DK Set-up :</p>
 <ul>

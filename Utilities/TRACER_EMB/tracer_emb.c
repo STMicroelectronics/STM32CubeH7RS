@@ -126,7 +126,11 @@ uint8_t TRACER_EMB_ReadData(void);
 /** @defgroup TRACER_EMB_Private_Variables TRACE Private Variables
   * @{
   */
+#if defined(TRACER_EMB_STRUCTURE_MEMORY_LOCATION)
+static TRACER_ContextTypedef_t TracerContext __attribute__((section(TRACER_EMB_STRUCTURE_MEMORY_LOCATION)));
+#else
 static TRACER_ContextTypedef_t TracerContext;
+#endif /* TRACER_EMB_STRUCTURE_MEMORY_LOCATION */
 /**
   * @}
   */
@@ -152,6 +156,15 @@ void TRACER_EMB_Init(void)
 
   /* Initialize the lowpower aspect */
   TRACER_EMB_LowPowerInit();
+}
+/**
+  * @brief  Tracer DeInit
+  * @param  None.
+  * @retval None.
+  */
+void TRACER_EMB_DeInit(void)
+{
+  HW_TRACER_EMB_DeInit();
 }
 
 void TRACER_EMB_Add(uint8_t *Ptr, uint32_t Size)

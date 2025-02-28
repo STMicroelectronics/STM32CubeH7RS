@@ -242,12 +242,12 @@ HAL_StatusTypeDef SAL_XSPI_Init(SAL_XSPI_ObjectTypeDef *SalXspi, void *HALHandle
   return HAL_OK;
 }
 
-HAL_StatusTypeDef SAL_XSPI_MemoryConfig(SAL_XSPI_ObjectTypeDef *SalXspi, SAL_XSPI_MemParamTypeTypeDef ParmetersType, void *ParamVal)
+HAL_StatusTypeDef SAL_XSPI_MemoryConfig(SAL_XSPI_ObjectTypeDef *SalXspi, SAL_XSPI_MemParamTypeTypeDef ParametersType, void *ParamVal)
 {
   HAL_StatusTypeDef retr = HAL_OK;
   XSPI_RegularCmdTypeDef s_commandbase = SalXspi->Commandbase;
 
-  switch (ParmetersType) {
+  switch (ParametersType) {
   case PARAM_PHY_LINK:{
     SalXspi->PhyLink = *((SAL_XSPI_PhysicalLinkTypeDef *)ParamVal);
     DEBUG_PARAM_BEGIN(); DEBUG_PARAM_DATA("::PARAM_PHY_LINK::");DEBUG_PARAM_DATA(STR_PHY_LINK(SalXspi->PhyLink));
@@ -861,6 +861,11 @@ HAL_StatusTypeDef retr = HAL_OK;
   return retr;
 }
 
+HAL_StatusTypeDef SAL_XSPI_Abort(SAL_XSPI_ObjectTypeDef *SalXspi)
+{
+  return HAL_XSPI_Abort(SalXspi->hxspi);
+}
+
 /**
   * @}
   */
@@ -869,7 +874,7 @@ HAL_StatusTypeDef retr = HAL_OK;
   * @{
   */
 /**
-  * @brief this function return a formatted command
+  * @brief This function return a formatted command
   *
   * @param CommandExtension type of the command extension 0: the complement  1 : the same
   * @param InstructionWidth instruction width
@@ -902,7 +907,13 @@ uint16_t XSPI_FormatCommand(uint8_t CommandExtension, uint32_t InstructionWidth,
   return retr;
 }
 
-
+/**
+  * @brief This function trasnmits the data
+  *
+  * @param SalXspi handle on the XSPI IP
+  * @param Data data pointer
+  * @return none
+  */
 HAL_StatusTypeDef XSPI_Transmit(SAL_XSPI_ObjectTypeDef *SalXspi, const uint8_t *Data)
 {
 HAL_StatusTypeDef retr;
@@ -941,7 +952,7 @@ HAL_StatusTypeDef retr;
 /**
   * @brief this is called to start the data transfer in polling mode or DMA
   *
-  * @param hxpsi handle on the XSPI IP
+  * @param SalXspi handle on the XSPI IP
   * @param Data data pointer
   * @return none
   */
@@ -983,7 +994,7 @@ HAL_StatusTypeDef retr;
 /**
   * @brief this is called when a DMA transfer error occurs
   *
-  * @param hxpsi handle on the XSPI IP
+  * @param hxspi handle on the XSPI IP
   * @return none
   */
 void SAL_XSPI_ErrorCallback(struct __XSPI_HandleTypeDef *hxspi)
@@ -994,7 +1005,7 @@ void SAL_XSPI_ErrorCallback(struct __XSPI_HandleTypeDef *hxspi)
 /**
   * @brief this is called when a DMA transfer is complete
   *
-  * @param hxpsi handle on the XSPI IP
+  * @param hxspi handle on the XSPI IP
   * @return none
   */
 void SAL_XSPI_CompleteCallback(struct __XSPI_HandleTypeDef *hxspi)

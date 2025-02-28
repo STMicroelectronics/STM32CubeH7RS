@@ -7,7 +7,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2023 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -62,15 +62,15 @@
   * @{
   */
 
-#define USBD_VID     1155
-#define USBD_LANGID_STRING     1033
+#define USBD_VID                     1155
+#define USBD_LANGID_STRING           1033
 #define USBD_MANUFACTURER_STRING     "STMicroelectronics"
-#define USBD_PID     22336
-#define USBD_PRODUCT_STRING     "STM32 Audio Class"
-#define USBD_CONFIGURATION_STRING     "AUDIO Config"
-#define USBD_INTERFACE_STRING     "AUDIO Interface"
+#define USBD_PID                     22336
+#define USBD_PRODUCT_STRING          "STM32 Audio Class"
+#define USBD_CONFIGURATION_STRING    "AUDIO Config"
+#define USBD_INTERFACE_STRING        "AUDIO Interface"
 
-#define USB_SIZ_BOS_DESC            0x0C
+#define USB_SIZ_BOS_DESC             0x0C
 
 /* USER CODE BEGIN PRIVATE_DEFINES */
 

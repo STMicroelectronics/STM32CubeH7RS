@@ -70,7 +70,7 @@ extern "C" {
 
 /* Maximum Timeout values for flags waiting loops.
    You may modify these timeout values depending on CPU frequency and application
-   conditions (interrupts routines ...). */
+   conditions (interrupts routines...). */
 #define COM_UART_TIMEOUT_MAX                    1000U
 
 /**

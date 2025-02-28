@@ -7,7 +7,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2023 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -23,6 +23,9 @@
 /* USER CODE BEGIN Includes */
 
 /* USER CODE END Includes */
+extern DMA_HandleTypeDef handle_HPDMA1_Channel1;
+
+extern DMA_HandleTypeDef handle_HPDMA1_Channel0;
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN TD */
@@ -62,7 +65,7 @@
   */
 void HAL_MspInit(void)
 {
-  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+RCC_OscInitTypeDef RCC_OscInitStruct = {0};
 
   /* Configure the system Power Supply */
 
@@ -147,7 +150,6 @@ void HAL_XSPI_MspInit(XSPI_HandleTypeDef* hxspi)
 
     __HAL_RCC_GPION_CLK_ENABLE();
     /**XSPI1 GPIO Configuration
-    PN1     ------> XSPIM_P2_NCS1
     PN3     ------> XSPIM_P2_IO1
     PN0     ------> XSPIM_P2_DQS0
     PN11     ------> XSPIM_P2_IO7
@@ -159,19 +161,72 @@ void HAL_XSPI_MspInit(XSPI_HandleTypeDef* hxspi)
     PN4     ------> XSPIM_P2_IO2
     PN5     ------> XSPIM_P2_IO3
     */
-    GPIO_InitStruct.Pin = GPIO_PIN_1|GPIO_PIN_3|GPIO_PIN_0|GPIO_PIN_11
-                          |GPIO_PIN_10|GPIO_PIN_9|GPIO_PIN_2|GPIO_PIN_6
-                          |GPIO_PIN_8|GPIO_PIN_4|GPIO_PIN_5;
+    GPIO_InitStruct.Pin = GPIO_PIN_3|GPIO_PIN_0|GPIO_PIN_11|GPIO_PIN_10
+                          |GPIO_PIN_9|GPIO_PIN_2|GPIO_PIN_6|GPIO_PIN_8
+                          |GPIO_PIN_4|GPIO_PIN_5;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
     GPIO_InitStruct.Alternate = GPIO_AF9_XSPIM_P2;
     HAL_GPIO_Init(GPION, &GPIO_InitStruct);
 
+    /* XSPI1 DMA Init */
+    /* HPDMA1_REQUEST_XSPI1 Init */
+    handle_HPDMA1_Channel1.Instance = HPDMA1_Channel1;
+    handle_HPDMA1_Channel1.Init.Request = HPDMA1_REQUEST_XSPI1;
+    handle_HPDMA1_Channel1.Init.BlkHWRequest = DMA_BREQ_SINGLE_BURST;
+    handle_HPDMA1_Channel1.Init.Direction = DMA_MEMORY_TO_PERIPH;
+    handle_HPDMA1_Channel1.Init.SrcInc = DMA_SINC_INCREMENTED;
+    handle_HPDMA1_Channel1.Init.DestInc = DMA_DINC_FIXED;
+    handle_HPDMA1_Channel1.Init.SrcDataWidth = DMA_SRC_DATAWIDTH_WORD;
+    handle_HPDMA1_Channel1.Init.DestDataWidth = DMA_DEST_DATAWIDTH_WORD;
+    handle_HPDMA1_Channel1.Init.Priority = DMA_LOW_PRIORITY_HIGH_WEIGHT;
+    handle_HPDMA1_Channel1.Init.SrcBurstLength = 4;
+    handle_HPDMA1_Channel1.Init.DestBurstLength = 4;
+    handle_HPDMA1_Channel1.Init.TransferAllocatedPort = DMA_SRC_ALLOCATED_PORT0|DMA_DEST_ALLOCATED_PORT1;
+    handle_HPDMA1_Channel1.Init.TransferEventMode = DMA_TCEM_BLOCK_TRANSFER;
+    handle_HPDMA1_Channel1.Init.Mode = DMA_NORMAL;
+    if (HAL_DMA_Init(&handle_HPDMA1_Channel1) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
+    __HAL_LINKDMA(hxspi, hdmatx, handle_HPDMA1_Channel1);
+
+    if (HAL_DMA_ConfigChannelAttributes(&handle_HPDMA1_Channel1, DMA_CHANNEL_NPRIV) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
+    /* HPDMA1_REQUEST_XSPI1 Init */
+    handle_HPDMA1_Channel0.Instance = HPDMA1_Channel0;
+    handle_HPDMA1_Channel0.Init.Request = HPDMA1_REQUEST_XSPI1;
+    handle_HPDMA1_Channel0.Init.BlkHWRequest = DMA_BREQ_SINGLE_BURST;
+    handle_HPDMA1_Channel0.Init.Direction = DMA_PERIPH_TO_MEMORY;
+    handle_HPDMA1_Channel0.Init.SrcInc = DMA_SINC_FIXED;
+    handle_HPDMA1_Channel0.Init.DestInc = DMA_DINC_INCREMENTED;
+    handle_HPDMA1_Channel0.Init.SrcDataWidth = DMA_SRC_DATAWIDTH_WORD;
+    handle_HPDMA1_Channel0.Init.DestDataWidth = DMA_DEST_DATAWIDTH_WORD;
+    handle_HPDMA1_Channel0.Init.Priority = DMA_LOW_PRIORITY_HIGH_WEIGHT;
+    handle_HPDMA1_Channel0.Init.SrcBurstLength = 4;
+    handle_HPDMA1_Channel0.Init.DestBurstLength = 4;
+    handle_HPDMA1_Channel0.Init.TransferAllocatedPort = DMA_SRC_ALLOCATED_PORT1|DMA_DEST_ALLOCATED_PORT0;
+    handle_HPDMA1_Channel0.Init.TransferEventMode = DMA_TCEM_BLOCK_TRANSFER;
+    handle_HPDMA1_Channel0.Init.Mode = DMA_NORMAL;
+    if (HAL_DMA_Init(&handle_HPDMA1_Channel0) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
+    __HAL_LINKDMA(hxspi, hdmarx, handle_HPDMA1_Channel0);
+
+    if (HAL_DMA_ConfigChannelAttributes(&handle_HPDMA1_Channel0, DMA_CHANNEL_NPRIV) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
   /* USER CODE BEGIN XSPI1_MspInit 1 */
-  /* NVIC configuration for XSPI interrupt */
-  HAL_NVIC_SetPriority(XSPI1_IRQn, 0x00, 0);
-  HAL_NVIC_EnableIRQ(XSPI1_IRQn);
+
   /* USER CODE END XSPI1_MspInit 1 */
   }
   else if(hxspi->Instance==XSPI2)
@@ -195,10 +250,20 @@ void HAL_XSPI_MspInit(XSPI_HandleTypeDef* hxspi)
       __HAL_RCC_XSPIM_CLK_ENABLE();
     }
     __HAL_RCC_XSPI2_CLK_ENABLE();
+
+    __HAL_RCC_GPION_CLK_ENABLE();
+    /**XSPI2 GPIO Configuration
+    PN1     ------> XSPIM_P2_NCS1
+    */
+    GPIO_InitStruct.Pin = GPIO_PIN_1;
+    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+    GPIO_InitStruct.Alternate = GPIO_AF9_XSPIM_P2;
+    HAL_GPIO_Init(GPION, &GPIO_InitStruct);
+
   /* USER CODE BEGIN XSPI2_MspInit 1 */
-  /* NVIC configuration for XSPI interrupt */
-  HAL_NVIC_SetPriority(XSPI2_IRQn, 0x01, 0);
-  HAL_NVIC_EnableIRQ(XSPI2_IRQn);
+
   /* USER CODE END XSPI2_MspInit 1 */
   }
 
@@ -225,7 +290,6 @@ void HAL_XSPI_MspDeInit(XSPI_HandleTypeDef* hxspi)
     __HAL_RCC_XSPI1_CLK_DISABLE();
 
     /**XSPI1 GPIO Configuration
-    PN1     ------> XSPIM_P2_NCS1
     PN3     ------> XSPIM_P2_IO1
     PN0     ------> XSPIM_P2_DQS0
     PN11     ------> XSPIM_P2_IO7
@@ -237,10 +301,13 @@ void HAL_XSPI_MspDeInit(XSPI_HandleTypeDef* hxspi)
     PN4     ------> XSPIM_P2_IO2
     PN5     ------> XSPIM_P2_IO3
     */
-    HAL_GPIO_DeInit(GPION, GPIO_PIN_1|GPIO_PIN_3|GPIO_PIN_0|GPIO_PIN_11
-                          |GPIO_PIN_10|GPIO_PIN_9|GPIO_PIN_2|GPIO_PIN_6
-                          |GPIO_PIN_8|GPIO_PIN_4|GPIO_PIN_5);
+    HAL_GPIO_DeInit(GPION, GPIO_PIN_3|GPIO_PIN_0|GPIO_PIN_11|GPIO_PIN_10
+                          |GPIO_PIN_9|GPIO_PIN_2|GPIO_PIN_6|GPIO_PIN_8
+                          |GPIO_PIN_4|GPIO_PIN_5);
 
+    /* XSPI1 DMA DeInit */
+    HAL_DMA_DeInit(hxspi->hdmatx);
+    HAL_DMA_DeInit(hxspi->hdmarx);
   /* USER CODE BEGIN XSPI1_MspDeInit 1 */
 
   /* USER CODE END XSPI1_MspDeInit 1 */
@@ -256,6 +323,12 @@ void HAL_XSPI_MspDeInit(XSPI_HandleTypeDef* hxspi)
       __HAL_RCC_XSPIM_CLK_DISABLE();
     }
     __HAL_RCC_XSPI2_CLK_DISABLE();
+
+    /**XSPI2 GPIO Configuration
+    PN1     ------> XSPIM_P2_NCS1
+    */
+    HAL_GPIO_DeInit(GPION, GPIO_PIN_1);
+
   /* USER CODE BEGIN XSPI2_MspDeInit 1 */
 
   /* USER CODE END XSPI2_MspDeInit 1 */

@@ -124,7 +124,7 @@
                 </option>
                 <option>
                     <name>GFPUDeviceSlave</name>
-                    <state>STM32H7S38-NUCLEO  ST STM32H7S38-NUCLEO</state>
+                    <state>STM32H7S38-NUCLEO	ST STM32H7S38-NUCLEO</state>
                 </option>
                 <option>
                     <name>FPU2</name>
@@ -216,11 +216,10 @@
                     <name>CCDefines</name>
                     <state>USE_HAL_DRIVER</state>
                     <state>STM32H7S3xx</state>
-                    <state>USBPDCORE_LIB_NO_PD</state>
+                    <state>USE_FULL_LL_DRIVER</state>
                     <state>USBPD_PORT_COUNT=1</state>
                     <state>_SNK</state>
-                    <state>USE_USB_HS</state>
-                    <state>USE_FULL_LL_DRIVER</state>
+                    <state>USBPDCORE_LIB_NO_PD</state>
                     <state>TCPP0203_SUPPORT</state>
                 </option>
                 <option>
@@ -343,6 +342,8 @@
                 <option>
                     <name>CCIncludePath2</name>
                     <state>$PROJ_DIR$/../../Appli/Inc</state>
+                    <state>$PROJ_DIR$/../../../../../../../Drivers/BSP/STM32H7RSxx_Nucleo</state>
+                    <state>$PROJ_DIR$/./../../../../../Drivers/BSP/Components/tcpp0203</state>
                     <state>$PROJ_DIR$/../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Inc</state>
                     <state>$PROJ_DIR$/../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Inc/Legacy</state>
                     <state>$PROJ_DIR$/../../../../../../../Middlewares/ST/STM32_USBPD_Library/Core/inc</state>
@@ -351,8 +352,6 @@
                     <state>$PROJ_DIR$/../../../../../../../Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc</state>
                     <state>$PROJ_DIR$/../../../../../../../Drivers/CMSIS/Device/ST/STM32H7RSxx/Include</state>
                     <state>$PROJ_DIR$/../../../../../../../Drivers/CMSIS/Include</state>
-                    <state>$PROJ_DIR$/../../../../../../../Drivers/BSP/STM32H7RSxx_Nucleo</state>
-                    <state>$PROJ_DIR$/./../../../../../Drivers/BSP/Components/tcpp0203</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
@@ -600,7 +599,7 @@
                 </option>
                 <option>
                     <name>AOutputFile</name>
-                    <state>$FILE_BNAME$.o</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>ALimitErrorsCheck</name>
@@ -1227,12 +1226,6 @@
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\..\..\..\..\..\Drivers\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_smbus_ex.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\..\..\Drivers\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_tim.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\..\..\Drivers\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_tim_ex.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\..\..\..\..\..\Drivers\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_uart.c</name>

@@ -16,4 +16,11 @@
 		<nature>com.st.stm32cube.ide.mcu.MCURootBootProjectNature</nature>
 		<nature>com.st.stm32cube.ide.mcu.MCUSingleCpuProjectNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>FreeRTOS_Mutex.ioc</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/FreeRTOS_Mutex.ioc</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>

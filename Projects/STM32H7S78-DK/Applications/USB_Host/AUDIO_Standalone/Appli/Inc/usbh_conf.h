@@ -19,10 +19,10 @@
 /* USER CODE END Header */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __USBH_CONF__H__
-#define __USBH_CONF__H__
+#ifndef __USBH_CONF_H
+#define __USBH_CONF_H
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 /* Includes ------------------------------------------------------------------*/
 
@@ -190,5 +190,5 @@
 }
 #endif
 
-#endif /* __USBH_CONF__H__ */
+#endif /* __USBH_CONF_H */
 

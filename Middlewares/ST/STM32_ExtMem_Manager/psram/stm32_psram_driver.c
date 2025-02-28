@@ -198,7 +198,7 @@ EXTMEM_DRIVER_PSRAM_StatusTypeDef EXTMEM_DRIVER_PSRAM_Disable_MemoryMappedMode(E
   */
 
 /**
- * @brief this function executes a command 
+ * @brief This function executes a command 
  *
  * @param PsramObject psram memory object
  * @param Index command index

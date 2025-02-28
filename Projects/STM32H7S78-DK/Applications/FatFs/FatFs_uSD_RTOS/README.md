@@ -88,7 +88,7 @@ FatFs, SDMMC, SD Card, File system, FAT Volume, Format, Mount, Read, Write
 
   - This application runs on STM32H7RSxx devices
 
-  - This application has been tested with STM32H7S78-DK boards Revision MB1736-H7S7L8-C01 and can be
+  - This application has been tested with STM32H7S78-DK boards Revision MB1736-H7S7L8-D01 and can be
     easily tailored to any other supported device and development board.
 
   STM32H7S78-DK Set-up :

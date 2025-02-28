@@ -86,7 +86,10 @@ void MX_USB_HOST_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN USB_HOST_Init_PostTreatment */
-
+  USBH_UsrLog(" **** USB OTG FS Host **** \n");
+  USBH_UsrLog("USB Host library started.\n");
+  USBH_UsrLog("Starting CDC Application");
+  USBH_UsrLog("Connect your CDC Device\n");
   /* USER CODE END USB_HOST_Init_PostTreatment */
 }
 

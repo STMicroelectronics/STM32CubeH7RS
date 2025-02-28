@@ -18,8 +18,8 @@
   */
 /* USER CODE END Header */
 
-#ifndef STRAEM1_H_
-#define STRAEM1_H_
+#ifndef __STRAEM1_H
+#define __STRAEM1_H
 
 #define IMG_NBR  17U
 
@@ -40479,4 +40479,4 @@ uint16_t tImagesSizes[] = {IMAGE_SIZE, IMAGE_SIZE, IMAGE_SIZE, IMAGE_SIZE, IMAGE
                            IMAGE_SIZE, IMAGE_SIZE, IMAGE_SIZE, IMAGE_SIZE, IMAGE_SIZE, \
                            IMAGE_SIZE, IMAGE_SIZE};
 
-#endif /* STRAEM1_H_ */
+#endif /* __STRAEM1_H */

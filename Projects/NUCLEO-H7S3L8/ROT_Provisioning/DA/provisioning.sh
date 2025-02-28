@@ -13,7 +13,6 @@ ob_programming_log="ob_programming.log"
 obk_provisioning_log="obk_provisioning.log"
 provisioning="provisioning.log"
 connect_no_reset="-c port=SWD speed=fast ap=1 mode=Hotplug"
-connect_reset="-c port=SWD speed=fast ap=1 mode=Hotplug -hardRst"
 
 # ============================================== Script functions ============================================================
 
@@ -61,7 +60,7 @@ dbg_auth_update()
   return
 }
 
-# Steps to create the obk file
+# Step to create the obk file
 update_da()
 {
   echo "   * $da_file.obk generation:"
@@ -113,9 +112,30 @@ else
 fi
 
 
-# ========================================================= Board provisioning steps =======================================================
-# ================================================== Provisioning the obk file ===========================================================
+# ========================================================= Board provisioning step =======================================================
 echo "Step 2 : Provisioning"
+# Set XSPI1_HSLV to 1
+action="Set XSPI1_HSLV configuration (needed to use external memories)"
+current_log_file="$provisioning"
+echo "\"$stm32programmercli\" $connect_no_reset -ob XSPI1_HSLV=1" > $current_log_file
+"$stm32programmercli" $connect_no_reset -ob XSPI1_HSLV=1 >> $current_log_file 2>&1
+if [ $? -ne 0 ]; then step_error; return 1; fi
+
+# Set XSPI2_HSLV to 1
+action="Set XSPI2_HSLV configuration (needed to use external memories)"
+current_log_file="$provisioning"
+echo "\"$stm32programmercli\" $connect_no_reset -ob XSPI2_HSLV=1" > $current_log_file
+"$stm32programmercli" $connect_no_reset -ob XSPI2_HSLV=1 >> $current_log_file 2>&1
+if [ $? -ne 0 ]; then step_error; return 1; fi
+
+# ========================================================= image flashing =========================================================
+echo "Step 3 : Image flashing"
+echo "   * Flash your application with your preferred toolchain, if not already done"
+echo "       Press any key to continue..."
+echo
+read -p "" -n1 -s
+
+# ================================================== Provisioning the obk file ===========================================================
 # Set DTCM/ITCM_AXI_SHARE to 0
 current_log_file="$provisioning"
 echo "\"$stm32programmercli\" $connect_no_reset -ob DTCM_AXI_SHARE=0 ITCM_AXI_SHARE=0" > $current_log_file
@@ -133,7 +153,7 @@ if [ $? -ne 0 ]; then step_error; exit 1; fi
 
 # Provisioning the obk file step
 current_log_file="$obk_provisioning_log"
-action="Provisionning the .obk file ..."
+action="Provisionning the .obk file..."
 echo "   * $action"
 source "$obk_provisioning" AUTO >> $obk_provisioning_log
 if [ $? -ne 0 ]; then step_error; exit 1; fi
@@ -142,25 +162,16 @@ echo "       Successful obk provisioning"
 echo "       (see $obk_provisioning_log for details)"
 echo
 
-# ====================================================== Option Bytes programming ==========================================================
-action="Programming the option bytes  ..."
+# ====================================================== Option Byte programming ==========================================================
+action="Programming the option bytes..."
 current_log_file=$ob_programming_log
 echo "   * $action"
 source "$ob_programming" AUTO > $ob_programming_log
 if [ $? -ne 0 ]; then step_error; exit 1; fi
 
-echo "       Successful option bytes programming"
+echo "       Successful option byte programming"
 echo "       (see $ob_programming_log for details)"
 echo
-
-# ========================================================= image generation steps ========================================================
-echo "Step 3 : Image flashing"
-echo "   * At this step, you have to flash your application with your preferred toolchain"
-echo "     The connection, with the toolchain, must be done in Hotplug mode (not on a reset)"
-echo "       Press any key to continue..."
-echo
-read -p "" -n1 -s
-
 
 # Set the final product state of the STM32H7RS product
 action="Setting the final product state $product_state"

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['how_20to_20contribute_20to_20lwip',['How to contribute to lwIP',['../contrib.html',1,'']]]
+  ['debugging_20memory_20pool_20sizes_0',['Debugging memory pool sizes',['../mem_err.html',1,'']]],
+  ['deprecated_20list_1',['Deprecated List',['../deprecated.html',1,'']]]
 ];

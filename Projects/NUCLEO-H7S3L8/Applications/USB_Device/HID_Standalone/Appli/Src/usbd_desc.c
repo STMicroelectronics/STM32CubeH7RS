@@ -69,6 +69,7 @@
 #define USBD_PRODUCT_STRING     "STM32 Human interface"
 #define USBD_CONFIGURATION_STRING     "HID Config"
 #define USBD_INTERFACE_STRING     "HID Interface"
+
 #define USB_SIZ_BOS_DESC            0x0C
 
 /* USER CODE BEGIN PRIVATE_DEFINES */
@@ -120,9 +121,11 @@ uint8_t * USBD_HID_ProductStrDescriptor(USBD_SpeedTypeDef speed, uint16_t *lengt
 uint8_t * USBD_HID_SerialStrDescriptor(USBD_SpeedTypeDef speed, uint16_t *length);
 uint8_t * USBD_HID_ConfigStrDescriptor(USBD_SpeedTypeDef speed, uint16_t *length);
 uint8_t * USBD_HID_InterfaceStrDescriptor(USBD_SpeedTypeDef speed, uint16_t *length);
+
 #if (USBD_LPM_ENABLED == 1)
 uint8_t * USBD_HID_USR_BOSDescriptor(USBD_SpeedTypeDef speed, uint16_t *length);
 #endif /* (USBD_LPM_ENABLED == 1) */
+
 /**
   * @}
   */

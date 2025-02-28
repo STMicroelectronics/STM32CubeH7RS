@@ -1,12 +1,9 @@
-## <b>FatFs_MultiAccess FatFs with uSD card drive application Description</b>
+## <b>FatFs_MultiAccess Application Description</b>
 
-This application provides a description on how to use STM32Cube firmware with FatFs
-middleware component as a generic FAT file system module, in order to develop an
-application exploiting FatFs offered features with microSD drive in RTOS mode
-configuration.
+This application provides a description on how to use STM32Cube firmware with FatFs middleware component as a generic FAT file system module, in order to develop an
+application exploiting FatFs offered features with microSD drive in RTOS mode configuration.
 
-At the beginning of the main program the HAL_Init() function is called to reset
-all the peripherals and initialize the Flash interface.
+At the beginning of the main program the HAL_Init() function is called to reset all the peripherals and initialize the Flash interface.
 The HAL initializes the TIM6 to generate an interrupt each 1ms, it will be used as time base for the HAL drivers.
 This application uses FreeRTOS, the RTOS initializes the systick to generate an interrupt each 1ms.
 The systick is then used for FreeRTOS time base.
@@ -31,20 +28,16 @@ and it's performed using FatFs APIs to access the FAT volume as described in the
  - Close the open text file;
  - Unlink the FatFs disk I/O driver.
 
-The application manages any error occurred during the
-access to FAT volume, when using FatFs APIs. Otherwise, user can check if the
+The application manages any error occurred during the access to FAT volume, when using FatFs APIs. Otherwise, user can check if the
 written text files are available on the uSD card.
 
-It is possible to fine tune needed FatFs features by modifying defines values
-in FatFs configuration file "ffconf.h" available under the project includes
+It is possible to fine tune needed FatFs features by modifying defines values in FatFs configuration file "ffconf.h" available under the project includes
 directory, in a way to fit the application requirements.
 
-It is possible to fine tune needed FatFs features by modifying defines values
-in FatFs configuration file "ffconf.h" available under the project includes
+It is possible to fine tune needed FatFs features by modifying defines values in FatFs configuration file "ffconf.h" available under the project includes
 directory, in a way to fit the application requirements.
 
-It is possible to dynamically hot plug/unplug the uSD card, as the application will
-handle the plug/unplug events.
+It is possible to dynamically hot plug/unplug the uSD card, as the application will handle the plug/unplug events.
 
 STM32H7S78-DK's LED can be used to monitor the application status:
 - BLUE LED is ON when the application runs successfully.
@@ -83,25 +76,23 @@ STM32H7S78-DK's LED can be used to monitor the application status:
 
 4. It is recommended to enable the cache and maintain its coherence.
    Depending on the use case it is also possible to configure the cache attributes using the MPU.
-   Please refer to the AN4838 "Managing memory protection unit (MPU) in STM32 MCUs"
-   Please refer to the AN4839 "Level 1 cache on STM32F7 Series and STM32H7 Series"
+        Please refer to the AN4838 "Managing memory protection unit (MPU) in STM32 MCUs"
+        Please refer to the AN4839 "Level 1 cache on STM32F7 Series and STM32H7 Series"
 
 ### <b>Keywords</b>
 
 FatFs, SDMMC, SD Card, File system, FAT Volume, Format, Mount, Read, Write
 
-
 ### <b>Hardware and Software environment</b>
 
   - This application runs on STM32H7RSxx devices
 
-  - This application has been tested with STM32H7S78-DK boards Revision MB1736-H7S7L8-C01
+  - This application has been tested with STM32H7S78-DK boards Revision MB1736-H7S7L8-D01
     and can be easily tailored to any other supported device and development board.
 
   STM32H7S78-DK Set-up :
 
   - Connect the uSD Card to the Micro SD connector (CN13).
-
 
 ### <b>How to use it ?</b>
 

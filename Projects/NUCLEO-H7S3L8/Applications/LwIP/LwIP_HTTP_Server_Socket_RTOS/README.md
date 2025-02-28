@@ -15,8 +15,8 @@ This application guides STM32Cube HAL API users to run a http server application
 
  + The board IP address is printed on the HyperTerminal
  + This HTTP server contains two html pages:
-     - The first page (home page) is static, it gives information about STM32H7RS and LwIP stack.
-     - The second page is dynamically refreshed (every 1 s), it shows the RTOS statistics in runtime.
+    - The first page (home page) is static, it gives information about STM32H7RS and LwIP stack.
+    - The second page is dynamically refreshed (every 1 s), it shows the RTOS statistics in runtime.
 
 #### <b>Expected error behavior</b>
 
@@ -30,6 +30,7 @@ This application guides STM32Cube HAL API users to run a http server application
 - The Application is using the DHCP to acquire IP address, thus a DHCP server should be reachable by the board in the LAN used to test the application.
 
 #### <b>Known limitations</b>
+
 None.
 
 ### <b>Notes</b>
@@ -67,19 +68,19 @@ Connectivity, LwIP, Ethernet, HTTP Server, Socket, TCP/IP, FreeRTOS, DHCP
   - This application runs on STM32H7S3L8 devices.
 
   - This application has been tested with the following environments:
-     - NUCLEO-H7S3L8 rev B01 board
-     - Http client: Google Chrome
-     - DHCP server: PC utility TFTPD32 (http://tftpd32.jounin.net/) is used as a DHCP server
+    - NUCLEO-H7S3L8 revision MB1737-H7S3L8-B02 board
+    - Http client: Google Chrome
+    - DHCP server: PC utility TFTPD32 (http://tftpd32.jounin.net/) is used as a DHCP server
 
-  - NUCLEO-H7S3L8 rev B01 Set-up
+  - NUCLEO-H7S3L8 revision MB1737-H7S3L8-B02 Set-up
   - Connect the NUCLEO board to remote PC (through a crossover ethernet cable) or to your local network (through a straight ethernet cable)
 
   - This application uses USART3 to display logs, the hyperterminal configuration is as follows:
-     - BaudRate = 115200 baud
-     - Word Length = 8 Bits
-     - Stop Bit = 1
-     - Parity = None
-     - Flow control = None
+    - BaudRate = 115200 baud
+    - Word Length = 8 Bits
+    - Stop Bit = 1
+    - Parity = None
+    - Flow control = None
 
   - User Option Bytes requirement (with STM32CubeProgrammer tool)
 
@@ -93,7 +94,7 @@ It boots from internal Flash (Template_XIP_Boot) then jumps to the application c
 To configure STM32CubeIDE Debug Configuration, you must do the following :
 
     1. Upload the template XIP
-    2. Add the adequate external loader (MX25UW25645G_STM32H7R38-NUCLEO.stldr file) in Project->Debugger Configuration
+    2. Add the adequate external loader (MX25UW25645G_STM32H7S3L8-NUCLEO.stldr file) in Project->Debugger Configuration
     3. Add in the startup the template_XIP_Boot in Project->Debugger Configuration
     4. Move up the application in the startup
 

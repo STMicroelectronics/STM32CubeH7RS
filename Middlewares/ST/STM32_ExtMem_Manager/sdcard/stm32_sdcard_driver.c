@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * @file    stm32_SDCARD_driver.c
+  * @file    stm32_sdcard_driver.c
   * @author  MCD Application Team
   * @brief   This file includes a driver for SDCARD support
   ******************************************************************************
@@ -122,7 +122,7 @@ EXTMEM_DRIVER_SDCARD_StatusTypeDef EXTMEM_DRIVER_SDCARD_Read(EXTMEM_DRIVER_SDCAR
   }
   else
   {
-    uint32_t block_mum = Address / block_size;
+    uint32_t block_num = Address / block_size;
     uint32_t block_count = Size / block_size;
     
     /* check if*/
@@ -141,11 +141,11 @@ EXTMEM_DRIVER_SDCARD_StatusTypeDef EXTMEM_DRIVER_SDCARD_Read(EXTMEM_DRIVER_SDCAR
     switch(SDCARDObject->sdcard_public.Link)
     {
     case EXTMEM_DRIVER_SDCARD_LINKSD :
-      hal_status = SAL_SD_ReadData(&SDCARDObject->sdcard_private.SALObject.SDObject, block_mum, Data, block_count);
+      hal_status = SAL_SD_ReadData(&SDCARDObject->sdcard_private.SALObject.SDObject, block_num, Data, block_count);
       break;
 #if EXTMEM_SAL_MMC == 1
     case EXTMEM_DRIVER_SDCARD_LINKMMC:
-      hal_status = SAL_MMC_Read(&SDCARDObject->sdcard_private.SALObject.MMCObject, block_mum, Data, block_count);
+      hal_status = SAL_MMC_Read(&SDCARDObject->sdcard_private.SALObject.MMCObject, block_num, Data, block_count);
       break;
 #endif /* EXTMEM_SAL_MMC == 1 */
     default :
@@ -174,7 +174,7 @@ EXTMEM_DRIVER_SDCARD_StatusTypeDef EXTMEM_DRIVER_SDCARD_Write(EXTMEM_DRIVER_SDCA
   }
   else
   {
-    uint32_t block_mum = Address / block_size;
+    uint32_t block_num = Address / block_size;
     uint32_t block_count = Size / block_size;
     
     /* check if */
@@ -193,7 +193,7 @@ EXTMEM_DRIVER_SDCARD_StatusTypeDef EXTMEM_DRIVER_SDCARD_Write(EXTMEM_DRIVER_SDCA
     switch(SDCARDObject->sdcard_public.Link)
     {
     case EXTMEM_DRIVER_SDCARD_LINKSD :
-      hal_status = SAL_SD_WriteData(&SDCARDObject->sdcard_private.SALObject.SDObject, block_mum, Data, block_count);
+      hal_status = SAL_SD_WriteData(&SDCARDObject->sdcard_private.SALObject.SDObject, block_num, Data, block_count);
       break;
     case EXTMEM_DRIVER_SDCARD_LINKMMC:
     default :
@@ -223,7 +223,7 @@ EXTMEM_DRIVER_SDCARD_StatusTypeDef EXTMEM_DRIVER_SDCARD_EraseBlock(EXTMEM_DRIVER
   }
   else
   {
-    uint32_t block_mum = Address / block_size;
+    uint32_t block_num = Address / block_size;
     uint32_t block_count = Size / block_size;
     
     if ((Size % block_size) != 0u)
@@ -247,7 +247,7 @@ EXTMEM_DRIVER_SDCARD_StatusTypeDef EXTMEM_DRIVER_SDCARD_EraseBlock(EXTMEM_DRIVER
     switch(SDCARDObject->sdcard_public.Link)
     {
     case EXTMEM_DRIVER_SDCARD_LINKSD :
-      hal_status = SAL_SD_EraseBlock(&SDCARDObject->sdcard_private.SALObject.SDObject, block_mum, block_count);
+      hal_status = SAL_SD_EraseBlock(&SDCARDObject->sdcard_private.SALObject.SDObject, block_num, block_count);
       break;
     case EXTMEM_DRIVER_SDCARD_LINKMMC:
     default :

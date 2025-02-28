@@ -397,6 +397,11 @@
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mbed-crypto/library/bignum.c</locationURI>
 		</link>
 		<link>
+			<name>Middlewares/mbed-crypto/bignum_core.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mbed-crypto/library/bignum_core.c</locationURI>
+		</link>
+		<link>
 			<name>Middlewares/mbed-crypto/cipher.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/mbed-crypto/library/cipher.c</locationURI>

@@ -113,3 +113,15 @@ void RNG_DeInit(void)
   users = 0;
 }
 
+#if defined(MBEDTLS_ENTROPY_HARDWARE_ALT)
+/* Provide entropy source to mbedtls */
+int mbedtls_hardware_poll(void *data, unsigned char *output, size_t len, size_t *olen)
+{
+  RNG_GetBytes(output, len, olen);
+  if (*olen != len)
+  {
+    return MBEDTLS_ERR_ENTROPY_SOURCE_FAILED;
+  }
+  return 0;
+}
+#endif

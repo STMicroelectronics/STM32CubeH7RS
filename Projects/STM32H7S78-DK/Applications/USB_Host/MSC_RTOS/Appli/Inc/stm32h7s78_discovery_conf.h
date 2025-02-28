@@ -17,8 +17,8 @@
   */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef STM32H7S78_DK_CONF_H
-#define STM32H7S78_DK_CONF_H
+#ifndef __STM32H7S78_DK_CONF_H
+#define __STM32H7S78_DK_CONF_H
 
 #ifdef __cplusplus
  extern "C" {
@@ -64,4 +64,4 @@
 }
 #endif
 
-#endif /* STM32H7S78_DK_CONF_H */
+#endif /* __STM32H7S78_DK_CONF_H */

@@ -32,7 +32,7 @@ extern "C" {
 #define MCUBOOT_FIH_PROFILE_HIGH    /* in this config random delay is activated at each FIH_CALL */
 /*
  * With some implementations, most of the configuration flags (e.g. signature type,
- * upgrade mode ...) are handled by the CMake-based buildsystem and
+ * upgrade mode...) are handled by the CMake-based buildsystem and
  * added to the compiler command lines.
  */
 
@@ -61,18 +61,25 @@ extern "C" {
 #define MCUBOOT_ENC_SECURITY_CNT     /* Security counters are encrypted: resets of boot_loader_state->enc are needed */
 
 #include "stm32h7rsxx_hal.h"
-#if defined(STM32H7S3xx) || defined(STM32H7S7xx)
+
 /*
  * Cryptographic settings
  */
-#define MCUBOOT_USE_HAL
 
-#if defined(MCUBOOT_USE_HAL)
+#if defined(STM32H7S3xx) || defined(STM32H7S7xx)
+/* HW accelerators activation in BL2 */
+#define BL2_HW_ACCEL_ENABLE
+#if defined(BL2_HW_ACCEL_ENABLE)
+#define MCUBOOT_USE_HAL
 #define MCUBOOT_USE_HASH_HAL_V2
 #define PKA_ECDSA_SIGNATURE_ADDRESS 0x0578UL
-#endif /* MCUBOOT_USE_HAL */
-#else
+#else /* not BL2_HW_ACCEL_ENABLE */
 #define MCUBOOT_USE_MBED_TLS
+#endif /* BL2_HW_ACCEL_ENABLE */
+
+#else /* STM32H7S3xx || STM32H7S7xx */
+#define MCUBOOT_USE_MBED_TLS
+
 #endif /* STM32H7S3xx || STM32H7S7xx */
 
 /*
@@ -80,7 +87,7 @@ extern "C" {
  */
 #ifdef OEMIROT_DEV_MODE
 #define MCUBOOT_HAVE_LOGGING    1
-#endif 
+#endif
 
 #endif /* !__BOOTSIM__ */
 

@@ -16,8 +16,8 @@
   ******************************************************************************
   */
 
-#ifndef SD_DISKIO_CONFIG_H
-#define SD_DISKIO_CONFIG_H
+#ifndef __SD_DISKIO_CONFIG_H
+#define __SD_DISKIO_CONFIG_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -63,4 +63,4 @@ extern void MX_SDMMC1_SD_Init(void);
 }
 #endif
 
-#endif /* SD_DISKIO_CONFIG_H */
+#endif /* __SD_DISKIO_CONFIG_H */

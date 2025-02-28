@@ -66,10 +66,33 @@ static void tcp_echoserver_connection_close(struct tcp_pcb *tpcb, struct tcp_ech
 
 #endif /* LWIP_TCP */
 /* USER CODE END 0 */
+
+/* Private typedef -----------------------------------------------------------*/
+/* USER CODE BEGIN PTD */
+
+/* USER CODE END PTD */
+
+/* Private define -----------------------------------------------------------*/
+/* USER CODE BEGIN PD */
+
+/* USER CODE END PD */
+
+/* Private macro -----------------------------------------------------------*/
+/* USER CODE BEGIN PM */
+
+/* USER CODE END PM */
+
 /* Private function prototypes -----------------------------------------------*/
 static void ethernet_link_status_updated(struct netif *netif);
 static void Ethernet_Link_Periodic_Handle(struct netif *netif);
+/* USER CODE BEGIN PFP */
+
+/* USER CODE END PFP */
+
 /* ETH Variables initialization ----------------------------------------------*/
+/* USER CODE BEGIN EVI */
+
+/* USER CODE END EVI */
 
 /* DHCP Variables initialization ---------------------------------------------*/
 uint32_t DHCPfineTimer = 0;
@@ -591,9 +614,6 @@ void MX_LWIP_Init(void)
   /* Set the link callback function, this function is called on change of link status*/
   netif_set_link_callback(&gnetif, ethernet_link_status_updated);
 
-  /* Start DHCP negotiation for a network interface (IPv4) */
-  dhcp_start(&gnetif);
-
 /* USER CODE BEGIN 3 */
   ethernet_link_status_updated(&gnetif);
 /* USER CODE END 3 */
@@ -757,3 +777,6 @@ u32_t sio_tryread(sio_fd_t fd, u8_t *data, u32_t len)
 }
 #endif /* MDK ARM Compiler */
 
+/* USER CODE BEGIN 11 */
+
+/* USER CODE END 11 */

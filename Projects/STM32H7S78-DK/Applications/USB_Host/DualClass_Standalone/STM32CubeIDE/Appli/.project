@@ -222,16 +222,6 @@
 			<locationURI>PARENT-7-PROJECT_LOC/Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_hal_smbus_ex.c</locationURI>
 		</link>
 		<link>
-			<name>Drivers/STM32H7RSxx_HAL_Driver/stm32h7rsxx_hal_tim.c</name>
-			<type>1</type>
-			<locationURI>PARENT-7-PROJECT_LOC/Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_hal_tim.c</locationURI>
-		</link>
-		<link>
-			<name>Drivers/STM32H7RSxx_HAL_Driver/stm32h7rsxx_hal_tim_ex.c</name>
-			<type>1</type>
-			<locationURI>PARENT-7-PROJECT_LOC/Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_hal_tim_ex.c</locationURI>
-		</link>
-		<link>
 			<name>Drivers/STM32H7RSxx_HAL_Driver/stm32h7rsxx_hal_uart.c</name>
 			<type>1</type>
 			<locationURI>PARENT-7-PROJECT_LOC/Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_hal_uart.c</locationURI>
@@ -275,11 +265,6 @@
 			<name>Drivers/STM32H7RSxx_HAL_Driver/stm32h7rsxx_ll_usb.c</name>
 			<type>1</type>
 			<locationURI>PARENT-7-PROJECT_LOC/Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_ll_usb.c</locationURI>
-		</link>
-		<link>
-			<name>Drivers/STM32H7RSxx_HAL_Driver/stm32h7rsxx_ll_utils.c</name>
-			<type>1</type>
-			<locationURI>PARENT-7-PROJECT_LOC/Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_ll_utils.c</locationURI>
 		</link>
 		<link>
 			<name>Middlewares/FatFs/diskio.c</name>

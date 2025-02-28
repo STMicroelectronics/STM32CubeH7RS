@@ -117,7 +117,7 @@ BOOTStatus_TypeDef JumpToApplication(void)
 {
   uint32_t primask_bit;
   typedef  void (*pFunction)(void);
-  pFunction JumpToApp;
+  static pFunction JumpToApp;
   uint32_t Application_vector;
 
   if (EXTMEM_OK != EXTMEM_GetMapAddress(EXTMEM_MEMORY_BOOTXIP, &Application_vector))
@@ -128,11 +128,21 @@ BOOTStatus_TypeDef JumpToApplication(void)
   /* Suspend SysTick */
   HAL_SuspendTick();
 
-  /* Disable I-Cache---------------------------------------------------------*/
-  SCB_DisableICache();
+#if defined(__ICACHE_PRESENT) && (__ICACHE_PRESENT == 1U)
+  /* if I-Cache is enabled, disable I-Cache-----------------------------------*/
+  if (SCB->CCR & SCB_CCR_IC_Msk)
+  {
+    SCB_DisableICache();
+  }
+#endif /* defined(__ICACHE_PRESENT) && (__ICACHE_PRESENT == 1U) */
 
-  /* Disable D-Cache---------------------------------------------------------*/
-  SCB_DisableDCache();
+#if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
+  /* if D-Cache is enabled, disable D-Cache-----------------------------------*/
+  if (SCB->CCR & SCB_CCR_DC_Msk)
+  {
+    SCB_DisableDCache();
+  }
+#endif /* defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U) */
 
   /* Initialize user application's Stack Pointer & Jump to user application  */
   primask_bit = __get_PRIMASK();

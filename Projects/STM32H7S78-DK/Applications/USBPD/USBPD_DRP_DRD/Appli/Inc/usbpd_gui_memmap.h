@@ -19,11 +19,11 @@
   */
 /* USER CODE END Header */
 
-#ifndef __USBPD_GUI_MEMMAP_H_
-#define __USBPD_GUI_MEMMAP_H_
+#ifndef __USBPD_GUI_MEMMAP_H
+#define __USBPD_GUI_MEMMAP_H
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -165,5 +165,5 @@
 }
 #endif
 
-#endif /* __USBPD_GUI_MEMMAP_H_ */
+#endif /* __USBPD_GUI_MEMMAP_H */
 

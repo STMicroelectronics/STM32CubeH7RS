@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['pbuf_5ffree_5fcustom_5ffn',['pbuf_free_custom_fn',['../pbuf_8h.html#a6d285ce1d910f25e511c8c38532a1dce',1,'pbuf.h']]]
+  ['raw_5finput_5fstate_5ft_0',['raw_input_state_t',['../raw__priv_8h.html#a50dd44a4fb984a1975e15dd073d34e8d',1,'raw_priv.h']]],
+  ['raw_5frecv_5ffn_1',['raw_recv_fn',['../raw_8h.html#a17edd059f34f45a770fe2fa458ecf4dd',1,'raw.h']]]
 ];

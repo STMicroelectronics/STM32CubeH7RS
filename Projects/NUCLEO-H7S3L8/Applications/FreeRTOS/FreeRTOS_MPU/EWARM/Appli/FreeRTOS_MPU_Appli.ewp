@@ -608,6 +608,7 @@
                 <option>
                     <name>AUserIncludes</name>
                     <state>$PROJ_DIR$/../../Appli/Inc</state>
+                    <state>$PROJ_DIR$/../../../../../../../Middlewares/Third_Party/FreeRTOS/Source/include</state>
                 </option>
                 <option>
                     <name>AExtraOptionsCheckV2</name>
@@ -1097,6 +1098,12 @@
                 </file>
             </group>
         </group>
+    </group>
+    <group>
+        <name>Doc</name>
+        <file>
+            <name>$PROJ_DIR$\..\..\README.md</name>
+        </file>
     </group>
     <group>
         <name>Drivers</name>

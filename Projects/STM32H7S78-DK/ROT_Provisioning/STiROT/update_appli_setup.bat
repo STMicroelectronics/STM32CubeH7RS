@@ -7,9 +7,6 @@ set project_dir=%~dp0
 :: Enable delayed expansion
 setlocal EnableDelayedExpansion
 
-:: External script
-set ob_flash_programming="ob_flash_programming.bat"
-
 if "%isGeneratedByCubeMX%" == "true" (
     set appli_dir=%stirot_boot_path_project%
 ) else (
@@ -33,15 +30,12 @@ if exist "%appli_dir%\EWARM\stm32h7s7xx_flash.icf" (
 )
 
 :: CubeIDE project Appli Full Secure files
-set cube_appli_postbuild="%appli_dir%\STM32CubeIDE\postbuild.sh"
 set ld_file="%appli_proj_dir%\STM32CubeIDE\%appli_subdir%STM32H7S7L8HXH_FLASH.ld"
 
 :: IAR project Appli Full Secure files
-set iar_appli_postbuild="%appli_dir%\EWARM\postbuild.bat"
 set icf_file="%appli_proj_dir%\EWARM\%appli_subdir%stm32h7s7xx_flash.icf"
 
 :: KEIL project Appli Full Secure files
-set keil_appli_postbuild="%appli_dir%\MDK-ARM\postbuild.bat"
 set sct_file="%appli_proj_dir%\MDK-ARM\%appli_subdir%stm32h7sxx_app.sct"
 
 set main_h="%appli_dir%\Inc\main.h"

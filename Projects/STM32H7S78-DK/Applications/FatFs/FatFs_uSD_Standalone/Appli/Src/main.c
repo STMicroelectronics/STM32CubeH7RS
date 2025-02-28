@@ -116,7 +116,7 @@ int main(void)
     }
     else if (ProcessStatus == APP_ERROR)
     {
-      Error_Handler();
+      App_Error_Handler();
     }
     else if (ProcessStatus == APP_OK)
     {
@@ -204,6 +204,19 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+/**
+  * @brief  This function is executed in case of error occurrence in MX_FATFS_Process function.
+  * @retval None
+  */
+void App_Error_Handler(void)
+{
+  /* USER CODE BEGIN App_Error_Handler_Debug */
+  /* Turn off LED_BLUE */
+  HAL_GPIO_WritePin(LD1_GPIO_Port, LD1_Pin, GPIO_PIN_SET);
+  /* Turn on LED_RED */
+  HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
+  /* USER CODE END App_Error_Handler_Debug */
+}
 
 /* USER CODE END 4 */
 

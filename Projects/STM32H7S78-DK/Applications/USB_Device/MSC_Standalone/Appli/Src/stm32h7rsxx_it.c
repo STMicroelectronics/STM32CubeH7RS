@@ -25,6 +25,9 @@
 /* USER CODE BEGIN Includes */
 #include "stm32h7rsxx_ll_exti.h"
 #include "stm32h7s78_discovery_sd.h"
+#if defined(TCPP0203_SUPPORT)
+#include "stm32h7s78_discovery_usbpd_pwr.h"
+#endif /* TCPP0203_SUPPORT */
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -49,7 +52,9 @@
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN PFP */
-
+#if defined(TCPP0203_SUPPORT)
+void TCPP0203_PORT0_FLG_EXTI_IRQHANDLER(void);
+#endif /* TCPP0203_SUPPORT */
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -209,7 +214,6 @@ void GPDMA1_Channel0_IRQHandler(void)
   /* USER CODE BEGIN GPDMA1_Channel0_IRQn 0 */
 
   /* USER CODE END GPDMA1_Channel0_IRQn 0 */
-
   /* USER CODE BEGIN GPDMA1_Channel0_IRQn 1 */
 
   /* USER CODE END GPDMA1_Channel0_IRQn 1 */
@@ -223,7 +227,6 @@ void GPDMA1_Channel1_IRQHandler(void)
   /* USER CODE BEGIN GPDMA1_Channel1_IRQn 0 */
 
   /* USER CODE END GPDMA1_Channel1_IRQn 0 */
-
   /* USER CODE BEGIN GPDMA1_Channel1_IRQn 1 */
 
   /* USER CODE END GPDMA1_Channel1_IRQn 1 */
@@ -279,15 +282,13 @@ void SDMMC1_IRQHandler(void)
 void TCPP0203_PORT0_FLG_EXTI_IRQHANDLER(void)
 {
   /* Manage Flags */
-  if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_8) != RESET)
-
+  if (TCPP0203_PORT0_FLG_EXTI_IS_ACTIVE_FLAG() != RESET)
   {
     /* Call BSP USBPD PWR callback */
     BSP_USBPD_PWR_EventCallback(USBPD_PWR_TYPE_C_PORT_1);
 
     /* Clear Flag */
-    LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_8);
-
+    TCPP0203_PORT0_FLG_EXTI_CLEAR_FLAG();
   }
 }
 #endif /* TCPP0203_SUPPORT */

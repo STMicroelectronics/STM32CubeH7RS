@@ -125,7 +125,7 @@ int main(void)
   /* !!! To boot in a secure way, STiROT has configured and activated the
      Memory Protection Unit (not all resources are allocated).
      In order to keep a secure environment execution, you should reconfigure
-     the MPU to make it compatible with your application.
+     the MPU to fulfill the security requirements of your application.
 
      In this application, the MPU configuration set by STiROT remains enabled.
      MPU may be reconfigured here, if needed. */
@@ -239,6 +239,11 @@ void FW_APP_Run(void)
   *            PLL2                           not used
   *            PLL3                           not used
   *            Flash Latency(WS)              = 5
+  *
+  * @note   The system clock is set to 380 MHz to be functional with all hardware
+  *         configurations (ECC_ON_SRAM enabled, no internal regulator) and with the full range
+  *         of temperature (Tj up to 125 degrees).
+  *
   * @retval None
   */
 static void SystemClock_Config(void)
@@ -246,7 +251,24 @@ static void SystemClock_Config(void)
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
 
-  /* Enable voltage range 1 for lowest power (compliant with the use of RAM ECC) */
+  /* Select HSI as system clock source before reconfiguring the system clock */
+  RCC_ClkInitStruct.ClockType = (RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_HCLK  | \
+                                 RCC_CLOCKTYPE_PCLK1  | RCC_CLOCKTYPE_PCLK2 | \
+                                 RCC_CLOCKTYPE_PCLK4  | RCC_CLOCKTYPE_PCLK5);
+  RCC_ClkInitStruct.SYSCLKSource   = RCC_SYSCLKSOURCE_HSI;
+  RCC_ClkInitStruct.SYSCLKDivider  = RCC_SYSCLK_DIV1;   /* System CPU clock=pll1p_ck (64MHz) */
+  RCC_ClkInitStruct.AHBCLKDivider  = RCC_HCLK_DIV1;     /* AXI/AHB System bus clock=System CPU clock/1 (64MHz) */
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_APB1_DIV1;     /* APB1 bus clock=System bus clock/1 (64MHz) */
+  RCC_ClkInitStruct.APB2CLKDivider = RCC_APB2_DIV1;     /* APB2 bus clock=System bus clock/1 (64MHz) */
+  RCC_ClkInitStruct.APB4CLKDivider = RCC_APB4_DIV1;     /* APB4 bus clock=System bus clock/1 (64MHz) */
+  RCC_ClkInitStruct.APB5CLKDivider = RCC_APB5_DIV1;     /* APB5 bus clock=System bus clock/1 (64MHz) */
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_7) != HAL_OK)
+  {
+    /* Initialization error */
+    while (1);
+  }
+
+  /* Enable voltage range 1 for lowest power (compliant with ECC_ON_SRAM enabled) */
   if (HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1) != HAL_OK)
   {
     /* Initialization error */

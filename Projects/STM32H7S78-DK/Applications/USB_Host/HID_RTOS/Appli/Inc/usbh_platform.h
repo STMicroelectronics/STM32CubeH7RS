@@ -18,11 +18,11 @@
 /* USER CODE END Header */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __USBH_PLATFORM_H__
-#define __USBH_PLATFORM_H__
+#ifndef __USBH_PLATFORM_H
+#define __USBH_PLATFORM_H
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -38,5 +38,5 @@ void MX_DriverVbusHS(uint8_t state);
 }
 #endif
 
-#endif /* __USBH_PLATFORM_H__ */
+#endif /* __USBH_PLATFORM_H */
 

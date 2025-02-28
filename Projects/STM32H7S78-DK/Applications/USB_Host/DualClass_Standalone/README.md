@@ -35,9 +35,11 @@ Errors are detected such as (Unsupported device, Enumeration Fail) and the corre
 User is familiar with USB 2.0 “Universal Serial BUS” Specification and HID class Specification.
 
 #### <b>Known limitations</b>
+
 None.
 
 ### <b>Notes</b>
+
 None.
 
 #### <b>USB usage hints</b>
@@ -51,7 +53,7 @@ Connectivity, USBPD, Thread, UART/USART, USB_NOPD_Lib, UCPD, Type C, USB, MSC, H
 
 ### <b>Hardware and Software environment</b>
 
-  - This application has been tested with STMicroelectronics STM32H7S78-DK boards Revision MB1736-H7S7L8-C01 and can be easily tailored to any other supported device and development board.
+  - This application has been tested with STMicroelectronics STM32H7S78-DK boards revision MB1736-H7S7L8-D01 and can be easily tailored to any other supported device and development board.
 
 - STM32H7S78-DK Set-up
     - Plug the USB HID device into the STM32H7S78-DK board through 'Type C  to A-Female' cable to the connector:
@@ -60,12 +62,12 @@ Connectivity, USBPD, Thread, UART/USART, USB_NOPD_Lib, UCPD, Type C, USB, MSC, H
     - Connect ST-Link cable to the PC USB port to display data on the HyperTerminal.
 
     A virtual COM port will then appear in the HyperTerminal:
-     - Hyperterminal configuration
-       - Data Length = 8 Bits
-       - One Stop Bit
-       - No parity
-       - BaudRate = 115200 baud
-       - Flow control: None
+    - Hyperterminal configuration
+      - Data Length = 8 Bits
+      - One Stop Bit
+      - No parity
+      - BaudRate = 115200 baud
+      - Flow control: None
 
 ### <b>How to use it ?</b>
 
@@ -87,7 +89,7 @@ In order to make the program work, you must do the following :
   3. Select then "DualClass_Standalone_Appli" workspace
   4. Rebuild all files from DualClass_Standalone Appli and load your images into memories: First load the DualClass_Standalone.hex in internal Flash , then load
      the Appli part in External memory available on STM32H7S78-DK board.
-  5. Run the example
+  5. Run the application
 
 
 #### <b>MDK-ARM</b>
@@ -103,7 +105,7 @@ In order to make the program work, you must do the following :
   3. Select then "DualClass_Standalone_Appli" workspace
   4. Rebuild all files from DualClass_Standalone Appli and load your images into memories: First load the DualClass_Standalone.hex in internal Flash , then load
      the Appli part in External memory available on STM32H7S78-DK board.
-  5. Run the example
+  5. Run the application
 
 
 #### <b>STM32CubeIDE</b>
@@ -123,7 +125,7 @@ In order to make the program work, you must do the following :
   4. Build the project
   5. With the Debug icon select the configuration “DualClass_Standalone_Appli Debug”. First load the Boot binary in internal Flash, then load the Appli binary in
      External memory available on STM32H7S78-DK board
-  6. Run the example
+  6. Run the application
 
 To configure STM32CubeIDE Debug Configuration, you must do the following :
 

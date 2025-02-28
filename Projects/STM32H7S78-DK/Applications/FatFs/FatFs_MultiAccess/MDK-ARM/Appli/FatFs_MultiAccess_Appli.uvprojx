@@ -18,7 +18,7 @@
           <Vendor>STMicroelectronics</Vendor>
           <PackID>Keil.STM32H7RSxx_DFP.1.0.0</PackID>
           <PackURL>https://www.keil.com/pack/</PackURL>
-          <Cpu>IRAM(0x20000000-0x2002FFFF) IRAM2(0x24000000-0x24071BFF) IROM(0x8000000-0x800FFFF) CLOCK(12000000) FPU3(DFPU) CPUTYPE("Cortex-M7") ELITTLE TZ</Cpu>
+          <Cpu>IRAM(0x20000000-0x2000FFFF) IRAM2(0x24000000-0x24071BFF) IROM(0x8000000-0x800FFFF) CLOCK(12000000) FPU3(DFPU) CPUTYPE("Cortex-M7") ELITTLE TZ</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
           <FlashDriverDll></FlashDriverDll>
@@ -247,7 +247,7 @@
               <IRAM>
                 <Type>0</Type>
                 <StartAddress>0x20000000</StartAddress>
-                <Size>0x30000</Size>
+                <Size>0x10000</Size>
               </IRAM>
               <IROM>
                 <Type>1</Type>
@@ -276,8 +276,8 @@
               </OCR_RVCT3>
               <OCR_RVCT4>
                 <Type>1</Type>
-                <StartAddress>0x8000000</StartAddress>
-                <Size>0x10000</Size>
+                <StartAddress>0x70000000</StartAddress>
+                <Size>0x10000000</Size>
               </OCR_RVCT4>
               <OCR_RVCT5>
                 <Type>1</Type>
@@ -302,12 +302,12 @@
               <OCR_RVCT9>
                 <Type>0</Type>
                 <StartAddress>0x20000000</StartAddress>
-                <Size>0x30000</Size>
+                <Size>0x10000</Size>
               </OCR_RVCT9>
               <OCR_RVCT10>
                 <Type>0</Type>
                 <StartAddress>0x24000000</StartAddress>
-                <Size>0x71c00</Size>
+                <Size>0x72000</Size>
               </OCR_RVCT10>
             </OnChipMemories>
             <RvctStartVector></RvctStartVector>
@@ -340,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32H7S7xx</Define>
               <Undefine></Undefine>
-              <IncludePath>../../Appli/Inc;../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Inc;../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Inc/Legacy;../../../../../../../Middlewares/Third_Party/FreeRTOS/Source/include;../../../../../../../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;../../../../../../../Drivers/CMSIS/RTOS2/Include;../../../../../../../Middlewares/Third_Party/FatFs/source;../../../../../../../Middlewares/Third_Party/FatFs/source/drivers/sd;../../../../../../../Drivers/CMSIS/Device/ST/STM32H7RSxx/Include;../../../../../../../Drivers/CMSIS/Include;..\..\..\..\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\portable\GCC\ARM_CM4F</IncludePath>
+              <IncludePath>../../Appli/Inc;../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Inc;../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Inc/Legacy;../../../../../../../Middlewares/Third_Party/FreeRTOS/Source/include;../../../../../../../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;../../../../../../../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F;../../../../../../../Drivers/CMSIS/RTOS2/Include;../../../../../../../Middlewares/Third_Party/FatFs/source;../../../../../../../Middlewares/Third_Party/FatFs/source/drivers/sd;../../../../../../../Middlewares/Third_Party/FatFs/source/drivers/template;../../../../../../../Drivers/CMSIS/Device/ST/STM32H7RSxx/Include;../../../../../../../Drivers/CMSIS/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -440,6 +440,16 @@
           <GroupName>Drivers/STM32H7RSxx_HAL_Driver</GroupName>
           <Files>
             <File>
+              <FileName>stm32h7rsxx_hal_tim.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_hal_tim.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32h7rsxx_hal_tim_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_hal_tim_ex.c</FilePath>
+            </File>
+            <File>
               <FileName>stm32h7rsxx_hal_cortex.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_hal_cortex.c</FilePath>
@@ -520,14 +530,14 @@
               <FilePath>../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_hal_sd_ex.c</FilePath>
             </File>
             <File>
-              <FileName>stm32h7rsxx_hal_tim.c</FileName>
+              <FileName>stm32h7rsxx_hal_mmc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_hal_tim.c</FilePath>
+              <FilePath>../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_hal_mmc.c</FilePath>
             </File>
             <File>
-              <FileName>stm32h7rsxx_hal_tim_ex.c</FileName>
+              <FileName>stm32h7rsxx_hal_mmc_ex.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_hal_tim_ex.c</FilePath>
+              <FilePath>../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_hal_mmc_ex.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -597,7 +607,7 @@
             <File>
               <FileName>port.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\portable\GCC\ARM_CM4F\port.c</FilePath>
+              <FilePath>../../../../../../../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -610,11 +620,6 @@
               <FilePath>../../../../../../../Middlewares/Third_Party/FatFs/source/diskio.c</FilePath>
             </File>
             <File>
-              <FileName>ffsystem_template.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../Middlewares/Third_Party/FatFs/source/ffsystem_template.c</FilePath>
-            </File>
-            <File>
               <FileName>ff.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../Middlewares/Third_Party/FatFs/source/ff.c</FilePath>
@@ -623,11 +628,6 @@
               <FileName>ff_gen_drv.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../Middlewares/Third_Party/FatFs/source/ff_gen_drv.c</FilePath>
-            </File>
-            <File>
-              <FileName>ffsystem_cmsis_os.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../Middlewares/Third_Party/FatFs/source/ffsystem_cmsis_os.c</FilePath>
             </File>
             <File>
               <FileName>ffunicode.c</FileName>

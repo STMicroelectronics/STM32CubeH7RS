@@ -8,14 +8,14 @@
   <WorkspaceName></WorkspaceName>
 
   <project>
-    <PathAndName>.\Appli\CDC_Standalone_Appli.uvprojx</PathAndName>
-    <NodeIsActive>1</NodeIsActive>
+    <PathAndName>.\Boot\CDC_Standalone_Boot.uvprojx</PathAndName>
     <NodeIsExpanded>1</NodeIsExpanded>
     <NodeIsCheckedInBatchBuild>1</NodeIsCheckedInBatchBuild>
   </project>
 
   <project>
-    <PathAndName>.\Boot\CDC_Standalone_Boot.uvprojx</PathAndName>
+    <PathAndName>.\Appli\CDC_Standalone_Appli.uvprojx</PathAndName>
+    <NodeIsActive>1</NodeIsActive>
     <NodeIsExpanded>1</NodeIsExpanded>
     <NodeIsCheckedInBatchBuild>1</NodeIsCheckedInBatchBuild>
   </project>

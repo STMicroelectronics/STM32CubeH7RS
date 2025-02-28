@@ -62,12 +62,12 @@ void Error_Handler(void);
 #define SRC_BUFFER_SIZE        (48U)  /* In Word */
 
 #define GATHER_BUFFER_SIZE     (16U)  /* In Word */
-#define GATHER_ADDRESS_OFFSET  (32U)  /* In Byte */
+#define GATHER_BLOCK_SIZE      (16U)  /* In Byte */
 #define GATHER_BLOCK_OFFSET    (32U)  /* In Byte */
 #define GATHER_BLOCK_NUM        (4U)
 
 #define SCATTER_BUFFER_SIZE    (48U)  /* In Word */
-#define SCATTER_ADDRESS_OFFSET (32U)  /* In Byte */
+#define SCATTER_BLOCK_SIZE     (16U)  /* In Byte */
 #define SCATTER_BLOCK_OFFSET   (32U)  /* In Byte */
 #define SCATTER_BLOCK_NUM       (4U)
 /* USER CODE END Private defines */

@@ -1,8 +1,8 @@
 /**
   ******************************************************************************
-  * @file           : stm32_boot_xip.h
-  * @version        : 1.0.0
-  * @brief          : Header for stm32_boot_xip.c file.
+  * @file    stm32_boot_xip.h
+  * @author  MCD Application Team
+  * @brief   Header for stm32_boot_xip.c file.
   ******************************************************************************
   * @attention
   *
@@ -18,8 +18,8 @@
 /* USER CODE END Header */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __XIPBOOT__H__
-#define __XIPBOOT__H__
+#ifndef __STM32_BOOT_XIP_H__
+#define __STM32_BOOT_XIP_H__
 
 #ifdef __cplusplus
  extern "C" {
@@ -33,11 +33,11 @@
 
 /* Exported defines ---------------------------------------------------------*/
 /**
-  *  @defgroup BOOT_XIP_Private_Defines Boot XIP exported Defines
+  *  @defgroup BOOT_XIP_Private_Defines Boot XIP exported definitions
   * @{
   */
 /**
- * @brief list of error code of XIP
+ * @brief List of status codes for XIP
  */
 typedef enum {
      BOOT_OK,
@@ -59,8 +59,8 @@ typedef enum {
   */
 
 /**
- * @brief this function boot on the application, the operation consists to map the memory 
- *        and jump in the application.
+ * @brief This function boots on the application, the operation consists in mapping
+ *        the memory and jumping in the application.
  *
  * @return @ref BOOTStatus_TypeDef
  **/
@@ -78,4 +78,4 @@ BOOTStatus_TypeDef BOOT_Application(void);
 }
 #endif
 
-#endif /* __XIPBOOT__H__ */
+#endif /* __STM32_BOOT_XIP_H__ */

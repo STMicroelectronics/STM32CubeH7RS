@@ -66,8 +66,8 @@ void HAL_HCD_MspInit(HCD_HandleTypeDef* hcdHandle)
 
   /* USER CODE END USB_OTG_HS_MspInit 0 */
 
-  /** Initializes the peripherals clock
-  */
+    /** Initializes the peripherals clock
+    */
     PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USBPHYC;
     PeriphClkInit.UsbPhycClockSelection = RCC_USBPHYCCLKSOURCE_HSE;
     if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
@@ -75,8 +75,8 @@ void HAL_HCD_MspInit(HCD_HandleTypeDef* hcdHandle)
       Error_Handler();
     }
 
-  /** Enable USB Voltage detector
-  */
+    /** Enable USB Voltage detector
+    */
     HAL_PWREx_EnableUSBVoltageDetector();
 
     /* Peripheral clock enable */
@@ -156,8 +156,9 @@ void HAL_HCD_HC_NotifyURBChange_Callback(HCD_HandleTypeDef *hhcd, uint8_t chnum,
   USBH_LL_NotifyURBChange(hhcd->pData);
 #endif
 }
+
 /**
-* @brief  Port Port Enabled callback.
+  * @brief  Port Port Enabled callback.
   * @param  hhcd: HCD handle
   * @retval None
   */

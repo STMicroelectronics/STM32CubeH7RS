@@ -50,7 +50,7 @@ LOAD_FLASH ROM_START ROM_SIZE  {    ; load region size_region
    *(HEAP, +RW)
   }
 
-  RW_CONF_FLAG CONF_FLAG_START UNINIT CONF_FLAG_SIZE {
+  RW_CONF_FLAG CONF_FLAG_START CONF_FLAG_SIZE {
    *(.bss.flag)
   }
 

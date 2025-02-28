@@ -19,8 +19,8 @@
 /* USER CODE END Header */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __USB_DEVICE__H__
-#define __USB_DEVICE__H__
+#ifndef __USB_DEVICE__H
+#define __USB_DEVICE__H
 
 #ifdef __cplusplus
  extern "C" {
@@ -99,4 +99,4 @@ void MX_USB_DEVICE_Init(void);
 }
 #endif
 
-#endif /* __USB_DEVICE__H__ */
+#endif /* __USB_DEVICE__H */

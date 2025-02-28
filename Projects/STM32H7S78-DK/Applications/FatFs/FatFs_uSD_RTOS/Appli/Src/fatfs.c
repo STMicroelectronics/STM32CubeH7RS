@@ -161,8 +161,8 @@ static void uSDThread_Entry(void *argument)
   */
 static void FS_FileOperations(void)
 {
-  FRESULT res;                                          /* FatFs function common result code */
-  uint32_t byteswritten, bytesread;                     /* File write/read counts */
+  FRESULT res;                      /* FatFs function common result code */
+  uint32_t byteswritten, bytesread; /* File write/read counts */
 
 
   /* Register the file system object to the FatFs module */

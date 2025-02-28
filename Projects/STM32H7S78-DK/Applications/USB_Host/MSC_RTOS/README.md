@@ -35,7 +35,7 @@ Connectivity, USBPD, Thread, UART/USART, USB_NOPD_Lib, UCPD, Type C, USB, MSC
 
 ### <b>Hardware and Software environment</b>
 
-  - This application has been tested with STMicroelectronics STM32H7S78-DK boards Revision MB1736-H7S7L8-C01 and can be easily tailored to any other supported device and development board.
+  - This application has been tested with STMicroelectronics STM32H7S78-DK boards revision MB1736-H7S7L8-D01 and can be easily tailored to any other supported device and development board.
 
 - STM32H7S78-DK Set-up
     - Plug the USB MSC device into the STM32H7S78-DK board through 'Type C  to A-Female' cable to the connector:
@@ -70,7 +70,7 @@ In order to make the program work, you must do the following :
   3. Select then "MSC_RTOS_Appli" workspace
   4. Rebuild all files from MSC_RTOS Appli and load your images into memories: First load the MSC_RTOS.hex in internal Flash , then load
      the Appli part in External memory available on STM32H7S78-DK board.
-  5. Run the example
+  5. Run the application
 
 
 #### <b>MDK-ARM</b>
@@ -86,7 +86,7 @@ In order to make the program work, you must do the following :
   3. Select then "MSC_RTOS_Appli" workspace
   4. Rebuild all files from MSC_RTOS Appli and load your images into memories: First load the MSC_RTOS.hex in internal Flash , then load
      the Appli part in External memory available on STM32H7S78-DK board.
-  5. Run the example
+  5. Run the application
 
 
 #### <b>STM32CubeIDE</b>
@@ -106,7 +106,7 @@ In order to make the program work, you must do the following :
   4. Build the project
   5. With the Debug icon select the configuration “MSC_RTOS_Appli Debug”. First load the Boot binary in internal Flash, then load the Appli binary in
      External memory available on STM32H7S78-DK board
-  6. Run the example
+  6. Run the application
 
 To configure STM32CubeIDE Debug Configuration, you must do the following :
 

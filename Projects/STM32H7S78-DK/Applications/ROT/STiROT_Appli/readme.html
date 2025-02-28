@@ -31,6 +31,10 @@ vertical-align: middle;
 performed through <b>STiROT boot path</b> after authenticity and
 integrity checks of the application firmware image.</p>
 <p>As example, this application will display a menu when started.</p>
+<p>The system clock is set to 380 MHz to be functional with all hardware
+configurations (ECC_ON_SRAM enabled, no internal regulator) and with the
+full range of temperature (Tj up to 125°). In other circumstances, the
+system clock can be increased up to 600 Mhz.</p>
 <h3 id="keywords"><b>Keywords</b></h3>
 <p>STiROT, Boot path, Root Of Trust, MPU</p>
 <h3 id="directory-contents"><b>Directory contents</b></h3>
@@ -125,7 +129,7 @@ well displayed:</p>
    Start &lt; Function A &gt; -------------------------------------------------- 1
    Start &lt; Function B &gt; -------------------------------------------------- 2
    Selection :</code></pre>
-<p>For more details, refer to STM32H7RS Wiki articles:</p>
+<p>For more details, refer to STM32H7S Wiki articles:</p>
 <ul>
 <li><a href="https://wiki.st.com/stm32mcu/wiki/Security:STiRoT_for_STM32H7S">STiRoT
 for STM32H7S</a>.</li>

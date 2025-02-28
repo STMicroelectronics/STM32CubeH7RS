@@ -18,11 +18,11 @@
   */
 /* USER CODE END Header */
 
-#ifndef __USBPD_VDM_USER_H_
-#define __USBPD_VDM_USER_H_
+#ifndef __USBPD_VDM_USER_H
+#define __USBPD_VDM_USER_H
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -74,5 +74,5 @@ void                USBPD_VDM_UserReset(uint8_t PortNum);
 }
 #endif
 
-#endif /* __USBPD_VDM_USER_H_ */
+#endif /* __USBPD_VDM_USER_H */
 

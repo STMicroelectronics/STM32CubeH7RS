@@ -3,7 +3,7 @@ var group__snmp__traps =
     [ "snmp_authfail_trap", "group__snmp__traps.html#gaf6d0a95a3a406d8ea00849c07aca05ee", null ],
     [ "snmp_coldstart_trap", "group__snmp__traps.html#gaa8a49d1a6a207740ba44e27b5bbc22be", null ],
     [ "snmp_get_auth_traps_enabled", "group__snmp__traps.html#ga7804a22615bd9b3a323a3f48a9fb8cb7", null ],
-    [ "snmp_get_community_trap", "group__snmp__traps.html#gafdd3299e145f53cc826cc11a469f8409", null ],
+    [ "snmp_get_community_trap", "group__snmp__traps.html#ga566aa7aeaf5fb75ca0a2af58486f4cba", null ],
     [ "snmp_send_trap", "group__snmp__traps.html#ga96cc7af0118d75049609872ea41187cd", null ],
     [ "snmp_send_trap_generic", "group__snmp__traps.html#ga0e044259289cb690197173f93c17607d", null ],
     [ "snmp_send_trap_specific", "group__snmp__traps.html#ga56bdce04e9e77cb3f8a872718cd273d1", null ],

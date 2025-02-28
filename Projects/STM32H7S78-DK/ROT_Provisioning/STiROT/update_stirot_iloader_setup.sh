@@ -63,7 +63,7 @@ else
 fi
 
 # ================================================ Updating STiROT_iLoader files ========================================================
-echo "Updating the STiROT_iLoader files ..."
+echo "Updating the STiROT_iLoader files..."
 action="Update the STiROT_iLoader files"
 if [ ! -f "$STiROT_iLoader_bin" ]; then
     echo "Error: STiROT_iLoader binary does not exist! use TPC to generate it"

@@ -62,11 +62,612 @@
 <div class="col-sm-12 col-lg-8">
 <h1 id="update-history">Update History</h1>
 <div class="collapse">
-<input type="checkbox" id="collapse-section2" checked aria-hidden="true"> <label for="collapse-section2" aria-hidden="true"><strong>V1.1.0 / 05-June-2024</strong></label>
+<input type="checkbox" id="collapse-section3" checked aria-hidden="true"> <label for="collapse-section3" aria-hidden="true"><strong>V1.2.0 / 05-February-2025</strong></label>
 <div>
 <h2 id="maintenance-release">Maintenance release</h2>
-<p>Maintenance Release of STM32CubeH7RS Firmware package supporting <strong>STM32H7R7xx/H7R3xx/H7S3xx/H7S7xx</strong> devices.</p>
+<ul>
+<li>General updates to fix known defects and enhancements implementation</li>
+<li>Rework readme files of ROT applications</li>
+<li>Fix the MPU configuration in boot projects to avoid a blocking state that prevents jumping to the user application in closed mode</li>
+<li>Add a new NOR Flash example with Read While Write feature (RWW)</li>
+<li>CMSIS Core changes:
+<ul>
+<li>Fix CMSIS-DSP and CMSIS-NN files in CMSIS Core v5.9.0</li>
+<li>Integrate issue #620 to fix endless loop in SCB_DisableDCache()</li>
+</ul></li>
+<li>Upgrade of <strong>USBPD core</strong> library to new version <strong>V5.3.0</strong></li>
+<li>Upgrade of <strong>USB host</strong> library to new version <strong>V3.5.3</strong></li>
+<li>Upgrade of <strong>FreeRTOS</strong> library to new version <strong>V10.6.2 (ST modified 2024-10-11)</strong></li>
+<li>Upgrade of <strong>STM32 ExtMem Manager</strong> library to new version <strong>V1.3.0</strong></li>
+<li>Upgrade of <strong>mcuboot</strong> library to new version <strong>V1.7.2.25</strong></li>
+<li>Upgrade of <strong>mbed-crypto</strong> library to new version <strong>V3.6.2 (ST modified 2024-11-25)</strong></li>
+<li>Upgrade of <strong>LwIP</strong> library to new version <strong>V2.1.3 (ST modified 2024-12-13)</strong></li>
+<li>Upgrade of <strong>FATFS</strong> library to new version <strong>R0.15 (ST modified 2024-12-20)</strong></li>
+</ul>
 <h2 id="contents">Contents</h2>
+<ul>
+<li><strong>CMSIS</strong> updates
+<ul>
+<li>CMSIS Core changes:
+<ul>
+<li>Fix CMSIS-DSP and CMSIS-NN files in CMSIS Core v5.9.0</li>
+<li>Integrate issue #620 to fix endless loop in SCB_DisableDCache()</li>
+</ul></li>
+<li>Remove flash size data register</li>
+</ul></li>
+<li><strong>HAL</strong> updates
+<ul>
+<li>Remove unnecessary parentheses that causes compilation warning.</li>
+<li>Enhance HAL code quality for MISRA-C Rule-8.13 by adding const qualifiers.</li>
+<li><strong>HAL ADC</strong>
+<ul>
+<li>Fix definition of VREFINT_CAL_ADDR, TEMPSENSOR_CAL1_ADDR, TEMPSENSOR_CAL2_ADDR macros.</li>
+<li>Fix description of parameter Length in HAL_ADCEx_MultiModeStart_DMA() API.</li>
+</ul></li>
+<li><strong>LL Cortex</strong>
+<ul>
+<li>Remove all references to LL_MPU_TEX_LEVEL4 macro in LL cortex driver.</li>
+</ul></li>
+<li><strong>HAL CRYP</strong>
+<ul>
+<li>Update related to reliability issue when running AES GCM in interrupt mode.</li>
+<li>Add SAES RESET using IPRST bit.</li>
+</ul></li>
+<li><strong>HAL Flash</strong>
+<ul>
+<li>Update the naming of defined Flash option byte keys to FLASH_OPT_KEY1 and FLASH_OPT_KEY2.</li>
+</ul></li>
+<li><strong>HAL GPIO</strong>
+<ul>
+<li>Add Pull-down capability in analog mode.</li>
+</ul></li>
+<li><strong>HAL HASH</strong>
+<ul>
+<li>Optimize HASH_WaitOnFlagUntilTimeout() API.</li>
+</ul></li>
+<li><strong>LL RCC</strong>
+<ul>
+<li>Update Timer clocks Prescaler definition.</li>
+</ul></li>
+<li><strong>HAL RNG</strong>
+<ul>
+<li>Update to distinguish error coming from RecoverSeedError or SeedError.</li>
+</ul></li>
+<li><strong>HAL/LL DMA</strong>
+<ul>
+<li>Remove duplicated assert checking.</li>
+<li>Add missing assert checking in some LL linked-list case.</li>
+<li>Fix in linked list node initialization.</li>
+</ul></li>
+<li><strong>HAL DMA2D</strong>
+<ul>
+<li>Fix incorrect word ‘surcharged’ in functions headers.</li>
+</ul></li>
+<li><strong>HAL JPEG</strong>
+<ul>
+<li>Fix HAL_JPEG_IRQHandler() API calling blocking DMA abort:
+<ul>
+<li>Replaced blocking HAL_DMA_Abort() with HAL_DMA_Abort_IT() in HAL_JPEG_IRQHandler() API.</li>
+<li>Added a note to the JPEG_DMA_StartProcess() function to ensure that the DMA interrupt has a higher priority than the JPEG interrupt. This prevents the JPEG interrupt from preempting the DMA interrupt before the DMA state is updated to ready.</li>
+</ul></li>
+<li>Remove multiple volatile reads in interrupt handler.</li>
+<li>Remove non referenced local variable in JPEG_DMA_ContinueProcess static function.</li>
+<li>Remove non referenced local variable in JPEG_Process static function.</li>
+</ul></li>
+<li><strong>HAL FMC nand</strong>
+<ul>
+<li>Add a fix to avoid compiler optimizations and ensure correct data reads in HAL_NAND_Read_Page_8b() and HAL_NAND_Read_SpareArea_8b(), HAL_NAND_Read_Page_16b() and HAL_NAND_Read_SpareArea_16b() APIs.</li>
+</ul></li>
+<li><strong>HAL PKA</strong>
+<ul>
+<li>Remove static global variables and add them to PKA handle to be compliant with HAL coding rules.</li>
+<li>Add check for MontgomeryParam not equal to null in HAL_PKA_PointCheck() and HAL_PKA_PointCheck_IT() APIs.</li>
+</ul></li>
+<li><strong>HAL SDIO</strong>
+<ul>
+<li>Add new HAL SDIO driver.</li>
+</ul></li>
+<li><strong>HAL SDMMC</strong>
+<ul>
+<li>Fix Misra issue for unused parameter in ll_sdmmc source file.</li>
+<li>Update MMC High Speed clock.</li>
+</ul></li>
+<li><strong>HAL SPI</strong>
+<ul>
+<li>Add protection against wrong transfer size during transmission.</li>
+<li>Check coherence between data size and DMA TX configuration.</li>
+<li>Clear auto suspend flag in HAL_SPI_Receive() API.</li>
+<li>Ensure DMA RX aborts after DMA TX in HAL_SPI_Abort_IT() API.</li>
+<li>Fix CRC computation to feat with standard CRC16-CCITT (XMODEM).</li>
+<li>Fix a bug reception when FIFO threshold is set.</li>
+</ul></li>
+<li><strong>HAL XSPI</strong>
+<ul>
+<li>Check BUSY flag instead of TC flag in indirect mode to be sure that command is well completed (FIFO flush).</li>
+<li>Correct comments for XSPI_MemorySize and XSPI_ChipSelectBoundary related definitions.</li>
+</ul></li>
+<li><strong>HAL ETH</strong>
+<ul>
+<li>Correct the disabling PTP transmission issue by clearing the TTSE bit in DESC2.</li>
+<li>Fix identical definitions of the ETH state code.</li>
+<li>Fix the calculation of the tail pointer so that it points to the last updated descriptor.</li>
+<li>Update the HAL_ETH_PTP_SetConfig() API to comply with the steps described in the reference manual guidelines.</li>
+<li>Fix issue with filter Configuration in HAL_ETH_SetMACFilterConfig() API.</li>
+<li>Add new API HAL_ETH_GetTxBuffersNumber() to get Buffers in use number.</li>
+<li>Update HAL_ETH_ReadData() API to properly handle the Context descriptor when timestamping is enabled.</li>
+</ul></li>
+<li><strong>HAL FDCAN</strong>
+<ul>
+<li>Fix assert issue when Standard or Extended filter numbers are zero.</li>
+</ul></li>
+<li><strong>HAL I2C</strong>
+<ul>
+<li>Move variable tmp declaration at the beginning in I2C_TransferCofig() function.</li>
+<li>Update HAL_I2C_IsDeviceReady() API to take into account the number of trials.</li>
+</ul></li>
+<li><strong>HAL I2S</strong>
+<ul>
+<li>Add IOSwap APIs:
+<ul>
+<li>HAL_I2S_EnableIOSwap() API.</li>
+<li>HAL_I2S_DisableIOSwap() API.</li>
+<li>HAL_I2S_IsEnabledIOSwap() API.</li>
+</ul></li>
+<li>Remove HAL_LOCK() APIs inside register callback functions.</li>
+</ul></li>
+<li><strong>HAL MDIOS</strong>
+<ul>
+<li>Remove multiple volatile reads or writes in interrupt handler (for better performance).</li>
+</ul></li>
+<li><strong>LL LPUART</strong>
+<ul>
+<li>Solve Coverity out-of-bound memory access warning in use of LPUART_PRESCALER_TAB array.</li>
+</ul></li>
+<li><strong>HAL UART</strong>
+<ul>
+<li>Correct DMA Rx abort procedure impact on ongoing Tx transfer in polling mode.</li>
+<li>Correct references to HAL_UARTEx_WakeupCallback() and to HAL_UART_WAKEUP_CB_ID() APIs define, according to series capabilities.</li>
+<li>Provide accurate position in RxEventCallback when ReceptionToIdle mode is used with DMA, when UART and DMA interrupts process is delayed.</li>
+</ul></li>
+<li><strong>LL USART</strong>
+<ul>
+<li>Solve Coverity out-of-bound memory access warning in use of USART_PRESCALER_TAB array.</li>
+</ul></li>
+<li><strong>LL UCPD</strong>
+<ul>
+<li>Add LL UCPD API LL_UCPD_IsActiveFlag_RxErr() API.</li>
+<li>Correct wording in some LL API LL_UCPD_IsActiveFlag_xxx() API descriptions.</li>
+</ul></li>
+<li><strong>LL UTILS</strong>
+<ul>
+<li>Remove F_SIZE bit field and change PKG_CODE position to align vs latest RM.</li>
+<li>Update LL_SetFlashLatency() and add missing VOS scale frequency.</li>
+</ul></li>
+<li><strong>HAL IWDG</strong>
+<ul>
+<li>Calculate the maximum IWDG Timeout period HAL_IWDG_DEFAULT_TIMEOUT, based on a Prescaler=128 at LSI frequency=32kHz (refer to the datasheet).</li>
+<li>Fix incorrect word ‘surcharged’ in functions headers.</li>
+</ul></li>
+<li><strong>HAL/LL USB</strong>
+<ul>
+<li>Add multi packet support for iso transfer.</li>
+<li>hal_hcd.c: ensure to reactivate the usb channel in case of transfer error.</li>
+<li>Fix the condition on EONUM flag of DOEPCTLx register in HAL_PCD_IRQHandler() API to correctly check on the frame number parity.</li>
+<li>Fix Misra-C 2012 Rule-10.7 issue.</li>
+</ul></li>
+<li><strong>HAL WWDG</strong>
+<ul>
+<li>Fix incorrect word ‘surcharged’ in functions headers.</li>
+</ul></li>
+</ul></li>
+<li><strong>BSP</strong> updates
+<ul>
+<li><strong>BSP Components</strong>
+<ul>
+<li><strong>wm8904</strong>
+<ul>
+<li>Update input devices to be defined as bitfields.</li>
+<li>Implement LINE_IN2 and digital microphone path.</li>
+<li>Add 24KHz audio frequency support.</li>
+<li>Update IsInitialized variable at the end of init function WM8904_Init().</li>
+</ul></li>
+<li><strong>mx25uw25645g</strong>
+<ul>
+<li>Fix prototype of MX25UW25645G_EnableSTRMemoryMappedMode()/MX25UW25645G_EnableDTRMemoryMappedMode() APIs.</li>
+</ul></li>
+</ul></li>
+<li><strong>BSP Boards</strong>
+<ul>
+<li><strong>STM32H7S78-DK</strong>
+<ul>
+<li>Enable Hardware flow control of SD handle in MX_SDMMC1_SD_Init().</li>
+</ul></li>
+<li><strong>STM32H7RSxx_Nucleo</strong>
+<ul>
+<li>Fix Dynamic Clock Prescaler calculation in stm32h7rsxx_nucleo_xspi.c.</li>
+<li>Use ReleasePowerDown command instead of No operation in BSP_XSPI_NOR_LeaveDeepPowerDown() API.</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><strong>Middleware</strong> updates:
+<ul>
+<li>Upgrade of <strong>USBPD core</strong> library to new version <strong>V5.3.0</strong></li>
+<li>Upgrade of <strong>USB host</strong> library to new version <strong>V3.5.3</strong></li>
+<li>Upgrade of <strong>FreeRTOS</strong> library to new version <strong>V10.6.2 (ST modified 2024-10-11)</strong></li>
+<li>Upgrade of <strong>STM32 ExtMem Manager</strong> library to new version <strong>V1.3.0</strong></li>
+<li>Upgrade of <strong>mcuboot</strong> library to new version <strong>V1.7.2.25</strong></li>
+<li>Upgrade of <strong>mbed-crypto</strong> library to new version <strong>V3.6.2 (ST modified 2024-11-25)</strong></li>
+<li>Upgrade of <strong>LwIP</strong> library to new version <strong>V2.1.3 (ST modified 2024-12-13)</strong></li>
+<li>Upgrade of <strong>FATFS</strong> library to new version <strong>R0.15 (ST modified 2024-12-20)</strong></li>
+</ul></li>
+<li><strong>Project</strong> updates
+<ul>
+<li>Fix the MPU configuration in boot projects to avoid a blocking state that prevents jumping to the user application in <strong>closed mode</strong>.</li>
+<li><strong>FreeRTOS Applications</strong>
+<ul>
+<li>Update applications following MW FreeRTOS component upgrade to V10.6.2.</li>
+<li>Allow the user to use the ulExpectedIdleTime in PreSleepProcessing in FreeRTOS Lowpower application.</li>
+</ul></li>
+<li><strong>FatFS Applications</strong>
+<ul>
+<li>Align expected success/error behavior in readme files with the application behavior for all FATFS applications.</li>
+<li>Remove the const from the variable wtext in fatfs file to resolve the empty file issue on the SD card.</li>
+<li>Update the SD_IsDetected() function by returning “APP_SD_PRESENT” when the SD card is detected and “APP_SD_NO_PRESENT” when it is not.</li>
+<li>Add MX_SDMMC1_SD_Init(); in MX_FATFS_Process() function when SD card is plugged to fix unplug/plug SD card.</li>
+</ul></li>
+<li><strong>LwIP Applications</strong>
+<ul>
+<li>Replace raw API by netif API in all LWIP applications.</li>
+<li>Highlight the new JP6 configuration change in the README files for LwIP applications on STM32H7S78-DK board.</li>
+<li>Add check on LAN8742_init() returned value in low_level_init() function.</li>
+<li>Increase the stack and heap size of the application LwIP_TFTP_Server.</li>
+<li>Increase the stack size of TCP and UDP threads to solve instable behavior of the application LwIP_UDPTCP_Echo_Server_Netconn_RTOS with STM32CubeIDE Debug mode.</li>
+</ul></li>
+<li><strong>ROT Applications</strong>
+<ul>
+<li>Add readme files to each subfolder of ROT_Provisioning.</li>
+<li>Open the whole RAM space to the user application by default in the OEMiROT or OEMuROT applications.</li>
+<li>Update ROT/OEMiROT_Boot/Inc/stm32_extmem_conf.h to resolve the scalar initializer warning.</li>
+<li>Add “LOAD_AND_RUN_INT_RAM” configuration to NUCLEO-H7S3L8 (OEMiROT_Boot) README files.</li>
+<li>Updated the stm32ExtLoaderFlash variable in the README files by changing -elbl to -el in the external loader paths in H7R section.</li>
+<li>Enable the Option Bytes “XSPI1_HSLV” and “XSPI2_HSLV” by default for STiROT_iLoader project.</li>
+<li>Align the Applications/ROT scatter files on Templates/Template_ROT.</li>
+<li>Change the executable files folder, object files folder, and listing files folder to be under the Board name folder.</li>
+<li>Move the MPU region allowing the execution of the application to index 0 of region_cfg_appli to Ensure that this first MPU region grants execution rights to the user application.</li>
+<li>Add wiki links to README files of Template projects (OEMiROT Appli/STiROT Appli).</li>
+<li>Revised all README files for OEMiROT_Boot, OEMiROT_Appli, STiROT_Appli, and STiROT_iLoader to enhance clarity and improve user understanding.</li>
+<li>Enhance boot time after reconfiguration of XSPI.</li>
+<li>Update documentation and provisioning processes for STiRoT_Appli, OEMIROT_Boot, OEMiROT_Appli, and templates, including removal of specific notes and added instructions for provisioning.</li>
+<li>Add a “Provisioning” step and renumber the “Preliminary stage” to Step 0 to make the process more detailed.</li>
+</ul></li>
+<li><strong>USB Applications</strong>
+<ul>
+<li>Fix USBPD_CAD_Task() and USBPD_TaskUser() functions in usbpd_dpm_core.c file of the application USB_Host_DualClass_Standalone.</li>
+<li>Remove HAL_PWREx_EnableUSBReg() function from stm32h7rsxx_hal_msp.c file in both Boot, Appli projects.</li>
+<li>Fix the application description in the readme of the application USB_Device_HID_Standalone.</li>
+<li>Set the region 0x70000000 a non cacheable region in order to solve instable behavior of the application MSC_Standalone with EWARM.</li>
+</ul></li>
+<li><strong>XSPI Examples</strong>
+<ul>
+<li>Add a new NOR Flash example with Read While Write feature (RWW).</li>
+</ul></li>
+<li><strong>IWDG Examples</strong>
+<ul>
+<li>Update IWDG_Reset example readme of NUCLEO-H7S3L8 board to further clarify expected behavior.</li>
+</ul></li>
+<li><strong>JPEG Examples</strong>
+<ul>
+<li>Fix issue in JPEG_EncodingFromXSPI_DMA example output.</li>
+</ul></li>
+</ul></li>
+</ul>
+<p><br />
+</p>
+<p>The exhaustive list of projects is provided in this table (<a href="Projects/STM32CubeProjectsList.html">STM32CubeProjectsList.html</a>).</p>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Version</th>
+<th>Release notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Projects</td>
+<td>V1.2.0 <span class="icon-st-update"></span></td>
+<td><a href="Projects/Release_Notes.html">release notes</a></td>
+</tr>
+</tbody>
+</table>
+<p><br />
+</p>
+<h2 id="components">Components</h2>
+<p><small>The components flagged by “<span class="icon-st-update"></span>” have changed since the previous release. “<span class="icon-st-add"></span>” are new.</small></p>
+<p><strong>Drivers</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Version</th>
+<th>Release notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">CMSIS</td>
+<td style="text-align: left;">V5.9.0 <span class="icon-st-update"></span></td>
+<td><a href="Drivers/CMSIS/Documentation/index.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32H7RSxx CMSIS</td>
+<td style="text-align: left;">V1.2.0 <span class="icon-st-update"></span></td>
+<td><a href="Drivers/CMSIS/Device/ST/STM32H7RSxx/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">STM32H7RSxx HAL</td>
+<td style="text-align: left;">V1.2.0 <span class="icon-st-update"></span></td>
+<td><a href="Drivers/STM32H7RSxx_HAL_Driver/Release_Notes.html">release notes</a></td>
+</tr>
+</tbody>
+</table>
+<p><strong>BSP Drivers</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Version</th>
+<th>Release notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">STM32H7RSxx_Nucleo</td>
+<td style="text-align: left;">V1.1.0 <span class="icon-st-update"></span></td>
+<td><a href="Drivers/BSP/STM32H7RSxx_Nucleo/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32H7S78-DK</td>
+<td style="text-align: left;">V1.0.1 <span class="icon-st-update"></span></td>
+<td><a href="Drivers/BSP/STM32H7S78-DK/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">aps256xx</td>
+<td style="text-align: left;">V1.0.6</td>
+<td><a href="Drivers/BSP/Components/aps256xx/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Common</td>
+<td style="text-align: left;">V7.3.0</td>
+<td><a href="Drivers/BSP/Components/Common/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">wm8904</td>
+<td style="text-align: left;">V1.1.0 <span class="icon-st-update"></span></td>
+<td><a href="Drivers/BSP/Components/wm8904/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">gt911</td>
+<td style="text-align: left;">V1.0.1</td>
+<td><a href="Drivers/BSP/Components/gt911/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">lan8742</td>
+<td style="text-align: left;">V1.0.3</td>
+<td><a href="Drivers/BSP/Components/lan8742/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">mx25uw25645g</td>
+<td style="text-align: left;">V1.1.0 <span class="icon-st-update"></span></td>
+<td><a href="Drivers/BSP/Components/mx25uw25645g/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">mx66uw1g45g</td>
+<td style="text-align: left;">V1.1.0</td>
+<td><a href="Drivers/BSP/Components/mx66uw1g45g/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ov5640</td>
+<td style="text-align: left;">V4.0.2</td>
+<td><a href="Drivers/BSP/Components/ov5640/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">rk050hr18</td>
+<td style="text-align: left;">V1.0.0</td>
+<td><a href="Drivers/BSP/Components/rk050hr18/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">tcpp0203</td>
+<td style="text-align: left;">V1.2.3</td>
+<td><a href="Drivers/BSP/Components/tcpp0203/Release_Notes.html">release notes</a></td>
+</tr>
+</tbody>
+</table>
+<p><br />
+</p>
+<p><strong>Middlewares</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Version</th>
+<th style="text-align: left;">Release notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">FatFS</td>
+<td style="text-align: left;">R0.15 <span class="icon-st-update"></span></td>
+<td style="text-align: left;"><a href="Middlewares/Third_Party/FatFs/documents/updates.html">release notes</a> ST modified 20241220 <a href="Middlewares/Third_Party/FatFs/source/st_readme.txt">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">FreeRTOS</td>
+<td style="text-align: left;">v10.6.2 <span class="icon-st-update"></span></td>
+<td style="text-align: left;"><a href="Middlewares/Third_Party/FreeRTOS/Source/readme.txt">release notes</a> ST modified 20241011 <a href="Middlewares/Third_Party/FreeRTOS/Source/st_readme.txt">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">LwIP</td>
+<td style="text-align: left;">v2.1.3 <span class="icon-st-update"></span></td>
+<td style="text-align: left;"><a href="Middlewares/Third_Party/LwIP/CHANGELOG">release notes</a> ST modified 20241213 <a href="Middlewares/Third_Party/LwIP/st_readme.txt">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">mbed-crypto</td>
+<td style="text-align: left;">v3.6.2_20241125 <span class="icon-st-update"></span></td>
+<td style="text-align: left;"><a href="Middlewares/Third_Party/mbed-crypto/st_readme.txt">ST release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">mcuboot</td>
+<td style="text-align: left;">v1.7.2.25 <span class="icon-st-update"></span></td>
+<td style="text-align: left;"><a href="Middlewares/Third_Party/mcuboot/docs/release-notes.md">release notes</a> ST modified 20240612 <a href="Middlewares/Third_Party/mcuboot/st_readme.txt">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">OpenBootloader</td>
+<td style="text-align: left;">v6.1.1</td>
+<td style="text-align: left;"><a href="Middlewares/ST/OpenBootloader/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">STM32_ExtMem_Loader</td>
+<td style="text-align: left;">v1.1.0</td>
+<td style="text-align: left;"><a href="Middlewares/ST/STM32_ExtMem_Loader/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32_ExtMem_Manager</td>
+<td style="text-align: left;">v1.3.0 <span class="icon-st-update"></span></td>
+<td style="text-align: left;"><a href="Middlewares/ST/STM32_ExtMem_Manager/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">STM32 USB Device Library</td>
+<td style="text-align: left;">v2.11.3</td>
+<td style="text-align: left;"><a href="Middlewares/ST/STM32_USB_Device_Library/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32 USB Host Library</td>
+<td style="text-align: left;">v3.5.3 <span class="icon-st-update"></span></td>
+<td style="text-align: left;"><a href="Middlewares/ST/STM32_USB_Host_Library/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">STM32_USBPD_Library - Core</td>
+<td style="text-align: left;">v5.3.0 <span class="icon-st-update"></span></td>
+<td style="text-align: left;"><a href="Middlewares/ST/STM32_USBPD_Library/Core/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32_USBPD_Library - Devices</td>
+<td style="text-align: left;">v1.2.1</td>
+<td style="text-align: left;"><a href="Middlewares/ST/STM32_USBPD_Library/Devices/STM32H7RSXX/Release_Notes.html">release notes</a></td>
+</tr>
+</tbody>
+</table>
+<p><br />
+</p>
+<p><strong>Utilities</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Version</th>
+<th style="text-align: left;">Release notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Common</td>
+<td style="text-align: left;">v1.6.1</td>
+<td style="text-align: left;"><a href="Utilities/Common/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CPU</td>
+<td style="text-align: left;">v1.1.4</td>
+<td style="text-align: left;"><a href="Utilities/CPU/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Fonts</td>
+<td style="text-align: left;">v2.0.4</td>
+<td style="text-align: left;"><a href="Utilities/Fonts/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">GUI_INTERFACE</td>
+<td style="text-align: left;">v3.0.1</td>
+<td style="text-align: left;"><a href="Utilities/GUI_INTERFACE/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">JPEG</td>
+<td style="text-align: left;">v2.0.6 <span class="icon-st-update"></span></td>
+<td style="text-align: left;"><a href="Utilities/JPEG/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">lcd</td>
+<td style="text-align: left;">v2.0.3</td>
+<td style="text-align: left;"><a href="Utilities/lcd/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">lcd_trace</td>
+<td style="text-align: left;">v2.0.2</td>
+<td style="text-align: left;"><a href="Utilities/lcd_trace/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">log</td>
+<td style="text-align: left;">v1.0.4</td>
+<td style="text-align: left;"><a href="Utilities/Log/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ROT_AppliConfig</td>
+<td style="text-align: left;">v1.1.2</td>
+<td style="text-align: left;"><a href="Utilities/PC_Software/ROT_AppliConfig/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">TRACER_EMB</td>
+<td style="text-align: left;">v1.12.0 <span class="icon-st-update"></span></td>
+<td style="text-align: left;"><a href="Utilities/TRACER_EMB/Release_Notes.html">release notes</a></td>
+</tr>
+</tbody>
+</table>
+<p><br />
+</p>
+<h2 id="development-toolchains-and-compilers">Development Toolchains and Compilers</h2>
+<ul>
+<li>IAR Embedded Workbench for ARM (EWARM) toolchain V9.20.1 + ST-Link</li>
+<li>RealView Microcontroller Development Kit (MDK-ARM) toolchain <strong>V5.39</strong> + ST-Link
+<ul>
+<li>Support of ARM Compiler 6 (AC-5 like warnings) for HAL/LL/BSP drivers and STMicroelectronics Middleware components</li>
+</ul></li>
+<li>STM32CubeIDE <strong>V1.18.0</strong> (GCC13)</li>
+</ul>
+<p><br />
+</p>
+<h2 id="supported-devices-and-boards">Supported Devices and boards</h2>
+<ul>
+<li>ROT applications are compatible with SFSP V1.0.0 (or higher).</li>
+<li>STM32H7R7xx/H7S7xx/H7R3xx/H7S3xx</li>
+<li>STM32H7S78-DK</li>
+<li>NUCLEO-H7S3L8</li>
+</ul>
+<p><br />
+</p>
+<h2 id="known-limitations">Known Limitations</h2>
+<ul>
+<li>Some examples and/or applications not supported by CubeMX</li>
+<li>The following STM32CubeIDE projects include only Debug configuration :
+<ul>
+<li>NUCLEO-H7S3L8//Examples//XSPI//XSPI_NOR_ReadWhileWrite_DTR</li>
+<li>STM32H7S78-DK//Examples//XSPI//XSPI_NOR_ReadWhileWrite_DTR</li>
+</ul></li>
+<li>On STM32H7S78-DK revision D board, some audio glitches might be perceptible. The issue will be fixed in next release.</li>
+</ul>
+<h2 id="dependencies">Dependencies</h2>
+<h2 id="backward-compatibility">Backward Compatibility</h2>
+<ul>
+<li>Not applicable</li>
+</ul>
+<p><br />
+</p>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section2" aria-hidden="true"> <label for="collapse-section2" aria-hidden="true"><strong>V1.1.0 / 05-June-2024</strong></label>
+<div>
+<h2 id="maintenance-release-1">Maintenance release</h2>
+<p>Maintenance Release of STM32CubeH7RS Firmware package supporting <strong>STM32H7R7xx/H7R3xx/H7S3xx/H7S7xx</strong> devices.</p>
+<h2 id="contents-1">Contents</h2>
 <h3 id="features"><strong>Features</strong></h3>
 <p>STM32CubeH7RS gathers in one single package all the generic embedded software components required to develop an application on STM32H7Rx/7Sx microcontrollers.</p>
 <ul>
@@ -146,7 +747,7 @@
 </table>
 <p><br />
 </p>
-<h2 id="components">Components</h2>
+<h2 id="components-1">Components</h2>
 <p><small>The components flagged by “<span class="icon-st-update"></span>” have changed since the previous release. “<span class="icon-st-add"></span>” are new.</small></p>
 <p><strong>Drivers</strong></p>
 <table>
@@ -387,7 +988,7 @@
 </table>
 <p><br />
 </p>
-<h2 id="development-toolchains-and-compilers">Development Toolchains and Compilers</h2>
+<h2 id="development-toolchains-and-compilers-1">Development Toolchains and Compilers</h2>
 <ul>
 <li>IAR Embedded Workbench for ARM (EWARM) toolchain V9.20.1 + ST-Link</li>
 <li>RealView Microcontroller Development Kit (MDK-ARM) toolchain <strong>V5.39</strong> + ST-Link
@@ -398,7 +999,7 @@
 </ul>
 <p><br />
 </p>
-<h2 id="supported-devices-and-boards">Supported Devices and boards</h2>
+<h2 id="supported-devices-and-boards-1">Supported Devices and boards</h2>
 <ul>
 <li>ROT applications are compatible with SFSP V1.0.0 (or higher).</li>
 <li>STM32H7R7xx/H7S7xx/H7R3xx/H7S3xx</li>
@@ -407,13 +1008,13 @@
 </ul>
 <p><br />
 </p>
-<h2 id="known-limitations">Known Limitations</h2>
+<h2 id="known-limitations-1">Known Limitations</h2>
 <ul>
 <li>Some examples and/or applications not supported by CubeMX</li>
 <li>All projects not yet available on MDK-ARM &amp; CubeIDE</li>
 </ul>
-<h2 id="dependencies">Dependencies</h2>
-<h2 id="backward-compatibility">Backward Compatibility</h2>
+<h2 id="dependencies-1">Dependencies</h2>
+<h2 id="backward-compatibility-1">Backward Compatibility</h2>
 <ul>
 <li>Not applicable</li>
 </ul>
@@ -426,7 +1027,7 @@
 <div>
 <h2 id="first-release">First release</h2>
 <p>First Official Release of STM32CubeH7RS Firmware package supporting <strong>STM32H7R7xx/H7R3xx/H7S3xx/H7S7xx</strong> devices.</p>
-<h2 id="contents-1">Contents</h2>
+<h2 id="contents-2">Contents</h2>
 <h3 id="features-1"><strong>Features</strong></h3>
 <p>STM32CubeH7RS gathers in one single package all the generic embedded software components required to develop an application on STM32H7Rx/7Sx microcontrollers.</p>
 <ul>
@@ -506,7 +1107,7 @@
 </table>
 <p><br />
 </p>
-<h2 id="components-1">Components</h2>
+<h2 id="components-2">Components</h2>
 <p><small>The components flagged by “<span class="icon-st-update"></span>” have changed since the previous release. “<span class="icon-st-add"></span>” are new.</small></p>
 <p><strong>Drivers</strong></p>
 <table>
@@ -742,7 +1343,7 @@
 </table>
 <p><br />
 </p>
-<h2 id="development-toolchains-and-compilers-1">Development Toolchains and Compilers</h2>
+<h2 id="development-toolchains-and-compilers-2">Development Toolchains and Compilers</h2>
 <ul>
 <li>IAR Embedded Workbench for ARM (EWARM) toolchain V9.20.1 + ST-Link</li>
 <li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.38a + ST-Link
@@ -753,7 +1354,7 @@
 </ul>
 <p><br />
 </p>
-<h2 id="supported-devices-and-boards-1">Supported Devices and boards</h2>
+<h2 id="supported-devices-and-boards-2">Supported Devices and boards</h2>
 <ul>
 <li>ROT applications are compatible with SFSP V1.0.0 (or higher).</li>
 <li>STM32H7R7xx/H7S7xx/H7R3xx/H7S3xx</li>
@@ -762,20 +1363,20 @@
 </ul>
 <p><br />
 </p>
-<h2 id="known-limitations-1">Known Limitations</h2>
+<h2 id="known-limitations-2">Known Limitations</h2>
 <ul>
 <li>Some examples and/or applications not supported by CubeMX</li>
 <li>All projects not yet available on MDK-ARM &amp; CubeIDE</li>
 </ul>
 <p>Those limitations will be corrected in maintenance release V1.1.0 planned in June 2024.</p>
-<h2 id="dependencies-1">Dependencies</h2>
+<h2 id="dependencies-2">Dependencies</h2>
 <ul>
 <li>STM32CubeMX V6.11.0
 <ul>
 <li>Projects (Applications and Examples) are generated using STM32CubeMX version V6.11.0.</li>
 </ul></li>
 </ul>
-<h2 id="backward-compatibility-1">Backward Compatibility</h2>
+<h2 id="backward-compatibility-2">Backward Compatibility</h2>
 <ul>
 <li>Not applicable</li>
 </ul>

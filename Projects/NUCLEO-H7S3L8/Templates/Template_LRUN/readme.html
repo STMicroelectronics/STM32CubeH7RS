@@ -156,7 +156,7 @@
 </ul>
 <h3 id="how-to-use-it"><b>How to use it ?</b></h3>
 <p>In order to make the program work, you must do the following:</p>
-<p>The output application is a raw binary and the IDEs does not offer the ability to handle the download in an easy way. The following procedure must be applied to load and debug the program : - Use a programming tool such as STM32CubeProgrammer to download the generated binary at the load address (here the external loader corresponding to NOR flash and load address is 0x7000000) - Reset the board - follow the procedure corresponding to your IDE to debug the project: - IAR : menu Projet-&gt;Attach to running target - KEIL : memu Debug-&gt;Start stop debug session (thanks to debug.ini/load.ini config) - CubeIDE : use the template Appli LRUN launch file provided</p>
+<p>The output application is a raw binary and the IDEs does not offer the ability to handle the download in an easy way. The following procedure must be applied to load and debug the program : - Use a programming tool such as STM32CubeProgrammer to download the generated binary at the load address (here the external loader corresponding to NOR flash and load address is 0x70000000) - Reset the board - follow the procedure corresponding to your IDE to debug the project: - IAR : menu Projet-&gt;Attach to running target - KEIL : memu Debug-&gt;Start stop debug session (thanks to debug.ini/load.ini config) - CubeIDE : use the template Appli LRUN launch file provided</p>
 <ol type="1">
 <li><p>Open your toolchain</p></li>
 <li>Open Multi-projects workspace file The contents of the workspace is the same for all IDEs
@@ -176,7 +176,7 @@
 </ul>
 The procedure to debug is as follows:
 <ul>
-<li>Use STM32CubeProgrammer to download the generated binary at the load address (here the external loader of the board corresponding to NOR flash and load address is 0x7000000)
+<li>Use STM32CubeProgrammer to download the generated binary at the load address (here the external loader of the board corresponding to NOR flash and load address is 0x70000000)
 <ul>
 <li>Reset the board</li>
 <li>Attachment to the running target depending on the IDE:

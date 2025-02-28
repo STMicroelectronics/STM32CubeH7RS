@@ -18,11 +18,11 @@
   */
 /* USER CODE END Header */
 
-#ifndef __USBPD_DPM_USER_H_
-#define __USBPD_DPM_USER_H_
+#ifndef __USBPD_DPM_USER_H
+#define __USBPD_DPM_USER_H
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -104,4 +104,4 @@ void                USBPD_DPM_Notification(uint8_t PortNum, USBPD_NotifyEventVal
 }
 #endif
 
-#endif /* __USBPD_DPM_USER_H_ */
+#endif /* __USBPD_DPM_USER_H */

@@ -17,8 +17,8 @@
   */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef EXTMEM_TYPE_H_
-#define EXTMEM_TYPE_H_
+#ifndef __STM32_EXTMEM_TYPE_H_
+#define __STM32_EXTMEM_TYPE_H_
 
 #ifdef __cplusplus
 extern "C" {
@@ -57,12 +57,12 @@ extern "C" {
 #include "user/stm32_user_driver_type.h"
 #endif /* DRIVER_USER_ENABLED */
     
-/* Exported constants --------------------------------------------------------*/
-/** @defgroup EXTMEN_Exported_Macro External Memory Exported Macro
+/* Exported macros -----------------------------------------------------------*/
+/** @defgroup EXTMEM_Exported_Macros External Memory Exported MMacros
   * @{
   */
 /**
-  * @brief macro to get the minimum value 
+  * @brief Macro to get the minimum value 
   */
 
 #define EXTMEM_MIN(_A_,_B_)    ((_A_)>(_B_))?(_B_):(_A_);
@@ -71,7 +71,7 @@ extern "C" {
   */
 
 /* Exported types ------------------------------------------------------------*/    
-/** @defgroup EXTMEN_Exported_Typedef External Memory Exported type definition
+/** @defgroup EXTMEM_Exported_Typedef External Memory Exported Type definition
   * @{
   */
 
@@ -113,4 +113,4 @@ typedef struct
 }
 #endif
 
-#endif /* EXTMEM_TYPE_H_ */
+#endif /* __STM32_EXTMEM_TYPE_H_ */

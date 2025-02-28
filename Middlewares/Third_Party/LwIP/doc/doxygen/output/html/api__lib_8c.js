@@ -13,7 +13,7 @@ var api__lib_8c =
     [ "netconn_join_leave_group", "group__netconn__udp.html#gaaaf2f92eeb38dca70b3e6ad98c3c45ed", null ],
     [ "netconn_join_leave_group_netif", "group__netconn__udp.html#ga5db2a1cf06a5fbb36f433e637da8729b", null ],
     [ "netconn_listen_with_backlog", "group__netconn__tcp.html#ga84333ba8e7cdf45558d2b4795f53265d", null ],
-    [ "netconn_new_with_proto_and_callback", "api__lib_8c.html#ad0a0434e5ff08bb350740cb840e2aca8", null ],
+    [ "netconn_new_with_proto_and_callback", "api__lib_8c.html#a42711660e5030bc0dff779f3cea4178e", null ],
     [ "netconn_prepare_delete", "group__netconn__common.html#gad5c079af0ad791a92fe9dade375744f0", null ],
     [ "netconn_recv", "group__netconn__common.html#ga50490bab058f4e740798beffcf48cabf", null ],
     [ "netconn_recv_tcp_pbuf", "group__netconn__tcp.html#ga6893cb7648733d1f05696bac94e10490", null ],

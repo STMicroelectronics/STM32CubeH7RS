@@ -19,8 +19,8 @@
 /* USER CODE END Header */
 
 /* Define to prevent recursive inclusion --------------------------------------*/
-#ifndef __LWIPOPTS__H__
-#define __LWIPOPTS__H__
+#ifndef __LWIPOPTS_H
+#define __LWIPOPTS_H
 
 #include "main.h"
 
@@ -34,7 +34,7 @@
 /* USER CODE END 0 */
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* STM32CubeMX Specific Parameters (not defined in opt.h) ---------------------*/
@@ -49,6 +49,8 @@
 /* Parameters set in STM32CubeMX LwIP Configuration GUI -*/
 /*----- Value in opt.h for LWIP_DHCP: 0 -----*/
 #define LWIP_DHCP 1
+/*----- LWIP_NETIF_API==1: Enable NETIF API -----*/
+#define LWIP_NETIF_API 1
 /*----- Default value in ETH configuration GUI in CubeMx: 1524 -----*/
 #define ETH_RX_BUFFER_SIZE 1000
 /*----- Default Value for MEMP_NUM_TCP_PCB: 5 ---*/
@@ -57,7 +59,7 @@
 #define MEM_ALIGNMENT 4
 /*----- Default Value for MEM_SIZE: 1600 ---*/
 #define MEM_SIZE 14*1024
-/*----- Default Value for H7 devices: 0x30044000 -----*/
+/*----- Default Value for H7 devices: 0x30004000 -----*/
 #define LWIP_RAM_HEAP_POINTER 0x24040000
 /*----- Value in opt.h for MEMP_NUM_SYS_TIMEOUT: (LWIP_TCP + IP_REASSEMBLY + LWIP_ARP + (2*LWIP_DHCP) + LWIP_AUTOIP + LWIP_IGMP + LWIP_DNS + (PPP_SUPPORT*6*MEMP_NUM_PPP_PCB) + (LWIP_IPV6 ? (1 + LWIP_IPV6_REASS + LWIP_IPV6_MLD) : 0)) -*/
 #define MEMP_NUM_SYS_TIMEOUT 5
@@ -137,4 +139,4 @@
 #ifdef __cplusplus
 }
 #endif
-#endif /*__LWIPOPTS__H__ */
+#endif /*__LWIPOPTS_H */

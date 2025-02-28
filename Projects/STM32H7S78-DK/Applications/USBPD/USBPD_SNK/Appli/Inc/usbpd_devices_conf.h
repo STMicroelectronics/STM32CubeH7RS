@@ -18,8 +18,8 @@
   */
 /* USER CODE END Header */
 
-#ifndef USBPD_DEVICE_CONF_H
-#define USBPD_DEVICE_CONF_H
+#ifndef __USBPD_DEVICE_CONF_H
+#define __USBPD_DEVICE_CONF_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -76,7 +76,6 @@ extern "C" {
 #define UCPDDMA_INSTANCE0_LL_CHANNEL_TX   LL_DMA_CHANNEL_0
 
 #define UCPDDMA_INSTANCE0_CHANNEL_TX   GPDMA1_Channel0
-
 /* defined used to configure  USBPD_HW_SetFRSSignalling */
 #define UCPDFRS_INSTANCE0_FRSCC1
 #define UCPDFRS_INSTANCE0_FRSCC2
@@ -125,4 +124,4 @@ extern "C" {
 }
 #endif
 
-#endif /* USBPD_DEVICE_CONF_H */
+#endif /* __USBPD_DEVICE_CONF_H */

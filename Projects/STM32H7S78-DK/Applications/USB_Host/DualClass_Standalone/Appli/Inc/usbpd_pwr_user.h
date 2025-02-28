@@ -19,8 +19,8 @@
 /* USER CODE END Header */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef USBPD_PWR_USER_H_
-#define USBPD_PWR_USER_H_
+#ifndef __USBPD_PWR_USER_H
+#define __USBPD_PWR_USER_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -265,5 +265,5 @@ void    BSP_USBPD_PWR_EventCallback(uint32_t Instance);
 }
 #endif
 
-#endif /* USBPD_PWR_USER_H_ */
+#endif /* __USBPD_PWR_USER_H */
 

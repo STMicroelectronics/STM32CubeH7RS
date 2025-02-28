@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * @file    stm32_sal_sd.h
+  * @file    stm32_sal_sd_api.h
   * @author  MCD Application Team
   * @brief   This file contains the software adaptation layer SD functions
   *          prototypes.
@@ -18,8 +18,8 @@
   */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __SAL_SD_H
-#define __SAL_SD_H
+#ifndef __STM32_SAL_SD_API_H
+#define __STM32_SAL_SD_API_H
 
 #ifdef __cplusplus
  extern "C" {
@@ -51,7 +51,7 @@
   */
 
 /**
- * @brief this function initializes the SD SAL context
+ * @brief This function initializes the SD SAL context
  * @param SalSD SAL SD Object
  * @param HALHandle HAL handle
  * @param Info  information on the SD card
@@ -60,14 +60,14 @@
 HAL_StatusTypeDef SAL_SD_Init(SAL_SD_ObjectTypeDef* SalSD, void* HALHandle, EXTMEM_DRIVER_SDCARD_InfoTypeDef* Info);
 
 /**
- * @brief this function un-initializes the SD SAL context
+ * @brief This function un-initializes the SD SAL context
  * @param SalSD SAL SD Object
  * @return @ref HAL_StatusTypeDef
  **/
 HAL_StatusTypeDef SAL_SD_DeInit(SAL_SD_ObjectTypeDef* SalSD);
 
 /**
- * @brief this function reads data from the SD
+ * @brief This function reads data from the SD
  * @param SalSD SAL SD Object
  * @param BlockIdx block index
  * @param Data data pointer
@@ -77,7 +77,7 @@ HAL_StatusTypeDef SAL_SD_DeInit(SAL_SD_ObjectTypeDef* SalSD);
 HAL_StatusTypeDef SAL_SD_ReadData(SAL_SD_ObjectTypeDef* SalSD, uint32_t BlockIdx, uint8_t* Data, uint32_t NumberOfBlock);
 
 /**
- * @brief this function writes data on the SD
+ * @brief This function writes data on the SD
  * @param SalSD SAL SD Object
  * @param BlockIdx block index
  * @param Data data pointer
@@ -87,7 +87,7 @@ HAL_StatusTypeDef SAL_SD_ReadData(SAL_SD_ObjectTypeDef* SalSD, uint32_t BlockIdx
 HAL_StatusTypeDef SAL_SD_WriteData(SAL_SD_ObjectTypeDef* SalSD, uint32_t BlockIdx, const uint8_t* const Data, uint32_t NumberOfBlock);
 
 /**
- * @brief this function erases an amount of blocks on the SD
+ * @brief This function erases an amount of blocks on the SD
  * @param SalSD SAL SD Object
  * @param BlockIdx block index
  * @param BlockCount number of block
@@ -96,7 +96,7 @@ HAL_StatusTypeDef SAL_SD_WriteData(SAL_SD_ObjectTypeDef* SalSD, uint32_t BlockId
 HAL_StatusTypeDef SAL_SD_EraseBlock(SAL_SD_ObjectTypeDef* SalSD, uint32_t BlockIdx, uint32_t BlockCount);
 
 /**
- * @brief this function reases the SD
+ * @brief This function erases all the SD
  * @param SalSD SAL SD Object
  * @return @ref HAL_StatusTypeDef
  **/
@@ -118,4 +118,4 @@ HAL_StatusTypeDef SAL_SD_MassErase(SAL_SD_ObjectTypeDef* SalSD);
 }
 #endif
 
-#endif /* __SAL_SD_H */
+#endif /* __STM32_SAL_SD_API_H */

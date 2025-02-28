@@ -88,7 +88,7 @@ static DRESULT USBH_read(BYTE lun, BYTE *buff, LBA_t sector, UINT count)
   MSC_LUNTypeDef info;
   USBH_StatusTypeDef  status = USBH_OK;
 
-  if ((DWORD)buff == NULL)
+  if (buff == NULL)
   {
     USBH_ErrLog("The Data buffer buff should be different to NULL");
   }
@@ -154,7 +154,7 @@ static DRESULT USBH_write(BYTE lun, const BYTE *buff, LBA_t sector, UINT count)
   MSC_LUNTypeDef info;
   USBH_StatusTypeDef  status = USBH_OK;
 
-  if ((DWORD)buff == NULL)
+  if (buff == NULL)
   {
     USBH_ErrLog("The Data buffer buff should be different to NULL");
   }
@@ -221,7 +221,7 @@ static DRESULT USBH_ioctl(BYTE lun, BYTE cmd, void *buff)
   DRESULT res = RES_ERROR;
   MSC_LUNTypeDef info;
 
-  if ((DWORD)buff == NULL)
+  if (buff == NULL)
   {
     USBH_ErrLog("The Data buffer buff should be different to NULL");
   }

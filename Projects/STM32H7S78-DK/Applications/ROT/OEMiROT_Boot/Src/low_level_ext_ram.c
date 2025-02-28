@@ -94,11 +94,6 @@ static HAL_StatusTypeDef Ext_Ram_SetHslv(void)
     }
   }
 
-  /* Configure "high speed low voltage" */
-  /* Both XSPI must be configured when XSPIM is used */
-  HAL_SBS_EnableIOSpeedOptimize(SBS_IO_XSPI1_HSLV);
-  HAL_SBS_EnableIOSpeedOptimize(SBS_IO_XSPI2_HSLV);
-
   return HAL_OK;
 }
 #endif /* OEMIROT_LOAD_AND_RUN == LOAD_AND_RUN_EXT_RAM */

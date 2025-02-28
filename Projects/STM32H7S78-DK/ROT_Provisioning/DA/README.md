@@ -53,7 +53,6 @@ The **provisioning process** (DA/provisioning.bat/.sh) is divided into 3 majors 
 
 - Step 1: Configuration
 - Step 2: Provisioning
-- Step 3: Image flashing
 
 The provisioning script is relying on ob_programming and obk_provisioning scripts.<br>
 At the end of the **provisioning process**, the DA is provisioned and the product state is

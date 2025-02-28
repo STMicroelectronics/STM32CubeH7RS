@@ -114,11 +114,11 @@ void HAL_MspInit(void)
 }
 
 /**
-* @brief XSPI MSP Initialization
-* This function configures the hardware resources used in this example
-* @param hxspi: XSPI handle pointer
-* @retval None
-*/
+  * @brief XSPI MSP Initialization
+  * This function configures the hardware resources used in this example
+  * @param hxspi: XSPI handle pointer
+  * @retval None
+  */
 void HAL_XSPI_MspInit(XSPI_HandleTypeDef* hxspi)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
@@ -126,7 +126,7 @@ void HAL_XSPI_MspInit(XSPI_HandleTypeDef* hxspi)
   if(hxspi->Instance==XSPI2)
   {
   /* USER CODE BEGIN XSPI2_MspInit 0 */
-    /**XSPI2 GPIO Configuration
+    /** XSPI2 GPIO Configuration
     PN1     ------> XSPIM_P2_NCS0
     PN3     ------> XSPIM_P2_IO1
     PN0     ------> XSPIM_P2_DQS0
@@ -142,8 +142,7 @@ void HAL_XSPI_MspInit(XSPI_HandleTypeDef* hxspi)
     */
   /* USER CODE END XSPI2_MspInit 0 */
 
-  /** Initializes the peripherals clock
-  */
+    /* Initializes the peripherals clock */
     PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_XSPI2;
     PeriphClkInit.Xspi2ClockSelection = RCC_XSPI2CLKSOURCE_PLL2S;
     if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
@@ -156,7 +155,7 @@ void HAL_XSPI_MspInit(XSPI_HandleTypeDef* hxspi)
     __HAL_RCC_XSPI2_CLK_ENABLE();
 
     __HAL_RCC_GPION_CLK_ENABLE();
-    /**XSPI2 GPIO Configuration
+    /** XSPI2 GPIO Configuration
     PN1     ------> XSPIM_P2_NCS1
     PN3     ------> XSPIM_P2_IO1
     PN0     ------> XSPIM_P2_DQS0
@@ -181,22 +180,23 @@ void HAL_XSPI_MspInit(XSPI_HandleTypeDef* hxspi)
   /* USER CODE BEGIN XSPI2_MspInit 1 */
 
   /* USER CODE END XSPI2_MspInit 1 */
+
   }
 
 }
 
 /**
-* @brief XSPI MSP De-Initialization
-* This function freeze the hardware resources used in this example
-* @param hxspi: XSPI handle pointer
-* @retval None
-*/
+  * @brief XSPI MSP De-Initialization
+  * This function freeze the hardware resources used in this example
+  * @param hxspi: XSPI handle pointer
+  * @retval None
+  */
 void HAL_XSPI_MspDeInit(XSPI_HandleTypeDef* hxspi)
 {
   if(hxspi->Instance==XSPI2)
   {
   /* USER CODE BEGIN XSPI2_MspDeInit 0 */
-    /**XSPI2 GPIO Configuration
+    /** XSPI2 GPIO Configuration
     PN1     ------> XSPIM_P2_NCS0
     PN3     ------> XSPIM_P2_IO1
     PN0     ------> XSPIM_P2_DQS0
@@ -215,7 +215,7 @@ void HAL_XSPI_MspDeInit(XSPI_HandleTypeDef* hxspi)
     __HAL_RCC_XSPIM_CLK_DISABLE();
     __HAL_RCC_XSPI2_CLK_DISABLE();
 
-    /**XSPI2 GPIO Configuration
+    /** XSPI2 GPIO Configuration
     PN1     ------> XSPIM_P2_NCS1
     PN3     ------> XSPIM_P2_IO1
     PN0     ------> XSPIM_P2_DQS0

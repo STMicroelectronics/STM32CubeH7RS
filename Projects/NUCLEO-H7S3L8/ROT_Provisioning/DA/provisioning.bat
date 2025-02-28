@@ -13,7 +13,6 @@ set ob_programming_log="ob_programming.log"
 set obk_provisioning_log="obk_provisioning.log"
 set provisioning="provisioning.log"
 set connect_no_reset=-c port=SWD speed=fast ap=1 mode=Hotplug
-set connect_reset=-c port=SWD speed=fast ap=1 mode=Hotplug -hardRst
 
 echo.
 echo =====
@@ -85,7 +84,7 @@ set current_log_file="./*.log files "
 echo;
 goto dbg_auth_update
 
-:: =============================================== Steps to create the obk file ==============================================
+:: =============================================== Step to create the obk file ==============================================
 :update_da
 
 echo    * !da_file!.obk generation:
@@ -96,9 +95,31 @@ echo        Press any key to continue...
 echo.
 pause >nul
 
-:: ========================================================= Board provisioning steps =======================================================
-:: ================================================== Provisioning the obk file ===========================================================
+:: ========================================================= Board provisioning step =======================================================
 echo Step 2 : Provisioning
+:: Set XSPI1_HSLV to 1
+set "action=Setting XSPI1_HSLV to 1"
+set current_log_file=%provisioning%
+set "command=%stm32programmercli% %connect_no_reset% -ob XSPI1_HSLV=1"
+echo %command% > %current_log_file%
+%command% >> %current_log_file% 2>&1
+if %errorlevel% neq 0 goto :step_error
+
+:: Set XSPI2_HSLV to 1
+set "action=Setting XSPI2_HSLV to 1"
+set current_log_file=%provisioning%
+set "command=%stm32programmercli% %connect_no_reset% -ob XSPI2_HSLV=1"
+echo %command% > %current_log_file%
+%command% >> %current_log_file% 2>&1
+if %errorlevel% neq 0 goto :step_error
+
+:: ========================================================= image flashing =========================================================
+echo    * Flash your application with your preferred toolchain, if not already done
+echo        Press any key to continue...
+echo.
+pause >nul
+
+:: ================================================== Provisioning the obk file ===========================================================
 :: Set DTCM/ITCM_AXI_SHARE to 0
 set current_log_file=%provisioning%
 set "command=%stm32programmercli% %connect_no_reset% -ob DTCM_AXI_SHARE=0 ITCM_AXI_SHARE=0"
@@ -120,7 +141,7 @@ goto provisioning_step
 :: Provisioning the obk file step
 :provisioning_step
 set current_log_file=%obk_provisioning_log%
-set "action=Provisionning the .obk file ..."
+set "action=Provisionning the .obk file..."
 set "command=start /w /b call %obk_provisioning% AUTO"
 echo    * %action%
 %command% >> %obk_provisioning_log%
@@ -130,26 +151,17 @@ echo        Successful obk provisioning
 echo        (see %obk_provisioning_log% for details)
 echo.
 
-:: ====================================================== Option Bytes programming ==========================================================
-set "action=Programming the option bytes  ..."
+:: ====================================================== Option Byte programming ==========================================================
+set "action=Programming the option bytes..."
 set current_log_file=%ob_programming_log%
 set "command=start /w /b call %ob_programming% AUTO"
 echo    * %action%
 %command% > %ob_programming_log%
 if %errorlevel% neq 0 goto :step_error
 
-echo        Successful option bytes programming
+echo        Successful option byte programming
 echo        (see %ob_programming_log% for details)
 echo.
-
-:: ========================================================= image generation steps ========================================================
-echo Step 3 : Image flashing
-echo    * At this step, you have to flash your application with your preferred toolchain
-echo      The connection, with the toolchain, must be done in Hotplug mode (not on a reset)
-echo        Press any key to continue...
-echo.
-pause >nul
-
 
 : Set the final product state of the STM32H7RS product
 :set_final_ps

@@ -21,9 +21,6 @@
 #include <string.h>
 #include "boot_hal_cfg.h"
 #include "boot_hal.h"
-#if  defined(MCUBOOT_USE_MCE)
-#include "boot_hal_mce.h"
-#endif /* MCUBOOT_USE_MCE */
 #include "boot_hal_hash_ref.h"
 #include "boot_hal_imagevalid.h"
 #include "boot_hal_flowcontrol.h"
@@ -47,12 +44,20 @@
 #include "low_level_ramecc.h"
 #include "bootutil_priv.h"
 #include "bootutil/crypto/sha256.h"
+
+#if  defined(MCUBOOT_USE_MCE)
+#include "boot_hal_mce.h"
+#else
+bool boot_is_in_primary(uint8_t fa_id, uint32_t offset_in_flash, size_t len);
+bool boot_is_in_primary_and_erased(uint8_t fa_id, uint32_t offset_in_flash, size_t len, uint8_t erased_val);
+#endif /* MCUBOOT_USE_MCE */
+
 extern ARM_DRIVER_FLASH FLASH_DEV_NAME;
 extern ARM_DRIVER_FLASH EXT_FLASH_DEV_NAME;
 
 
 #if defined(MCUBOOT_DOUBLE_SIGN_VERIF)
-/* Global variables to memorize images validation status */
+/* Global variables to memorize image validation status */
 #if (MCUBOOT_IMAGE_NUMBER == 1)
 uint8_t ImageValidStatus[MCUBOOT_IMAGE_NUMBER] = {IMAGE_INVALID};
 #elif (MCUBOOT_IMAGE_NUMBER == 2)
@@ -269,7 +274,7 @@ void boot_platform_quit(struct boot_arm_vector_table *vector)
   {
     if (ImageValidStatus[image_index] != IMAGE_VALID)
     {
-      BOOT_LOG_ERR("Error while double controlling images validation");
+      BOOT_LOG_ERR("Error while double controlling image validation");
       Error_Handler();
     }
   }
@@ -536,7 +541,6 @@ int boot_hash_ref_get(uint8_t *hash_ref, uint8_t size, uint8_t image_index)
 }
 #endif /* MCUBOOT_USE_HASH_REF */
 
-#ifdef MCUBOOT_USE_MCE
 /**
   * @brief This function check if a buffer is in primary code
   * @param fa_id identifier of the flash area
@@ -650,7 +654,6 @@ bool boot_is_in_primary_and_erased(uint8_t fa_id, uint32_t offset_in_flash, size
   return decrypted_content_erased;
 #endif /* OEMIROT_MCE_PROTECTION */
 }
-#endif /* MCUBOOT_USE_MCE */
 
 /**
   * @brief Erase image (code + data)
@@ -660,18 +663,25 @@ bool boot_is_in_primary_and_erased(uint8_t fa_id, uint32_t offset_in_flash, size
 void boot_erase_image(void)
 {
   uint32_t sector;
+  ARM_FLASH_INFO *flash_info;
 
-  /* Erase code image */
-  for (sector = FLASH_AREA_0_OFFSET;
-       sector < (FLASH_AREA_0_OFFSET + FLASH_AREA_0_SIZE);
-       sector += FLASH_AREA_IMAGE_SECTOR_SIZE)
+  /* Get the flash information */
+  flash_info = EXT_FLASH_DEV_NAME.GetInfo();
+
+  /* Check whether the first sector is erased */
+  if (boot_is_in_primary_and_erased(FLASH_AREA_0_ID, FLASH_AREA_0_OFFSET, FLASH_AREA_IMAGE_SECTOR_SIZE, flash_info->erased_value) == false)
   {
-    if (EXT_FLASH_DEV_NAME.EraseSector(sector) != ARM_DRIVER_OK)
+    /* Erase code image */
+    for (sector = FLASH_AREA_0_OFFSET;
+         sector < (FLASH_AREA_0_OFFSET + FLASH_AREA_0_SIZE);
+         sector += FLASH_AREA_IMAGE_SECTOR_SIZE)
     {
-      Error_Handler();
+      if (EXT_FLASH_DEV_NAME.EraseSector(sector) != ARM_DRIVER_OK)
+      {
+        Error_Handler();
+      }
     }
   }
-
 }
 /**
   * @brief This function configures and enables the ICache.
@@ -917,7 +927,7 @@ int32_t boot_platform_init(void)
   }
 
 #if defined(MCUBOOT_USE_HASH_REF)
-  /* Load all images hash references (for mcuboot) */
+  /* Load all image hash references (for mcuboot) */
   if (boot_hash_ref_load())
   {
     BOOT_LOG_ERR("Error while loading Hash references from FLash");

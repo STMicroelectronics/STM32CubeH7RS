@@ -1,13 +1,13 @@
 ## <b>CDC_Standalone Application Description</b>
 
 This application is a part of the USB Device Library package using STM32Cube firmware. It describes how to
-use USB device application based on the Device Communication Class (CDC) following the PSTN subprotocol
+use USB device application based on the device communication class (CDC) following the PSTN subprotocol
 in the NUCLEO-H7S3L8 devices using the OTG-USB and UART peripherals.
 
-This is a typical application on how to use the NUCLEO-H7S3L8 USB OTG Device peripheral where the STM32 MCU
+This is a typical application on how to use the NUCLEO-H7S3L8 USB OTG device peripheral where the STM32 MCU
 behaves as a USB-to-RS232 bridge following the Virtual COM Port (VCP) implementation.
 
- - On one side, the STM32 exchanges data with a PC host through USB interface in Device mode.
+ - On one side, the STM32 exchanges data with a PC host through USB interface in device mode.
 
  - On the other side, the STM32 exchanges data with other devices (same host, other host, other devices..) through the UART interface (RS232).
 
@@ -33,24 +33,24 @@ implementation (PSTN sub-class):
  - 1 x Interrupt IN endpoint for setting and getting serial-port parameters:
    When control setup is received, the corresponding request is executed in CDC_Itf_Control().
    In this application, two requests are implemented:
-    - Set line: Set the bit rate, number of Stop bits, parity, and number of data bits
-    - Get line: Get the bit rate, number of Stop bits, parity, and number of data bits
+    - Set line: set the bit rate, number of Stop bits, parity, and number of data bits
+    - Get line: get the bit rate, number of Stop bits, parity, and number of data bits
    The other requests (send break, control line state) are not implemented.
 
 ####  <b>Expected success behavior</b>
 
 When plugged to PC host, the NUCLEO-H7S3L8 must be properly enumerated as an USB Serial device and an STlink Com port.
-During the enumeration phase, the device must provide host with the requested descriptors (Device descriptor, configuration descriptor, string descriptors).
+During the enumeration phase, the device must provide host with the requested descriptors (device descriptor, configuration descriptor, string descriptors).
 Those descriptors are used by host driver to identify the device capabilities. Once NUCLEO-H7S3L8 USB device successfully completed the enumeration phase,
 Open two hyperterminals (USB com port and UART com port(USB STLink VCP)) to send/receive data to/from host from/to device.
 
 #### <b>Error behaviors</b>
 
-Host PC shows that USB device does not operate as designed (CDC Device enumeration failed, PC and Device can not communicate over VCP ports).
+Host PC shows that USB device does not operate as designed (CDC device enumeration failed, PC and device can not communicate over VCP ports).
 
 #### <b>Assumptions if any</b>
 
-User is familiar with USB 2.0 "Universal Serial BUS" Specification and CDC_ACM class Specification.
+User is familiar with USB 2.0 "Universal Serial BUS" specification and CDC_ACM class specification.
 
 #### <b>Known limitations</b>
 
@@ -58,11 +58,11 @@ None.
 
 ### <b>Notes</b>
 
-> - The reception of data via UART is managed by interrupt while the transmission is managed by DMA, thus allowing the application to receive data at the same time as it transmits other data (full-duplex functionality).
-> - The user has to check the list of the COM ports in Device Manager to find out the number of the COM ports that have been assigned (by OS) to the VCP interface.
-> - It is mandatory to check that the jumper below is connected:
-> -    JP4  (USB-PD).
-> - Connect the NUCLEO-H7S3L8 board to the PC through TYPE-C to Standard A cable.
+ - The reception of data via UART is managed by interrupt while the transmission is managed by DMA, thus allowing the application to receive data at the same time as it transmits other data (full-duplex functionality).
+ - The user has to check the list of the COM ports in Device Manager to find out the number of the COM ports that have been assigned (by OS) to the VCP interface.
+ - It is mandatory to check that the jumper below is connected:
+ - JP4  (USB-PD).
+ - Connect the NUCLEO-H7S3L8 board to the PC through TYPE-C to Standard A cable.
 
 #### <b>USB usage hints</b>
 
@@ -77,8 +77,8 @@ USB_Device, USB_OTG, High_Speed, CDC, VCP
 
 ### <b>Hardware and Software environment</b>
 
-  - This example runs on NUCLEO-H7S3L8 device
-  - This example has been tested with STMicroelectronics NUCLEO-H7S3L8 boards Revision MB1737-H7S3L8-B01 and can be easily tailored to any other supported device and development board.
+  - This application runs on STM32H7S3xx devices
+  - This application has been tested with STMicroelectronics NUCLEO-H7S3L8 boards revision MB1737-H7S3L8-B02 and can be easily tailored to any other supported device and development board.
   - NUCLEO-H7S3L8 Set-up
   - Connect the NUCLEO-H7S3L8 board CN2 to the PC through USB cable.
   - For VCP the configuration is dynamic for example it can be :
@@ -118,7 +118,7 @@ In order to make the program work, you must do the following :
   3. Select then "CDC_Standalone_Appli" workspace
   4. Rebuild all files from CDC_Standalone Appli and load your images into memories: First, load the CDC_Standalone_Boot.hex in internal Flash, then, load
      the Appli part in External memory available on NUCLEO-H7S3L8 board.
-  5. Run the example
+  5. Run the application
 
 
 #### <b>MDK-ARM</b>
@@ -134,7 +134,7 @@ In order to make the program work, you must do the following :
   3. Select then "CDC_Standalone_Appli" workspace
   4. Rebuild all files from CDC_Standalone Appli and load your images into memories: First, load the CDC_Standalone_Boot.hex in internal Flash, then, load
      the Appli part in External memory available on NUCLEO-H7S3L8 board.
-  5. Run the example
+  5. Run the application
 
 
 #### <b>STM32CubeIDE</b>
@@ -142,10 +142,10 @@ In order to make the program work, you must do the following :
 To configure STM32CubeIDE Debug Configuration, you must do the following :
 
 For "CDC_Standalone_Boot" project :
-    Add the adequate external loader (MX25UW25645G_STM32H7R38-NUCLEO.stldr file) in Project->Debugger Configuration
+    Add the adequate external loader (MX25UW25645G_STM32H7S3L8-NUCLEO.stldr file) in Project->Debugger Configuration
 
 For "CDC_Standalone_Appli" project :
-    1. Add the adequate external loader (MX25UW25645G_STM32H7R38-NUCLEO.stldr file) in Project->Debugger Configuration
+    1. Add the adequate external loader (MX25UW25645G_STM32H7S3L8-NUCLEO.stldr file) in Project->Debugger Configuration
     2. Add in the startup the CDC_Standalone_Boot in Project->Debugger Configuration
     3. Move up the application in the startup
 
@@ -165,7 +165,7 @@ For "CDC_Standalone_Appli" project :
   4. Build the project
   5. With the Debug icon select the configuration “CDC_Standalone_Appli Debug”. First, load the Boot binary in internal Flash, then, load the Appli binary in
      External memory available on NUCLEO-H7S3L8 board
-  6. Run the example
+  6. Run the application
 
 <b>Note</b>
 

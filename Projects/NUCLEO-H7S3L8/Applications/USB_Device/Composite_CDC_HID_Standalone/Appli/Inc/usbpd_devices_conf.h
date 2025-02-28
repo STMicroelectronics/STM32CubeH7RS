@@ -18,8 +18,8 @@
   */
 /* USER CODE END Header */
 
-#ifndef USBPD_DEVICE_CONF_H
-#define USBPD_DEVICE_CONF_H
+#ifndef __USBPD_DEVICE_CONF_H
+#define __USBPD_DEVICE_CONF_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -126,4 +126,4 @@ extern "C" {
 }
 #endif
 
-#endif /* USBPD_DEVICE_CONF_H */
+#endif /* __USBPD_DEVICE_CONF_H */

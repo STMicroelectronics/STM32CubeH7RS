@@ -39,7 +39,7 @@
   */
 
 /**
- * @brief list of error code of the PSRAM driver
+ * @brief List of error codes of the PSRAM driver
  */
 typedef enum  {
   EXTMEM_DRIVER_PSRAM_OK                           =   0,
@@ -59,7 +59,7 @@ typedef enum  {
   * @{
   */
 /**
- * @brief this function initialize the driver PSRAM
+ * @brief This function initializes the driver PSRAM
  *
  * @param Peripheral ptr on the Peripheral handle
  * @param Config link configuration
@@ -72,7 +72,7 @@ EXTMEM_DRIVER_PSRAM_StatusTypeDef EXTMEM_DRIVER_PSRAM_Init(void *Peripheral, EXT
                                                            EXTMEM_DRIVER_PSRAM_ObjectTypeDef *PsramObject);
 
 /**
- * @brief this function un-initialize the driver PSRAM
+ * @brief This function un-initializes the driver PSRAM
  *
  * @param PsramObject IP instance
  * @return @ref EXTMEM_DRIVER_PSRAM_StatusTypeDef
@@ -80,7 +80,7 @@ EXTMEM_DRIVER_PSRAM_StatusTypeDef EXTMEM_DRIVER_PSRAM_Init(void *Peripheral, EXT
 EXTMEM_DRIVER_PSRAM_StatusTypeDef EXTMEM_DRIVER_PSRAM_DeInit(EXTMEM_DRIVER_PSRAM_ObjectTypeDef *PsramObject);
 
 /**
- * @brief this function enables the memory mapped mode
+ * @brief This function enables the memory mapped mode
  *
  * @param PsramObject memory instance
  * @return @ref EXTMEM_DRIVER_PSRAM_StatusTypeDef
@@ -88,7 +88,7 @@ EXTMEM_DRIVER_PSRAM_StatusTypeDef EXTMEM_DRIVER_PSRAM_DeInit(EXTMEM_DRIVER_PSRAM
 EXTMEM_DRIVER_PSRAM_StatusTypeDef EXTMEM_DRIVER_PSRAM_Enable_MemoryMappedMode(EXTMEM_DRIVER_PSRAM_ObjectTypeDef *PsramObject);
 
 /**
- * @brief this function disables the memory mapped mode
+ * @brief This function disables the memory mapped mode
  *
  * @param PsramObject memory instance
  * @return @ref EXTMEM_DRIVER_PSRAM_StatusTypeDef

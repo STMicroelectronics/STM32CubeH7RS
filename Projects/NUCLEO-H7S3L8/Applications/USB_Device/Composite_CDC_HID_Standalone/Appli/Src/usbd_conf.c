@@ -79,8 +79,7 @@ void HAL_PCD_MspInit(PCD_HandleTypeDef* pcdHandle)
 
     /* USER CODE END USB_OTG_HS_MspInit 0 */
 
-    /** Initializes the peripherals clock
-    */
+    /* Initializes the peripherals clock */
     PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USBPHYC;
     PeriphClkInit.UsbPhycClockSelection = RCC_USBPHYCCLKSOURCE_HSE;
     if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
@@ -88,8 +87,7 @@ void HAL_PCD_MspInit(PCD_HandleTypeDef* pcdHandle)
       Error_Handler();
     }
 
-    /** Enable USB Voltage detector
-    */
+    /* Enable USB Voltage detector */
     HAL_PWREx_EnableUSBVoltageDetector();
 
     /* Peripheral clock enable */

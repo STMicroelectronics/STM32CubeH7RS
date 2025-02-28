@@ -155,7 +155,7 @@ if /i "!selected_product_state!" == "OPEN" (
 )
 
 :: ==================================================== Download images ====================================================================
-set "action=Application images programming in download slots"
+set "action=Application image programming in download slots"
 echo %action%
 
 if  "%app_image_number%" == "1" (

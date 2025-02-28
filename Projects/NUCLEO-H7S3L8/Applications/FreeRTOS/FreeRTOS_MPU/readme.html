@@ -37,12 +37,12 @@ creates one Privileged mode task using xTaskCreate():</p>
 Blocks while waiting for a fault to occur. Displays information about
 the faults and takes corrective actions. It also has User mode tasks
 created using the xTaskCreateRestricted() API:</p></li>
-<li><p>‘Task1’: Has read only access to shared memory Attempts an
-illegal write to the shared memory only once Toggles the green
-LED</p></li>
-<li><p>‘Task2’: Has read only access to shared memory Attempts an
-illegal write to the shared memory periodically Toggles the yellow LED
-The application will try to recover from MemManage fault exception for
+<li><p>‘Task1’: Has read only access to shared memory. Attempts an
+illegal write to the shared memory only once. Toggles the green
+LED.</p></li>
+<li><p>‘Task2’: Has read only access to shared memory. Attempts an
+illegal write to the shared memory periodically. Toggles the yellow LED.</p></li>
+<li><p>The application will try to recover from MemManage fault exception for
 each task until EXAMPLE_FAULT_COUNT_THRESHOLD is reached for that task.
 At that point the task will be suspended to avoid further
 exceptions.</p></li>
@@ -101,7 +101,7 @@ environment</b></h3>
 <ul>
 <li><p>This application runs on NUCLEO-H7S3L8 device.</p></li>
 <li><p>This application has been tested with STMicroelectronics
-NUCLEO-H7S3L8 board MB1737 Rev. B01 and can be easily tailored to any
+NUCLEO-H7S3L8 board MB1737 Rev. B02 and can be easily tailored to any
 other supported device and development board.</p></li>
 <li><p>This application uses USART3 to display output, the hyperterminal
 configuration is as follows:</p>
@@ -109,7 +109,7 @@ configuration is as follows:</p>
 <li>BaudRate = 115200 baud</li>
 <li>Word Length = 8 Bits</li>
 <li>Stop Bit = 1</li>
-<li>Parity = none</li>
+<li>Parity = None</li>
 <li>Flow control = None</li>
 </ul></li>
 </ul>
@@ -120,7 +120,7 @@ the application code in external Flash.</p>
 <p>To configure STM32CubeIDE Debug Configuration, you must do the
 following :</p>
 <pre><code>1. Upload the template XIP
-2. Add the adequate external loader (MX25UW25645G_STM32H7R38-NUCLEO.stldr file) in Project-&gt;Debugger Configuration
+2. Add the adequate external loader (MX25UW25645G_STM32H7S3L8-NUCLEO.stldr file) in Project-&gt;Debugger Configuration
 3. Add in the startup the template_XIP_Boot in Project-&gt;Debugger Configuration
 4. Move up the application in the startup</code></pre>
 <p>In order to make the program work, you must do the following :</p>

@@ -19,11 +19,11 @@
 /* USER CODE END Header */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __USBD_STORAGE_IF_H__
-#define __USBD_STORAGE_IF_H__
+#ifndef __USBD_STORAGE_IF_H
+#define __USBD_STORAGE_IF_H
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -123,5 +123,5 @@ extern USBD_StorageTypeDef USBD_Storage_Interface_fops_HS;
 }
 #endif
 
-#endif /* __USBD_STORAGE_IF_H__ */
+#endif /* __USBD_STORAGE_IF_H */
 

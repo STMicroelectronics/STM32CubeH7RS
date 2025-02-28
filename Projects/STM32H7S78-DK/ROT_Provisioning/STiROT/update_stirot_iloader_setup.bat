@@ -78,7 +78,7 @@ goto :update
 set "AppliCfg=%python% %Applicfg%"
 
 :: ================================================ Updating STiROT_iLoader files ========================================================
-echo Updating the STiROT_iLoader files ...
+echo Updating the STiROT_iLoader files...
 set "action=Updating the STiROT_iLoader files"
 call :getBinSize STiROT_iLoader_bin_size %STiROT_iLoader_bin%
 

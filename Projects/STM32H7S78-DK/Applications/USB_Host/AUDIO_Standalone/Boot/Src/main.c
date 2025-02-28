@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2023 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -226,7 +226,7 @@ static void MX_XSPI1_Init(void)
   hxspi1.Init.MemoryMode = HAL_XSPI_SINGLE_MEM;
   hxspi1.Init.MemoryType = HAL_XSPI_MEMTYPE_APMEM_16BITS;
   hxspi1.Init.MemorySize = HAL_XSPI_SIZE_32GB;
-  hxspi1.Init.ChipSelectHighTimeCycle = 1;
+  hxspi1.Init.ChipSelectHighTimeCycle = 5;
   hxspi1.Init.FreeRunningClock = HAL_XSPI_FREERUNCLK_DISABLE;
   hxspi1.Init.ClockMode = HAL_XSPI_CLOCK_MODE_0;
   hxspi1.Init.WrapSize = HAL_XSPI_WRAP_32_BYTES;
@@ -334,6 +334,12 @@ static void MPU_Config(void)
 
   /* Disables the MPU */
   HAL_MPU_Disable();
+
+  /* Disables all MPU regions */
+  for(uint8_t i=0; i<__MPU_REGIONCOUNT; i++)
+  {
+    HAL_MPU_DisableRegion(i);
+  }
 
   /** Initializes and configures the Region and the memory to be protected
   */

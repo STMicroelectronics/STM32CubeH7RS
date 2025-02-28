@@ -69,7 +69,7 @@ int main(void)
   /* !!! To boot in a secure way, OEMxROT has configured and activated the
      Memory Protection Unit (not all resources are allocated).
      In order to keep a secure environment execution, you should reconfigure
-     the MPU to make it compatible with your application.
+     the MPU to fulfill the security requirements of your application.
      In this example, a default "non-secure" MPU configuration is applied. */
   MPU_Config();
   /* USER CODE END 1 */

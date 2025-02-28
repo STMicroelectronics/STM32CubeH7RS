@@ -271,11 +271,16 @@ void SystemCoreClockUpdate(void)
 /**
   * @brief  Configures the System clock source, PLL Multiplier and Divider factors,
   *         AHB/APBx prescalers and Flash settings for System clock 380 MHz
+  *
+  * @note   The system clock is set to 380 MHz to be functional with all hardware
+  *         configurations (ECC_ON_SRAM enabled, no internal regulator) and with the full range
+  *         of temperature (Tj up to 125 degrees).
+  *
   * @retval None
   */
 static void SetSysClock(void)
 {
-  /* Enable voltage range 1 for high performance */
+  /* Enable voltage range 1 for lowest power (compliant with ECC_ON_SRAM enabled) */
   MODIFY_REG(PWR->CSR4, PWR_CSR4_VOS, PWR_REGULATOR_VOLTAGE_SCALE1);
   while ((PWR->CSR4 & PWR_CSR4_VOSRDY) != PWR_CSR4_VOSRDY)
   {

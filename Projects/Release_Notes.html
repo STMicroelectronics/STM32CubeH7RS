@@ -52,10 +52,332 @@
 <div class="col-sm-12 col-lg-8">
 <h1 id="update-history">Update History</h1>
 <div class="collapse">
-<input type="checkbox" id="collapse-section2" checked aria-hidden="true"> <label for="collapse-section2" aria-hidden="true"><strong>V1.1.0 / 05-June-2024</strong></label>
+<input type="checkbox" id="collapse-section3" checked aria-hidden="true"> <label for="collapse-section3" aria-hidden="true"><strong>V1.2.0 / 05-February-2025</strong></label>
 <div>
 <h2 id="maintenance-release">Maintenance release</h2>
 <h3 id="maintenance-release-of-stm32cubeh7rs-firmware-projects-supporting-stm32h7rxsx-devices-mounted-on-stm32h7s78-dk-board-nucleo-h7s3l8-board.">Maintenance Release of <strong>STM32CubeH7RS</strong> Firmware projects supporting <strong>STM32H7Rx/Sx</strong> devices mounted on STM32H7S78-DK board &amp; NUCLEO-H7S3L8 board.</h3>
+<p><strong>New examples</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Board</th>
+<th style="text-align: left;">Example name</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">NUCLEO-H7S3L8</td>
+<td style="text-align: left;">XSPI_NOR_ReadWhileWrite_DTR</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Bug fixes</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Headline</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">- Fix the MPU configuration in boot projects to avoid a blocking state that prevents jumping to the user application in <strong>closed mode</strong>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">- <strong>FreeRTOS Applications</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">- Update applications following MW FreeRTOS component upgrade to V10.6.2.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">- Allow the user to use the ulExpectedIdleTime in PreSleepProcessing in FreeRTOS Lowpower application.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">- <strong>FatFS Applications</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">- Align expected success/error behavior in readme files with the application behavior for all FATFS applications.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">- Remove the const from the variable wtext in fatfs file to resolve the empty file issue on the SD card.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">- Update the SD_IsDetected() function by returning “APP_SD_PRESENT” when the SD card is detected and “APP_SD_NO_PRESENT” when it is not.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">- Add MX_SDMMC1_SD_Init(); in MX_FATFS_Process() function when SD card is plugged to fix unplug/plug SD card.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">- <strong>LwIP Applications</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">- Replace raw API by netif API in all LWIP applications.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">- Highlight the new JP6 configuration change in the README files for LwIP applications on STM32H7S78-DK board.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">- Add check on LAN8742_init() returned value in low_level_init() function.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">- Increase the stack and heap size of the application LwIP_TFTP_Server.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">- Increase the stack size of TCP and UDP threads to solve instable behavior of the application LwIP_UDPTCP_Echo_Server_Netconn_RTOS with STM32CubeIDE Debug mode.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">- <strong>ROT Applications</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">- Add readme files to each subfolder of ROT_Provisioning.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">- Open the whole RAM space to the user application by default in the OEMiROT or OEMuROT applications.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">- Update ROT/OEMiROT_Boot/Inc/stm32_extmem_conf.h to resolve the scalar initializer warning.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">- Add “LOAD_AND_RUN_INT_RAM” configuration to NUCLEO-H7S3L8 (OEMiROT_Boot) README files.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">- Updated the stm32ExtLoaderFlash variable in the README files by changing -elbl to -el in the external loader paths in H7R section.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">- Enable the Option Bytes “XSPI1_HSLV” and “XSPI2_HSLV” by default for STiROT_iLoader project.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">- Align the Applications/ROT scatter files on Templates/Template_ROT.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">- Change the executable files folder, object files folder, and listing files folder to be under the Board name folder.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">- Move the MPU region allowing the execution of the application to index 0 of region_cfg_appli to Ensure that this first MPU region grants execution rights to the user application.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">- Add wiki links to README files of Template projects (OEMiROT Appli/STiROT Appli).</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">- Revised all README files for OEMiROT_Boot, OEMiROT_Appli, STiROT_Appli, and STiROT_iLoader to enhance clarity and improve user understanding.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">- Enhance boot time after reconfiguration of XSPI.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">- Update documentation and provisioning processes for STiRoT_Appli, OEMIROT_Boot, OEMiROT_Appli, and templates, including removal of specific notes and added instructions for provisioning.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">- Add a “Provisioning” step and renumber the “Preliminary stage” to Step 0 to make the process more detailed.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">- <strong>USB Applications</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">- Fix USBPD_CAD_Task() and USBPD_TaskUser() functions in usbpd_dpm_core.c file of the application USB_Host_DualClass_Standalone.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">- Remove HAL_PWREx_EnableUSBReg() function from stm32h7rsxx_hal_msp.c file in both Boot, Appli projects.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">- Fix the application description in the readme of the application USB_Device_HID_Standalone.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">- Set the region 0x70000000 a non cacheable region in order to solve instable behavior of the application MSC_Standalone with EWARM.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">- <strong>XSPI Examples</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">- Add a new NOR Flash example with Read While Write feature (RWW).</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">- <strong>IWDG Examples</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">- Update IWDG_Reset example readme of NUCLEO-H7S3L8 board to further clarify expected behavior.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">- <strong>JPEG Examples</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">- Fix issue in JPEG_EncodingFromXSPI_DMA example output.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="contents">Contents</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Board</th>
+<th style="text-align: left;">Project category</th>
+<th style="text-align: left;">Path</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">STM32H7S78-DK</td>
+<td style="text-align: left;">Applications <span class="icon-st-update"></span></td>
+<td style="text-align: left;">Projects\STM32H7S78-DK\Applications</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32H7S78-DK</td>
+<td style="text-align: left;">Examples <span class="icon-st-update"></span></td>
+<td style="text-align: left;">Projects\STM32H7S78-DK\Examples</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">STM32H7S78-DK</td>
+<td style="text-align: left;">ROT_Provisioning <span class="icon-st-update"></span></td>
+<td style="text-align: left;">Projects\STM32H7S78-DK\ROT_Provisioning</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32H7S78-DK</td>
+<td style="text-align: left;">Templates <span class="icon-st-update"></span></td>
+<td style="text-align: left;">Projects\STM32H7S78-DK\Templates</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">STM32H7S78-DK</td>
+<td style="text-align: left;">Templates LL</td>
+<td style="text-align: left;">Projects\STM32H7S78-DK\Templates_LL</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NUCLEO-H7S3L8</td>
+<td style="text-align: left;">Applications <span class="icon-st-update"></span></td>
+<td style="text-align: left;">Projects\NUCLEO-H7S3L8\Applications</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NUCLEO-H7S3L8</td>
+<td style="text-align: left;">Examples <span class="icon-st-update"></span></td>
+<td style="text-align: left;">Projects\NUCLEO-H7S3L8\Examples</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NUCLEO-H7S3L8</td>
+<td style="text-align: left;">Examples_LL <span class="icon-st-update"></span></td>
+<td style="text-align: left;">Projects\NUCLEO-H7S3L8\Examples_LL</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NUCLEO-H7S3L8</td>
+<td style="text-align: left;">Examples_MIX</td>
+<td style="text-align: left;">Projects\NUCLEO-H7S3L8\Examples_MIX</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NUCLEO-H7S3L8</td>
+<td style="text-align: left;">ROT_Provisioning <span class="icon-st-update"></span></td>
+<td style="text-align: left;">Projects\NUCLEO-H7S3L8\ROT_Provisioning</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NUCLEO-H7S3L8</td>
+<td style="text-align: left;">Templates <span class="icon-st-update"></span></td>
+<td style="text-align: left;">Projects\NUCLEO-H7S3L8\Templates</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NUCLEO-H7S3L8</td>
+<td style="text-align: left;">Templates_Board</td>
+<td style="text-align: left;">Projects\NUCLEO-H7S3L8\Templates_Board</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NUCLEO-H7S3L8</td>
+<td style="text-align: left;">Templates LL</td>
+<td style="text-align: left;">Projects\NUCLEO-H7S3L8\Templates_LL</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32H7RS_CUSTOM_HW</td>
+<td style="text-align: left;">Examples</td>
+<td style="text-align: left;">Projects\STM32H7RS_CUSTOM_HW\Examples</td>
+</tr>
+</tbody>
+</table>
+<p><small>The components flagged by “<span class="icon-st-update"></span>” have changed since the previous release. “<span class="icon-st-add"></span>” are new.</small></p>
+<p><br />
+</p>
+<h2 id="development-toolchains-and-compilers">Development Toolchains and Compilers</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Toolchain + ST-Link</th>
+<th>Version</th>
+<th style="text-align: left;">Device</th>
+<th style="text-align: left;">Patch(if available)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">IAR Embedded Workbench for ARM (EWARM)</td>
+<td>V9.20.1</td>
+<td style="text-align: left;">H7RSxx</td>
+<td style="text-align: left;"><a href="../Utilities/PC_Software/EWARMv9_STM32H7RSxx_V1.0.0.zip">Patch EWARM</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">RealView Microcontroller Development Kit (MDK-ARM)</td>
+<td>V5.39</td>
+<td style="text-align: left;">H7RSxx</td>
+<td style="text-align: left;"><a href="../Utilities/PC_Software/Keil.STM32H7RSxx_DFP.1.0.0.zip">Patch KEIL</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">STM32CubeIDE V1.18.0 (GCC13) <span class="icon-st-update"></span></td>
+<td>V1.18.0 <span class="icon-st-update"></span></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+<h2 id="supported-devices-and-boards">Supported Devices and boards</h2>
+<ul>
+<li>STM32H7R7xx, STM32H7R3xx, STM32H7S3xx and STM32H7S7xx devices</li>
+<li>STM32H7S78-DK Discovery kit</li>
+<li>NUCLEO-H7S3L8 kit</li>
+</ul>
+<p><br />
+</p>
+<p><b>Warning</b>: The default BOOT0 switch position should be 1-2 on our DK board for normal boot operation from Flash for whatever operation (debug under IAR, flash programmer from STM32CubeProgrammer)</p>
+<p><b>Recommendation</b>: For projects using external memory, please check &amp; set carefully required User Option Bytes configuration with STM32CubeProgrammer tool:</p>
+<p><br />
+</p>
+<p>STM32H7S78-DK:</p>
+<pre><code>- XSPI1_HSLV=1     I/O XSPIM_P1 High speed option enabled
+- XSPI2_HSLV=1     I/O XSPIM_P2 High speed option enabled
+- VDDIO_HSLV=0     I/O speed optimized to operate at 3.3V</code></pre>
+<p>NUCLEO-H7S3L8:</p>
+<pre><code>- XSPI2_HSLV=1     I/O XSPIM_P2 High speed option enabled
+- VDDIO_HSLV=0     I/O speed optimized to operate at 3.3V</code></pre>
+<p><br />
+</p>
+<h2 id="known-limitations">Known Limitations</h2>
+<ul>
+<li>Some projects are not generated with STM32CubeMX tool. For the exhaustive list please refer to this table <a href="STM32CubeProjectsList.html">STM32CubeProjectsList</a></li>
+<li>The following STM32CubeIDE projects include only Debug configuration :
+<ul>
+<li>NUCLEO-H7S3L8//Examples//XSPI//XSPI_NOR_ReadWhileWrite_DTR</li>
+<li>STM32H7S78-DK//Examples//XSPI//XSPI_NOR_ReadWhileWrite_DTR</li>
+</ul></li>
+<li>On STM32H7S78-DK revision D board, some audio glitches might be perceptible. The issue will be fixed in next release.<br />
+</li>
+</ul>
+<h2 id="dependencies">Dependencies</h2>
+<ul>
+<li>STM32CubeMX <strong>V6.14.0</strong>
+<ul>
+<li>Projects (Applications and Examples) are generated using STM32CubeMX version V6.14.0.</li>
+</ul></li>
+</ul>
+<p><br />
+</p>
+<h2 id="backward-compatibility">Backward compatibility</h2>
+<ul>
+<li>Not applicable</li>
+</ul>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>None</li>
+</ul>
+<p><br />
+</p>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section2" aria-hidden="true"> <label for="collapse-section2" aria-hidden="true"><strong>V1.1.0 / 05-June-2024</strong></label>
+<div>
+<h2 id="maintenance-release-1">Maintenance release</h2>
+<h3 id="maintenance-release-of-stm32cubeh7rs-firmware-projects-supporting-stm32h7rxsx-devices-mounted-on-stm32h7s78-dk-board-nucleo-h7s3l8-board.-1">Maintenance Release of <strong>STM32CubeH7RS</strong> Firmware projects supporting <strong>STM32H7Rx/Sx</strong> devices mounted on STM32H7S78-DK board &amp; NUCLEO-H7S3L8 board.</h3>
 <p><strong>New feature</strong></p>
 <p>Add support of ExtMemLoaderloader generation for OPENBL in Nucleo &amp; DK board templates_XIP Add converted projects on CubeIDE &amp; MDK-ARM</p>
 <p><strong>New examples</strong></p>
@@ -148,7 +470,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="contents">Contents</h2>
+<h2 id="contents-1">Contents</h2>
 <table>
 <thead>
 <tr class="header">
@@ -233,7 +555,7 @@
 <p><small>The components flagged by “<span class="icon-st-update"></span>” have changed since the previous release. “<span class="icon-st-add"></span>” are new.</small></p>
 <p><br />
 </p>
-<h2 id="development-toolchains-and-compilers">Development Toolchains and Compilers</h2>
+<h2 id="development-toolchains-and-compilers-1">Development Toolchains and Compilers</h2>
 <table>
 <thead>
 <tr class="header">
@@ -264,7 +586,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="supported-devices-and-boards">Supported Devices and boards</h2>
+<h2 id="supported-devices-and-boards-1">Supported Devices and boards</h2>
 <ul>
 <li>STM32H7R7xx, STM32H7R3xx, STM32H7S3xx and STM32H7S7xx devices</li>
 <li>STM32H7S78-DK Discovery kit</li>
@@ -285,13 +607,13 @@
 - VDDIO_HSLV=0     I/O speed optimized to operate at 3.3V</code></pre>
 <p><br />
 </p>
-<h2 id="known-limitations">Known Limitations</h2>
+<h2 id="known-limitations-1">Known Limitations</h2>
 <ul>
 <li>Some projects are not generated with STM32CubeMX tool. For the exhaustive list please refer to this table <a href="STM32CubeProjectsList.html">STM32CubeProjectsList</a></li>
 </ul>
 <p><br />
 </p>
-<h2 id="dependencies">Dependencies</h2>
+<h2 id="dependencies-1">Dependencies</h2>
 <ul>
 <li>STM32CubeMX <strong>V6.12.0</strong>
 <ul>
@@ -300,11 +622,11 @@
 </ul>
 <p><br />
 </p>
-<h2 id="backward-compatibility">Backward compatibility</h2>
+<h2 id="backward-compatibility-1">Backward compatibility</h2>
 <ul>
 <li>Not applicable</li>
 </ul>
-<h2 id="notes">Notes</h2>
+<h2 id="notes-1">Notes</h2>
 <ul>
 <li>None</li>
 </ul>
@@ -317,7 +639,7 @@
 <div>
 <h2 id="first-release">First release</h2>
 <h3 id="official-release-of-stm32cubeh7rs-firmware-projects-supporting-stm32h7rxsx-devices-mounted-on-stm32h7s78-dk-board-nucleo-h7s3l8-board.">Official Release of <strong>STM32CubeH7RS</strong> Firmware projects supporting <strong>STM32H7Rx/Sx</strong> devices mounted on STM32H7S78-DK board &amp; NUCLEO-H7S3L8 board.</h3>
-<h2 id="contents-1">Contents</h2>
+<h2 id="contents-2">Contents</h2>
 <table>
 <thead>
 <tr class="header">
@@ -402,7 +724,7 @@
 <p><small>The components flagged by “<span class="icon-st-update"></span>” have changed since the previous release. “<span class="icon-st-add"></span>” are new.</small></p>
 <p><br />
 </p>
-<h2 id="development-toolchains-and-compilers-1">Development Toolchains and Compilers</h2>
+<h2 id="development-toolchains-and-compilers-2">Development Toolchains and Compilers</h2>
 <table>
 <thead>
 <tr class="header">
@@ -433,7 +755,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="supported-devices-and-boards-1">Supported Devices and boards</h2>
+<h2 id="supported-devices-and-boards-2">Supported Devices and boards</h2>
 <ul>
 <li>STM32H7R7xx, STM32H7R3xx, STM32H7S3xx and STM32H7S7xx devices</li>
 <li>STM32H7S78-DK Discovery kit</li>
@@ -454,7 +776,7 @@
 - VDDIO_HSLV=0     I/O speed optimized to operate at 3.3V</code></pre>
 <p><br />
 </p>
-<h2 id="known-limitations-1">Known Limitations</h2>
+<h2 id="known-limitations-2">Known Limitations</h2>
 <ul>
 <li>All projects not yet available on MDK-ARM &amp; CubeIDE</li>
 <li>Some projects are not generated with STM32CubeMX tool. For the exhaustive list please refer to this table <a href="STM32CubeProjectsList.html">STM32CubeProjectsList</a></li>
@@ -462,7 +784,7 @@
 <p>Those limitations will be corrected in maintenance release V1.1.0 planned in June 2024.</p>
 <p><br />
 </p>
-<h2 id="dependencies-1">Dependencies</h2>
+<h2 id="dependencies-2">Dependencies</h2>
 <ul>
 <li>STM32CubeMX V6.11.0
 <ul>
@@ -471,11 +793,11 @@
 </ul>
 <p><br />
 </p>
-<h2 id="backward-compatibility-1">Backward compatibility</h2>
+<h2 id="backward-compatibility-2">Backward compatibility</h2>
 <ul>
 <li>Not applicable</li>
 </ul>
-<h2 id="notes-1">Notes</h2>
+<h2 id="notes-2">Notes</h2>
 <ul>
 <li>None</li>
 </ul>

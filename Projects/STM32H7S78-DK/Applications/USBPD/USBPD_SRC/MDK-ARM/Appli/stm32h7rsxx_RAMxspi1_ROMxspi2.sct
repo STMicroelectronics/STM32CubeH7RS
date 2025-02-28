@@ -30,8 +30,4 @@ LOAD_FLASH 0x70000000 0x10000000  {    ; load region size_region
    .ANY (+RW +ZI)
   }
 
-  RW_NONCACHEABLEBUFFER  0x24072000-0x1000 0x1000 {
-   *(noncacheable_buffer)
-   *(HEAP)
-  }
 }

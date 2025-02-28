@@ -54,7 +54,7 @@ void Error_Handler(void);
 void MX_SDMMC1_SD_Init(void);
 
 /* USER CODE BEGIN EFP */
-
+void App_Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
@@ -66,12 +66,14 @@ void MX_SDMMC1_SD_Init(void);
 #define SD_DETECT_GPIO_Port GPIOM
 
 /* USER CODE BEGIN Private defines */
-#define SD_DETECT_EXTI_IRQn   EXTI14_IRQn
+#define SD_DETECT_EXTI_IRQn  EXTI14_IRQn
 
-#define APP_OK                     0
-#define APP_ERROR                  -1
-#define APP_SD_UNPLUGGED           -2
-#define APP_INIT                   1
+#define APP_OK             0
+#define APP_ERROR         -1
+#define APP_SD_UNPLUGGED  -2
+#define APP_INIT           1
+#define APP_SD_PRESENT     1
+#define APP_SD_NO_PRESENT  0
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

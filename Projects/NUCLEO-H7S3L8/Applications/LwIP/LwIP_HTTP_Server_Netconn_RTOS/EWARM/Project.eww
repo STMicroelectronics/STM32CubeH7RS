@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <workspace>
-    <project>
-        <path>$WS_DIR$\Appli\LwIP_HTTP_Server_Netconn_RTOS_Appli.ewp</path>
-    </project>
-    <batchBuild />
+  <project>
+    <path>$WS_DIR$\Appli\LwIP_HTTP_Server_Netconn_RTOS_Appli.ewp</path>
+  </project>
+  <batchBuild />
 </workspace>

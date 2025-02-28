@@ -17,8 +17,8 @@
   ******************************************************************************
   */
 /* USER CODE END Header */
-#ifndef USBPD_CORE_OSPORT_H_
-#define USBPD_CORE_OSPORT_H_
+#ifndef __USBPD_CORE_OSPORT_H
+#define __USBPD_CORE_OSPORT_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -217,5 +217,5 @@ extern "C" {
 #ifdef __cplusplus
 }
 #endif
-#endif /* USBPD_CORE_OSPORT_H_ */
+#endif /* __USBPD_CORE_OSPORT_H */
 

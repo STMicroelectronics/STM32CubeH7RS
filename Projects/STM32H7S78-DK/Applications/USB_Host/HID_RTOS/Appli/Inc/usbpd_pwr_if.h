@@ -18,11 +18,11 @@
   */
 /* USER CODE END Header */
 
-#ifndef __USBPD_PW_IF_H_
-#define __USBPD_PW_IF_H_
+#ifndef __USBPD_PW_IF_H
+#define __USBPD_PW_IF_H
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -356,4 +356,4 @@ void USBPD_PWR_IF_ResetVbusThreshold(uint8_t PortNum);
 }
 #endif
 
-#endif /* __USBPD_PW_IF_H_ */
+#endif /* __USBPD_PW_IF_H */

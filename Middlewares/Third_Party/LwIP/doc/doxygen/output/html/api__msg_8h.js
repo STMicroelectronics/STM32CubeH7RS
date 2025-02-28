@@ -18,6 +18,6 @@ var api__msg_8h =
     [ "lwip_netconn_do_recv", "api__msg_8h.html#ab6ae6036baf5c8fef22228ceb5e3ff9f", null ],
     [ "lwip_netconn_do_send", "api__msg_8h.html#ac714bdd3d57e34f0a6517a469d80df6c", null ],
     [ "lwip_netconn_do_write", "api__msg_8h.html#aca4545a471ead1bc673ea93fe85f7e5c", null ],
-    [ "netconn_alloc", "api__msg_8h.html#a919865fa64270a3e4cb719ddff2fead9", null ],
+    [ "netconn_alloc", "api__msg_8h.html#a126d82a17c302d883f4131379abd1430", null ],
     [ "netconn_free", "api__msg_8h.html#a875b82ad129bdec1c6f2c21cbeedc48b", null ]
 ];

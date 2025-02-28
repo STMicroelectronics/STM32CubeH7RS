@@ -28,7 +28,7 @@
 #include "boot_hal_flowcontrol.h"
 #include "boot_hal_cfg.h"
 #include "flash_layout.h"
-#include "config-boot.h"
+#include "mbedtls_config.h"
 #include <string.h>
 
 /* Private typedef -----------------------------------------------------------*/
@@ -361,7 +361,7 @@ bool OBK_IsEncryptionEnabled(void)
   static FLASH_OBProgramInitTypeDef flash_option_bytes = {0};
   uint32_t product_state;
 
-  /* Get Option Bytes status */
+  /* Get Option Byte status */
   (void) HAL_FLASHEx_OBGetConfig(&flash_option_bytes);
 
   /* Check Non-Volatile State */

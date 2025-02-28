@@ -49,7 +49,7 @@ else
 fi
 
 # ======================================================= Updating the Option bytes =======================================================
-echo Updating the ob_flash_programming script ...
+echo Updating the ob_flash_programming script...
 
 action="Update Write protection values"
 echo "$python "$AppliCfg" setob --layout "$STiROT_iLoader_ld_file" -b wrps -ms "CODE_OFFSET" -me "CODE_SIZE" -msec "CODE_SIZE" -d "0x2000" --protected_area "0x10000" "$ob_flash_programming" --vb"

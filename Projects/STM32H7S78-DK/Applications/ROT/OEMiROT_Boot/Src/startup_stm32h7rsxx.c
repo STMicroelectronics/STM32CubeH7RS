@@ -431,6 +431,11 @@ volatile uint32_t TamperEventCleared  __attribute__((section(".noinit")));
  *----------------------------------------------------------------------------*/
 void Reset_Handler(void)
 {
+  /* Configure DWT to enable cycles counter */
+  CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk | CoreDebug_DEMCR_MON_EN_Msk;
+  DWT->CYCCNT = 0;
+  DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
+
   __IO uint64_t *pt = (uint64_t *)DTCM_BASE;
   uint32_t index;
   /* Write in the DTCM to prevent RAMECC notifications

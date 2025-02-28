@@ -7,7 +7,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2023 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -76,31 +76,28 @@ void HAL_MspInit(void)
    Error_Handler();
   }
 
-  HAL_PWREx_EnableUSBReg();
-
   /* USER CODE BEGIN MspInit 1 */
 
   /* USER CODE END MspInit 1 */
 }
 
 /**
-* @brief MDF MSP Initialization
-* This function configures the hardware resources used in this example
-* @param hmdf: MDF handle pointer
-* @retval None
-*/
+  * @brief MDF MSP Initialization
+  * This function configures the hardware resources used in this example
+  * @param hmdf: MDF handle pointer
+  * @retval None
+  */
 void HAL_MDF_MspInit(MDF_HandleTypeDef* hmdf)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
   RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
   if(IS_MDF_ALL_INSTANCE(hmdf->Instance))
   {
-  /* USER CODE BEGIN ADF1_MspInit 0 */
+    /* USER CODE BEGIN ADF1_MspInit 0 */
 
-  /* USER CODE END ADF1_MspInit 0 */
+    /* USER CODE END ADF1_MspInit 0 */
 
-  /** Initializes the peripherals clock
-  */
+    /* Initializes the peripherals clock */
     PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_ADF1;
     PeriphClkInit.Adf1ClockSelection = RCC_ADF1CLKSOURCE_HCLK;
     if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
@@ -112,7 +109,7 @@ void HAL_MDF_MspInit(MDF_HandleTypeDef* hmdf)
     __HAL_RCC_ADF1_CLK_ENABLE();
 
     __HAL_RCC_GPIOE_CLK_ENABLE();
-    /**ADF1 GPIO Configuration
+    /** ADF1 GPIO Configuration
     PE2     ------> ADF1_CCK0
     PE6     ------> ADF1_SDI0
     */
@@ -130,38 +127,39 @@ void HAL_MDF_MspInit(MDF_HandleTypeDef* hmdf)
     GPIO_InitStruct.Alternate = GPIO_AF3_ADF1;
     HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
-  /* USER CODE BEGIN ADF1_MspInit 1 */
+    /* USER CODE BEGIN ADF1_MspInit 1 */
 
-  /* USER CODE END ADF1_MspInit 1 */
+    /* USER CODE END ADF1_MspInit 1 */
+
   }
 
 }
 
 /**
-* @brief MDF MSP De-Initialization
-* This function freeze the hardware resources used in this example
-* @param hmdf: MDF handle pointer
-* @retval None
-*/
+  * @brief MDF MSP De-Initialization
+  * This function freeze the hardware resources used in this example
+  * @param hmdf: MDF handle pointer
+  * @retval None
+  */
 void HAL_MDF_MspDeInit(MDF_HandleTypeDef* hmdf)
 {
   if(IS_MDF_ALL_INSTANCE(hmdf->Instance))
   {
-  /* USER CODE BEGIN ADF1_MspDeInit 0 */
+    /* USER CODE BEGIN ADF1_MspDeInit 0 */
 
-  /* USER CODE END ADF1_MspDeInit 0 */
+    /* USER CODE END ADF1_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_ADF1_CLK_DISABLE();
 
-    /**ADF1 GPIO Configuration
+    /** ADF1 GPIO Configuration
     PE2     ------> ADF1_CCK0
     PE6     ------> ADF1_SDI0
     */
     HAL_GPIO_DeInit(GPIOE, GPIO_PIN_2|GPIO_PIN_6);
 
-  /* USER CODE BEGIN ADF1_MspDeInit 1 */
+    /* USER CODE BEGIN ADF1_MspDeInit 1 */
 
-  /* USER CODE END ADF1_MspDeInit 1 */
+    /* USER CODE END ADF1_MspDeInit 1 */
   }
 
 }

@@ -1,8 +1,8 @@
 /**
   ******************************************************************************
-  * @file    stm32_user_driver.h
+  * @file    stm32_user_driver_api.h
   * @author  MCD Application Team
-  * @brief   This file contains the user driver api definition.
+  * @brief   This file contains the user driver API definition.
   ******************************************************************************
   * @attention
   *
@@ -17,8 +17,8 @@
   */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __STM32_USER_DRIVER_H
-#define __STM32_USER_DRIVER_H
+#ifndef __STM32_USER_DRIVER_API_H
+#define __STM32_USER_DRIVER_API_H
 
 #ifdef __cplusplus
  extern "C" {
@@ -63,7 +63,7 @@ typedef enum  {
   * @{
   */
 /**
- * @brief this function initialize the driver USER
+ * @brief This function initializes the driver USER
  *
  * @param MemoryID id of the memory
  * @param UsersObject object USER
@@ -73,7 +73,7 @@ EXTMEM_DRIVER_USER_StatusTypeDef EXTMEM_DRIVER_USER_Init(uint32_t MemoryId,
                                                          EXTMEM_DRIVER_USER_ObjectTypeDef* UserObject);
 
 /**
- * @brief this function un-initialize the driver USER
+ * @brief This function un-initializes the driver USER
  *
  * @param UserObject object user
  * @return @ref EXTMEM_DRIVER_USER_StatusTypeDef
@@ -81,7 +81,7 @@ EXTMEM_DRIVER_USER_StatusTypeDef EXTMEM_DRIVER_USER_Init(uint32_t MemoryId,
 EXTMEM_DRIVER_USER_StatusTypeDef EXTMEM_DRIVER_USER_DeInit(EXTMEM_DRIVER_USER_ObjectTypeDef* UserObject);
 
 /**
- * @brief this function read a buffer from the memory
+ * @brief This function reads a buffer from the memory
  *
  * @param UserObject memory instance
  * @param Address location of the data memory
@@ -93,7 +93,7 @@ EXTMEM_DRIVER_USER_StatusTypeDef EXTMEM_DRIVER_USER_Read(EXTMEM_DRIVER_USER_Obje
                                                          uint32_t Address, uint8_t* Data, uint32_t Size);
 
 /**
- * @brief this function write date form the memory into buffer
+ * @brief This function writes data from the memory into buffer
  *
  * @param UserObject memory instance
  * @param Address location of the data memory
@@ -105,7 +105,7 @@ EXTMEM_DRIVER_USER_StatusTypeDef EXTMEM_DRIVER_USER_Write(EXTMEM_DRIVER_USER_Obj
                                                           uint32_t Address, const uint8_t* Data, uint32_t Size);
 
 /**
- * @brief this function erase a number of sector
+ * @brief This function erases a number of sectors
  *
  * @param UserObject memory instance
  * @param Address location of the data memory
@@ -116,7 +116,7 @@ EXTMEM_DRIVER_USER_StatusTypeDef EXTMEM_DRIVER_USER_EraseSector(EXTMEM_DRIVER_US
                                                                 uint32_t Address, uint32_t Size);
 
 /**
- * @brief this function erase all the memory
+ * @brief This function erases all the memory
  *
  * @param UserObject memory instance
  * @return @ref EXTMEM_DRIVER_USER_StatusTypeDef
@@ -124,7 +124,7 @@ EXTMEM_DRIVER_USER_StatusTypeDef EXTMEM_DRIVER_USER_EraseSector(EXTMEM_DRIVER_US
 EXTMEM_DRIVER_USER_StatusTypeDef EXTMEM_DRIVER_USER_MassErase(EXTMEM_DRIVER_USER_ObjectTypeDef* UserObject);
 
 /**
- * @brief this function enables the memory mapped mode
+ * @brief This function enables the memory mapped mode
  *
  * @param UserObject memory instance
  * @return @ref EXTMEM_DRIVER_USER_StatusTypeDef
@@ -132,7 +132,7 @@ EXTMEM_DRIVER_USER_StatusTypeDef EXTMEM_DRIVER_USER_MassErase(EXTMEM_DRIVER_USER
 EXTMEM_DRIVER_USER_StatusTypeDef EXTMEM_DRIVER_USER_Enable_MemoryMappedMode(EXTMEM_DRIVER_USER_ObjectTypeDef* UserObject);
 
 /**
- * @brief this function disables the memory mapped mode
+ * @brief This function disables the memory mapped mode
  *
  * @param UserObject memory instance
  * @return @ref EXTMEM_DRIVER_USER_StatusTypeDef
@@ -140,7 +140,7 @@ EXTMEM_DRIVER_USER_StatusTypeDef EXTMEM_DRIVER_USER_Enable_MemoryMappedMode(EXTM
 EXTMEM_DRIVER_USER_StatusTypeDef EXTMEM_DRIVER_USER_Disable_MemoryMappedMode(EXTMEM_DRIVER_USER_ObjectTypeDef* UserObject);
 
 /**
- * @brief this function get the map address
+ * @brief This function gets the mapped address
  *
  * @param UserObject memory instance
  * @param BaseAddress memory map address
@@ -149,7 +149,7 @@ EXTMEM_DRIVER_USER_StatusTypeDef EXTMEM_DRIVER_USER_Disable_MemoryMappedMode(EXT
 EXTMEM_DRIVER_USER_StatusTypeDef EXTMEM_DRIVER_USER_GetMapAddress(EXTMEM_DRIVER_USER_ObjectTypeDef* UserObject, uint32_t* BaseAddress);
 
 /**
- * @brief this function get the mem information
+ * @brief This function gets the memory information
  *
  * @param UserObject memory instance
  * @param MemInfo memory information
@@ -174,4 +174,4 @@ EXTMEM_DRIVER_USER_StatusTypeDef EXTMEM_DRIVER_USER_GetInfo(EXTMEM_DRIVER_USER_O
 }
 #endif
 
-#endif /* __STM32_USER_DRIVER_H */
+#endif /* __STM32_USER_DRIVER_API_H */

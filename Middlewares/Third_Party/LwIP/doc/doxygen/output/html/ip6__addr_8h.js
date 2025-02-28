@@ -26,6 +26,6 @@ var ip6__addr_8h =
     [ "ip6_addr_set_zero", "ip6__addr_8h.html#af696d3b81f4cb9c40ece912de73ed53c", null ],
     [ "ip6_addr_t", "ip6__addr_8h.html#aaca9e796e93a355294c4954c08d01762", null ],
     [ "ip6addr_aton", "ip6__addr_8h.html#a3f555ae302eb056f28f6cb266a27036e", null ],
-    [ "ip6addr_ntoa", "ip6__addr_8h.html#adba4443e6629583d48e1d1c7c21a977e", null ],
-    [ "ip6addr_ntoa_r", "ip6__addr_8h.html#a64d442f35f34c43121bf91cfea2e77a2", null ]
+    [ "ip6addr_ntoa", "ip6__addr_8h.html#ab153e5b58a5674e5e1bacdbbc0934c44", null ],
+    [ "ip6addr_ntoa_r", "ip6__addr_8h.html#ac0470fb6b6fdbf986a20e523870e6f2e", null ]
 ];

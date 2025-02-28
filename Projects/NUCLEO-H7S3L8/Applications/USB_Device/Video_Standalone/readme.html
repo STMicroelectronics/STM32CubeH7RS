@@ -56,8 +56,8 @@
 <p>USB_Device, USB_OTG, High_Speed, VIDEO</p>
 <h3 id="hardware-and-software-environment"><b>Hardware and Software environment</b></h3>
 <ul>
-<li>This example runs on NUCLEO-H7S3L8 device</li>
-<li>This example has been tested with STMicroelectronics NUCLEO-H7S3L8 boards Revision MB1737-H7S3L8-B01 and can be easily tailored to any other supported device and development board.</li>
+<li>This application runs on NUCLEO-H7S3L8 device</li>
+<li>This application has been tested with STMicroelectronics NUCLEO-H7S3L8 boards revision MB1737-H7S3L8-B02 and can be easily tailored to any other supported device and development board.</li>
 </ul>
 <h3 id="how-to-use-it"><b>How to use it ?</b></h3>
 <p>This application runs from the external Flash memory (Video_Standalone Appli).</p>
@@ -80,7 +80,7 @@
 <li>Select then “Video_Standalone_Appli” workspace</li>
 <li>Rebuild all files from Video_Standalone Appli and load your images into memories: First, load the Video_Standalone_Boot.hex in internal Flash, then, load
 the Appli part in External memory available on NUCLEO-H7S3L8 board.</li>
-<li>Run the example</li>
+<li>Run the application</li>
 </ol>
 <h4 id="mdk-arm"><b>MDK-ARM</b></h4>
 <ol type="1">
@@ -99,14 +99,14 @@ the Appli part in External memory available on NUCLEO-H7S3L8 board.</li>
 <li>Select then “Video_Standalone_Appli” workspace</li>
 <li>Rebuild all files from Video_Standalone Appli and load your images into memories: First, load the Video_Standalone_Boot.hex in internal Flash, then, load
 the Appli part in External memory available on NUCLEO-H7S3L8 board.</li>
-<li>Run the example</li>
+<li>Run the application</li>
 </ol>
 <h4 id="stm32cubeide"><b>STM32CubeIDE</b></h4>
 <p>To configure STM32CubeIDE Debug Configuration, you must do the following :<p>
 <p>For "Video_Standalone_Boot" project :</p>
-<p>Add the adequate external loader (MX25UW25645G_STM32H7R38-NUCLEO.stldr file) in Project->Debugger Configuration</p>
+<p>Add the adequate external loader (MX25UW25645G_STM32H7S3L8-NUCLEO.stldr file) in Project->Debugger Configuration</p>
 <p>For "Video_Standalone_Appli" project :</p>
-<p>1. Add the adequate external loader (MX25UW25645G_STM32H7R38-NUCLEO.stldr file) in Project->Debugger Configuration</p>
+<p>1. Add the adequate external loader (MX25UW25645G_STM32H7S3L8-NUCLEO.stldr file) in Project->Debugger Configuration</p>
 <p>2. Add in the startup the Video_Standalone_Boot in Project->Debugger Configuration</p>
 <p>3. Move up the application in the startup</p>
 <ol type="1">
@@ -126,7 +126,7 @@ the Appli part in External memory available on NUCLEO-H7S3L8 board.</li>
 <li>Select the “Video_Standalone_Appli” project</li>
 <li>Build the project</li>
 <li>With the Debug icon select the configuration “Video_Standalone_Appli Debug”. First, load the Boot binary in internal Flash, then, load the Appli binary in External memory available on NUCLEO-H7S3L8 board</li>
-<li>Run the example</li>
+<li>Run the application</li>
 </ol>
 <p><b>Note</b></p>
 <p>The application uses the external HSE clock as system clock source.</p>

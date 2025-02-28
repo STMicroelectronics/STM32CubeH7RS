@@ -11,11 +11,7 @@ var dir_f9284811ac594eafdc3134d5f8b945cb =
     [ "mdns_priv.h", "mdns__priv_8h.html", "mdns__priv_8h" ],
     [ "mqtt.h", "mqtt_8h.html", "mqtt_8h" ],
     [ "mqtt_opts.h", "mqtt__opts_8h.html", "mqtt__opts_8h" ],
-    [ "mqtt_priv.h", "mqtt__priv_8h.html", [
-      [ "mqtt_request_t", "structmqtt__request__t.html", "structmqtt__request__t" ],
-      [ "mqtt_ringbuf_t", "structmqtt__ringbuf__t.html", null ],
-      [ "mqtt_client_s", "structmqtt__client__s.html", "structmqtt__client__s" ]
-    ] ],
+    [ "mqtt_priv.h", "mqtt__priv_8h.html", "mqtt__priv_8h" ],
     [ "netbiosns.h", "netbiosns_8h.html", "netbiosns_8h" ],
     [ "netbiosns_opts.h", "netbiosns__opts_8h.html", "netbiosns__opts_8h" ],
     [ "snmp.h", "apps_2snmp_8h.html", "apps_2snmp_8h" ],

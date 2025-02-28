@@ -34,6 +34,7 @@
 #define TRACER_EMB_TRANSMIT_DATA8       LL_LPUART_TransmitData8
 #define TRACER_EMB_DMA_GETREGADDR       LL_LPUART_DMA_GetRegAddr
 #define TRACER_EMB_ENABLEDMAREQ_TX      LL_LPUART_EnableDMAReq_TX
+#define TRACER_EMB_DISABLEDMAREQ_TX     LL_LPUART_DisableDMAReq_TX
 
 #define TRACER_EMB_ENABLE_IT_RXNE       LL_LPUART_EnableIT_RXNE
 #define TRACER_EMB_ENABLE_IT_ERROR      LL_LPUART_EnableIT_ERROR
@@ -75,6 +76,7 @@
 #define TRACER_EMB_TRANSMIT_DATA8       LL_USART_TransmitData8
 #define TRACER_EMB_DMA_GETREGADDR       LL_USART_DMA_GetRegAddr
 #define TRACER_EMB_ENABLEDMAREQ_TX      LL_USART_EnableDMAReq_TX
+#define TRACER_EMB_DISABLEDMAREQ_TX     LL_USART_DisableDMAReq_TX
 
 #define TRACER_EMB_ENABLE_IT_RXNE       LL_USART_EnableIT_RXNE
 #define TRACER_EMB_ENABLE_IT_ERROR      LL_USART_EnableIT_ERROR
@@ -143,6 +145,8 @@
 
 /* Private Variables ---------------------------------------------------------*/
 static void (*fptr_rx)(uint8_t, uint8_t) = NULL;
+static uint8_t trace_initialized = 0U;
+
 #if TRACER_EMB_IT_MODE == 1UL
 uint8_t *txData = NULL;
 uint32_t txSize = 0;
@@ -150,7 +154,6 @@ uint32_t txSize = 0;
 
 /* Private function prototypes -----------------------------------------------*/
 /* Exported functions --------------------------------------------------------*/
-
 /**
   * @brief  Trace init
   * @param  callbackTX
@@ -345,6 +348,7 @@ void HW_TRACER_EMB_Init(void)
   NVIC_EnableIRQ(TRACER_EMB_USART_IRQ);
 #endif /* TRACER_EMB_TX_IRQ_PRIORITY */
 
+  trace_initialized = 1;
   /* Disable the UART */
   if (fptr_rx == NULL)
   {
@@ -359,8 +363,51 @@ void HW_TRACER_EMB_Init(void)
   */
 void HW_TRACER_EMB_DeInit(void)
 {
-  TRACER_EMB_DISABLE_CLK_USART();
-  return;
+  uint32_t _isrflags = 0;
+
+  trace_initialized = 0;
+
+  TRACER_EMB_ENABLE_CLK_USART();
+
+#if TRACER_EMB_DMA_MODE == 1UL
+  /* deinit the dma channel */
+  NVIC_DisableIRQ(TRACER_EMB_TX_DMA_IRQ);
+  TRACER_EMB_DISABLECHANNEL(TRACER_EMB_DMA_INSTANCE, TRACER_EMB_TX_DMA_CHANNEL);
+  LL_DMA_DisableIT_TC(TRACER_EMB_DMA_INSTANCE, TRACER_EMB_TX_DMA_CHANNEL);
+  LL_DMA_DeInit(TRACER_EMB_DMA_INSTANCE, TRACER_EMB_TX_DMA_CHANNEL);
+#endif
+
+  /* deinit the UART */
+#if (TRACER_EMB_IS_INSTANCE_LPUART_TYPE == 0UL)
+  if (IS_UART_INSTANCE(TRACER_EMB_USART_INSTANCE))
+  {
+    TRACER_EMB_DISABLEDMAREQ_TX(TRACER_EMB_USART_INSTANCE);
+    LL_USART_DisableDirectionTx(TRACER_EMB_USART_INSTANCE);
+    while(!(_isrflags & TRACER_EMB_FLAG_TC))
+    {
+#if defined(USART_ISR_TC)
+      _isrflags = TRACER_EMB_READREG(TRACER_EMB_USART_INSTANCE, ISR);
+#else
+      _isrflags = TRACER_EMB_READREG(TRACER_EMB_USART_INSTANCE, SR);
+#endif  /* USART_ISR_TC */
+    }
+    TRACER_EMB_DISABLEDMAREQ_TX(TRACER_EMB_USART_INSTANCE);
+    TRACER_EMB_CLEARFLAG_TC(TRACER_EMB_USART_INSTANCE);
+
+    LL_USART_Disable(TRACER_EMB_USART_INSTANCE);
+    TRACER_EMB_DISABLE_CLK_USART();
+
+    NVIC_DisableIRQ(TRACER_EMB_USART_IRQ);
+  }
+#else  /* TRACER_EMB_IS_INSTANCE_LPUART_TYPE == 1UL */
+  {
+    NVIC_DisableIRQ(TRACER_EMB_USART_IRQ);
+    /* Disable USART prior modifying configuration registers */
+    LL_LPUART_Disable(TRACER_EMB_USART_INSTANCE);
+    TRACER_EMB_DISABLE_CLK_USART();
+  }
+#endif /* TRACER_EMB_IS_INSTANCE_LPUART_TYPE == 0UL */
+
 }
 
 /**
@@ -567,6 +614,11 @@ void HW_TRACER_EMB_IRQHandlerUSART(void)
   */
 void HW_TRACER_EMB_SendData(const uint8_t *pData, uint32_t Size)
 {
+  if(!trace_initialized)
+  {
+    return;
+  }
+
   /* enable the USART */
   TRACER_EMB_ENABLE_CLK_USART();
 

@@ -18,8 +18,8 @@
   */
 /* USER CODE END Header */
 
-#ifndef USBPD_USBIF_H_
-#define USBPD_USBIF_H_
+#ifndef __USBPD_USBIF_H
+#define __USBPD_USBIF_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -152,5 +152,5 @@ void USBPD_USBIF_DeviceSetVDMInfo(uint32_t PortNum, void *DataPtr);
 }
 #endif
 
-#endif /* USBPD_USBIF_H_ */
+#endif /* __USBPD_USBIF_H */
 

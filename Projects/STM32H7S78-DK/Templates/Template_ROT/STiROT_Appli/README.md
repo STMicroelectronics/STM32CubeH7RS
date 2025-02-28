@@ -2,7 +2,7 @@
 
 This project provides a STiROT boot path reference template. Boot is performed through STiROT boot path after authenticity and integrity checks of the project firmware image.
 
-This project template is based on the STM32Cube HAL API. It hightlights the ROT specificies:
+This project template is based on the STM32Cube HAL API. It highlights the ROT specificies:
 
   - Defines automatically updated in the linker file.
   - Postbuild script (postbuild.bat (.sh)) called from the project files.

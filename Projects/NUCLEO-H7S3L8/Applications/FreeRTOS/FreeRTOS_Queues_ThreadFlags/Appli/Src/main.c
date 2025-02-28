@@ -427,12 +427,12 @@ void Gen_Thread(void *argument)
     }
     else
     {
-      /* Check if it’s the correct message */
+      /* Check if it is the correct message */
       printf("GenThread: getting the msg from queue & checking if the GEN_VALUE is reached\r\n");
       if(osQueueMsg == GEN_VALUE)
       {
-        /* Set ReceiveThread' flag to 1 */
-        printf("GenThread: GenerationValue reached -> Set ReceiveThread' flag to 1\r\n");
+        /* Set ReceiveThread flag to 1 */
+        printf("GenThread: GenerationValue reached -> Set ReceiveThread flag to 1\r\n");
         osThreadFlagsSet(ReceiveThreadHandle, 0x0001U);
       }
     }
@@ -455,8 +455,8 @@ void Receive_Thread(void *argument)
   /* USER CODE BEGIN Receive_Thread */
   for (;;)
   {
-    /* Wait forever until thread flag 1 is set */
-    printf("ReceiveThread: Wait until thread flag 1 is set\r\n");
+    /* Wait forever until thread flag is set to 1 */
+    printf("ReceiveThread: Wait until thread flag is set to 1\r\n");
     osThreadFlagsWait(0x0001U, osFlagsWaitAny, osWaitForever);
 
     /* Toggle LD2 (LED_YELLOW) */

@@ -7,7 +7,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2023 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -31,7 +31,7 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "stm32h7s78_discovery.h"
+
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -41,59 +41,7 @@ extern "C" {
 
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
-/* Flash commands */
-#define OCTAL_IO_READ_CMD           0xEC13
-#define OCTAL_IO_DTR_READ_CMD       0xEE11
-#define OCTAL_PAGE_PROG_CMD         0x12ED
-  
-#define OCTAL_WRBI_CMD              0x22DD
-#define OCTAL_RDBUF_CMD             0x25DA
-#define OCTAL_WRCT_CMD              0x24DB
-#define OCTAL_WRCF_CMD              0x31CE
-  
-  
-  
-  
-#define OCTAL_READ_STATUS_REG_CMD   0x05FA
-#define OCTAL_SECTOR_ERASE_CMD      0x21DE
-#define OCTAL_WRITE_ENABLE_CMD      0x06F9
-#define READ_STATUS_REG_CMD         0x05
-#define WRITE_CFG_REG_2_CMD         0x72
-#define WRITE_ENABLE_CMD            0x06
 
-/* Dummy clocks cycles */
-#define DUMMY_CLOCK_CYCLES_WRITE           0
-#define DUMMY_CLOCK_CYCLES_READ            6
-#define DUMMY_CLOCK_CYCLES_READ_REG        4
-#define DUMMY_CLOCK_CYCLES_READ_OCTAL      6
-
-/* Auto-polling values */
-#define WRITE_ENABLE_MATCH_VALUE    0x02
-#define WRITE_ENABLE_MASK_VALUE     0x02
-
-#define MEMORY_READY_MATCH_VALUE    0x00
-#define MEMORY_READY_MASK_VALUE     0x01
-
-#define AUTO_POLLING_INTERVAL       0x10
-
-/* Memory registers address */
-#define CONFIG_REG2_ADDR1           0x0000000
-#define CR2_DTR_OPI_ENABLE          0x02
-
-#define CONFIG_REG2_ADDR3           0x00000300
-#define CR2_DUMMY_CYCLES_66MHZ      0x07
-
-/* Memory delay */
-#define MEMORY_REG_WRITE_DELAY      40
-#define MEMORY_PAGE_PROG_DELAY      2
-
-/* OSPI NOR Banks address*/
-#define BANK1_ADRESS      0x000000000
-#define BANK2_ADRESS      0x002000000 
-
-
-/* Size of buffers */
-#define BUFFERSIZE                  256
 /* USER CODE END EC */
 
 /* Exported macro ------------------------------------------------------------*/

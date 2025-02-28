@@ -165,7 +165,7 @@ else
 fi
 
 # ==================================================== Download images ====================================================================
-action="Application images programming in download slots"
+action="Application image programming in download slots"
 echo $action
 
 if [ "$app_image_number" == "1" ]; then

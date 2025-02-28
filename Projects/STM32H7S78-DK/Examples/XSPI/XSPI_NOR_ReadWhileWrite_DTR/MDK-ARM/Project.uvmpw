@@ -5,10 +5,16 @@
 
   <Header>### uVision Project, (C) Keil Software</Header>
 
-  <WorkspaceName></WorkspaceName>
+  <WorkspaceName>C:\git\h7rs_w5\Firmware\Projects\STM32H7S78-DK\Examples\XSPI\XSPI_NOR_ReadWhileWrite_DTR\MDK-ARM\Project.uvmpw</WorkspaceName>
 
   <project>
     <PathAndName>.\Boot\XSPI_NOR_ReadWhileWrite_DTR_Boot.uvprojx</PathAndName>
+    <NodeIsExpanded>1</NodeIsExpanded>
+    <NodeIsCheckedInBatchBuild>1</NodeIsCheckedInBatchBuild>
+  </project>
+
+  <project>
+    <PathAndName>.\Appli\XSPI_NOR_ReadWhileWrite_DTR_Appli.uvprojx</PathAndName>
     <NodeIsActive>1</NodeIsActive>
     <NodeIsExpanded>1</NodeIsExpanded>
     <NodeIsCheckedInBatchBuild>1</NodeIsCheckedInBatchBuild>

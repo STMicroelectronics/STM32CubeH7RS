@@ -36,7 +36,9 @@ download through bootloader a new version of the application firmware.
 At next reset, the OEMiROT will decrypt and install this new version
 after successful check of the authenticity and the integrity of the
 image.</p>
-<p>The system clock frequency is the one configured by OEMiROT.</p>
+<p>The system clock frequency is the one configured by OEMiROT. The
+application cannot reconfigure the system clock. To use a different
+frequency, it is mandatory to update the OEMiROT_Boot project.</p>
 <h3 id="keywords"><b>Keywords</b></h3>
 <p>OEMiROT, boot path, Root Of Trust, MPU</p>
 <h3 id="directory-contents"><b>Directory contents</b></h3>

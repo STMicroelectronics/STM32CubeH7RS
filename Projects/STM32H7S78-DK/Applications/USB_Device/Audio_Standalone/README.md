@@ -47,9 +47,9 @@ Connectivity, USB_Device, USB, I2S, Audio, Streaming, Full speed
 
 ### <b>Hardware and Software environment</b>
 
-  - This example runs on STM32H7S78-DK MB1736 Rev. C01.
+  - This application runs on STM32H7S78-DK MB1736 Rev. D01
 
-  - This example has been tested with STMicroelectronics STM32H7S78-DK MB1736 Rev. C01
+  - This application has been tested with STMicroelectronics STM32H7S78-DK MB1736 Rev. D01
     board and can be easily tailored to any other supported device
     and development board.
 
@@ -69,6 +69,7 @@ It boots from internal Flash (Audio_Standalone Boot) then jumps to the applicati
 In order to make the program work, you must do the following :
 
 #### <b>IAR</b>
+
   1. Open your toolchain
   2. Open Audio_Standalone workspace file Project.eww
 
@@ -80,11 +81,11 @@ In order to make the program work, you must do the following :
 
   3. Select then "Audio_Standalone_Appli" workspace
   4. Rebuild all files from Audio_Standalone Appli and load your images into memories: First, load the Audio_Standalone_Boot.hex in internal Flash, then, load
-     the Appli part in External memory available on NUCLEO-H7S3L8 board.
-  5. Run the example
-
+     the Appli part in External memory available on STM32H7S78-DK board.
+  5. Run the application
 
 #### <b>MDK-ARM</b>
+
   1. Open your toolchain
   2. Open Audio_Standalone workspace file Project.uvmpw
 
@@ -96,9 +97,8 @@ In order to make the program work, you must do the following :
 
   3. Select then "Audio_Standalone_Appli" workspace
   4. Rebuild all files from Audio_Standalone Appli and load your images into memories: First, load the Audio_Standalone_Boot.hex in internal Flash, then, load
-     the Appli part in External memory available on NUCLEO-H7S3L8 board.
-  5. Run the example
-
+     the Appli part in External memory available on STM32H7S78-DK board.
+  5. Run the application
 
 #### <b>STM32CubeIDE</b>
 
@@ -109,7 +109,7 @@ For "Audio_Standalone_Boot" project :
 
 For "Audio_Standalone_Appli" project :
     1. Add the adequate external loader (MX66UW1G45G_STM32H7S78-DK.stldr file) in Project->Debugger Configuration
-    2. Add in the startup the 	Audio_Standalone_Boot in Project->Debugger Configuration
+    2. Add in the startup the Audio_Standalone_Boot in Project->Debugger Configuration
     3. Move up the application in the startup
 
   1. Open your toolchain
@@ -127,10 +127,10 @@ For "Audio_Standalone_Appli" project :
   3. Select the "Audio_Standalone_Appli" project
   4. Build the project
   5. With the Debug icon select the configuration “Audio_Standalone_Appli Debug”. First, load the Boot binary in internal Flash, then, load the Appli binary in
-     External memory available on NUCLEO-H7S3L8 board
-  6. Run the example
+     External memory available on STM32H7S78-DK board
+  6. Run the application
 
 <b>Note</b>
 
-   The application uses the internal HSI clock as system clock source.
+The application uses the internal HSI clock as system clock source.
 

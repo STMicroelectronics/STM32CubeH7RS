@@ -15,14 +15,6 @@
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
-          <name>BrowseInfoPath</name>
-          <state>MSC_Standalone_Boot\BrowseInfo</state>
-        </option>
-        <option>
-          <name>BuildFilesPath</name>
-          <state>MSC_Standalone_Boot\</state>
-        </option>
-        <option>
           <name>ExePath</name>
           <state>MSC_Standalone_Boot/Exe</state>
         </option>
@@ -120,7 +112,7 @@
         <option>
           <name>CoreVariant</name>
           <version>31</version>
-          <state>41</state>
+          <state>59</state>
         </option>
         <option>
           <name>GFPUDeviceSlave</name>
@@ -129,7 +121,7 @@
         <option>
           <name>FPU2</name>
           <version>0</version>
-          <state>7</state>
+          <state>6</state>
         </option>
         <option>
           <name>NrRegs</name>
@@ -143,7 +135,7 @@
         <option>
           <name>GFPUCoreSlave2</name>
           <version>31</version>
-          <state>41</state>
+          <state>59</state>
         </option>
         <option>
           <name>OGCMSISPackSelectDevice</name>
@@ -213,9 +205,14 @@
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
+          <name>CCOptimizationNoSizeConstraints</name>
+          <state>0</state>
+        </option>
+        <option>
           <name>CCDefines</name>
           <state>USE_HAL_DRIVER</state>
           <state>STM32H7S7xx</state>
+          <state></state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -672,6 +669,11 @@
       </data>
     </settings>
     <settings>
+      <name>BICOMP</name>
+      <archiveVersion>0</archiveVersion>
+      <data></data>
+    </settings>
+    <settings>
       <name>BUILDACTION</name>
       <archiveVersion>1</archiveVersion>
       <data>
@@ -760,7 +762,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$PROJ_DIR$\stm32h7s7xx_flash.icf</state>
+          <state>$PROJ_DIR$/stm32h7s7xx_flash.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -1067,6 +1069,11 @@
       </data>
     </settings>
     <settings>
+      <name>BILINK</name>
+      <archiveVersion>0</archiveVersion>
+      <data></data>
+    </settings>
+    <settings>
       <name>Coder</name>
       <archiveVersion>0</archiveVersion>
       <data></data>
@@ -1077,7 +1084,7 @@
     <group>
       <name>EWARM</name>
       <file>
-        <name>$PROJ_DIR$\..\startup_stm32h7s7xx.s</name>
+        <name>$PROJ_DIR$/../startup_stm32h7s7xx.s</name>
       </file>
     </group>
     <group>
@@ -1085,16 +1092,16 @@
       <group>
         <name>Boot</name>
         <file>
-          <name>$PROJ_DIR$\..\..\Boot\Src\main.c</name>
+          <name>$PROJ_DIR$/../../Boot/Src/main.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\Boot\Src\extmem_manager.c</name>
+          <name>$PROJ_DIR$/../../Boot/Src/extmem_manager.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\Boot\Src\stm32h7rsxx_it.c</name>
+          <name>$PROJ_DIR$/../../Boot/Src/stm32h7rsxx_it.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\..\Boot\Src\stm32h7rsxx_hal_msp.c</name>
+          <name>$PROJ_DIR$/../../Boot/Src/stm32h7rsxx_hal_msp.c</name>
         </file>
       </group>
     </group>
@@ -1102,7 +1109,7 @@
   <group>
     <name>Doc</name>
     <file>
-      <name>$PROJ_DIR$\..\..\README.md</name>
+      <name>$PROJ_DIR$/../../README.md</name>
     </file>
   </group>
   <group>
@@ -1110,7 +1117,7 @@
     <group>
       <name>CMSIS</name>
       <file>
-        <name>$PROJ_DIR$\..\..\Boot\Src\system_stm32h7rsxx.c</name>
+        <name>$PROJ_DIR$/../../Boot/Src/system_stm32h7rsxx.c</name>
       </file>
     </group>
     <group>
@@ -1155,16 +1162,7 @@
         <name>$PROJ_DIR$/../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_ll_rcc.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_ll_utils.c</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_ll_exti.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_hal_tim.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_hal_tim_ex.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_hal_xspi.c</name>

@@ -1,7 +1,7 @@
 /**
   ******************************************************************************
   * @file           : JPEG/JPEG_EncodingFromXSPI_DMA/Appli/Src/encode_dma.c
-  * @brief          : This file provides routines for JPEG Encoding from memory with 
+  * @brief          : This file provides routines for JPEG Encoding from memory with
   *                   DMA method.
   ******************************************************************************
   * @attention
@@ -30,7 +30,7 @@
 /* Private typedef -----------------------------------------------------------*/
 typedef struct
 {
-  uint8_t State;  
+  uint8_t State;
   uint8_t *DataBuffer;
   uint32_t DataBufferSize;
 
@@ -45,7 +45,7 @@ typedef struct
 #define BYTES_PER_PIXEL    2
 #endif
 
-#define CHUNK_SIZE_IN   ((uint32_t)(MAX_INPUT_WIDTH * BYTES_PER_PIXEL * MAX_INPUT_LINES)) 
+#define CHUNK_SIZE_IN   ((uint32_t)(MAX_INPUT_WIDTH * BYTES_PER_PIXEL * MAX_INPUT_LINES))
 #define CHUNK_SIZE_OUT  ((uint32_t) (4096))
 
 #define JPEG_BUFFER_EMPTY       0
@@ -67,7 +67,7 @@ JPEG_Data_BufferTypeDef Jpeg_IN_BufferTab = {JPEG_BUFFER_EMPTY , MCU_Data_IntBuf
 
 uint32_t MCU_TotalNb                = 0;
 uint32_t MCU_BlockIndex             = 0;
-__IO uint32_t Jpeg_HWEncodingEnd         = 0;
+__IO uint32_t Jpeg_HWEncodingEnd    = 0;
 
 
 __IO uint32_t Output_Is_Paused      = 0;
@@ -75,7 +75,7 @@ __IO uint32_t Input_Is_Paused       = 0;
 
 JPEG_ConfTypeDef Conf;
 
-uint32_t * pJpegBuffer; //FIL *pJpegFile;
+uint32_t * pJpegBuffer;
 
 uint32_t RGB_InputImageIndex;
 uint32_t RGB_InputImageSize_Bytes;
@@ -109,9 +109,9 @@ uint32_t JPEG_Encode_DMA(JPEG_HandleTypeDef *hjpeg, uint32_t RGBImageBufferAddre
 
   /* Clear Output Buffer */
   Jpeg_OUT_BufferTab.DataBufferSize = 0;
-  Jpeg_OUT_BufferTab.State = JPEG_BUFFER_EMPTY; 
+  Jpeg_OUT_BufferTab.State = JPEG_BUFFER_EMPTY;
 
-  /* Fill input Buffers */  
+  /* Fill input Buffers */
   RGB_InputImageIndex = 0;
   RGB_InputImageAddress = RGBImageBufferAddress;
   RGB_InputImageSize_Bytes = RGBImageSize_Bytes;
@@ -122,7 +122,7 @@ uint32_t JPEG_Encode_DMA(JPEG_HandleTypeDef *hjpeg, uint32_t RGBImageBufferAddre
     /* Pre-Processing */
     MCU_BlockIndex += pRGBToYCbCr_Convert_Function((uint8_t *)(RGB_InputImageAddress + RGB_InputImageIndex), Jpeg_IN_BufferTab.DataBuffer, 0, DataBufferSize,(uint32_t*)(&Jpeg_IN_BufferTab.DataBufferSize));
     Jpeg_IN_BufferTab.State = JPEG_BUFFER_FULL;
-    
+
     RGB_InputImageIndex += DataBufferSize;
   }
 
@@ -144,13 +144,13 @@ uint32_t JPEG_EncodeOutputHandler(JPEG_HandleTypeDef *hjpeg)
 {
 
   if(Jpeg_OUT_BufferTab.State == JPEG_BUFFER_FULL)
-  { 
+  {
     /* Copy encoded shunk from Jpeg_OUT_BufferTab to JpegBuffer */
-    memcpy(pJpegBuffer, Jpeg_OUT_BufferTab.DataBuffer ,Jpeg_OUT_BufferTab.DataBufferSize); 
+    memcpy(pJpegBuffer, Jpeg_OUT_BufferTab.DataBuffer ,Jpeg_OUT_BufferTab.DataBufferSize);
     pJpegBuffer+= Jpeg_OUT_BufferTab.DataBufferSize/4;
     Jpeg_OUT_BufferTab.State = JPEG_BUFFER_EMPTY;
     Jpeg_OUT_BufferTab.DataBufferSize = 0;
-    
+
     if(Jpeg_HWEncodingEnd != 0)
     {
       return 1;
@@ -158,12 +158,12 @@ uint32_t JPEG_EncodeOutputHandler(JPEG_HandleTypeDef *hjpeg)
     else if((Output_Is_Paused == 1) && (Jpeg_OUT_BufferTab.State == JPEG_BUFFER_EMPTY))
     {
       Output_Is_Paused = 0;
-      HAL_JPEG_Resume(hjpeg, JPEG_PAUSE_RESUME_OUTPUT);            
-    }    
+      HAL_JPEG_Resume(hjpeg, JPEG_PAUSE_RESUME_OUTPUT);
+    }
   }
 
 
-  return 0;  
+  return 0;
 }
 
 /**
@@ -175,7 +175,7 @@ void JPEG_EncodeInputHandler(JPEG_HandleTypeDef *hjpeg)
 {
   uint32_t DataBufferSize = Conf.ImageWidth * MAX_INPUT_LINES * BYTES_PER_PIXEL;
 
-  if((Jpeg_IN_BufferTab.State == JPEG_BUFFER_EMPTY) && (MCU_BlockIndex <= MCU_TotalNb))  
+  if((Jpeg_IN_BufferTab.State == JPEG_BUFFER_EMPTY) && (MCU_BlockIndex <= MCU_TotalNb))
   {
     /* Read and reorder lines from RGB input and fill data buffer */
     if(RGB_InputImageIndex < RGB_InputImageSize_Bytes)
@@ -188,9 +188,9 @@ void JPEG_EncodeInputHandler(JPEG_HandleTypeDef *hjpeg)
       if(Input_Is_Paused == 1)
       {
         Input_Is_Paused = 0;
-        HAL_JPEG_ConfigInputBuffer(hjpeg,Jpeg_IN_BufferTab.DataBuffer, Jpeg_IN_BufferTab.DataBufferSize);    
-  
-        HAL_JPEG_Resume(hjpeg, JPEG_PAUSE_RESUME_INPUT); 
+        HAL_JPEG_ConfigInputBuffer(hjpeg,Jpeg_IN_BufferTab.DataBuffer, Jpeg_IN_BufferTab.DataBufferSize);
+
+        HAL_JPEG_Resume(hjpeg, JPEG_PAUSE_RESUME_INPUT);
       }
     }
     else
@@ -209,7 +209,7 @@ void JPEG_EncodeInputHandler(JPEG_HandleTypeDef *hjpeg)
 void HAL_JPEG_GetDataCallback(JPEG_HandleTypeDef *hjpeg, uint32_t NbEncodedData)
 {
   if(NbEncodedData == Jpeg_IN_BufferTab.DataBufferSize)
-  {  
+  {
     Jpeg_IN_BufferTab.State = JPEG_BUFFER_EMPTY;
     Jpeg_IN_BufferTab.DataBufferSize = 0;
 
@@ -218,7 +218,7 @@ void HAL_JPEG_GetDataCallback(JPEG_HandleTypeDef *hjpeg, uint32_t NbEncodedData)
   }
   else
   {
-    HAL_JPEG_ConfigInputBuffer(hjpeg,Jpeg_IN_BufferTab.DataBuffer + NbEncodedData, Jpeg_IN_BufferTab.DataBufferSize - NbEncodedData);      
+    HAL_JPEG_ConfigInputBuffer(hjpeg,Jpeg_IN_BufferTab.DataBuffer + NbEncodedData, Jpeg_IN_BufferTab.DataBufferSize - NbEncodedData);
   }
 }
 
@@ -237,7 +237,7 @@ void HAL_JPEG_DataReadyCallback (JPEG_HandleTypeDef *hjpeg, uint8_t *pDataOut, u
   HAL_JPEG_Pause(hjpeg, JPEG_PAUSE_RESUME_OUTPUT);
   Output_Is_Paused = 1;
 
-  HAL_JPEG_ConfigOutputBuffer(hjpeg, Jpeg_OUT_BufferTab.DataBuffer, CHUNK_SIZE_OUT); 
+  HAL_JPEG_ConfigOutputBuffer(hjpeg, Jpeg_OUT_BufferTab.DataBuffer, CHUNK_SIZE_OUT);
 }
 
 /**
@@ -256,8 +256,8 @@ void HAL_JPEG_ErrorCallback(JPEG_HandleTypeDef *hjpeg)
   * @retval None
   */
 void HAL_JPEG_EncodeCpltCallback(JPEG_HandleTypeDef *hjpeg)
-{    
-  Jpeg_HWEncodingEnd = 1; 
+{
+  Jpeg_HWEncodingEnd = 1;
 }
 
 /**

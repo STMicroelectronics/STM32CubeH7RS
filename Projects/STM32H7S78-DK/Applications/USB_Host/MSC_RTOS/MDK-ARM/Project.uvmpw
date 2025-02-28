@@ -5,17 +5,17 @@
 
   <Header>### uVision Project, (C) Keil Software</Header>
 
-  <WorkspaceName></WorkspaceName>
+  <WorkspaceName>MSC_RTOS</WorkspaceName>
 
   <project>
-    <PathAndName>.\Appli\MSC_RTOS_Appli.uvprojx</PathAndName>
+    <PathAndName>.\Boot\MSC_RTOS_Boot.uvprojx</PathAndName>
     <NodeIsActive>1</NodeIsActive>
     <NodeIsExpanded>1</NodeIsExpanded>
     <NodeIsCheckedInBatchBuild>1</NodeIsCheckedInBatchBuild>
   </project>
 
   <project>
-    <PathAndName>.\Boot\MSC_RTOS_Boot.uvprojx</PathAndName>
+    <PathAndName>.\Appli\MSC_RTOS_Appli.uvprojx</PathAndName>
     <NodeIsExpanded>1</NodeIsExpanded>
     <NodeIsCheckedInBatchBuild>1</NodeIsCheckedInBatchBuild>
   </project>

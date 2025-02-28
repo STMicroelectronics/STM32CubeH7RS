@@ -80,6 +80,63 @@ HAL_StatusTypeDef RCC_OscConfig(RCC_OscInitTypeDef  *pOscInitStruct)
   /* Check the parameters */
   assert_param(IS_RCC_OSCILLATORTYPE(pOscInitStruct->OscillatorType));
 
+  /*----------------------------- CSI Configuration --------------------------*/
+  if (((pOscInitStruct->OscillatorType) & RCC_OSCILLATORTYPE_CSI) == RCC_OSCILLATORTYPE_CSI)
+  {
+    /* Check the parameters */
+    assert_param(IS_RCC_CSI(pOscInitStruct->CSIState));
+
+    /* When the CSI is used as system clock it will not disabled */
+    if ((__HAL_RCC_GET_SYSCLK_SOURCE() == RCC_SYSCLKSOURCE_STATUS_CSI) ||
+        (((RCC->CR & (RCC_CR_PLL1RDY | RCC_CR_PLL2RDY | RCC_CR_PLL3RDY)) != 0U) &&
+         (__HAL_RCC_GET_PLL_OSCSOURCE() == RCC_PLLSOURCE_CSI)))
+    {
+      /* When CSI is used as system clock it will not disabled */
+      if (pOscInitStruct->CSIState == RCC_CSI_OFF)
+      {
+        return HAL_ERROR;
+      }
+    }
+    else
+    {
+      /* Check the CSI State */
+      if ((pOscInitStruct->CSIState) != RCC_CSI_OFF)
+      {
+        /* Enable the Internal High Speed oscillator (CSI). */
+        __HAL_RCC_CSI_ENABLE();
+
+        /* Get Start Tick*/
+        tickstart = HAL_GetTick();
+
+        /* Wait till CSI is ready */
+        while (READ_BIT(RCC->CR, RCC_CR_CSIRDY) == 0U)
+        {
+          if ((HAL_GetTick() - tickstart) > RCC_CSI_TIMEOUT_VALUE)
+          {
+            return HAL_TIMEOUT;
+          }
+        }
+      }
+      else
+      {
+        /* Disable the Internal High Speed oscillator (CSI). */
+        __HAL_RCC_CSI_DISABLE();
+
+        /* Get Start Tick*/
+        tickstart = HAL_GetTick();
+
+        /* Wait till CSI is disabled */
+        while (READ_BIT(RCC->CR, RCC_CR_CSIRDY) != 0U)
+        {
+          if ((HAL_GetTick() - tickstart) > RCC_CSI_TIMEOUT_VALUE)
+          {
+            return HAL_TIMEOUT;
+          }
+        }
+      }
+    }
+  }
+
 #if defined (RTC_CLOCK_SOURCE_LSI)
   /*------------------------------ LSI Configuration -------------------------*/
   if (((pOscInitStruct->OscillatorType) & RCC_OSCILLATORTYPE_LSI) == RCC_OSCILLATORTYPE_LSI)
@@ -389,6 +446,13 @@ void HAL_RTC_MspDeInit(RTC_HandleTypeDef *hrtc)
   */
 void HAL_XSPI_MspInit(XSPI_HandleTypeDef *hxspi)
 {
+  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+  /* Enable the XSPIM_P1 interface */
+  HAL_PWREx_EnableXSPIM1();
+
+  /* Enable the XSPIM_P2 interface */
+  HAL_PWREx_EnableXSPIM2();
+
   if (hxspi->Instance == XSPI2)
   {
     /* Remove clock protection on XSPI memory interface */
@@ -445,6 +509,34 @@ void HAL_XSPI_MspInit(XSPI_HandleTypeDef *hxspi)
     XSPIM_InitPort1();
 #endif /* STM32H7S3xx || STM32H7S7xx */
   }
+
+  /* Remove clock protection on XSPI memory interface */
+  HAL_RCCEx_DisableClockProtection(RCC_CLOCKPROTECT_XSPI);
+
+  /* The CSI is used by the compensation cells and must be enabled before enabling the
+     compensation cells.
+     For more details refer to RM0477 [SBS I/O compensation cell management] chapter.
+  */
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_CSI;
+  RCC_OscInitStruct.CSIState = RCC_CSI_ON;
+  if (RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* Configure the compensation cell */
+  HAL_SBS_ConfigCompensationCell(SBS_IO_XSPI1_CELL, SBS_IO_CELL_CODE, 0U, 0U);
+  HAL_SBS_ConfigCompensationCell(SBS_IO_XSPI2_CELL, SBS_IO_CELL_CODE, 0U, 0U);
+  /* Enable compensation cell */
+  HAL_SBS_EnableCompensationCell(SBS_IO_XSPI1_CELL);
+  HAL_SBS_EnableCompensationCell(SBS_IO_XSPI2_CELL);
+  /* wait ready before enabled IO */
+  while(HAL_SBS_GetCompensationCellReadyStatus(SBS_IO_XSPI1_CELL_READY) != 1U);
+  while(HAL_SBS_GetCompensationCellReadyStatus(SBS_IO_XSPI2_CELL_READY) != 1U);
+
+  /* Configure "high speed low voltage" */
+  /* Both XSPI must be configured when XSPIM is used */
+  HAL_SBS_EnableIOSpeedOptimize(SBS_IO_XSPI1_HSLV);
+  HAL_SBS_EnableIOSpeedOptimize(SBS_IO_XSPI2_HSLV);
 }
 
 /**
@@ -515,9 +607,6 @@ void XSPIM_InitPort1(void)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
 
-  /* Enable the XSPIM_P1 interface */
-  HAL_PWREx_EnableXSPIM1();
-
   /* Enable GPIO clocks */
   __HAL_RCC_GPIOO_CLK_ENABLE();
   __HAL_RCC_GPIOP_CLK_ENABLE();
@@ -546,9 +635,6 @@ void XSPIM_InitPort1(void)
 void XSPIM_InitPort2(void)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
-
-  /* Enable the XSPIM_P2 interface */
-  HAL_PWREx_EnableXSPIM2();
 
   /* Enable GPIO clocks */
   __HAL_RCC_GPION_CLK_ENABLE();

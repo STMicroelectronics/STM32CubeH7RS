@@ -34,10 +34,16 @@
 <h3 id="hardware-and-software-environment"><b>Hardware and Software environment</b></h3>
 <ul>
 <li><p>This example runs on NUCLEO-H7S3L8.</p></li>
-<li><p>This example has been tested with STMicroelectronics NUCLEO-H7S3L8 (MB1737) board and can be easily tailored to any other supported device and development board.</p></li>
+<li><p>This example has been tested with STMicroelectronics NUCLEO-H7S3L8 boards revision MB1737-H7S3L8-B02 and can be easily tailored to any other supported device and development board.</p></li>
 <li><p>Connect ST-Link cable to the PC USB port to display data on the CubeMx Monitor.</p></li>
 </ul>
 <h3 id="how-to-use-it"><b>How to use it ?</b></h3>
+<p>This application runs from the external Flash memory (USBPD_SRC Appli). It boots from internal Flash (Template_XIP_Boot) then jumps to the application code in external Flash.</p>
+<p>To configure STM32CubeIDE Debug Configuration, you must do the following :</p>
+<pre><code>1. Upload the template XIP
+2. Add the adequate external loader (MX25UW25645G_STM32H7S3L8-NUCLEO.stldr file) in Project-&gt;Debugger Configuration
+3. Add in the startup the template_XIP_Boot in Project-&gt;Debugger Configuration
+4. Move up the application in the startup</code></pre>
 <p>In order to make the program work, you must do the following :</p>
 <ul>
 <li>Open your preferred toolchain</li>

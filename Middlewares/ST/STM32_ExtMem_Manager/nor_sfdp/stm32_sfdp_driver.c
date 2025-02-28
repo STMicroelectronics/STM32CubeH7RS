@@ -74,7 +74,7 @@
            }
 
 /**
- * @brief debug macro for lowlevel
+ * @brief debug macro for low level
  */
 #if EXTMEM_DRIVER_NOR_SFDP_DEBUG_LEVEL > 2
 #define DEBUG_DRIVER(_STR_)  {                     \
@@ -159,8 +159,8 @@ EXTMEM_DRIVER_NOR_SFDP_StatusTypeDef EXTMEM_DRIVER_NOR_SFDP_Init(void *Periphera
   /* Abort any ongoing XSPI action */
   (void)SAL_XSPI_DisableMapMode(&SFDPObject->sfpd_private.SALObject);
 
-  /* analyse the SFPD structure to get driver information */
-  SFDP_DEBUG_STR("4 - analyse the SFPD structure to get driver information")
+  /* analyze the SFPD structure to get driver information */
+  SFDP_DEBUG_STR("4 - analyze the SFPD structure to get driver information")
   if(EXTMEM_SFDP_OK != SFDP_GetHeader(SFDPObject, &JEDEC_SFDP_Header))
   {
     /*
@@ -186,8 +186,8 @@ EXTMEM_DRIVER_NOR_SFDP_StatusTypeDef EXTMEM_DRIVER_NOR_SFDP_Init(void *Periphera
   /* wait few ms after the reset operation, this is done to avoid issue on SFDP read */
   HAL_Delay(10);
 
-  /* analyse the SFPD structure to get driver information after the reset */
-  SFDP_DEBUG_STR("6 - analyse the SFPD structure to get driver information")
+  /* analyze the SFPD structure to get driver information after the reset */
+  SFDP_DEBUG_STR("6 - analyze the SFPD structure to get driver information")
   if(EXTMEM_SFDP_OK != SFDP_GetHeader(SFDPObject, &JEDEC_SFDP_Header))
   {
     /*
@@ -631,7 +631,7 @@ EXTMEM_DRIVER_NOR_SFDP_StatusTypeDef EXTMEM_DRIVER_NOR_SFDP_Disable_MemoryMapped
   */
 
 /**
- * @brief this function enables the WEL Flag and checks its activation
+ * @brief This function enables the WEL Flag and checks its activation
  *
  * @param SFDPObject memory object
  * @param timeout timeout value

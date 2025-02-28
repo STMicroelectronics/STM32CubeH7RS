@@ -116,7 +116,7 @@
                 </option>
                 <option>
                     <name>OCImagesSuppressCheck1</name>
-                    <state>1</state>
+                    <state>0</state>
                 </option>
                 <option>
                     <name>OCImagesPath1</name>
@@ -1094,7 +1094,7 @@
                 </option>
                 <option>
                     <name>CCCpuClockEdit</name>
-                    <state>-0.0</state>
+                    <state>200</state>
                 </option>
                 <option>
                     <name>CCSwoClockAuto</name>

@@ -216,30 +216,36 @@ static void MX_FLASH_Init(void)
   /* USER CODE BEGIN FLASH_Init 1 */
 
   /* USER CODE END FLASH_Init 1 */
-  if (HAL_FLASH_Unlock() != HAL_OK)
+  HAL_FLASHEx_OBGetConfig(&pOBInit);
+  if ((pOBInit.USERConfig1 & OB_XSPI1_HSLV_ENABLE) != OB_XSPI1_HSLV_ENABLE||
+      (pOBInit.USERConfig1 & OB_XSPI2_HSLV_ENABLE) != OB_XSPI2_HSLV_ENABLE||
+        (pOBInit.USERConfig2 & OB_I2C_NI3C_I2C) != OB_I2C_NI3C_I2C)
   {
-    Error_Handler();
-  }
-  if (HAL_FLASH_OB_Unlock() != HAL_OK)
-  {
-    Error_Handler();
-  }
-  pOBInit.OptionType = OPTIONBYTE_USER;
-  pOBInit.USERType = OB_USER_XSPI1_HSLV|OB_USER_XSPI2_HSLV
-                              |OB_USER_I2C_NI3C;
-  pOBInit.USERConfig1 = OB_XSPI1_HSLV_ENABLE|OB_XSPI2_HSLV_ENABLE;
-  pOBInit.USERConfig2 = OB_I2C_NI3C_I2C;
-  if (HAL_FLASHEx_OBProgram(&pOBInit) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  if (HAL_FLASH_OB_Lock() != HAL_OK)
-  {
-    Error_Handler();
-  }
-  if (HAL_FLASH_Lock() != HAL_OK)
-  {
-    Error_Handler();
+    if (HAL_FLASH_Unlock() != HAL_OK)
+    {
+      Error_Handler();
+    }
+    if (HAL_FLASH_OB_Unlock() != HAL_OK)
+    {
+      Error_Handler();
+    }
+    pOBInit.OptionType = OPTIONBYTE_USER;
+    pOBInit.USERType = OB_USER_XSPI1_HSLV|OB_USER_XSPI2_HSLV
+      |OB_USER_I2C_NI3C;
+    pOBInit.USERConfig1 = OB_XSPI1_HSLV_ENABLE|OB_XSPI2_HSLV_ENABLE;
+    pOBInit.USERConfig2 = OB_I2C_NI3C_I2C;
+    if (HAL_FLASHEx_OBProgram(&pOBInit) != HAL_OK)
+    {
+      Error_Handler();
+    }
+    if (HAL_FLASH_OB_Lock() != HAL_OK)
+    {
+      Error_Handler();
+    }
+    if (HAL_FLASH_Lock() != HAL_OK)
+    {
+      Error_Handler();
+    }
   }
   /* USER CODE BEGIN FLASH_Init 2 */
 
@@ -315,7 +321,7 @@ static void MX_XSPI1_Init(void)
   hxspi1.Init.MemoryMode = HAL_XSPI_SINGLE_MEM;
   hxspi1.Init.MemoryType = HAL_XSPI_MEMTYPE_APMEM_16BITS;
   hxspi1.Init.MemorySize = HAL_XSPI_SIZE_32GB;
-  hxspi1.Init.ChipSelectHighTimeCycle = 1;
+  hxspi1.Init.ChipSelectHighTimeCycle = 5;
   hxspi1.Init.FreeRunningClock = HAL_XSPI_FREERUNCLK_DISABLE;
   hxspi1.Init.ClockMode = HAL_XSPI_CLOCK_MODE_0;
   hxspi1.Init.WrapSize = HAL_XSPI_WRAP_32_BYTES;
@@ -423,6 +429,12 @@ static void MPU_Config(void)
 
   /* Disables the MPU */
   HAL_MPU_Disable();
+
+  /* Disables all MPU regions */
+  for(uint8_t i=0; i<__MPU_REGIONCOUNT; i++)
+  {
+    HAL_MPU_DisableRegion(i);
+  }
 
   /** Initializes and configures the Region and the memory to be protected
   */

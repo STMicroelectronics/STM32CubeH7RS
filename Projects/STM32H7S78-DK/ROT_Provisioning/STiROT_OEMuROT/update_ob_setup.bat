@@ -75,7 +75,7 @@ set "python=python "
 :update
 set "AppliCfg=%python% %applicfg%"
 :: ======================================================= Updating the Option bytes =======================================================
-echo Updating the ob_flash_programming script ...
+echo Updating the ob_flash_programming script...
 
 set "action=Update Write protection values from %active_ide%"
 echo %action%

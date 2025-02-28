@@ -10,9 +10,6 @@ set connect_no_reset=-c port=SWD speed=fast ap=1 mode=Hotplug
 set connect_reset=-c port=SWD speed=fast ap=1 mode=UR
 
 :: =============================================== Remove protections and initialize Option Bytes ===========================================
-
-:: =============================================== Erase the user flash =====================================================================
-set erase_all=-e all
 set "wrps_disable=0xff"
 set "hdp_area_start=0x0ff"
 set "hdp_area_end=0x000"
@@ -20,11 +17,6 @@ set "hdp_area_end=0x000"
 :: =============================================== Configure Option Bytes ====================================================================
 set "action=Configure Initial OB"
 echo %action%
-
-set "action=Remove Protection and erase All"
-echo %action%
-%stm32programmercli% %connect_no_reset% %erase_all%
-IF %errorlevel% NEQ 0 goto :error
 
 :: Disable WRP protections
 :: WRPS

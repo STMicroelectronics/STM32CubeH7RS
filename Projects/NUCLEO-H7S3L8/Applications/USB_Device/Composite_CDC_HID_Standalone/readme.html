@@ -33,17 +33,17 @@ Application Description</b></h2>
 STM32Cube firmware. It describes how to use USB device application based
 on the CDC HID composite device on the NUCLEO-H7S3L8 device.</p>
 <p>This is a typical application on how to use the NUCLEO-H7S3L8 USB OTG
-Device peripheral where the STM32 MCU is enumerated as a composite
+device peripheral where the STM32 MCU is enumerated as a composite
 device containing 2 functions: 1- CDC functions: A typical application
-on how to use the NUCLEO-H7S3L8 USB OTG Device peripheral where the
+on how to use the NUCLEO-H7S3L8 USB OTG device peripheral where the
 STM32 MCU behaves as a USB-to-RS232 bridge following the Virtual COM
 Port (VCP) implementation. - On one side, the STM32 exchanges data with
-a PC host through USB interface in Device mode. - On the other side, the
+a PC host through USB interface in device mode. - On the other side, the
 STM32 exchanges data with other devices (same host, other host, other
 devices…) through the UART interface (RS232). This function is
 duplicated so that PC Host revognizes two different instances of CDC VCP
 ports. 2- HID function: This is a typical application on how to use the
-NUCLEO-H7S3L8 USB OTG Device peripheral where the STM32 MCU is
+NUCLEO-H7S3L8 USB OTG device peripheral where the STM32 MCU is
 enumerated as a HID device using the native PC Host HID driver to which
 the NUCLEO-H7S3L8 board is connected, in order to emulate the Mouse
 directions using user button mounted on the NUCLEO-H7S3L8 board.</p>
@@ -92,7 +92,7 @@ USB mouse.</p>
 <p>When plugged to PC host, the NUCLEO-H7S3L8 must be properly
 enumerated as an USB Serial device and an STlink Com port. During the
 enumeration phase, the device must provide host with the requested
-descriptors (Device descriptor, configuration descriptor, string
+descriptors (device descriptor, configuration descriptor, string
 descriptors). Those descriptors are used by host driver to identify the
 device capabilities. Once NUCLEO-H7S3L8 USB device successfully
 completed the enumeration phase, Open two hyperterminals (USB com port
@@ -100,11 +100,11 @@ and UART com port(USB STLink VCP)) to send/receive data to/from host
 from/to device.</p>
 <h4 id="error-behaviors"><b>Error behaviors</b></h4>
 <p>Host PC shows that USB device does not operate as designed (CDC
-Device enumeration failed, PC and Device can not communicate over VCP
+device enumeration failed, PC and device can not communicate over VCP
 ports).</p>
 <h4 id="assumptions-if-any"><b>Assumptions if any</b></h4>
-<p>User is familiar with USB 2.0 “Universal Serial BUS” Specification
-and CDC_ACM class Specification.</p>
+<p>User is familiar with USB 2.0 “Universal Serial BUS” specification
+and CDC_ACM class specification.</p>
 <h4 id="known-limitations"><b>Known limitations</b></h4>
 <p>None.</p>
 <h3 id="notes"><b>Notes</b></h3>
@@ -137,9 +137,9 @@ Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Src directory.</li>
 <h3 id="hardware-and-software-environment"><b>Hardware and Software
 environment</b></h3>
 <ul>
-<li>This example runs on NUCLEO-H7S3L8 device</li>
-<li>This example has been tested with STMicroelectronics NUCLEO-H7S3L8
-boards Revision MB1737-H7S3L8-B01 and can be easily tailored to any
+<li>This application runs on STM32H7S3xx devices</li>
+<li>This application has been tested with STMicroelectronics NUCLEO-H7S3L8
+boards revision MB1737-H7S3L8-B02 and can be easily tailored to any
 other supported device and development board.</li>
 <li>NUCLEO-H7S3L8 Set-up</li>
 <li>Connect the NUCLEO-H7S3L8 board CN2 to the PC through USB
@@ -185,7 +185,7 @@ as following:
 <li>Select then “CDC_HID_Standalone_Appli” workspace</li>
 <li>Rebuild all files from CDC_HID_Standalone Appli and load your images into memories: First, load the CDC_HID_Standalone_Boot.hex in internal Flash, then, load
 the Appli part in External memory available on NUCLEO-H7S3L8 board.</li>
-<li>Run the example</li>
+<li>Run the application</li>
 </ol>
 <h4 id="mdk-arm"><b>MDK-ARM</b></h4>
 <ol type="1">
@@ -204,13 +204,13 @@ the Appli part in External memory available on NUCLEO-H7S3L8 board.</li>
 <li>Select then “CDC_HID_Standalone_Appli” workspace</li>
 <li>Rebuild all files from CDC_HID_Standalone Appli and load your images into memories: First, load the CDC_HID_Standalone_Boot.hex in internal Flash, then, load
 the Appli part in External memory available on NUCLEO-H7S3L8 board.</li>
-<li>Run the example</li>
+<li>Run the application</li>
 </ol>
 <h4 id="stm32cubeide"><b>STM32CubeIDE</b></h4>
 <p>For "CDC_HID_Standalone_Boot" project :</p>
-<p>Add the adequate external loader (MX25UW25645G_STM32H7R38-NUCLEO.stldr file) in Project->Debugger Configuration</p>
+<p>Add the adequate external loader (MX25UW25645G_STM32H7S3L8-NUCLEO.stldr file) in Project->Debugger Configuration</p>
 <p>For "CDC_HID_Standalone_Appli" project :</p>
-<p>1. Add the adequate external loader (MX25UW25645G_STM32H7R38-NUCLEO.stldr file) in Project->Debugger Configuration</p>
+<p>1. Add the adequate external loader (MX25UW25645G_STM32H7S3L8-NUCLEO.stldr file) in Project->Debugger Configuration</p>
 <p>2. Add in the startup the CDC_HID_Standalone_Boot in Project->Debugger Configuration</p>
 <p>3. Move up the application in the startup</p>
 <ol type="1">
@@ -230,7 +230,7 @@ the Appli part in External memory available on NUCLEO-H7S3L8 board.</li>
 <li>Select the “CDC_HID_Standalone_Appli” project</li>
 <li>Build the project</li>
 <li>With the Debug icon select the configuration “CDC_HID_Standalone_Appli Debug”. First, load the Boot binary in internal Flash, then, load the Appli binary in External memory available on NUCLEO-H7S3L8 board</li>
-<li>Run the example</li>
+<li>Run the application</li>
 </ol>
 <p><b>Note</b></p>
 <p>The application uses the external HSE clock as system clock

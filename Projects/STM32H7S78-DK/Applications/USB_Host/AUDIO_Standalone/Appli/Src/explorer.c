@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2019 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -32,12 +32,12 @@
 typedef struct _FILELIST_LineTypeDef {
   uint8_t type;
   uint8_t name[FILEMGR_FILE_NAME_SIZE];
-}FILELIST_LineTypeDef;
+} FILELIST_LineTypeDef;
 
 typedef struct _FILELIST_FileTypeDef {
   FILELIST_LineTypeDef  file[FILEMGR_LIST_DEPDTH] ;
   uint16_t              ptr;
-}FILELIST_FileTypeDef;
+} FILELIST_FileTypeDef;
 /* Private macro ------------------------------------------------------------- */
 /* Private variables --------------------------------------------------------- */
 extern SD_HandleTypeDef hsd1;

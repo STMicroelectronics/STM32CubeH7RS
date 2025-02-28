@@ -19,11 +19,7 @@
  *      Purpose: CMSIS RTOS2 wrapper for FreeRTOS
  *
  *---------------------------------------------------------------------------*/
-
 #include <string.h>
-
-#include "cmsis_os2.h"                  // ::CMSIS:RTOS2
-#include "cmsis_compiler.h"             // Compiler agnostic definitions
 
 #include "FreeRTOS.h"                   // ARM.FreeRTOS::RTOS:Core
 #include "task.h"                       // ARM.FreeRTOS::RTOS:Core
@@ -33,6 +29,9 @@
 
 #include "freertos_mpool.h"             // osMemoryPool definitions
 #include "freertos_os2.h"               // Configuration check and setup
+
+#include "cmsis_os2.h"                  // ::CMSIS:RTOS2
+#include "cmsis_compiler.h"             // Compiler agnostic definitions
 
 /*---------------------------------------------------------------------------*/
 #ifndef __ARM_ARCH_6M__
@@ -227,20 +226,34 @@ __STATIC_INLINE uint32_t IRQ_Context (void) {
 
 /* Get OS Tick count value */
 static uint32_t OS_Tick_GetCount (void) {
+#if (__ARM_ARCH_7A__ == 1U)
+  return (__get_CNTFRQ() - PL1_GetCurrentValue());
+#else
   uint32_t load = SysTick->LOAD;
   return  (load - SysTick->VAL);
+#endif /* __ARM_ARCH_7A__ */
 }
 
 #if (configUSE_TICKLESS_IDLE == 0)
 /* Get OS Tick overflow status */
 static uint32_t OS_Tick_GetOverflow (void) {
+#if (__ARM_ARCH_7A__ == 1U)
+  CNTP_CTL_Type cntp_ctl;
+  cntp_ctl.w = PL1_GetControl();
+  return (cntp_ctl.b.ISTATUS);
+#else
   return ((SysTick->CTRL >> 16) & 1U);
+#endif /* __ARM_ARCH_7A__ */
 }
 #endif
 
 /* Get OS Tick interval */
 static uint32_t OS_Tick_GetInterval (void) {
+#if (__ARM_ARCH_7A__ == 1U)
+  return (__get_CNTFRQ() + 1U);
+#else
   return (SysTick->LOAD + 1U);
+#endif /* __ARM_ARCH_7A__ */
 }
 
 /* ==== Kernel Management Functions ==== */

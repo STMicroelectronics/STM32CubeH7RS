@@ -7,7 +7,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2024 STMicroelectronics.
+  * Copyright (c) 2023 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -19,11 +19,11 @@
 /* USER CODE END Header */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __USB_HOST__H__
-#define __USB_HOST__H__
+#ifndef __USB_HOST__H
+#define __USB_HOST__H
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -104,5 +104,5 @@ void USBH_Task(void *argument);
 }
 #endif
 
-#endif /* __USB_HOST__H__ */
+#endif /* __USB_HOST__H */
 

@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['httpc_5fheaders_5fdone_5ffn',['httpc_headers_done_fn',['../group__httpc.html#ga1e5b62519d6592c89ed3edfabd917472',1,'http_client.h']]],
-  ['httpc_5fresult_5ffn',['httpc_result_fn',['../group__httpc.html#ga0452eb8007dbb5f139ec992e58e560dd',1,'http_client.h']]],
-  ['httpc_5fresult_5ft',['httpc_result_t',['../group__httpc.html#gac6713454283bff8e1187849e8d4bda18',1,'http_client.h']]]
+  ['ip4_5faddr_5ft_0',['ip4_addr_t',['../ip4__addr_8h.html#a3d3b45daffbc15d65da236e31e621b7e',1,'ip4_addr.h']]],
+  ['ip6_5faddr_5ft_1',['ip6_addr_t',['../ip6__addr_8h.html#aaca9e796e93a355294c4954c08d01762',1,'ip6_addr.h']]],
+  ['ip_5faddr_5ft_2',['ip_addr_t',['../group__ipaddr.html#ga335a8c9df66319e88a1a529047ce0a1e',1,'ip_addr.h']]]
 ];

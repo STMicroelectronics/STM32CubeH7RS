@@ -46,7 +46,7 @@
   */
 
 /**
- * @brief SFDP param table ID
+ * @brief SFDP parameter table ID
  */
 typedef enum {
    SFPD_PARAMID_UNKNOWN                                     = 0x00000u,
@@ -113,7 +113,7 @@ typedef struct {
   */
 
  /**
- * @brief this function get the SFDP header
+ * @brief This function gets the SFDP header
  * @param Object memory instance object descriptor
  * @return @ref SFDP_StatusTypeDef
  **/
@@ -121,8 +121,8 @@ SFDP_StatusTypeDef SFDP_GetHeader(EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef *Object,
                                   SFPD_HeaderTypeDef *sfdp_header);
 
  /**
- * @brief this function read the SFDP header for current configuration
-          and adjust the memory type if required
+ * @brief This function reads the SFDP header for current configuration
+          and adjusts the memory type if required
  * @param Object memory instance object descriptor
  * @return @ref SFDP_StatusTypeDef
  **/
@@ -130,21 +130,21 @@ SFDP_StatusTypeDef SFDP_ReadHeader(EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef *Object,
                                    SFPD_HeaderTypeDef *sfdp_header);
 
 /**
- * @brief collect all the SFPD information
+ * @brief This function collects all the SFPD information
  * @param Object memory instance object descriptor
  * @return @ref SFDP_StatusTypeDef
  */
 SFDP_StatusTypeDef SFDP_CollectData(EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef *Object);
 
 /**
- * @brief reset the memory
+ * @brief This function resets the memory
  * @param Object memory instance object descriptor
  * @return @ref SFDP_StatusTypeDef
  */
 SFDP_StatusTypeDef SFDP_MemoryReset(EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef *Object);
 
 /**
- * @brief build the driver info
+ * @brief This function builds the driver info
  * @param Object memory instance object descriptor
  * @param FreqUpdated set to 1 if the freqence is updated
  * @return @ref SFDP_StatusTypeDef
@@ -152,7 +152,7 @@ SFDP_StatusTypeDef SFDP_MemoryReset(EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef *Object
 SFDP_StatusTypeDef SFDP_BuildGenericDriver(EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef *Object, uint8_t *FreqUpdated);
 
 /**
- * @brief this function check the busy flag
+ * @brief This function checks the busy flag
  *
  * @param SFDPObject memory Object
  * @param timeout timeout value

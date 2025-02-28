@@ -1,3 +1,27 @@
+/*
+ @licstart  The following is the entire license notice for the JavaScript code in this file.
+
+ The MIT License (MIT)
+
+ Copyright (C) 1997-2020 by Dimitri van Heesch
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+ and associated documentation files (the "Software"), to deal in the Software without restriction,
+ including without limitation the rights to use, copy, modify, merge, publish, distribute,
+ sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in all copies or
+ substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+ BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+ @licend  The above is the entire license notice for the JavaScript code in this file
+*/
 var NAVTREE =
 [
   [ "lwIP", "index.html", [
@@ -6,13 +30,14 @@ var NAVTREE =
     [ "Changelog", "changelog.html", null ],
     [ "How to contribute to lwIP", "contrib.html", null ],
     [ "Common pitfalls", "pitfalls.html", null ],
+    [ "Debugging memory pool sizes", "mem_err.html", null ],
     [ "Reporting bugs", "bugs.html", null ],
     [ "Zero-copy RX", "zerocopyrx.html", null ],
     [ "System initalization", "sys_init.html", null ],
     [ "Multithreading", "multithreading.html", null ],
     [ "Optimization hints", "optimization.html", null ],
     [ "Deprecated List", "deprecated.html", null ],
-    [ "Modules", "modules.html", "modules" ],
+    [ "Topics", "topics.html", "topics" ],
     [ "Data Structures", "annotated.html", [
       [ "Data Structures", "annotated.html", "annotated_dup" ],
       [ "Data Fields", "functions.html", [
@@ -20,8 +45,8 @@ var NAVTREE =
         [ "Variables", "functions_vars.html", "functions_vars" ]
       ] ]
     ] ],
-    [ "Files", null, [
-      [ "File List", "files.html", "files" ],
+    [ "Files", "files.html", [
+      [ "File List", "files.html", "files_dup" ],
       [ "Globals", "globals.html", [
         [ "All", "globals.html", "globals_dup" ],
         [ "Functions", "globals_func.html", "globals_func" ],
@@ -38,23 +63,17 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "altcp_8c.html",
-"functions_j.html",
-"group__compiler__abstraction.html#ga25591dcb72fccc7b5dc46fbc1959694e",
-"group__httpd__opts.html#gacc3e7667baa2cfafd23de2b152df7a63",
-"group__ip6addr.html#ga5181d2cb6b9254eb5ad4137f7b3635a0",
-"group__lwip__opts__dhcp.html#ga2cc18315edcd5ffc083d1256f7d22a83",
-"group__lwip__opts__memp.html#ga8e136f5811e6652c6c5d2fcf596f0893",
-"group__lwip__opts__thread.html#ga42b2c7a3042d7c3efd00f367f5837435",
-"group__netbuf.html#ga9dfd3ddfe0ec65009cb140c68404b09d",
-"group__netif__ip6.html#gae864211a5eb052deb5da7bc7e3427fb9",
-"group__smtp__opts.html#ga021d8133159895a2dbf5fb0b243da9fa",
-"group__socket.html#gab096fb7dbc3f84be1699a87dce980f2f",
-"http__client_8c.html#ad2ec42c8e7adaef67266a5bd12c4ad2a",
-"lowpan6__common_8h.html",
-"pbuf_8h.html#a567a0dfa01b0e5540f9416a200ed163f",
-"sockets_8h.html#a0a250b3b4d1827e3a3661327f5e80ae0",
+"functions_c.html",
+"group__httpd.html#gac364305cee969a0be43c071722b136e6",
+"group__lwip__opts__dhcpv6.html#ga5d08f76a7472daa7bcfe17343243bd77",
+"group__lwip__opts__tcp.html#gaf1b6a015d29fea67b906c276e1e8314f",
+"group__pbuf.html#gaba88511dee3df4b631fde691f421320d",
+"group__zepif.html",
+"lowpan6__ble_8h.html#a6ae90ad69f5d901eb44cf87b9120cd9a",
+"pbuf_8h.html#a426883d928f8f3e8fd066e616159d78f",
+"sockets_8c.html#ade85c68b6673296c8fb67127b93fa4c1",
 "structnetbios__hdr.html",
-"tcp_8c.html#a3846a756b13214ed88ea47d0ff8279eb"
+"tcp_8c.html#a3d9bb9809769197bce9b2499d55cf28c"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -26,7 +26,7 @@ process.
 From security point of view STiROT_iLoader project must be trusted and is therefore under flash memory write
 protection (immutability).
 
-The communication between STiROT and STiLoader is performed trough two channels:
+The communication between STiROT and STiLoader is performed through two channels:
 
 - RSSCMD register: write channel, STiROT_iLoader provides STiROT with a status on the last operation performed
 - shared RAM: read channel, STiROT notifies STiROT_iLoader:

@@ -43,7 +43,8 @@
 RNG_HandleTypeDef hrng;
 
 CRYP_HandleTypeDef hcryp;
-uint32_t pInitVectSAES[4] = {0x00010203,0x04050607,0x08090A0B,0x0C0D0E0F};
+__ALIGN_BEGIN static const uint32_t pInitVectSAES[4] __ALIGN_END = {
+                            0x00010203,0x04050607,0x08090A0B,0x0C0D0E0F};
 
 /* USER CODE BEGIN PV */
 /* The size of the plaintext is in words */

@@ -18,8 +18,8 @@
   */
 /* USER CODE END Header */
 
-#ifndef STRAEM2_H_
-#define STRAEM2_H_
+#ifndef __STRAEM2_H
+#define __STRAEM2_H
 
 #define IMG_NBR      29
 
@@ -6919,4 +6919,4 @@ uint16_t tImagesSizes[] = {JPEG0_SIZE, JPEG1_SIZE, JPEG2_SIZE, JPEG3_SIZE, JPEG4
                            JPEG19_SIZE, JPEG20_SIZE, JPEG21_SIZE, JPEG22_SIZE, JPEG23_SIZE, JPEG24_SIZE, \
                            JPEG25_SIZE, JPEG26_SIZE, JPEG27_SIZE, JPEG28_SIZE};
 
-#endif /* STRAEM2_H_ */
+#endif /* __STRAEM2_H */

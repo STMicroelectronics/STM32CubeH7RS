@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <workspace>
-    <project>
-        <path>$WS_DIR$\Boot\MSC_Standalone_Boot.ewp</path>
-    </project>
-    <project>
-        <path>$WS_DIR$\Appli\MSC_Standalone_Appli.ewp</path>
-    </project>
-    <batchBuild />
+  <project>
+    <path>$WS_DIR$\Boot\MSC_Standalone_Boot.ewp</path>
+  </project><project>
+    <path>$WS_DIR$\Appli\MSC_Standalone_Appli.ewp</path>
+  </project>
+  <batchBuild />
 </workspace>

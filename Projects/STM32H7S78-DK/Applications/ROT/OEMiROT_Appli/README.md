@@ -7,6 +7,7 @@ This application will display a menu on the console explaining how to download t
 the OEMiROT will decrypt and install this new version after successful check of the authenticity and the integrity of the image.
 
 The system clock frequency is the one configured by OEMiROT.
+The application cannot reconfigure the system clock. To use a different frequency, it is mandatory to update the OEMiROT_Boot project.
 
 ### <b>Keywords</b>
 

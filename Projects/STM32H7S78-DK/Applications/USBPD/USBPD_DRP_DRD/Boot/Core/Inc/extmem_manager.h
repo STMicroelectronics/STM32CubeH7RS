@@ -23,7 +23,7 @@
 #define __MX_EXTMEM__H__
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/

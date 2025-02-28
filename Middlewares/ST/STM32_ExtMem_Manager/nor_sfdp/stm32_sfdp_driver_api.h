@@ -40,7 +40,7 @@
 
 
 /**
- * @brief list of error code of the SFDP driver
+ * @brief List of error codes for the SFDP driver
  */
 typedef enum  {
   EXTMEM_DRIVER_NOR_SFDP_OK                           =  0,
@@ -62,7 +62,7 @@ typedef enum  {
 } EXTMEM_DRIVER_NOR_SFDP_StatusTypeDef;
 
 /**
- * @brief list of sector type
+ * @brief List of sector types for the SFDP driver
  */
 typedef enum  {
   EXTMEM_DRIVER_NOR_SFDP_SECTOR_TYPE1,
@@ -82,7 +82,7 @@ typedef enum  {
   * @{
   */
 /**
- * @brief this function initialize the driver SFDP
+ * @brief This function initializes the driver SFDP
  *
  * @param Peripheral Peripheral pointer
  * @param Config config type
@@ -93,7 +93,7 @@ typedef enum  {
 EXTMEM_DRIVER_NOR_SFDP_StatusTypeDef EXTMEM_DRIVER_NOR_SFDP_Init(void *Peripheral, EXTMEM_LinkConfig_TypeDef Config, uint32_t ClockInput, EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef *SFDPObject);
 
 /**
- * @brief this function un-initialize the driver SFDP
+ * @brief This function un-initializes the driver SFDP
  *
  * @param SFDPObject IP object
  * @return @ref EXTMEM_DRIVER_NOR_SFDP_StatusTypeDef
@@ -101,7 +101,7 @@ EXTMEM_DRIVER_NOR_SFDP_StatusTypeDef EXTMEM_DRIVER_NOR_SFDP_Init(void *Periphera
 EXTMEM_DRIVER_NOR_SFDP_StatusTypeDef EXTMEM_DRIVER_NOR_SFDP_DeInit(EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef *SFDPObject);
 
 /**
- * @brief this function return the flash information
+ * @brief This function returns the flash information
  *
  * @param SFDPObject memory objecte
  * @param FlashInfo pointer on flash info structure
@@ -109,7 +109,7 @@ EXTMEM_DRIVER_NOR_SFDP_StatusTypeDef EXTMEM_DRIVER_NOR_SFDP_DeInit(EXTMEM_DRIVER
 void EXTMEM_DRIVER_NOR_SFDP_GetFlashInfo(EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef *SFDPObject, EXTMEM_NOR_SFDP_FlashInfoTypeDef *FlashInfo);
 
 /**
- * @brief this function read the memory
+ * @brief This function reads the memory
  *
  * @param SFDPObject memory object
  * @param Address memory address
@@ -120,7 +120,7 @@ void EXTMEM_DRIVER_NOR_SFDP_GetFlashInfo(EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef *S
 EXTMEM_DRIVER_NOR_SFDP_StatusTypeDef EXTMEM_DRIVER_NOR_SFDP_Read(EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef *SFDPObject, uint32_t Address, uint8_t* Data, uint32_t Size);
 
 /**
- * @brief this function write data in the memory
+ * @brief This function writes data in the memory
  *
  * @param SFDPObject memory object
  * @param Address memory address
@@ -131,7 +131,7 @@ EXTMEM_DRIVER_NOR_SFDP_StatusTypeDef EXTMEM_DRIVER_NOR_SFDP_Read(EXTMEM_DRIVER_N
 EXTMEM_DRIVER_NOR_SFDP_StatusTypeDef EXTMEM_DRIVER_NOR_SFDP_Write(EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef *SFDPObject, uint32_t Address, const uint8_t* Data, uint32_t Size);
 
 /**
- * @brief this function write data in the memory in mapped mode
+ * @brief This function writes data in the memory in mapped mode
  *
  * @param SFDPObject memory object
  * @param Address memory address in mapped mode 
@@ -142,7 +142,7 @@ EXTMEM_DRIVER_NOR_SFDP_StatusTypeDef EXTMEM_DRIVER_NOR_SFDP_Write(EXTMEM_DRIVER_
 EXTMEM_DRIVER_NOR_SFDP_StatusTypeDef EXTMEM_DRIVER_NOR_SFDP_WriteInMappedMode(EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef *SFDPObject, uint32_t Address, const uint8_t* Data, uint32_t Size);
 
 /**
- * @brief this function erases all the memory
+ * @brief This function erases all the memory
  *
  * @param SFDPObject memory object
  * @return @ref EXTMEM_DRIVER_NOR_SFDP_StatusTypeDef
@@ -150,7 +150,7 @@ EXTMEM_DRIVER_NOR_SFDP_StatusTypeDef EXTMEM_DRIVER_NOR_SFDP_WriteInMappedMode(EX
 EXTMEM_DRIVER_NOR_SFDP_StatusTypeDef EXTMEM_DRIVER_NOR_SFDP_MassErase(EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef *SFDPObject);
 
 /**
- * @brief this function erase memory sector
+ * @brief This function erases memory sector
  *
  * @param SFDPObject memory object
  * @param Address memory address
@@ -160,7 +160,7 @@ EXTMEM_DRIVER_NOR_SFDP_StatusTypeDef EXTMEM_DRIVER_NOR_SFDP_MassErase(EXTMEM_DRI
 EXTMEM_DRIVER_NOR_SFDP_StatusTypeDef EXTMEM_DRIVER_NOR_SFDP_SectorErase(EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef *SFDPObject, uint32_t Address, EXTMEM_DRIVER_NOR_SFDP_SectorTypeTypeDef SectorType);
 
 /**
- * @brief this function enables the memory mapped mode
+ * @brief This function enables the memory mapped mode
  *
  * @param SFDPObject memory object
  * @return @ref EXTMEM_DRIVER_NOR_SFDP_StatusTypeDef
@@ -168,7 +168,7 @@ EXTMEM_DRIVER_NOR_SFDP_StatusTypeDef EXTMEM_DRIVER_NOR_SFDP_SectorErase(EXTMEM_D
 EXTMEM_DRIVER_NOR_SFDP_StatusTypeDef EXTMEM_DRIVER_NOR_SFDP_Enable_MemoryMappedMode(EXTMEM_DRIVER_NOR_SFDP_ObjectTypeDef *SFDPObject);
 
 /**
- * @brief this function disables the memory mapped mode
+ * @brief This function disables the memory mapped mode
  *
  * @param SFDPObject memory object
  * @return @ref EXTMEM_DRIVER_NOR_SFDP_StatusTypeDef

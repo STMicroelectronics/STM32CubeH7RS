@@ -19,6 +19,7 @@ fi
 error()
 {
   echo "dbg_auth script failed"
+  echo "WARNING: If you have selected 'Forced download', this is the normal behavior"
   if [ "$script_mode" != "AUTO" ]; then $SHELL; fi
   return 1
 }

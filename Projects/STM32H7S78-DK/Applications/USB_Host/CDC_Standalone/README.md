@@ -34,13 +34,18 @@ User is familiar with USB 2.0 “Universal Serial BUS” Specification and CDC c
 #### <b>Known limitations</b>
 None.
 
+### <b>Notes</b>
+
+- It is mandatory to check that the jumper below is connected for USB_FS:
+    JP1  (USB2).
+
 ### <b>Keywords</b>
 
 Connectivity, UART/USART, Type C, USB, CDC
 
 ### <b>Hardware and Software environment</b>
 
-  - This application has been tested with STMicroelectronics STM32H7S78-DK boards Revision MB1736-H7S7L8-C01 and can be easily tailored to any other supported device and development board.
+  - This application has been tested with STMicroelectronics STM32H7S78-DK boards revision MB1736-H7S7L8-D01 and can be easily tailored to any other supported device and development board.
 
   - Connect ST-Link cable to the PC USB port to display data on the HyperTerminal.
   - STM32H7S78-DK Set-up
@@ -48,12 +53,12 @@ Connectivity, UART/USART, Type C, USB, CDC
         - CN17 : to use USB OTG IP in full speed (FS)
 
     A virtual COM port will then appear in the HyperTerminal:
-     - Hyperterminal configuration
-       - Data Length = 8 Bits
-       - One Stop Bit
-       - No parity
-       - BaudRate = 115200 baud
-       - Flow control: None
+    - Hyperterminal configuration
+      - Data Length = 8 Bits
+      - One Stop Bit
+      - No parity
+      - BaudRate = 115200 baud
+        Flow control: None
 
   - The USRT4 interface available on PD0 and PD1 of the microcontroller are connected to ST-LINK MCU.
   - By default the USRT4 communication between the target MCU and ST-LINK MCU is enabled. It's configuration is as following:
@@ -83,7 +88,7 @@ In order to make the program work, you must do the following :
   3. Select then "CDC_Standalone_Appli" workspace
   4. Rebuild all files from CDC_Standalone Appli and load your images into memories: First load the CDC_Standalone.hex in internal Flash , then load
      the Appli part in External memory available on STM32H7S78-DK board.
-  5. Run the example
+  5. Run the application
 
 
 #### <b>MDK-ARM</b>
@@ -99,7 +104,7 @@ In order to make the program work, you must do the following :
   3. Select then "CDC_Standalone_Appli" workspace
   4. Rebuild all files from CDC_Standalone Appli and load your images into memories: First load the CDC_Standalone.hex in internal Flash , then load
      the Appli part in External memory available on STM32H7S78-DK board.
-  5. Run the example
+  5. Run the application
 
 
 #### <b>STM32CubeIDE</b>
@@ -119,7 +124,7 @@ In order to make the program work, you must do the following :
   4. Build the project
   5. With the Debug icon select the configuration “CDC_Standalone_Appli Debug”. First load the Boot binary in internal Flash, then load the Appli binary in
      External memory available on STM32H7S78-DK board
-  6. Run the example
+  6. Run the application
 
 To configure STM32CubeIDE Debug Configuration, you must do the following :
 

@@ -19,11 +19,11 @@
 /* USER CODE END Header */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __USBD_CONF__H__
-#define __USBD_CONF__H__
+#ifndef __USBD_CONF_H
+#define __USBD_CONF_H
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -173,5 +173,5 @@ void USBD_static_free(void *p);
 }
 #endif
 
-#endif /* __USBD_CONF__H__ */
+#endif /* __USBD_CONF_H */
 

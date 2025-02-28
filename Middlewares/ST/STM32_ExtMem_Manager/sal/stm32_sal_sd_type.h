@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * @file    stm32_sal_SD_type.h
+  * @file    stm32_sal_sd_type.h
   * @author  MCD Application Team
   * @brief   This file contains the software adaptation layer SD functions
   *          prototypes.
@@ -18,8 +18,8 @@
   */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __SAL_SD_TYPE_H
-#define __SAL_SD_TYPE_H
+#ifndef __STM32_SAL_SD_TYPE_H
+#define __STM32_SAL_SD_TYPE_H
 
 #ifdef __cplusplus
  extern "C" {
@@ -71,4 +71,4 @@ typedef struct {
 }
 #endif
 
-#endif /* __SAL_SD_TYPE_H */
+#endif /* __STM32_SAL_SD_TYPE_H */

@@ -18,7 +18,7 @@ The prebuild command is in charge of preparing the OEMiROT_Boot scatter file acc
 The postbuild command is in charge of preparing the provisioning scripts and the application image (firmware application managed by OEMiROT) configuration files in ROT_Provisioning/OEMiROT
 folder, according to the flash layout and OEMiROT configuration.
 
-The system clock is set to 380 MHz in order to be functional with all hardware configurations (RAMECC enabled, no internal regulator)
+The system clock is set to 380 MHz to be functional with all hardware configurations (ECC_ON_SRAM enabled, no internal regulator)
 and with the full range of temperature (Tj up to 125°). In other circumstances, the system clock can be increased up to 600 Mhz.
 
 ### <b>Keywords</b>
@@ -36,7 +36,6 @@ File | Description
   OEMiROT_Boot/Inc/boot_hal_imagevalid.h           |  Header file for image validation code in boot_hal.c
   OEMiROT_Boot/Inc/boot_hal_mce.h                  |  Header file for MCE code in boot_hal.c
   OEMiROT_Boot/Inc/cmsis.h                         |  Header file for CMSIS
-  OEMiROT_Boot/Inc/config-boot.h                   |  Mbed-crypto configuration file
   OEMiROT_Boot/Inc/flash_layout.h                  |  Flash mapping
   OEMiROT_Boot/Inc/low_level_ext_flash.h           |  Header file for low_level_ext_flash.c
   OEMiROT_Boot/Inc/low_level_ext_ram.h             |  Header file for low_level_ext_ram.c
@@ -46,13 +45,14 @@ File | Description
   OEMiROT_Boot/Inc/low_level_ramecc.h              |  Header file for low_level_ramecc.c
   OEMiROT_Boot/Inc/low_level_rng.h                 |  Header file for low_level_rng.c
   OEMiROT_Boot/Inc/low_level_security.h            |  Header file for low_level_security.c
+  OEMiROT_Boot/Inc/mbedtls_config.h                |  Mbed-crypto configuration file
   OEMiROT_Boot/Inc/region_defs.h                   |  RAM and FLASH regions definitions
   OEMiROT_Boot/Inc/stm32_extmem_conf.h             |  STM32_ExtMem_Manager configuration file
   OEMiROT_Boot/Inc/stm32h7rsxx_hal_conf.h          |  HAL driver configuration file
   OEMiROT_Boot/Inc/target_cfg.h                    |  Header file for target start up
   OEMiROT_Boot/Src/bl2_nv_services.c               |  Non Volatile services for OEMiROT_Boot
   OEMiROT_Boot/Src/boot_hal.c                      |  Platform initialization
-  OEMiROT_Boot/Src/image_macros_to_preprocess_bl2.c |  Images definitions to preprocess for bl2
+  OEMiROT_Boot/Src/image_macros_to_preprocess_bl2.c |  Image definitions to preprocess for bl2
   OEMiROT_Boot/Src/keys_map.c                      |  keys indirection to access keys in OBKeys area
   OEMiROT_Boot/Src/low_level_com.c                 |  UART low level interface
   OEMiROT_Boot/Src/low_level_device.c              |  Flash Low level device configuration

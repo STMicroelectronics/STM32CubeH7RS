@@ -356,7 +356,7 @@ static void MX_GPDMA1_Init(void)
   handle_GPDMA1_Channel15.Init.SrcBurstLength = 1;
   handle_GPDMA1_Channel15.Init.DestBurstLength = 1;
   handle_GPDMA1_Channel15.Init.TransferAllocatedPort = DMA_SRC_ALLOCATED_PORT0|DMA_DEST_ALLOCATED_PORT1;
-  handle_GPDMA1_Channel15.Init.TransferEventMode = DMA_TCEM_BLOCK_TRANSFER;
+  handle_GPDMA1_Channel15.Init.TransferEventMode = DMA_TCEM_REPEATED_BLOCK_TRANSFER;
   handle_GPDMA1_Channel15.Init.Mode = DMA_NORMAL;
   if (HAL_DMA_Init(&handle_GPDMA1_Channel15) != HAL_OK)
   {
@@ -404,17 +404,17 @@ static void DMA_Increment_GatherOperation(void)
   handle_GPDMA1_Channel15.Init.SrcBurstLength = 4;
   handle_GPDMA1_Channel15.Init.DestBurstLength = 4;
   handle_GPDMA1_Channel15.Init.TransferAllocatedPort = DMA_SRC_ALLOCATED_PORT0|DMA_DEST_ALLOCATED_PORT1;
-  handle_GPDMA1_Channel15.Init.TransferEventMode = DMA_TCEM_BLOCK_TRANSFER;
+  handle_GPDMA1_Channel15.Init.TransferEventMode = DMA_TCEM_REPEATED_BLOCK_TRANSFER;
   handle_GPDMA1_Channel15.Init.Mode = DMA_NORMAL;
   if (HAL_DMA_Init(&handle_GPDMA1_Channel15) != HAL_OK)
   {
     Error_Handler();
   }
   RepeatBlockConfig.RepeatCount = GATHER_BLOCK_NUM;
-  RepeatBlockConfig.SrcAddrOffset = GATHER_ADDRESS_OFFSET; /* +8 words */
+  RepeatBlockConfig.SrcAddrOffset = 0U;
   RepeatBlockConfig.DestAddrOffset = 0U;
-  RepeatBlockConfig.BlkSrcAddrOffset = (-(SRC_BUFFER_SIZE * 4U)); /* -48 words */
-  RepeatBlockConfig.BlkDestAddrOffset = (-(GATHER_BUFFER_SIZE * 4U)); /* -16 words */
+  RepeatBlockConfig.BlkSrcAddrOffset = GATHER_BLOCK_OFFSET; /* +8 words */
+  RepeatBlockConfig.BlkDestAddrOffset = 0U;
   if (HAL_DMAEx_ConfigRepeatBlock(&handle_GPDMA1_Channel15, &RepeatBlockConfig) != HAL_OK)
   {
     Error_Handler();
@@ -430,7 +430,7 @@ static void DMA_Increment_GatherOperation(void)
 
   /* Configure the source, destination and buffer size DMA fields and Start DMA Channel/Stream transfer */
   /* Enable All the DMA interrupts */
-  if (HAL_DMA_Start_IT(&handle_GPDMA1_Channel15, (uint32_t)&aSRC_Const_Buffer, (uint32_t)&aDST_IncrementGather_Buffer, GATHER_BUFFER_SIZE * 4U) != HAL_OK)
+  if (HAL_DMA_Start_IT(&handle_GPDMA1_Channel15, (uint32_t)&aSRC_Const_Buffer, (uint32_t)&aDST_IncrementGather_Buffer, GATHER_BLOCK_SIZE) != HAL_OK)
   {
     Error_Handler();
   }
@@ -459,17 +459,17 @@ static void DMA_Increment_ScatterOperation(void)
   handle_GPDMA1_Channel15.Init.SrcBurstLength = 4;
   handle_GPDMA1_Channel15.Init.DestBurstLength = 4;
   handle_GPDMA1_Channel15.Init.TransferAllocatedPort = DMA_SRC_ALLOCATED_PORT0|DMA_DEST_ALLOCATED_PORT1;
-  handle_GPDMA1_Channel15.Init.TransferEventMode = DMA_TCEM_BLOCK_TRANSFER;
+  handle_GPDMA1_Channel15.Init.TransferEventMode = DMA_TCEM_REPEATED_BLOCK_TRANSFER;
   handle_GPDMA1_Channel15.Init.Mode = DMA_NORMAL;
   if (HAL_DMA_Init(&handle_GPDMA1_Channel15) != HAL_OK)
   {
     Error_Handler();
   }
   RepeatBlockConfig.RepeatCount = SCATTER_BLOCK_NUM;
-  RepeatBlockConfig.SrcAddrOffset = 0;
-  RepeatBlockConfig.DestAddrOffset = SCATTER_ADDRESS_OFFSET; /* +8 words */
-  RepeatBlockConfig.BlkSrcAddrOffset = (-(GATHER_BUFFER_SIZE * 4U)); /* -16 words */
-  RepeatBlockConfig.BlkDestAddrOffset = (-(SCATTER_BUFFER_SIZE * 4U)); /* -48 words */
+  RepeatBlockConfig.SrcAddrOffset = 0U;
+  RepeatBlockConfig.DestAddrOffset = 0U;
+  RepeatBlockConfig.BlkSrcAddrOffset = 0U;
+  RepeatBlockConfig.BlkDestAddrOffset = SCATTER_BLOCK_OFFSET; /* +8 words */
   if (HAL_DMAEx_ConfigRepeatBlock(&handle_GPDMA1_Channel15, &RepeatBlockConfig) != HAL_OK)
   {
     Error_Handler();
@@ -481,7 +481,7 @@ static void DMA_Increment_ScatterOperation(void)
 
   /* Configure the source, destination and buffer size DMA fields and Start DMA Channel/Stream transfer */
   /* Enable All the DMA interrupts */
-  if (HAL_DMA_Start_IT(&handle_GPDMA1_Channel15, (uint32_t)&aDST_IncrementGather_Buffer, (uint32_t)&aDST_IncrementScatter_Buffer, GATHER_BUFFER_SIZE * 4U) != HAL_OK)
+  if (HAL_DMA_Start_IT(&handle_GPDMA1_Channel15, (uint32_t)&aDST_IncrementGather_Buffer, (uint32_t)&aDST_IncrementScatter_Buffer, SCATTER_BLOCK_SIZE) != HAL_OK)
   {
     Error_Handler();
   }
@@ -510,17 +510,17 @@ static void DMA_Decrement_GatherOperation(void)
   handle_GPDMA1_Channel15.Init.SrcBurstLength = 4;
   handle_GPDMA1_Channel15.Init.DestBurstLength = 4;
   handle_GPDMA1_Channel15.Init.TransferAllocatedPort = DMA_SRC_ALLOCATED_PORT0|DMA_DEST_ALLOCATED_PORT1;
-  handle_GPDMA1_Channel15.Init.TransferEventMode = DMA_TCEM_BLOCK_TRANSFER;
+  handle_GPDMA1_Channel15.Init.TransferEventMode = DMA_TCEM_REPEATED_BLOCK_TRANSFER;
   handle_GPDMA1_Channel15.Init.Mode = DMA_NORMAL;
   if (HAL_DMA_Init(&handle_GPDMA1_Channel15) != HAL_OK)
   {
     Error_Handler();
   }
   RepeatBlockConfig.RepeatCount = GATHER_BLOCK_NUM;
-  RepeatBlockConfig.SrcAddrOffset = GATHER_ADDRESS_OFFSET; /* +8 words */
-  RepeatBlockConfig.DestAddrOffset = (-(GATHER_ADDRESS_OFFSET)); /* -8 words */
-  RepeatBlockConfig.BlkSrcAddrOffset = (-(SRC_BUFFER_SIZE * 4U)); /* -48 words */
-  RepeatBlockConfig.BlkDestAddrOffset = GATHER_BUFFER_SIZE * 4U; /* +16 words */
+  RepeatBlockConfig.SrcAddrOffset = 0U;
+  RepeatBlockConfig.DestAddrOffset = 0U;
+  RepeatBlockConfig.BlkSrcAddrOffset = GATHER_BLOCK_OFFSET; /* +8 words */
+  RepeatBlockConfig.BlkDestAddrOffset = (-(GATHER_BLOCK_SIZE * 2U)); /* -8 words */
   if (HAL_DMAEx_ConfigRepeatBlock(&handle_GPDMA1_Channel15, &RepeatBlockConfig) != HAL_OK)
   {
     Error_Handler();
@@ -532,7 +532,7 @@ static void DMA_Decrement_GatherOperation(void)
 
   /* Configure the source, destination and buffer size DMA fields and Start DMA Channel/Stream transfer */
   /* Enable All the DMA interrupts */
-  if (HAL_DMA_Start_IT(&handle_GPDMA1_Channel15, (uint32_t)&aSRC_Const_Buffer, (uint32_t)&aDST_DecrementGather_Buffer[12], GATHER_BUFFER_SIZE * 4) != HAL_OK)
+  if (HAL_DMA_Start_IT(&handle_GPDMA1_Channel15, (uint32_t)&aSRC_Const_Buffer, (uint32_t)&aDST_DecrementGather_Buffer[12], GATHER_BLOCK_SIZE) != HAL_OK)
   {
     Error_Handler();
   }
@@ -568,10 +568,10 @@ static void DMA_Decrement_ScatterOperation(void)
     Error_Handler();
   }
   RepeatBlockConfig.RepeatCount = SCATTER_BLOCK_NUM;
-  RepeatBlockConfig.SrcAddrOffset = 0;
-  RepeatBlockConfig.DestAddrOffset = (-(16 * 4U)); /* -16 words */
-  RepeatBlockConfig.BlkSrcAddrOffset = (-(GATHER_BUFFER_SIZE * 4U)); /* -16 words */
-  RepeatBlockConfig.BlkDestAddrOffset = SCATTER_BUFFER_SIZE * 4U; /* +48 words */
+  RepeatBlockConfig.SrcAddrOffset = 0U;
+  RepeatBlockConfig.DestAddrOffset = 0U;
+  RepeatBlockConfig.BlkSrcAddrOffset = 0U;
+  RepeatBlockConfig.BlkDestAddrOffset = (-(SCATTER_BLOCK_SIZE * 4U)); /* -16 words */
   if (HAL_DMAEx_ConfigRepeatBlock(&handle_GPDMA1_Channel15, &RepeatBlockConfig) != HAL_OK)
   {
     Error_Handler();
@@ -583,7 +583,7 @@ static void DMA_Decrement_ScatterOperation(void)
 
   /* Configure the source, destination and buffer size DMA fields and Start DMA Channel/Stream transfer */
   /* Enable All the DMA interrupts */
-  if (HAL_DMA_Start_IT(&handle_GPDMA1_Channel15, (uint32_t)&aDST_IncrementGather_Buffer, (uint32_t)&aDST_DecrementScatter_Buffer[36], GATHER_BUFFER_SIZE * 4U) != HAL_OK)
+  if (HAL_DMA_Start_IT(&handle_GPDMA1_Channel15, (uint32_t)&aDST_IncrementGather_Buffer, (uint32_t)&aDST_DecrementScatter_Buffer[36], SCATTER_BLOCK_SIZE) != HAL_OK)
   {
     Error_Handler();
   }
@@ -731,7 +731,7 @@ static void MPU_Config(void)
   MPU_InitStruct.TypeExtField = MPU_TEX_LEVEL1;
   MPU_InitStruct.AccessPermission = MPU_REGION_FULL_ACCESS;
   MPU_InitStruct.DisableExec = MPU_INSTRUCTION_ACCESS_ENABLE;
-  MPU_InitStruct.IsShareable = MPU_ACCESS_SHAREABLE;
+  MPU_InitStruct.IsShareable = MPU_ACCESS_NOT_SHAREABLE;
   MPU_InitStruct.IsCacheable = MPU_ACCESS_CACHEABLE;
   MPU_InitStruct.IsBufferable = MPU_ACCESS_BUFFERABLE;
   MPU_AdjustRegionAddressSize(address, size, &MPU_InitStruct);
@@ -760,25 +760,38 @@ static void MPU_Config(void)
   */
 static void MPU_AdjustRegionAddressSize(uint32_t Address, uint32_t Size, MPU_Region_InitTypeDef* pInit)
 {
+  static uint8_t loopcontrol = 0;
+  uint32_t Modulo;
+
+  /* control the loop increment */
+  loopcontrol++;
+
+  if (loopcontrol > 3)
+  {
+    /* the scatter file input is too complex to determine the MPU configuration */
+    Error_Handler();
+  }
+
   /* Compute the MPU region size */
   pInit->Size = ((31 - __CLZ(Size)) - 1);
   if (Size > (1 << (pInit->Size + 1)))
   {
     pInit->Size++;
   }
-  uint32_t Modulo = Address % (1 << (pInit->Size - 1));
+  Modulo = Address % (1 << (pInit->Size + 1));
   if (0 != Modulo)
   {
     /* Align address with MPU region size considering there is no need to increase the size */
-    pInit->BaseAddress = Address - Modulo;
+    MPU_AdjustRegionAddressSize(Address - Modulo, Size + Modulo, pInit);
   }
   else
   {
     pInit->BaseAddress = Address;
   }
+
+  /* control the loop decrement */
+  loopcontrol--;
 }
-
-
 /* USER CODE END 4 */
 
 /**

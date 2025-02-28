@@ -1,5 +1,5 @@
 
-## <b>LwIP_TCP_Echo_Client application Description</b>
+## <b>LwIP_TCP_Echo_Client Application Description</b>
 
 This application guides STM32Cube HAL API users to run TCP Echo Client application based on Raw API of LwIP TCP/IP stack.
 
@@ -36,25 +36,25 @@ Connectivity, LwIP, Ethernet, TCP/IP, DHCP, TCP echo client
   - This application runs on STM32H7S3L8 devices.
 
   - This application has been tested with the following environments:
-     - NUCLEO-H7S3L8 revision B01 board
-     - echotool: (http://bansky.net/echotool/) is used as echo server that sends
-       back every incoming data.
-     - DHCP server:  PC utility TFTPD32 (http://tftpd32.jounin.net/) is used as a DHCP server
+    - NUCLEO-H7S3L8 revision B02 board
+    - echotool: (http://bansky.net/echotool/) is used as echo server that sends
+      back every incoming data.
+    - DHCP server:  PC utility TFTPD32 (http://tftpd32.jounin.net/) is used as a DHCP server
 
-  - NUCLEO-H7S3L8 revision B01 Set-up
-     - Connect the NUCLEO board to remote PC (through a crossover ethernet cable)
-       or to your local network (through a straight ethernet cable)
+  - NUCLEO-H7S3L8 revision B02 Set-up
+    - Connect the NUCLEO board to remote PC (through a crossover ethernet cable)
+      or to your local network (through a straight ethernet cable)
 
   - Remote PC Set-up
-     - PC must share the same LAN network configuration with the NUCLEO board
-       the IP address must be the same as destination address value in (main.h)
+    - PC must share the same LAN network configuration with the NUCLEO board
+      the IP address must be the same as destination address value in (main.h)
 
   - This application uses USART3 to display logs, the hyperterminal configuration is as follows:
-     - BaudRate = 115200 baud
-     - Word Length = 8 Bits
-     - Stop Bit = 1
-     - Parity = None
-     - Flow control = None
+    - BaudRate = 115200 baud
+    - Word Length = 8 Bits
+    - Stop Bit = 1
+    - Parity = None
+    - Flow control = None
 
   - User Option Bytes requirement (with STM32CubeProgrammer tool)
 
@@ -68,7 +68,7 @@ It boots from internal Flash (Template_XIP_Boot) then jumps to the application c
 To configure STM32CubeIDE Debug, you must do the following :
 
     1. Upload the template XIP
-    2. Add the adequate external loader (MX25UW25645G_STM32H7R38-NUCLEO.stldr file) in Project->Debugger Configuration
+    2. Add the adequate external loader (MX25UW25645G_STM32H7S3L8-NUCLEO.stldr file) in Project->Debugger Configuration
     3. Add in the startup the template_XIP_Boot in Project->Debugger Configuration
     4. Move up the application in the startup
 

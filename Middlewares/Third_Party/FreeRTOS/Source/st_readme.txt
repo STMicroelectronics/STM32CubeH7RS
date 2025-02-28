@@ -31,6 +31,139 @@
   @endverbatim
 
 =======
+### 11-October-2024 ###
+=========================
+  + FreeRTOS: Update to FreeRTOS v10.6.2
+
+  + Add files to include folder
+    - include/mpu_syscall_numbers.h
+    - include/newlib-freertos.h
+    - include/picolibc-freertos.h
+
+  + Add file to portable/Common folder
+    - portable/Common/mpu_wrappers_v2.c
+
+  + Add files to portable folder
+    - portable/GCC/ARM_CM3_MPU/mpu_wrappers_v2_asm.c
+    - portable/GCC-RVDS/ARM_CM4_MPU/mpu_wrappers_v2_asm.c
+    - portable/GCC/ARM_CM23/non_secure/mpu_wrappers_v2_asm.c
+    - portable/GCC/ARM_CM23_NTZ/non_secure/mpu_wrappers_v2_asm.c
+    - portable/GCC/ARM_CM33/non_secure/mpu_wrappers_v2_asm.c
+    - portable/GCC/ARM_CM33_NTZ/non_secure/mpu_wrappers_v2_asm.c
+    - portable/GCC/ARM_CM55/non_secure/mpu_wrappers_v2_asm.c
+    - portable/GCC/ARM_CM55_NTZ/non_secure/mpu_wrappers_v2_asm.c
+    - portable/GCC/ARM_CM85/non_secure/mpu_wrappers_v2_asm.c
+    - portable/GCC/ARM_CM85_NTZ/non_secure/mpu_wrappers_v2_asm.c
+    - portable/RVDS/ARM_CM4_MPU/mpu_wrappers_v2_asm.c
+    - portable/IAR/ARM_CM4_MPU/mpu_wrappers_v2_asm.S
+    - portable/IAR/ARM_CM23/non_secure/mpu_wrappers_v2_asm.S
+    - portable/IAR/ARM_CM23_NTZ/non_secure/mpu_wrappers_v2_asm.S
+    - portable/IAR/ARM_CM33/non_secure/mpu_wrappers_v2_asm.S
+    - portable/IAR/ARM_CM33_NTZ/non_secure/mpu_wrappers_v2_asm.S
+    - portable/IAR/ARM_CM55/non_secure/mpu_wrappers_v2_asm.S
+    - portable/IAR/ARM_CM55_NTZ/non_secure/mpu_wrappers_v2_asm.S
+    - portable/IAR/ARM_CM85/non_secure/mpu_wrappers_v2_asm.S
+    - portable/IAR/ARM_CM85_NTZ/non_secure/mpu_wrappers_v2_asm.S
+
+  + Add support for 16 MPU regions to Cortex-M33, M55 and M85 ports
+    - Source/portable/IAR/ARM_CM33_NTZ/non_secure/portmacro.h
+    - Source/portable/IAR/ARM_CM33/non_secure/portmacro.h
+    - Source/portable/IAR/ARM_CM55_NTZ/non_secure/portmacro.h
+    - Source/portable/IAR/ARM_CM55/non_secure/portmacro.h
+    - Source/portable/IAR/ARM_CM85_NTZ/non_secure/portmacro.h
+    - Source/portable/IAR/ARM_CM85/non_secure/portmacro.h
+
+  + Add missing MPU API prototypes
+    - Source/include/mpu_prototypes.h
+    - Source/include/mpu_wrappers.h
+
+  + CMSIS_RTOS_V2: update API to be compatible with Cortex A
+    - CMSIS_RTOS_V2/cmsis_os2.c
+
+### 03-May-2024 ###
+=========================
+  + Restore ARM_CA9, ARM_CM55 and ARM_CM85 port files
+
+     - Source/portable/GCC/ARM_CA9/port.c
+     - Source/portable/GCC/ARM_CA9/portASM.S
+     - Source/portable/GCC/ARM_CA9/portmacro.h
+     - Source/portable/GCC/ARM_CM55/non_secure/port.c
+     - Source/portable/GCC/ARM_CM55/non_secure/portasm.c
+     - Source/portable/GCC/ARM_CM55/non_secure/portasm.h
+     - Source/portable/GCC/ARM_CM55/non_secure/portmacro.h
+     - Source/portable/GCC/ARM_CM55/non_secure/portmacrocommon.h
+     - Source/portable/GCC/ARM_CM55/secure/secure_context.c
+     - Source/portable/GCC/ARM_CM55/secure/secure_context.h
+     - Source/portable/GCC/ARM_CM55/secure/secure_context_port.c
+     - Source/portable/GCC/ARM_CM55/secure/secure_heap.c
+     - Source/portable/GCC/ARM_CM55/secure/secure_heap.h
+     - Source/portable/GCC/ARM_CM55/secure/secure_init.c
+     - Source/portable/GCC/ARM_CM55/secure/secure_init.h
+     - Source/portable/GCC/ARM_CM55/secure/secure_port_macros.h
+     - Source/portable/GCC/ARM_CM55_NTZ/non_secure/port.c
+     - Source/portable/GCC/ARM_CM55_NTZ/non_secure/portasm.c
+     - Source/portable/GCC/ARM_CM55_NTZ/non_secure/portasm.h
+     - Source/portable/GCC/ARM_CM55_NTZ/non_secure/portmacro.h
+     - Source/portable/GCC/ARM_CM55_NTZ/non_secure/portmacrocommon.h
+     - Source/portable/GCC/ARM_CM85/non_secure/port.c
+     - Source/portable/GCC/ARM_CM85/non_secure/portasm.c
+     - Source/portable/GCC/ARM_CM85/non_secure/portasm.h
+     - Source/portable/GCC/ARM_CM85/non_secure/portmacro.h
+     - Source/portable/GCC/ARM_CM85/non_secure/portmacrocommon.h
+     - Source/portable/GCC/ARM_CM85/secure/secure_context.c
+     - Source/portable/GCC/ARM_CM85/secure/secure_context.h
+     - Source/portable/GCC/ARM_CM85/secure/secure_context_port.c
+     - Source/portable/GCC/ARM_CM85/secure/secure_heap.c
+     - Source/portable/GCC/ARM_CM85/secure/secure_heap.h
+     - Source/portable/GCC/ARM_CM85/secure/secure_init.c
+     - Source/portable/GCC/ARM_CM85/secure/secure_init.h
+     - Source/portable/GCC/ARM_CM85/secure/secure_port_macros.h
+     - Source/portable/GCC/ARM_CM85_NTZ/non_secure/port.c
+     - Source/portable/GCC/ARM_CM85_NTZ/non_secure/portasm.c
+     - Source/portable/GCC/ARM_CM85_NTZ/non_secure/portasm.h
+     - Source/portable/GCC/ARM_CM85_NTZ/non_secure/portmacro.h
+     - Source/portable/GCC/ARM_CM85_NTZ/non_secure/portmacrocommon.h
+     - Source/portable/IAR/ARM_CA9/port.c
+     - Source/portable/IAR/ARM_CA9/portASM.h
+     - Source/portable/IAR/ARM_CA9/portASM.s
+     - Source/portable/IAR/ARM_CA9/portmacro.h
+     - Source/portable/IAR/ARM_CM55/non_secure/port.c
+     - Source/portable/IAR/ARM_CM55/non_secure/portasm.h
+     - Source/portable/IAR/ARM_CM55/non_secure/portasm.s
+     - Source/portable/IAR/ARM_CM55/non_secure/portmacro.h
+     - Source/portable/IAR/ARM_CM55/non_secure/portmacrocommon.h
+     - Source/portable/IAR/ARM_CM55/secure/secure_context.c
+     - Source/portable/IAR/ARM_CM55/secure/secure_context.h
+     - Source/portable/IAR/ARM_CM55/secure/secure_context_port_asm.s
+     - Source/portable/IAR/ARM_CM55/secure/secure_heap.c
+     - Source/portable/IAR/ARM_CM55/secure/secure_heap.h
+     - Source/portable/IAR/ARM_CM55/secure/secure_init.c
+     - Source/portable/IAR/ARM_CM55/secure/secure_init.h
+     - Source/portable/IAR/ARM_CM55/secure/secure_port_macros.h
+     - Source/portable/IAR/ARM_CM55_NTZ/non_secure/port.c
+     - Source/portable/IAR/ARM_CM55_NTZ/non_secure/portasm.h
+     - Source/portable/IAR/ARM_CM55_NTZ/non_secure/portasm.s
+     - Source/portable/IAR/ARM_CM55_NTZ/non_secure/portmacro.h
+     - Source/portable/IAR/ARM_CM55_NTZ/non_secure/portmacrocommon.h
+     - Source/portable/IAR/ARM_CM85/non_secure/port.c
+     - Source/portable/IAR/ARM_CM85/non_secure/portasm.h
+     - Source/portable/IAR/ARM_CM85/non_secure/portasm.s
+     - Source/portable/IAR/ARM_CM85/non_secure/portmacro.h
+     - Source/portable/IAR/ARM_CM85/non_secure/portmacrocommon.h
+     - Source/portable/IAR/ARM_CM85/secure/secure_context.c
+     - Source/portable/IAR/ARM_CM85/secure/secure_context.h
+     - Source/portable/IAR/ARM_CM85/secure/secure_context_port_asm.s
+     - Source/portable/IAR/ARM_CM85/secure/secure_heap.c
+     - Source/portable/IAR/ARM_CM85/secure/secure_heap.h
+     - Source/portable/IAR/ARM_CM85/secure/secure_init.c
+     - Source/portable/IAR/ARM_CM85/secure/secure_init.h
+     - Source/portable/IAR/ARM_CM85/secure/secure_port_macros.h
+     - Source/portable/IAR/ARM_CM85_NTZ/non_secure/port.c
+     - Source/portable/IAR/ARM_CM85_NTZ/non_secure/portasm.h
+     - Source/portable/IAR/ARM_CM85_NTZ/non_secure/portasm.s
+     - Source/portable/IAR/ARM_CM85_NTZ/non_secure/portmacro.h
+     - Source/portable/IAR/ARM_CM85_NTZ/non_secure/portmacrocommon.h
+     - 
 
 ### 17-November-2023 ###
 =========================

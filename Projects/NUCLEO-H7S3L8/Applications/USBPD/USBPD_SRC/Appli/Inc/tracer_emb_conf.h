@@ -18,8 +18,8 @@
   */
 /* USER CODE END Header */
 
-#ifndef TRACER_EMB_CONF_H
-#define TRACER_EMB_CONF_H
+#ifndef __TRACER_EMB_CONF_H
+#define __TRACER_EMB_CONF_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -87,8 +87,10 @@ extern "C" {
 #define TRACER_EMB_TX_DMA_ACTIVE_FLAG(_DMA_)         LL_DMA_IsActiveFlag_TC(_DMA_, TRACER_EMB_TX_DMA_CHANNEL)
 #define TRACER_EMB_TX_DMA_CLEAR_FLAG(_DMA_)          LL_DMA_ClearFlag_TC(_DMA_, TRACER_EMB_TX_DMA_CHANNEL)
 
+#define TRACER_EMB_STRUCTURE_MEMORY_LOCATION         "noncacheable_buffer"
+
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* TRACER_EMB_CONF_H */
+#endif /* __TRACER_EMB_CONF_H */

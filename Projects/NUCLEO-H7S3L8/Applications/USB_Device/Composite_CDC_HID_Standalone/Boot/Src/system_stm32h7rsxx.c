@@ -78,38 +78,21 @@
   #define CSI_VALUE    4000000UL  /*!< Value of the Low-power Internal oscillator in Hz */
 #endif /* CSI_VALUE */
 
-/* Note: Following vector table addresses must be defined in line with linker
-         configuration. */
-/*!< Uncomment the following line or define USER_VECT_TAB_ADDRESS at compiler level if you need
-     to relocate the vector table anywhere in Flash or Sram, else the vector table is kept at
-	 the automatic remap of the selected boot address */
-/* #define USER_VECT_TAB_ADDRESS */
+/*!< The VTOR location information is based on information from the linker with a dependency
+     on the IDE, the cortex register is updated using the INTVECT_START.
+*/
+#if defined(__ICCARM__)
+extern uint32_t __vector_table;
+#define INTVECT_START ((uint32_t)& __vector_table)
+#elif defined(__CC_ARM) || defined(__ARMCC_VERSION)
+extern void * __Vectors;
+#define INTVECT_START ((uint32_t) & __Vectors)
+#elif defined(__GNUC__)
+extern void * g_pfnVectors;
+#define INTVECT_START ((uint32_t)& g_pfnVectors)
+#endif /* __ICCARM__*/
 
-#if defined(USER_VECT_TAB_ADDRESS)
-/*!< Uncomment the following line or define VECT_TAB_SRAM at compiler level if you need
-     to relocate your vector Table in Sram else user remap will be done in Flash. */
-/* #define VECT_TAB_SRAM */
 
-#if defined(VECT_TAB_SRAM)
-#if !defined(VECT_TAB_BASE_ADDRESS)
-#define VECT_TAB_BASE_ADDRESS   ITCM_BASE       /*!< Vector Table base address field.
-                                                     This value must be a multiple of 0x400. */
-#endif
-#if !defined(VECT_TAB_OFFSET)
-#define VECT_TAB_OFFSET         0x00000000U     /*!< Vector Table base offset field.
-                                                     This value must be a multiple of 0x400. */
-#endif
-#else
-#if !defined(VECT_TAB_BASE_ADDRESS)
-#define VECT_TAB_BASE_ADDRESS   FLASH_BASE      /*!< Vector Table base address field.
-                                                     This value must be a multiple of 0x400. */
-#endif
-#if !defined(VECT_TAB_OFFSET)
-#define VECT_TAB_OFFSET         0x00000000U     /*!< Vector Table base offset field.
-                                                     This value must be a multiple of 0x400. */
-#endif
-#endif /* VECT_TAB_SRAM */
-#endif /* USER_VECT_TAB_ADDRESS */
 
 /******************************************************************************/
 /**
@@ -160,9 +143,7 @@ uint32_t SystemCoreClock = HSI_VALUE;
 void SystemInit(void)
 {
   /* Configure the Vector Table location -------------------------------------*/
-#if defined(USER_VECT_TAB_ADDRESS)
-  SCB->VTOR = VECT_TAB_BASE_ADDRESS | VECT_TAB_OFFSET;
-#endif
+  SCB->VTOR = INTVECT_START;
 
   /* FPU settings ------------------------------------------------------------*/
 #if (__FPU_PRESENT == 1) && (__FPU_USED == 1)

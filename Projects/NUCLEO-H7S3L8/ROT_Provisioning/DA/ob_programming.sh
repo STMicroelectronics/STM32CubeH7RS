@@ -17,9 +17,6 @@ error()
 }
 
 # =============================================== Remove protections and initialize Option Bytes ===========================================
-
-# =============================================== Erase the user flash =====================================================================
-erase_all="-e all"
 wrps_disable="0xff"
 hdp_area_start="0x0ff"
 hdp_area_end="0x000"
@@ -27,11 +24,6 @@ hdp_area_end="0x000"
 # =============================================== Configure Option Bytes ====================================================================
 action="Configure Initial OB"
 echo $action
-
-action="Remove Protection and erase All"
-echo $action
-"$stm32programmercli" $connect_no_reset $erase_all
-if [ $? -ne 0 ]; then error; return 1; fi
 
 # Disable WRP protections
 # WRPS

@@ -181,7 +181,9 @@ void TimeBase_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   UNUSED(htim);
 
   HAL_IncTick();
+
   USBPD_DPM_TimerCounter();
+
 }
 #endif /* USE_HAL_TIM_REGISTER_CALLBACKS */
 /**

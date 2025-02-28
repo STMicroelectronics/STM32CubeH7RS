@@ -218,11 +218,10 @@
                     <state>STM32H7S7xx</state>
                     <state>USE_FULL_LL_DRIVER</state>
                     <state>USBPD_PORT_COUNT=1</state>
+                    <state>_RTOS</state>
                     <state>_SRC</state>
                     <state>USBPDCORE_LIB_NO_PD</state>
                     <state>TCPP0203_SUPPORT</state>
-                    <state>_RTOS</state>
-                    <state>CMSIS_device_header=&lt;stm32h7rsxx.h&gt;</state>
                 </option>
                 <option>
                     <name>CCPreprocFile</name>
@@ -344,22 +343,23 @@
                 <option>
                     <name>CCIncludePath2</name>
                     <state>$PROJ_DIR$/../../Appli/Inc</state>
+                    <state>$PROJ_DIR$/../../../../../../../Drivers/BSP/STM32H7S78-DK</state>
+                    <state>$PROJ_DIR$/./../../../../../Drivers/BSP/Components/tcpp0203</state>
                     <state>$PROJ_DIR$/../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Inc</state>
                     <state>$PROJ_DIR$/../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Inc/Legacy</state>
                     <state>$PROJ_DIR$/../../../../../../../Middlewares/Third_Party/FreeRTOS/Source/include</state>
                     <state>$PROJ_DIR$/../../../../../../../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2</state>
                     <state>$PROJ_DIR$/../../../../../../../Middlewares/Third_Party/FreeRTOS/Source/portable/IAR/ARM_CM4F</state>
                     <state>$PROJ_DIR$/../../../../../../../Drivers/CMSIS/RTOS2/Include</state>
+                    <state>$PROJ_DIR$/../../../../../../../Middlewares/Third_Party/FatFs/source</state>
+                    <state>$PROJ_DIR$/../../../../../../../Middlewares/Third_Party/FatFs/source/drivers/template</state>
                     <state>$PROJ_DIR$/../../../../../../../Middlewares/ST/STM32_USBPD_Library/Core/inc</state>
                     <state>$PROJ_DIR$/../../../../../../../Middlewares/ST/STM32_USBPD_Library/Devices/STM32H7RSXX/inc</state>
                     <state>$PROJ_DIR$/../../../../../../../Middlewares/ST/STM32_USB_Host_Library/Core/Inc</state>
                     <state>$PROJ_DIR$/../../../../../../../Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Inc</state>
                     <state>$PROJ_DIR$/../../../../../../../Drivers/CMSIS/Device/ST/STM32H7RSxx/Include</state>
                     <state>$PROJ_DIR$/../../../../../../../Drivers/CMSIS/Include</state>
-                    <state>$PROJ_DIR$/../../../../../../../Middlewares/Third_Party/FatFs/source</state>
-                    <state>$PROJ_DIR$/../../../../../../../Middlewares/Third_Party/FatFs/source/drivers/usb_host</state>
-                    <state>$PROJ_DIR$/../../../../../../../Drivers/BSP/STM32H7S78-DK</state>
-                    <state>$PROJ_DIR$/./../../../../../Drivers/BSP/Components/tcpp0203</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\..\..\Middlewares\Third_Party\FatFs\source\drivers\usb_host</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>

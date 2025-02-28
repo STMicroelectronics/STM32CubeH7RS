@@ -31,6 +31,7 @@ set erase_all=-e all
 set "wrps_disable=0xff"
 set "hdp_area_start=0x0ff"
 set "hdp_area_end=0x000"
+set /A "hdps=(%hdp_area_start%<<0)|(%hdp_area_end%<<16)"
 
 :: =============================================== Configure Option Bytes ====================================================================
 
@@ -49,25 +50,28 @@ echo !command!
 IF %errorlevel% NEQ 0 goto :error
 
 :: Disable HDP protection on user flash
-:: HDP_AREA_START
 %stm32programmercli% %connect_reset% >> nul
-set ob_add=0x52002230
-set ob_mask=0x000003ff
+set ob_add=0x52002234
+set ob_mask=0x03ff03ff
 set ob_pos=0x00
-set "command=%stm32programmercli% %connect_no_reset% -obrss %ob_add% %ob_mask% %hdp_area_start% %ob_pos%"
+set "command=%stm32programmercli% %connect_no_reset% -obrss !ob_add! !ob_mask! %hdps% !ob_pos!"
 echo !command!
 !command!
-IF %errorlevel% NEQ 0 goto :error
+IF !errorlevel! NEQ 0 goto :error
 
-:: HDP_AREA_END
-%stm32programmercli% %connect_reset% >> nul
-set ob_add=0x52002230
-set ob_mask=0x000003ff
-set ob_pos=0x10
-set "command=%stm32programmercli% %connect_no_reset% -obrss %ob_add% %ob_mask% %hdp_area_end% %ob_pos%"
+set "action=Set XSPI1_HSLV configuration (needed to use external memories)"
+echo %action%
+set "command=%stm32programmercli% %connect_no_reset% -ob XSPI1_HSLV=1"
 echo !command!
 !command!
-IF %errorlevel% NEQ 0 goto :error
+IF !errorlevel! NEQ 0 goto :error
+
+set "action=Set XSPI2_HSLV configuration (needed to use external memories)"
+echo %action%
+set "command=%stm32programmercli% %connect_no_reset% -ob XSPI2_HSLV=1"
+echo !command!
+!command!
+IF !errorlevel! NEQ 0 goto :error
 
 %stm32programmercli% %connect_reset% >> nul
 %stm32programmercli% %connect_no_reset% %erase_all%
@@ -143,7 +147,7 @@ echo !command!
 IF %errorlevel% NEQ 0 goto :error
 
 :: ==================================================== Download images ====================================================================
-set "action=OEMuROT application images programming in download slots"
+set "action=OEMuROT application image programming in download slots"
 echo %action%
 
 set "action=Write OEMiROT_Appli Code"

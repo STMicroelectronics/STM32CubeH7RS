@@ -31,6 +31,7 @@
 <li>The SystemClock_Config() function is used to configure the system clock (SYSCLK) to run at 600 Mhz.</li>
 <li>The Application project calls also SCB_EnableICache() and SCB_EnableDCache() functions in order to enable the Layer 1 Core Instruction and Data Caches.</li>
 <li>This is provided as template implementation that the User may integrate in his application in order to enhance the performance.</li>
+<li>The CPU is at 600MHz.</li>
 </ul>
 <h4 id="expected-success-behavior"><b>Expected success behavior</b></h4>
 <ul>
@@ -45,7 +46,15 @@ SW tool</li>
 <li>LED_YELLOW is ON indicating the ethernet cable is not connected</li>
 <li>LED_RED is toggling to indicate a critical error has occurred</li>
 <li>The error message is printed on the HyperTerminal</li>
-<li>Timeout Message is displayed on TFTPD32 SW tool</li>
+<li>Timeout message is displayed on TFTPD32 SW tool</li>
+</ul>
+<h4 id="assumptions-if-any"><b>Assumptions if any</b></h4>
+<ul>
+<li>The Application is using the DHCP to acquire IP address, thus a DHCP server should be reachable by the board in the LAN used to test the application.</li>
+</ul>
+<h4 id="known-limitations"><b>Known limitations</b></h4>
+<ul>
+<li>The filename used to send or receive to/from uSD should not contain any special characters and its maximum length is set to 30 characters.</li>
 </ul>
 <h4 id="notes"><b>Notes</b></h4>
 <ol type="1">
@@ -79,9 +88,22 @@ SW tool</li>
 - LwIP/LwIP_TFTP_Server/Appli/Inc/stm32h7rsxx_hal_conf.h       HAL Configuration file</code></pre>
 <h3 id="hardware-and-software-environment"><b>Hardware and Software environment</b></h3>
 <ul>
-<li><p>This template runs on STM32H7S7xx devices.</p></li>
-<li><p>This template has been tested with STMicroelectronics STM32H7S78-DK board MB1736 Rev. C01 boards and can be easily tailored to any other supported device and development board.</p></li>
+<li><p>This application runs on STM32H7S7xx devices.</p></li>
+<li><p>This application has been tested with the following environments:</p></li>
+<li><p>STM32H7S78-DK MB1736 Rev. D01 board</p></li>
+<li><p>DHCP server:  PC utility TFTPD32 (http://tftpd32.jounin.net/) is used as a DHCP server</p></li>
+<li><p>STM32H7S78-DK MB1736 Rev. D01 Set-up</p></li>
+<li><p>Connect the board to remote PC (through a crossover ethernet cable) or to your local network (through a straight ethernet cable)</p></li>
+<li><p>This application uses UART4 to display logs, the hyperterminal configuration is as follows:</p>
+<ul>
+<li>BaudRate = 115200 baud</li>
+<li>Word Length = 8 Bits</li>
+<li>Stop Bit = 1</li>
+<li>Parity = None</li>
+<li>Flow control = None</li>
+</ul>
 <li><p>On STM32H7S78-DK board, the BOOT0 mechanical slide switch must be set to SW1.</p></li>
+<li><p>On STM32H7S78-DK board, the JP6 pin [2-3] must be ON.</p></li>
 <li><p>The following User Option Bytes are set in this template:</p>
 <ul>
 <li>XSPI1_HSLV=1 I/O XSPIM_P1 High speed option enabled</li>
@@ -90,6 +112,12 @@ SW tool</li>
 </ul></li>
 </ul>
 <h3 id="how-to-use-it"><b>How to use it ?</b></h3>
+<p>This application runs from the external Flash memory (LwIP_TFTP_Server Appli). It boots from internal Flash (Template_XIP_Boot) then jumps to the application code in external Flash.</p>
+<p>To configure STM32CubeIDE Debug Configuration, you must do the following :</p>
+<pre><code>1. Upload the template XIP
+2. Add the adequate external loader (MX66UW1G45G_STM32H7S78-DK.stldr file) in Project-&gt;Debugger Configuration
+3. Add in the startup the template_XIP_Boot in Project-&gt;Debugger Configuration
+4. Move up the application in the startup</code></pre>
 <p>In order to make the program work, you must do the following :</p>
 <ul>
 <li>Open your preferred toolchain</li>

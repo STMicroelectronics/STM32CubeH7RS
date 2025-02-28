@@ -255,7 +255,6 @@ void HAL_PCD_SuspendCallback(PCD_HandleTypeDef *hpcd)
 
   /* Inform USB library that core enters in suspend Mode. */
   USBD_LL_Suspend((USBD_HandleTypeDef*)hpcd->pData);
-
   /* Enter in STOP mode. */
   /* USER CODE BEGIN 2 */
   if (hpcd->Init.low_power_enable)

@@ -18,8 +18,8 @@
   */
 /* USER CODE END Header */
 
-#ifndef __USBPD_DPM_CONF_H_
-#define __USBPD_DPM_CONF_H_
+#ifndef __USBPD_DPM_CONF_H
+#define __USBPD_DPM_CONF_H
 
 #ifdef __cplusplus
  extern "C" {
@@ -79,4 +79,4 @@ USBPD_SettingsTypeDef       DPM_Settings[USBPD_PORT_COUNT] =
 }
 #endif
 
-#endif /* __USBPD_DPM_CONF_H_ */
+#endif /* __USBPD_DPM_CONF_H */

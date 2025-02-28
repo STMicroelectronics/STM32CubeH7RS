@@ -161,6 +161,7 @@ SECTIONS
   /* Used by the startup to initialize data */
   _sidata = LOADADDR(.data);
 
+  /* "NOLOAD" avoids to add .flag content into the output binary */
   .flag (NOLOAD):
   {
     . = ALIGN(4);

@@ -1,8 +1,8 @@
 /**
   ******************************************************************************
-  * @file           : stm32_boot_lrun.h
-  * @version        : 1.0.0
-  * @brief          : Header for stm32_boot_lrun.c file.
+  * @file    stm32_boot_lrun.h
+  * @author  MCD Application Team
+  * @brief   Header for stm32_boot_lrun.c file.
   ******************************************************************************
   * @attention
   *
@@ -17,8 +17,8 @@
   */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __LRUNBOOT__H__
-#define __LRUNBOOT__H__
+#ifndef __STM32_BOOT_LRUN_H__
+#define __STM32_BOOT_LRUN_H__
 
 #ifdef __cplusplus
  extern "C" {
@@ -33,11 +33,11 @@
 
 /* Exported defines ---------------------------------------------------------*/
 /**
-  *  @defgroup BOOT_LRUN_Private_Defines Boot LRUN exported Defines
+  *  @defgroup BOOT_LRUN_Private_Defines Boot LRUN exported definitions
   * @{
   */
 /**
- * @brief list of error code of LRUN
+ * @brief List of status codes for LRUN
  */
 typedef enum {
      BOOT_OK,
@@ -59,8 +59,8 @@ typedef enum {
   */
 
 /**
- * @brief this function boot on the application, the operation consists in mapping 
- *        the memories, load the code and jump in the application. 
+ * @brief This function boots on the application, the operation consists in mapping 
+ *        the memories, loading the code and jumping in the application. 
  *
  * @return @ref BOOTStatus_TypeDef
  **/
@@ -81,4 +81,4 @@ typedef enum {
 }
 #endif
 
-#endif /* __LRUNBOOT__H__ */
+#endif /* __STM32_BOOT_LRUN_H__ */

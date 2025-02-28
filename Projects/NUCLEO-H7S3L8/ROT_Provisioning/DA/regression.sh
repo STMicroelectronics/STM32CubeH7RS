@@ -5,7 +5,6 @@ source ../env.sh
 if [ $# -ge 1 ]; then script_mode=$1; else script_mode=MANUAL; fi
 
 connect_no_reset="-c port=SWD speed=fast ap=1 mode=Hotplug"
-connect_reset="-c port=SWD speed=fast ap=1 mode=Hotplug -hardRst"
 Debug_authentication_method=""
 
 error()
@@ -22,7 +21,7 @@ if [ "$script_mode" == "AUTO" ]; then
 fi
 if [[ "${Debug_authentication_method^^}" == "CERTIFICATE" ]]; then
   # Configure OBKeys for Debug Authentication (in case of Provisioning Product state)
-  "$stm32programmercli" $connect_reset > /dev/null
+  "$stm32programmercli" $connect_no_reset > /dev/null
   "$stm32programmercli" $connect_no_reset -sdp ./Binary/DA_Config.obk > /dev/null
   "$stm32programmercli" -c port=SWD debugauth=2
   "$stm32programmercli" -c port=SWD speed=fast per=a key=./Keys/key_3_leaf.pem cert=./Certificates/cert_leaf_chain.b64 debugauth=1
@@ -31,7 +30,7 @@ if [[ "${Debug_authentication_method^^}" == "CERTIFICATE" ]]; then
 else
   if [[ "${Debug_authentication_method^^}" == "PASSWORD" ]]; then
     # Configure OBKeys for Debug Authentication (in case of Provisioning Product state)
-    "$stm32programmercli" $connect_reset > /dev/null
+    "$stm32programmercli" $connect_no_reset > /dev/null
     "$stm32programmercli" $connect_no_reset -sdp ./DA/Binary/DA_ConfigWithPassword.obk > /dev/null
 
     "$stm32programmercli" -c port=SWD debugauth=2

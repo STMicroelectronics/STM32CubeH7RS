@@ -23,22 +23,12 @@ None.
 
 Connectivity, USBPD, FreeRTOS, UART/USART, USB_PD_Lib, UCPD, Type C
 
-### <b>Hardware and Software environment</b>
-
-  - This example runs on STM32H7S78-DK.
-
-  - This example has been tested with STMicroelectronics STM32H7S78-DK (MB1736)
-    board and can be easily tailored to any other supported device
-    and development board.
-
-  - Connect ST-Link cable to the PC USB port to display data on the CubeMx Monitor.
-	
 ### <b>Hardware and Software environment</b> 
 
   - This example runs on STM32H7S7L8HxH devices.
 
-  - This template has been tested with STMicroelectronics STM32H7S78-DK
-    board and can be easily tailored to any other supported device
+  - This example has been tested with STMicroelectronics STM32H7S78-DK
+    MB1736 revision D01 board and can be easily tailored to any other supported device
     and development board.
 
   - On STM32H7S78-DK board, the BOOT0 mechanical slide switch must be set to SW1.
@@ -50,6 +40,12 @@ Connectivity, USBPD, FreeRTOS, UART/USART, USB_PD_Lib, UCPD, Type C
     - VDDIO_HSLV=0     I/O speed optimized to operate at 3.3V
 
 ### <b>How to use it ?</b>
+To configure STM32CubeIDE Debug Configuration, you must do the following :
+
+ 1. Compile the USBPD_DRP_DRD_Boot
+ 2. Add the adequate external loader (MX66UW1G45G_STM32H7S78-DK.stldr file) in Project->Debugger Configuration
+ 3. Add in the startup the USBPD_DRP_DRD_Boot in Project->Debugger Configuration
+ 4. Move up the application in the startup
 
 In order to make the program work, you must do the following :
 

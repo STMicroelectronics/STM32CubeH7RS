@@ -1,5 +1,5 @@
 
-## <b>LwIP_UDP_Echo_Client application Description</b>
+## <b>LwIP_UDP_Echo_Client Application Description</b>
 
 This application guides STM32Cube HAL API users to run UDP Echo Client application based on Raw API of LwIP TCP/IP stack.
 
@@ -18,6 +18,7 @@ This application guides STM32Cube HAL API users to run UDP Echo Client applicati
 - The Application is using the DHCP to acquire IP address, thus a DHCP server should be reachable by the board in the LAN used to test the application.
 
 #### <b>Known limitations</b>
+
 None.
 
 ### <b>Notes</b>
@@ -33,28 +34,28 @@ Connectivity, LwIP, Ethernet, TCP/IP, DHCP, UDP echo client
 
 ### <b>Hardware and Software environment</b>
 
-  - This application runs on STM32H7S3L8 devices.
+  - This application runs on STM32H7S3xx devices.
 
   - This application has been tested with the following environments:
-     - NUCLEO-H7S3L8 revision B01 board
-     - echotool: (http://bansky.net/echotool/) is used as echo server that sends
-       back every incoming data.
-     - DHCP server:  PC utility TFTPD32 (http://tftpd32.jounin.net/) is used as a DHCP server
+    - NUCLEO-H7S3L8 board revision MB1737-H7S3L8-B02
+    - echotool: (http://bansky.net/echotool/) is used as echo server that sends
+      back every incoming data.
+    - DHCP server:  PC utility TFTPD32 (http://tftpd32.jounin.net/) is used as a DHCP server
 
-  - NUCLEO-H7S3L8 revision B01 Set-up
-     - Connect the NUCLEO board to remote PC (through a crossover ethernet cable)
-       or to your local network (through a straight ethernet cable)
+  - NUCLEO-H7S3L8 revision MB1737-H7S3L8-B02 Set-up
+    - Connect the NUCLEO board to remote PC (through a crossover ethernet cable)
+      or to your local network (through a straight ethernet cable)
 
   - Remote PC Set-up
-     - PC must share the same LAN network configuration with the NUCLEO board
-       the IP address must be the same as destination address value in (main.h)
+    - PC must share the same LAN network configuration with the NUCLEO board
+      the IP address must be the same as destination address value in (main.h)
 
   - This application uses USART3 to display logs, the hyperterminal configuration is as follows:
-     - BaudRate = 115200 baud
-     - Word Length = 8 Bits
-     - Stop Bit = 1
-     - Parity = None
-     - Flow control = None
+    - BaudRate = 115200 baud
+    - Word Length = 8 Bits
+    - Stop Bit = 1
+    - Parity = None
+    - Flow control = None
 
   - User Option Bytes requirement (with STM32CubeProgrammer tool)
 
@@ -68,7 +69,7 @@ It boots from internal Flash (Template_XIP_Boot) then jumps to the application c
 To configure STM32CubeIDE Debug Configuration, you must do the following :
 
     1. Upload the template XIP
-    2. Add the adequate external loader (MX25UW25645G_STM32H7R38-NUCLEO.stldr file) in Project->Debugger Configuration
+    2. Add the adequate external loader (MX25UW25645G_STM32H7S3L8-NUCLEO.stldr file) in Project->Debugger Configuration
     3. Add in the startup the template_XIP_Boot in Project->Debugger Configuration
     4. Move up the application in the startup
 

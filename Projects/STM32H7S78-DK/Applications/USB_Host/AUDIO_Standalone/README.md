@@ -47,10 +47,10 @@ Connectivity, USB_Host, USB, Audio, Full speed
 
 ### <b>Hardware and Software environment</b>
 
-  - This example runs on STM32H7S78-DK MB1736 revision C01.
+  - This application runs on STM32H7S78-DK MB1736 revision D01.
 
-  - This example has been tested with STMicroelectronics STM32H7S78-DK
-    MB1736 revision C01 board and can be easily tailored to any other supported device
+  - This application has been tested with STMicroelectronics STM32H7S78-DK
+    MB1736 revision D01 board and can be easily tailored to any other supported device
     and development board.
   - User Option Bytes requirement (with STM32CubeProgrammer tool):
 
@@ -79,8 +79,8 @@ In order to make the program work, you must do the following :
 
   3. Select then "AUDIO_Standalone_Appli" workspace
   4. Rebuild all files from AUDIO_Standalone Appli and load your images into memories: First, load the AUDIO_Standalone_Boot.hex in internal Flash, then, load
-     the Appli part in External memory available on NUCLEO-H7S3L8 board.
-  5. Run the example
+     the Appli part in External memory available on STM32H7S78-DK board.
+  5. Run the application
 
 
 #### <b>MDK-ARM</b>
@@ -95,8 +95,8 @@ In order to make the program work, you must do the following :
 
   3. Select then "AUDIO_Standalone_Appli" workspace
   4. Rebuild all files from AUDIO_Standalone Appli and load your images into memories: First, load the AUDIO_Standalone_Boot.hex in internal Flash, then, load
-     the Appli part in External memory available on NUCLEO-H7S3L8 board.
-  5. Run the example
+     the Appli part in External memory available on STM32H7S78-DK board.
+  5. Run the application
 
 
 #### <b>STM32CubeIDE</b>
@@ -104,7 +104,7 @@ In order to make the program work, you must do the following :
 To configure STM32CubeIDE Debug Configuration, you must do the following :
 
 For "AUDIO_Standalone_Boot" project :
-    Add the adequate external loader (MX25UW25645G_STM32H7R38-NUCLEO.stldr file) in Project->Debugger Configuration
+    Add the adequate external loader (MX66UW1G45G_STM32H7S78-DK.stldr file) in Project->Debugger Configuration
 
 For "AUDIO_Standalone_Appli" project :
     1. Add the adequate external loader (MX66UW1G45G_STM32H7S78-DK.stldr file) in Project->Debugger Configuration
@@ -125,9 +125,9 @@ For "AUDIO_Standalone_Appli" project :
   3. Select the "AUDIO_Standalone_Appli" project
   4. Build the project
   5. With the Debug icon select the configuration “AUDIO_Standalone_Appli Debug”. First, load the Boot binary in internal Flash, then, load the Appli binary in
-     External memory available on NUCLEO-H7S3L8 board
-  6. Run the example
+     External memory available on STM32H7S78-DK board
+  6. Run the application
 
 <b>Note</b>
 
-   The application uses the external HSE clock as system clock source.
+The application uses the external HSE clock as system clock source.

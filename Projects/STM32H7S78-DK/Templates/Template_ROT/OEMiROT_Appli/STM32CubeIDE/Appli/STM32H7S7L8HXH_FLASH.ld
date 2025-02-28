@@ -56,18 +56,18 @@ __RAM          = 0x30004000;
 __RAM_SIZE     = 0x4000;
 __RAM_NONCACHEABLEBUFFER_SIZE = 0x400;
 __RAM_CONF_FLAG_SIZE          = 0x20;
-__RAM_RAMECC_HANDLER_SIZE     = 0x40;
-__RAM_NONCACHEABLEBUFFER      = __RAM + __RAM_SIZE - __RAM_NONCACHEABLEBUFFER_SIZE - __RAM_CONF_FLAG_SIZE - __RAM_RAMECC_HANDLER_SIZE;
+__RAM_RAMECC_HANDLE_SIZE     = 0x40;
+__RAM_NONCACHEABLEBUFFER      = __RAM + __RAM_SIZE - __RAM_NONCACHEABLEBUFFER_SIZE - __RAM_CONF_FLAG_SIZE - __RAM_RAMECC_HANDLE_SIZE;
 __RAM_CONF_FLAG               = __RAM_NONCACHEABLEBUFFER + __RAM_NONCACHEABLEBUFFER_SIZE;
-__RAM_RAMECC_HANDLER          = __RAM_NONCACHEABLEBUFFER + __RAM_CONF_FLAG_SIZE;
+__RAM_RAMECC_HANDLE          = __RAM_NONCACHEABLEBUFFER + __RAM_CONF_FLAG_SIZE;
 
 /* Memories definition */
 MEMORY
 {
-  RAM                    (xrw) : ORIGIN = __RAM,    LENGTH = __RAM_SIZE -__RAM_NONCACHEABLEBUFFER_SIZE -__RAM_CONF_FLAG_SIZE -__RAM_RAMECC_HANDLER_SIZE
+  RAM                    (xrw) : ORIGIN = __RAM,    LENGTH = __RAM_SIZE -__RAM_NONCACHEABLEBUFFER_SIZE -__RAM_CONF_FLAG_SIZE -__RAM_RAMECC_HANDLE_SIZE
   RAM_NONCACHEABLEBUFFER (xrw) : ORIGIN = __RAM_NONCACHEABLEBUFFER,  LENGTH = __RAM_NONCACHEABLEBUFFER_SIZE
   CONF_FLAG              (rw)  : ORIGIN = __RAM_CONF_FLAG,   LENGTH = __RAM_CONF_FLAG_SIZE
-  RAMECC_HANDLER         (rw)  : ORIGIN = __RAM_RAMECC_HANDLER,   LENGTH = __RAM_RAMECC_HANDLER_SIZE
+  RAMECC_HANDLE         (rw)  : ORIGIN = __RAM_RAMECC_HANDLE,   LENGTH = __RAM_RAMECC_HANDLE_SIZE
 
   ITCM      (xrw) : ORIGIN = 0x00000000,    LENGTH = 4K
   DTCM       (rw) : ORIGIN = 0x20000000,    LENGTH = 4K
@@ -161,6 +161,7 @@ SECTIONS
   /* Used by the startup to initialize data */
   _sidata = LOADADDR(.data);
 
+  /* "NOLOAD" avoids to add .flag content into the output binary */
   .flag (NOLOAD):
   {
     . = ALIGN(4);
@@ -168,12 +169,12 @@ SECTIONS
     . = ALIGN(4);
   } > CONF_FLAG
 
-  .ramecchandlernoinit (NOLOAD):
+  .ramecchandlenoinit (NOLOAD):
   {
     . = ALIGN(4);
-    *(.ramecchandlernoinit)
+    *(.ramecchandlenoinit)
     . = ALIGN(4);
-  } > RAMECC_HANDLER
+  } > RAMECC_HANDLE
 
   /* Initialized data sections into "RAM" Ram type memory */
   .data :

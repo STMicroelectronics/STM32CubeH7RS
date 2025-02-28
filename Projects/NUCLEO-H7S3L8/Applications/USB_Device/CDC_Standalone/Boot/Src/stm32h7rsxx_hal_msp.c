@@ -168,6 +168,7 @@ void HAL_XSPI_MspInit(XSPI_HandleTypeDef* hxspi)
   /* USER CODE BEGIN XSPI2_MspInit 1 */
 
   /* USER CODE END XSPI2_MspInit 1 */
+
   }
 
 }
