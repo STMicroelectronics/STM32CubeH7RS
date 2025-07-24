@@ -77,23 +77,36 @@ void MX_EXTMEM_MANAGER_Init(void)
 
   extmem_list_config[1].PsramObject.psram_public.MemorySize = HAL_XSPI_SIZE_256MB;
   extmem_list_config[1].PsramObject.psram_public.FreqMax = 200 * 1000000u;
-  extmem_list_config[1].PsramObject.psram_public.NumberOfConfig = 1u;
 
-  /* Config */
-  extmem_list_config[1].PsramObject.psram_public.config[0].WriteMask = 0x40u;
-  extmem_list_config[1].PsramObject.psram_public.config[0].WriteValue = 0x40u;
+  /* Required configuration steps */
+  extmem_list_config[1].PsramObject.psram_public.NumberOfConfig = 3u;
+  extmem_list_config[1].PsramObject.psram_public.REG_DummyCycle = 6u;
+
+  /* 1 - Configuration of X16 mode + 64 Byte/Word Hybrid Wrap in MR8 : value bx1xxx110 */
+  extmem_list_config[1].PsramObject.psram_public.config[0].WriteMask  = 0x47u;
+  extmem_list_config[1].PsramObject.psram_public.config[0].WriteValue = 0x46u;
   extmem_list_config[1].PsramObject.psram_public.config[0].REGAddress = 0x08u;
 
+  /* 2 - Configuration of Write Latency codes in MR4 : value b001xxxxx => 7 cycles (as in AP specs, 6 in real) */
+  extmem_list_config[1].PsramObject.psram_public.config[1].WriteMask  = 0xE0u;
+  extmem_list_config[1].PsramObject.psram_public.config[1].WriteValue = 0x20u;
+  extmem_list_config[1].PsramObject.psram_public.config[1].REGAddress = 0x04u;
+  extmem_list_config[1].PsramObject.psram_public.Write_DummyCycle     = 6u;
+
+  /* 3 - Configuration of Latency Type = FL + Read Latency codes in MR0 + Drive Strength 50 Ohms :
+         value bxx110001 => 14 cycles (as in AP specs, 13 in real) */
+  extmem_list_config[1].PsramObject.psram_public.config[2].WriteMask  = 0x3Fu;
+  extmem_list_config[1].PsramObject.psram_public.config[2].WriteValue = 0x31u;
+  extmem_list_config[1].PsramObject.psram_public.config[2].REGAddress = 0x00u;
+  extmem_list_config[1].PsramObject.psram_public.Read_DummyCycle      = 13u;
+
   /* Memory command configuration */
-  extmem_list_config[1].PsramObject.psram_public.ReadREG           = 0x40u;
-  extmem_list_config[1].PsramObject.psram_public.WriteREG          = 0xC0u;
-  extmem_list_config[1].PsramObject.psram_public.ReadREGSize       = 2u;
-  extmem_list_config[1].PsramObject.psram_public.REG_DummyCycle    = 4u;
-  extmem_list_config[1].PsramObject.psram_public.Write_command     = 0xA0u;
-  extmem_list_config[1].PsramObject.psram_public.Write_DummyCycle  = 4u;
-  extmem_list_config[1].PsramObject.psram_public.Read_command      = 0x20u;
-  extmem_list_config[1].PsramObject.psram_public.WrapRead_command  = 0x00u;
-  extmem_list_config[1].PsramObject.psram_public.Read_DummyCycle   = 4u;
+  extmem_list_config[1].PsramObject.psram_public.ReadREG              = 0x40u;
+  extmem_list_config[1].PsramObject.psram_public.WriteREG             = 0xC0u;
+  extmem_list_config[1].PsramObject.psram_public.ReadREGSize          = 2u;
+  extmem_list_config[1].PsramObject.psram_public.Write_command        = 0xA0u;
+  extmem_list_config[1].PsramObject.psram_public.Read_command         = 0x20u;
+  extmem_list_config[1].PsramObject.psram_public.WrapRead_command     = 0x00u;
 
   EXTMEM_Init(EXTMEMORY_1, HAL_RCCEx_GetPeriphCLKFreq(RCC_PERIPHCLK_XSPI2));
   EXTMEM_Init(EXTMEMORY_2, HAL_RCCEx_GetPeriphCLKFreq(RCC_PERIPHCLK_XSPI1));
