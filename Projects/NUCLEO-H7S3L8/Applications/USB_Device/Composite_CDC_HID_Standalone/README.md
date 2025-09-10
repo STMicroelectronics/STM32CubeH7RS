@@ -72,9 +72,7 @@ None.
 
  - The reception of data via UART is managed by interrupt while the transmission is managed by DMA, thus allowing the application to receive data at the same time as it transmits other data (full-duplex functionality).
  - The user has to check the list of the COM ports in Device Manager to find out the number of the COM ports that have been assigned (by OS) to the VCP interface.
- - It is mandatory to check that the jumper below is connected:
-    JP4  (USB-PD).
-Connect the NUCLEO-H7S3L8 board to the PC through “TYPE-C” to “Standard A” cable.
+ - Connect the NUCLEO-H7S3L8 board to the PC through “TYPE-C” to “Standard A” cable.
 
 #### <b>USB usage hints</b>
 

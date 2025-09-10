@@ -34,8 +34,6 @@ None.
 
 ### <b>Notes</b>
 
-- It is mandatory to check that the jumper below is connected:
-- JP4  (USB-PD).
 - Connect the NUCLEO-H7S3L8 board to the PC through TYPE-C-to-Standard-A cable.
 
 #### <b>USB usage hints</b>
