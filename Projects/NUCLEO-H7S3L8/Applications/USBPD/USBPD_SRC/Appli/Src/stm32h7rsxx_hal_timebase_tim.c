@@ -12,7 +12,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2023 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -117,7 +117,7 @@ HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
   if (Status == HAL_OK)
   {
 #if (USE_HAL_TIM_REGISTER_CALLBACKS == 1U)
-  HAL_TIM_RegisterCallback(&htim6, HAL_TIM_PERIOD_ELAPSED_CB_ID, TimeBase_TIM_PeriodElapsedCallback);
+    HAL_TIM_RegisterCallback(&htim6, HAL_TIM_PERIOD_ELAPSED_CB_ID, TimeBase_TIM_PeriodElapsedCallback);
 #endif /* USE_HAL_TIM_REGISTER_CALLBACKS */
     /* Start the TIM time Base generation in interrupt mode */
     Status = HAL_TIM_Base_Start_IT(&htim6);

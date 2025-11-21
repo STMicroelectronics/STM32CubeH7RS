@@ -1,0 +1,43 @@
+[#ftl]
+[#assign RefParam_ELOADER_ADDRESS_value = 0]
+[#assign RefParam_ELOADER_END_ADDRESS_value = 0]
+[#assign RefParam_ELOADER_SIZE_value = 0]
+[#assign RefParam_SECTORS_NBR_value = 0]
+[#assign RefParam_SECTORS_SIZE_value = 0]
+
+[#compress]
+[#list SWIPdatas as SWIP]
+[#if SWIP.defines??]
+  [#list SWIP.defines as definition]
+    [#assign Value = definition.value]
+    [#assign Name = definition.name]
+
+    [#if Name == "RefParam_ELOADER_ADDRESS"]
+      [#assign RefParam_ELOADER_ADDRESS_value = Value]
+    [/#if]
+    [#if Name == "RefParam_ELOADER_END_ADDRESS"]
+      [#assign RefParam_ELOADER_END_ADDRESS_value = Value]
+    [/#if]
+    [#if Name == "RefParam_SECTORS_NBR"]
+      [#assign RefParam_SECTORS_NBR_value = Value]
+    [/#if]
+	[#if Name == "RefParam_SECTORS_SIZE"]
+      [#assign RefParam_SECTORS_SIZE_value = Value]
+    [/#if]
+  [/#list]
+[/#if]
+[/#list]
+[/#compress]
+
+<?xml version="1.0" encoding="iso-8859-1"?>
+<flash_board>
+  <pass>
+    <range>CODE ${RefParam_ELOADER_ADDRESS_value} ${RefParam_ELOADER_END_ADDRESS_value}</range>
+    <loader>$PROJ_DIR$\..\..\ExtMemLoader\config\extmemloader.flash</loader>
+  </pass>
+  <pass>
+    <range>CODE 0x08000000 0x0800FFFF</range>
+    <loader_offset> 0x20000000</loader_offset>
+    <loader>$TOOLKIT_DIR$\config\flashloader\ST\FlashSTM32H7R-Sxx8.flash</loader>
+  </pass>
+</flash_board>

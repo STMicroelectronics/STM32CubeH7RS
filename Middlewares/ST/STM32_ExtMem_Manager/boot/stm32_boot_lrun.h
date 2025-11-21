@@ -21,7 +21,7 @@
 #define __STM32_BOOT_LRUN_H__
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -37,15 +37,16 @@
   * @{
   */
 /**
- * @brief List of status codes for LRUN
- */
-typedef enum {
-     BOOT_OK,
-     BOOT_ERROR_UNSUPPORTED_MEMORY, /* !< unsupported memory type         */
-     BOOT_ERROR_NOBASEADDRESS,      /* !< not base address for the memory */
-     BOOT_ERROR_MAPPEDMODEFAIL,     /* !< */
-     BOOT_ERROR_COPY,
-}BOOTStatus_TypeDef;
+  * @brief List of status codes for LRUN
+  */
+typedef enum
+{
+  BOOT_OK,                                 /*!< Operation successful */
+  BOOT_ERROR_UNSUPPORTED_MEMORY,           /*!< Unsupported memory type */
+  BOOT_ERROR_NOBASEADDRESS,                /*!< No base address for the memory */
+  BOOT_ERROR_MAPPEDMODEFAIL,               /*!< Failed to enable memory mapped mode */
+  BOOT_ERROR_COPY,                         /*!< Error during copy operation */
+} BOOTStatus_TypeDef;
 
 /**
   * @}
@@ -58,16 +59,9 @@ typedef enum {
   * @{
   */
 
-/**
- * @brief This function boots on the application, the operation consists in mapping 
- *        the memories, loading the code and jumping in the application. 
- *
- * @return @ref BOOTStatus_TypeDef
- **/
- BOOTStatus_TypeDef BOOT_Application(void);
- 
- uint32_t BOOT_GetApplicationSize(uint32_t img_addr);
- uint32_t BOOT_GetApplicationVectorTable(void);
+BOOTStatus_TypeDef BOOT_Application(void);
+uint32_t BOOT_GetApplicationSize(uint32_t img_addr);
+uint32_t BOOT_GetApplicationVectorTable(void);
 
 /**
   * @}

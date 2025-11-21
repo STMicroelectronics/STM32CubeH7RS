@@ -242,7 +242,7 @@ int main(void)
  *                    fnc:  Function Code (1 - Erase, 2 - Program, 3 - Verify)
  *    Return Value:   0 - OK,  1 - Failed
  */
-int Init (unsigned long adr, unsigned long clk, unsigned long fnc)
+KeepInCompilation int Init (unsigned long adr, unsigned long clk, unsigned long fnc)
 {
 
   int retr = 0;
@@ -303,7 +303,7 @@ int Init (unsigned long adr, unsigned long clk, unsigned long fnc)
  *    Return Value:   0 - OK,  1 - Failed
  */
 
-int UnInit(unsigned long fnc)
+KeepInCompilation int UnInit(unsigned long fnc)
 {
   return (0);
 }
@@ -312,7 +312,7 @@ int UnInit(unsigned long fnc)
  *  Erase complete Flash Memory
  *    Return Value:   0 - OK,  1 - Failed
  */
-int EraseChip(void)
+KeepInCompilation int EraseChip(void)
 {
   int retr = 0;
 
@@ -344,7 +344,7 @@ int EraseChip(void)
  *    Parameter:      adr:  Sector Address
  *    Return Value:   0 - OK,  1 - Failed
  */
-int EraseSector(unsigned long adr)
+KeepInCompilation int EraseSector(unsigned long adr)
 {
   int retr = 0;
 
@@ -392,7 +392,7 @@ int EraseSector(unsigned long adr)
  *               buf:  Page Data
  *  Return Value:   0 - OK,  1 - Failed
  */
-int ProgramPage(unsigned long block_start, unsigned long size, unsigned char *buffer)
+KeepInCompilation int ProgramPage(unsigned long block_start, unsigned long size, unsigned char *buffer)
 {
   int retr = 0;
 
@@ -427,7 +427,7 @@ int ProgramPage(unsigned long block_start, unsigned long size, unsigned char *bu
  *               buf:  Page Data
  *  Return Value:   0 - OK,  adr - Failed
  */
-unsigned long Verify(unsigned long adr, unsigned long sz, unsigned char *buf)
+KeepInCompilation unsigned long Verify(unsigned long adr, unsigned long sz, unsigned char *buf)
 {
   int retr = 0;
 

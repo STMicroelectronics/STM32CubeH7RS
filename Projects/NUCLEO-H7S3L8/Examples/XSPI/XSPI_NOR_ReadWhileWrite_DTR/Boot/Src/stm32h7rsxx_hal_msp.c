@@ -117,20 +117,20 @@ RCC_OscInitTypeDef RCC_OscInitStruct = {0};
 static uint32_t HAL_RCC_XSPIM_CLK_ENABLED=0;
 
 /**
-* @brief XSPI MSP Initialization
-* This function configures the hardware resources used in this example
-* @param hxspi: XSPI handle pointer
-* @retval None
-*/
+  * @brief XSPI MSP Initialization
+  * This function configures the hardware resources used in this example
+  * @param hxspi: XSPI handle pointer
+  * @retval None
+  */
 void HAL_XSPI_MspInit(XSPI_HandleTypeDef* hxspi)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
   RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
   if(hxspi->Instance==XSPI1)
   {
-  /* USER CODE BEGIN XSPI1_MspInit 0 */
+    /* USER CODE BEGIN XSPI1_MspInit 0 */
 
-  /* USER CODE END XSPI1_MspInit 0 */
+    /* USER CODE END XSPI1_MspInit 0 */
 
   /** Initializes the peripherals clock
   */
@@ -225,7 +225,7 @@ void HAL_XSPI_MspInit(XSPI_HandleTypeDef* hxspi)
       Error_Handler();
     }
 
-  /* USER CODE BEGIN XSPI1_MspInit 1 */
+    /* USER CODE BEGIN XSPI1_MspInit 1 */
 
     __HAL_RCC_GPION_CLK_ENABLE();
     /**XSPI2 GPIO Configuration
@@ -238,13 +238,13 @@ void HAL_XSPI_MspInit(XSPI_HandleTypeDef* hxspi)
     GPIO_InitStruct.Alternate = GPIO_AF9_XSPIM_P2;
     HAL_GPIO_Init(GPION, &GPIO_InitStruct);
 
-  /* USER CODE END XSPI1_MspInit 1 */
+    /* USER CODE END XSPI1_MspInit 1 */
   }
   else if(hxspi->Instance==XSPI2)
   {
-  /* USER CODE BEGIN XSPI2_MspInit 0 */
+    /* USER CODE BEGIN XSPI2_MspInit 0 */
 
-  /* USER CODE END XSPI2_MspInit 0 */
+    /* USER CODE END XSPI2_MspInit 0 */
 
   /** Initializes the peripherals clock
   */
@@ -261,26 +261,26 @@ void HAL_XSPI_MspInit(XSPI_HandleTypeDef* hxspi)
       __HAL_RCC_XSPIM_CLK_ENABLE();
     }
     __HAL_RCC_XSPI2_CLK_ENABLE();
-  /* USER CODE BEGIN XSPI2_MspInit 1 */
+    /* USER CODE BEGIN XSPI2_MspInit 1 */
 
-  /* USER CODE END XSPI2_MspInit 1 */
+    /* USER CODE END XSPI2_MspInit 1 */
   }
 
 }
 
 /**
-* @brief XSPI MSP De-Initialization
-* This function freeze the hardware resources used in this example
-* @param hxspi: XSPI handle pointer
-* @retval None
-*/
+  * @brief XSPI MSP De-Initialization
+  * This function freeze the hardware resources used in this example
+  * @param hxspi: XSPI handle pointer
+  * @retval None
+  */
 void HAL_XSPI_MspDeInit(XSPI_HandleTypeDef* hxspi)
 {
   if(hxspi->Instance==XSPI1)
   {
-  /* USER CODE BEGIN XSPI1_MspDeInit 0 */
+    /* USER CODE BEGIN XSPI1_MspDeInit 0 */
 
-  /* USER CODE END XSPI1_MspDeInit 0 */
+    /* USER CODE END XSPI1_MspDeInit 0 */
     /* Peripheral clock disable */
     HAL_RCC_XSPIM_CLK_ENABLED--;
     if(HAL_RCC_XSPIM_CLK_ENABLED==0){
@@ -307,24 +307,24 @@ void HAL_XSPI_MspDeInit(XSPI_HandleTypeDef* hxspi)
     /* XSPI1 DMA DeInit */
     HAL_DMA_DeInit(hxspi->hdmatx);
     HAL_DMA_DeInit(hxspi->hdmarx);
-  /* USER CODE BEGIN XSPI1_MspDeInit 1 */
+    /* USER CODE BEGIN XSPI1_MspDeInit 1 */
 
-  /* USER CODE END XSPI1_MspDeInit 1 */
+    /* USER CODE END XSPI1_MspDeInit 1 */
   }
   else if(hxspi->Instance==XSPI2)
   {
-  /* USER CODE BEGIN XSPI2_MspDeInit 0 */
+    /* USER CODE BEGIN XSPI2_MspDeInit 0 */
 
-  /* USER CODE END XSPI2_MspDeInit 0 */
+    /* USER CODE END XSPI2_MspDeInit 0 */
     /* Peripheral clock disable */
     HAL_RCC_XSPIM_CLK_ENABLED--;
     if(HAL_RCC_XSPIM_CLK_ENABLED==0){
       __HAL_RCC_XSPIM_CLK_DISABLE();
     }
     __HAL_RCC_XSPI2_CLK_DISABLE();
-  /* USER CODE BEGIN XSPI2_MspDeInit 1 */
+    /* USER CODE BEGIN XSPI2_MspDeInit 1 */
 
-  /* USER CODE END XSPI2_MspDeInit 1 */
+    /* USER CODE END XSPI2_MspDeInit 1 */
   }
 
 }

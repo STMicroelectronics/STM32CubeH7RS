@@ -1,8 +1,8 @@
 /**
   ******************************************************************************
-  * @file    stm32_psram_type.h
+  * @file    stm32_psram_driver_type.h
   * @author  MCD Application Team
-  * @brief   This file contains the psram driver definition.
+  * @brief   This file contains PSRAM driver type definitions.
   ******************************************************************************
   * @attention
   *
@@ -21,7 +21,7 @@
 #define __STM32_PSRAM_TYPE_H
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -38,8 +38,8 @@
   */
 
 /**
- * @brief driver PSRAM maximum number of commands
- */
+  * @brief PSRAM driver maximum number of commands
+  */
 #define PSRAM_MAX_COMMAND 3u
 
 /**
@@ -52,38 +52,42 @@
   */
 
 /**
- * @brief driver PSRAM object definition
- */
-typedef struct {
-  struct {
-  SAL_XSPI_ObjectTypeDef   SALObject;     /*!< SAL object */
-  } psram_private;                        /*!< private data of the object */
+  * @brief PSRAM driver object definition
+  */
+typedef struct
+{
+  struct
+  {
+    SAL_XSPI_ObjectTypeDef   SALObject;    /*!< SAL XSPI object. */
+  } psram_private;                         /*!< Private data for the PSRAM driver object. */
 
-  struct {
-  uint32_t MemorySize;                    /*!< memory size @ref XSPI_MemorySize */
-  uint32_t FreqMax;                       /*!< maximum frequency supported by the memory */
+  struct
+  {
+    uint32_t MemorySize;                     /*!< Memory size (see @ref XSPI_MemorySize). */
+    uint32_t FreqMax;                        /*!< Maximum supported memory frequency. */
 
-  /* Configuration */
-  uint8_t NumberOfConfig;                /*!< Number of config, each config consists to perform read and write operation */
-  struct {
-    uint8_t WriteMask;                   /*!< write mask */
-    uint8_t WriteValue;                  /*!< write value */
-    uint8_t REGAddress;                  /*!< register address */
-  } config[PSRAM_MAX_COMMAND];
+    /* Configuration */
+    uint8_t NumberOfConfig;                  /*!< Number of configuration steps; each step performs a read and write operation. */
+    struct
+    {
+      uint8_t WriteMask;                       /*!< Mask for write operation. */
+      uint8_t WriteValue;                      /*!< Value to write. */
+      uint8_t REGAddress;                      /*!< Address of the register. */
+    } config[PSRAM_MAX_COMMAND];
 
-  /* Command REG */
-  uint8_t ReadREG;
-  uint8_t WriteREG;
-  uint8_t ReadREGSize;
-  uint8_t REG_DummyCycle;
+    /* Command REG */
+    uint8_t ReadREG;
+    uint8_t WriteREG;
+    uint8_t ReadREGSize;
+    uint8_t REG_DummyCycle;
 
-  /* Command read write */
-  uint8_t Write_command;
-  uint8_t Write_DummyCycle;
-  uint8_t Read_command;
-  uint8_t WrapRead_command;
-  uint8_t Read_DummyCycle;
-  } psram_public;                        /*!< public data of the object */
+    /* Command Read and Write */
+    uint8_t Write_command;
+    uint8_t Write_DummyCycle;
+    uint8_t Read_command;
+    uint8_t WrapRead_command;
+    uint8_t Read_DummyCycle;
+  } psram_public;                          /*!< Public data for the PSRAM driver object. */
 } EXTMEM_DRIVER_PSRAM_ObjectTypeDef;
 
 /**

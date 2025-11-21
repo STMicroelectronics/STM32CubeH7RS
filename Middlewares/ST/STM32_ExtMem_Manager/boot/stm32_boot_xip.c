@@ -2,7 +2,7 @@
   ******************************************************************************
   * @file    stm32_boot_xip.c
   * @author  MCD Application Team
-  * @brief   this file manages the boot in the mode execute in place.
+  * @brief   This file manages booting in execute-in-place (XIP) mode.
   ******************************************************************************
   * @attention
   *
@@ -31,15 +31,15 @@
 /* Private typedefs ----------------------------------------------------------*/
 /* Private defines -----------------------------------------------------------*/
 
-/* offset of the image from the boot memory base */
+/* Offset of the image from the boot memory base */
 #ifndef EXTMEM_XIP_IMAGE_OFFSET
 #define EXTMEM_XIP_IMAGE_OFFSET 0
-#endif
+#endif /* EXTMEM_XIP_IMAGE_OFFSET */
 
-/* offset of the vector table from the start of the image */
+/* Offset of the vector table from the start of the image */
 #ifndef EXTMEM_HEADER_OFFSET
 #define EXTMEM_HEADER_OFFSET 0
-#endif
+#endif /* EXTMEM_HEADER_OFFSET */
 
 /* Private macros ------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
@@ -53,15 +53,19 @@ BOOTStatus_TypeDef GetBaseAddress(uint32_t MemIndex, uint32_t *BaseAddress);
   * @{
   */
 
+/**
+  * @brief Boots the application by mapping the memory and jumping to the application.
+  * @retval BOOTStatus_TypeDef Status of the operation.
+  */
 BOOTStatus_TypeDef BOOT_Application(void)
 {
   BOOTStatus_TypeDef retr;
 
-  /* mount the memory */
+  /* Mount the memory */
   retr = MapMemory();
   if (BOOT_OK == retr)
   {
-    /* jump on the application */
+    /* Jump on the application */
     retr = JumpToApplication();
   }
   return retr;
@@ -77,8 +81,8 @@ BOOTStatus_TypeDef BOOT_Application(void)
   */
 
 /**
-  * @brief  this function maps the memory
-  * @return @ref BOOTStatus_TypeDef
+  * @brief  Maps the external memory.
+  * @retval BOOTStatus_TypeDef Status of the operation.
   */
 BOOTStatus_TypeDef MapMemory(void)
 {
@@ -87,31 +91,31 @@ BOOTStatus_TypeDef MapMemory(void)
   /* Map all the memory */
   for (uint8_t index = 0; index < (sizeof(extmem_list_config) / sizeof(EXTMEM_DefinitionTypeDef)); index++)
   {
-    switch(EXTMEM_MemoryMappedMode(index, EXTMEM_ENABLE))
+    switch (EXTMEM_MemoryMappedMode(index, EXTMEM_ENABLE))
     {
       case EXTMEM_ERROR_NOTSUPPORTED :
-           if (EXTMEM_MEMORY_BOOTXIP ==  index)
-           {
-             retr = BOOT_ERROR_INCOMPATIBLEMEMORY;
-           }
-           else
-           {
-            /* We considers the memory will be not used any more */
-            EXTMEM_DeInit(index);
-           }
+        if (EXTMEM_MEMORY_BOOTXIP ==  index)
+        {
+          retr = BOOT_ERROR_INCOMPATIBLEMEMORY;
+        }
+        else
+        {
+          /* We consider the memory will be not used any more */
+          EXTMEM_DeInit(index);
+        }
       case EXTMEM_OK:
-      break;
+        break;
       default :
         retr = BOOT_ERROR_MAPPEDMODEFAIL;
-      break;
+        break;
     }
   }
   return retr;
 }
 
 /**
-  * @brief  This function jumps to the application through its vector table
-  * @return @ref BOOTStatus_TypeDef
+  * @brief  Jumps to the application using its vector table.
+  * @retval BOOTStatus_TypeDef Status of the operation.
   */
 BOOTStatus_TypeDef JumpToApplication(void)
 {
@@ -122,7 +126,7 @@ BOOTStatus_TypeDef JumpToApplication(void)
 
   if (EXTMEM_OK != EXTMEM_GetMapAddress(EXTMEM_MEMORY_BOOTXIP, &Application_vector))
   {
-      return BOOT_ERROR_INCOMPATIBLEMEMORY;
+    return BOOT_ERROR_INCOMPATIBLEMEMORY;
   }
 
   /* Suspend SysTick */
@@ -134,7 +138,7 @@ BOOTStatus_TypeDef JumpToApplication(void)
   {
     SCB_DisableICache();
   }
-#endif /* defined(__ICACHE_PRESENT) && (__ICACHE_PRESENT == 1U) */
+#endif /* __ICACHE_PRESENT */
 
 #if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
   /* if D-Cache is enabled, disable D-Cache-----------------------------------*/
@@ -142,7 +146,7 @@ BOOTStatus_TypeDef JumpToApplication(void)
   {
     SCB_DisableDCache();
   }
-#endif /* defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U) */
+#endif /* __DCACHE_PRESENT */
 
   /* Initialize user application's Stack Pointer & Jump to user application  */
   primask_bit = __get_PRIMASK();
@@ -152,16 +156,20 @@ BOOTStatus_TypeDef JumpToApplication(void)
   Application_vector += EXTMEM_XIP_IMAGE_OFFSET + EXTMEM_HEADER_OFFSET;
 
   SCB->VTOR = (uint32_t)Application_vector;
-  JumpToApp = (pFunction) (*(__IO uint32_t *)(Application_vector + 4u));
+  JumpToApp = (pFunction)(*(__IO uint32_t *)(Application_vector + 4u));
 
-#if ((defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1)) || \
-     (defined (__ARM_ARCH_8_1M_MAIN__ ) && (__ARM_ARCH_8_1M_MAIN__ == 1)) || \
-     (defined (__ARM_ARCH_8M_BASE__ ) && (__ARM_ARCH_8M_BASE__ == 1))    )
+#if (defined(__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1))
   /* on ARM v8m, set MSPLIM before setting MSP to avoid unwanted stack overflow faults */
   __set_MSPLIM(0x00000000);
-#endif  /* __ARM_ARCH_8M_MAIN__ or __ARM_ARCH_8M_BASE__ */
+#elif (defined(__ARM_ARCH_8_1M_MAIN__ ) && (__ARM_ARCH_8_1M_MAIN__ == 1))
+  /* on ARM v8m, set MSPLIM before setting MSP to avoid unwanted stack overflow faults */
+  __set_MSPLIM(0x00000000);
+#elif (defined(__ARM_ARCH_8M_BASE__ ) && (__ARM_ARCH_8M_BASE__ == 1))
+  /* on ARM v8m, set MSPLIM before setting MSP to avoid unwanted stack overflow faults */
+  __set_MSPLIM(0x00000000);
+#endif  /* __ARM_ARCH_8M_MAIN__ or __ARM_ARCH_8_1M_MAIN__ or __ARM_ARCH_8M_BASE__ */
 
-  __set_MSP(*(__IO uint32_t*) Application_vector);
+  __set_MSP(*(__IO uint32_t *) Application_vector);
 
   /* Re-enable the interrupts */
   __set_PRIMASK(primask_bit);
@@ -174,9 +182,9 @@ BOOTStatus_TypeDef JumpToApplication(void)
   * @}
   */
 
- /**
+/**
   * @}
-  */
+ */
 
 /**
   * @}

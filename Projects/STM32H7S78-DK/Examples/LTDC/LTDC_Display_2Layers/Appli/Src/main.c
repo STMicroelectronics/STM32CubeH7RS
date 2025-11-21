@@ -59,7 +59,7 @@ static void MX_ADC1_Init(void);
 static void MX_LTDC_Init(void);
 static void MX_USART1_UART_Init(void);
 /* USER CODE BEGIN PFP */
-void MPU_AdjustRegionAddressSize(uint32_t Address, uint32_t Size, MPU_Region_InitTypeDef* pInit);
+static void MPU_AdjustRegionAddressSize(uint32_t Address, uint32_t Size, MPU_Region_InitTypeDef* pInit);
 void MPU_Config(void);
 /* USER CODE END PFP */
 
@@ -571,24 +571,39 @@ void MPU_Config(void)
   * @param pInit pointer to an MPU initialization structure
   * @retval None
   */
-void MPU_AdjustRegionAddressSize(uint32_t Address, uint32_t Size, MPU_Region_InitTypeDef* pInit)
+static void MPU_AdjustRegionAddressSize(uint32_t Address, uint32_t Size, MPU_Region_InitTypeDef* pInit)
 {
+  static uint8_t loopcontrol = 0;
+  uint32_t Modulo;
+
+  /* control the loop increment */
+  loopcontrol++;
+
+  if (loopcontrol > 3)
+  {
+    /* the scatter file input is too complex to determine the MPU configuration */
+    Error_Handler();
+  }
+
   /* Compute the MPU region size */
   pInit->Size = ((31 - __CLZ(Size)) - 1);
   if (Size > (1 << (pInit->Size + 1)))
   {
     pInit->Size++;
   }
-  uint32_t Modulo = Address % (1 << (pInit->Size - 1));
+  Modulo = Address % (1 << (pInit->Size + 1));
   if (0 != Modulo)
   {
     /* Align address with MPU region size considering there is no need to increase the size */
-    pInit->BaseAddress = Address - Modulo;
+    MPU_AdjustRegionAddressSize(Address - Modulo, Size + Modulo, pInit);
   }
   else
   {
     pInit->BaseAddress = Address;
   }
+
+  /* control the loop decrement */
+  loopcontrol--;
 }
 
 /* USER CODE END 4 */

@@ -25,7 +25,7 @@
 #include "main.h"
 
 /*-----------------------------------------------------------------------------*/
-/* Current version of LwIP supported by CubeMx: 2.1.3 -*/
+/* Current version of LwIP supported by CubeMx: 2.2.1 -*/
 /*-----------------------------------------------------------------------------*/
 
 /* Within 'USER CODE' section, code will be kept by default at each generation */
@@ -34,7 +34,7 @@
 /* USER CODE END 0 */
 
 #ifdef __cplusplus
-extern "C" {
+ extern "C" {
 #endif
 
 /* STM32CubeMX Specific Parameters (not defined in opt.h) ---------------------*/

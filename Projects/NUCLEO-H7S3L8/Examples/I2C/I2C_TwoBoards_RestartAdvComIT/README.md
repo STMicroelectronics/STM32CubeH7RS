@@ -292,6 +292,12 @@ Connectivity, I2C, Communication, Transmission, Reception, SCL, SDA, Interrupt, 
     (115200 bauds, 8 bits data, 1 stop bit, no parity, no HW flow control) connected with the com port number of STLINK.
     Then Launch the program on both side.
 
+    For **CubeIDE** (Both Configurations in Standalone mode):
+
+      - Comment the function initialise_monitor_handles() in main.c at line 158.
+      - Delete the miscellaneous linker flag "-specs=rdimon.specs -lc -lrdimon" under Project -> Properties -> C/C++ Build -> Settings (Tool Settings Tab) -> MCU GCC Linker
+      - Include syscalls.c to the build.
+
   - Press USER push-button to initiate a communication by Master device to Slave device.
     User can initiate a new communication after each previous transfer completed.
 

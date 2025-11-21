@@ -1,8 +1,8 @@
 /**
   ******************************************************************************
-  * @file    stm32_psram_driver.h
+  * @file    stm32_psram_driver_api.h
   * @author  MCD Application Team
-  * @brief   This file contains the psram driver definition.
+  * @brief   This file contains PSRAM driver API definitions.
   ******************************************************************************
   * @attention
   *
@@ -21,12 +21,12 @@
 #define __STM32_PSRAM_DRIVER_H
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
 #if EXTMEM_DRIVER_PSRAM == 1
-   
+
 /** @addtogroup PSRAM
   * @ingroup EXTMEM_DRIVER
   * @{
@@ -39,9 +39,10 @@
   */
 
 /**
- * @brief List of error codes of the PSRAM driver
- */
-typedef enum  {
+  * @brief Enumeration of error codes for the PSRAM driver.
+  */
+typedef enum
+{
   EXTMEM_DRIVER_PSRAM_OK                           =   0,
   EXTMEM_DRIVER_PSRAM_ERROR_READREG                =  -1,
   EXTMEM_DRIVER_PSRAM_ERROR_WRITEREG               =  -2,
@@ -55,45 +56,17 @@ typedef enum  {
 
 /* Exported functions --------------------------------------------------------*/
 /**
-  * @addtogroup PSRAM_Exported_Functions Exported functions
+  * @addtogroup PSRAM_Exported_Functions Exported Functions
   * @{
   */
-/**
- * @brief This function initializes the driver PSRAM
- *
- * @param Peripheral ptr on the Peripheral handle
- * @param Config link configuration
- * @param ClockInput timeout value
- * @param PsramObject object PSRAM
- * @return @ref EXTMEM_DRIVER_PSRAM_StatusTypeDef
- **/
 EXTMEM_DRIVER_PSRAM_StatusTypeDef EXTMEM_DRIVER_PSRAM_Init(void *Peripheral, EXTMEM_LinkConfig_TypeDef Config,
                                                            uint32_t ClockInput,
                                                            EXTMEM_DRIVER_PSRAM_ObjectTypeDef *PsramObject);
-
-/**
- * @brief This function un-initializes the driver PSRAM
- *
- * @param PsramObject IP instance
- * @return @ref EXTMEM_DRIVER_PSRAM_StatusTypeDef
- **/
 EXTMEM_DRIVER_PSRAM_StatusTypeDef EXTMEM_DRIVER_PSRAM_DeInit(EXTMEM_DRIVER_PSRAM_ObjectTypeDef *PsramObject);
-
-/**
- * @brief This function enables the memory mapped mode
- *
- * @param PsramObject memory instance
- * @return @ref EXTMEM_DRIVER_PSRAM_StatusTypeDef
- **/
-EXTMEM_DRIVER_PSRAM_StatusTypeDef EXTMEM_DRIVER_PSRAM_Enable_MemoryMappedMode(EXTMEM_DRIVER_PSRAM_ObjectTypeDef *PsramObject);
-
-/**
- * @brief This function disables the memory mapped mode
- *
- * @param PsramObject memory instance
- * @return @ref EXTMEM_DRIVER_PSRAM_StatusTypeDef
- **/
-EXTMEM_DRIVER_PSRAM_StatusTypeDef EXTMEM_DRIVER_PSRAM_Disable_MemoryMappedMode(EXTMEM_DRIVER_PSRAM_ObjectTypeDef *PsramObject);
+EXTMEM_DRIVER_PSRAM_StatusTypeDef EXTMEM_DRIVER_PSRAM_Enable_MemoryMappedMode(EXTMEM_DRIVER_PSRAM_ObjectTypeDef
+                                                                              *PsramObject);
+EXTMEM_DRIVER_PSRAM_StatusTypeDef EXTMEM_DRIVER_PSRAM_Disable_MemoryMappedMode(EXTMEM_DRIVER_PSRAM_ObjectTypeDef
+                                                                               *PsramObject);
 /**
   * @}
   */

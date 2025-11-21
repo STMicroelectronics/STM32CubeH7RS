@@ -70,7 +70,7 @@ void Error_Handler(void);
      USE_VCP_CONNECTION == 0
        IDE output print is used to print Command Code of this example. See readme.txt for more details.
      USE_VCP_CONNECTION == 1
-       USART2 instance is used to print Command Code of this example. (TX on PD.5, RX on PD.6)
+       USART3 instance is used to print Command Code of this example. (TX on PD.8, RX on PD.9)
        (please ensure that USART communication between the target MCU and ST-LINK MCU is properly enabled 
        on HW board in order to support Virtual Com Port)
 */
@@ -79,25 +79,25 @@ void Error_Handler(void);
 /* Private definitions covering GPIO clock and USART pins 
    depending on selected USART instance. */
 #if (USE_VCP_CONNECTION == 1) 
-/* USART2 instance is used. (TX on PD.5, RX on PD.6)
+/* USART3 instance is used. (TX on PD.8, RX on PD.9)
    (please ensure that USART communication between the target MCU and ST-LINK MCU is properly enabled 
     on HW board in order to support Virtual Com Port) */
 /* Definition for USARTx clock resources */
-#define USARTx                           USART2
-#define USARTx_CLK_ENABLE()              __HAL_RCC_USART2_CLK_ENABLE()
+#define USARTx                           USART3
+#define USARTx_CLK_ENABLE()              __HAL_RCC_USART3_CLK_ENABLE()
 #define USARTx_RX_GPIO_CLK_ENABLE()      __HAL_RCC_GPIOD_CLK_ENABLE()
 #define USARTx_TX_GPIO_CLK_ENABLE()      __HAL_RCC_GPIOD_CLK_ENABLE()
 
-#define USARTx_FORCE_RESET()             __HAL_RCC_USART2_FORCE_RESET()
-#define USARTx_RELEASE_RESET()           __HAL_RCC_USART2_RELEASE_RESET()
+#define USARTx_FORCE_RESET()             __HAL_RCC_USART3_FORCE_RESET()
+#define USARTx_RELEASE_RESET()           __HAL_RCC_USART3_RELEASE_RESET()
 
 /* Definition for USARTx Pins */
-#define USARTx_TX_PIN                    GPIO_PIN_5
+#define USARTx_TX_PIN                    GPIO_PIN_8
 #define USARTx_TX_GPIO_PORT              GPIOD
-#define USARTx_TX_AF                     GPIO_AF7_USART2
-#define USARTx_RX_PIN                    GPIO_PIN_6
+#define USARTx_TX_AF                     GPIO_AF7_USART3
+#define USARTx_RX_PIN                    GPIO_PIN_9
 #define USARTx_RX_GPIO_PORT              GPIOD
-#define USARTx_RX_AF                     GPIO_AF7_USART2
+#define USARTx_RX_AF                     GPIO_AF7_USART3
 
 #endif /* (USE_VCP_CONNECTION == 0) */
 

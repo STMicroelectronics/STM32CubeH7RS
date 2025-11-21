@@ -93,7 +93,6 @@ LWIP_MEMPOOL_DECLARE(RX_POOL, ETH_RX_BUFFER_CNT, sizeof(RxBuff_t), "Zero-copy RX
 
 /* Variable Definitions */
 static uint8_t RxAllocStatus;
-
 #if defined ( __ICCARM__ ) /*!< IAR Compiler */
 
 #pragma location=0x24020000
@@ -206,8 +205,7 @@ static void low_level_init(struct netif *netif)
   LWIP_MEMPOOL_INIT(RX_POOL);
 
 #if LWIP_ARP || LWIP_ETHERNET
-
-  /* set MAC hardware address length */
+  /* Set MAC hardware address length */
   netif->hwaddr_len = ETH_HWADDR_LEN;
 
   /* set MAC hardware address */
@@ -245,8 +243,8 @@ static void low_level_init(struct netif *netif)
 
   if (hal_eth_init_status == HAL_OK)
   {
-  /* Get link state */
-  ethernet_link_check_state(netif);
+    /* Get link state */
+    ethernet_link_check_state(netif);
   }
   else
   {
@@ -407,7 +405,6 @@ err_t ethernetif_init(struct netif *netif)
    * The last argument should be replaced with your link speed, in units
    * of bits per second.
    */
-
   netif->name[0] = IFNAME0;
   netif->name[1] = IFNAME1;
   /* We directly use etharp_output() here to save a function call.
@@ -488,8 +485,8 @@ void HAL_ETH_MspInit(ETH_HandleTypeDef* ethHandle)
 
   /* USER CODE END ETH_MspInit 0 */
 
-    /** Initializes the peripherals clock
-    */
+  /** Initializes the peripherals clock
+  */
     PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_ETH1REF|RCC_PERIPHCLK_ETH1PHY;
     PeriphClkInit.Eth1RefClockSelection = RCC_ETH1REFCLKSOURCE_PHY;
     PeriphClkInit.Eth1PhyClockSelection = RCC_ETH1PHYCLKSOURCE_PLL3S;
@@ -609,8 +606,7 @@ void HAL_ETH_MspDeInit(ETH_HandleTypeDef* ethHandle)
 int32_t ETH_PHY_IO_Init(void)
 {
   /* We assume that MDIO GPIO configuration is already done
-     in the ETH_MspInit() else it should be done here
-  */
+     in the ETH_MspInit() else it should be done here */
 
   /* Configure the MDIO Clock */
   HAL_ETH_SetMDIOClockRange(&heth);
@@ -806,4 +802,3 @@ void HAL_ETH_TxFreeCallback(uint32_t * buff)
 /* USER CODE BEGIN 8 */
 
 /* USER CODE END 8 */
-

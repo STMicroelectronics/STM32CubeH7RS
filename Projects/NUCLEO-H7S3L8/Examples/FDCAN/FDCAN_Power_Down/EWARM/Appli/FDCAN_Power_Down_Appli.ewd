@@ -120,7 +120,7 @@
         </option>
         <option>
           <name>OCImagesPath1</name>
-          <state>$PROJ_DIR$\..\..\..\..\..\Templates\Template_XIP\Binary\Boot_XIP.hex</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\Templates\Template_XIP\Binary\Boot_XIP_HSE.hex</state>
         </option>
         <option>
           <name>OCImagesSuppressCheck2</name>

@@ -11,11 +11,11 @@ if [ $# -ge 1 ]; then mode=$1; else mode=MANUAL; fi
 project_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 if [ "$isGeneratedByCubeMX" == "true" ]; then
-  appli_dir="$oemirot_boot_path_project"
+  appli_dir="$oemirot_appli_path_project"
   stirot_oemurot_boot_path_project="$cube_fw_path/Projects/STM32H7S78-DK/Applications/ROT/OEMiROT_Boot"
   flash_layout="$cube_fw_path/Projects/STM32H7S78-DK/Applications/ROT/OEMiROT_Boot/Inc/flash_layout.h"
 else
-  appli_dir="../../$oemirot_boot_path_project"
+  appli_dir="../../$oemirot_appli_path_project"
   stirot_oemurot_boot_path_project="$project_dir/../../Applications/ROT/OEMiROT_Boot"
   flash_layout="$stirot_oemurot_boot_path_project/Inc/flash_layout.h"
 fi
@@ -31,20 +31,22 @@ default_dbgauth_str="default_dbgauth"
 product_state_list="CLOSED LOCKED"
 dbgauth_list="CERTIFICATE PASSWORD"
 
-# AppliCfg path
-AppliCfg="$cube_fw_path/Utilities/PC_Software/ROT_AppliConfig/dist/AppliCfg.exe"
-uname | grep -i -e windows -e mingw
-if [ $? == 0 ] && [ -e "$AppliCfg" ]; then
-  #line for window executable
-  echo "AppliCfg with windows executable"
-  python=""
+# Environment variable for AppliCfg
+# Check if Python is installed
+python3 --version >/dev/null 2>&1
+if [ $? -ne 0 ]; then
+  python --version >/dev/null 2>&1
+  if [ $? -ne 0 ]; then
+  echo "Python installation missing. Refer to Utilities/PC_Software/ROT_AppliConfig/README.md"
+  exit 1
+  fi
+  python="python "
 else
-  #line for python
-  echo "AppliCfg with python script"
-  AppliCfg="$cube_fw_path/Utilities/PC_Software/ROT_AppliConfig/AppliCfg.py"
-  #determine/check python version command
   python="python3 "
 fi
+
+# Environment variable for AppliCfg
+AppliCfg="$cube_fw_path/Utilities/PC_Software/ROT_AppliConfig/AppliCfg.py"
 
 # External scripts
 ob_flash_programming="./ob_flash_programming.sh"

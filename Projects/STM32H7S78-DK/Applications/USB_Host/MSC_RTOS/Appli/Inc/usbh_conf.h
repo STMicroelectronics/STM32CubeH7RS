@@ -86,7 +86,7 @@
 #define USBH_DEBUG_LEVEL      2U
 
 /*----------   -----------*/
-#define USBH_USE_OS      0U
+#define USBH_USE_OS      1U
 
 /****************************************/
 /* #define for FS and HS identification */

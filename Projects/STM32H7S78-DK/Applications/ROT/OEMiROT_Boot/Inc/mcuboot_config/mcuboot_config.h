@@ -18,6 +18,7 @@
 extern "C" {
 #endif
 
+#define MCUBOOT_NO_INITIAL_IMAGE_IN_PRIMARY
 /*
  * This file is also included by the simulator, but we don't want to
  * define anything here in simulator builds.
@@ -86,7 +87,7 @@ extern "C" {
  * Logging
  */
 #ifdef OEMIROT_DEV_MODE
-#define MCUBOOT_HAVE_LOGGING    1
+#define MCUBOOT_HAVE_LOGGING
 #endif
 
 #endif /* !__BOOTSIM__ */

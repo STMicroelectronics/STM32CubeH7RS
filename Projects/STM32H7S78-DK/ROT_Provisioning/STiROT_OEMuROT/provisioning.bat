@@ -12,10 +12,10 @@ set isGeneratedByCubeMX=%PROJECT_GENERATED_BY_CUBEMX%
 set "project_dir=%~dp0"
 
 if "%isGeneratedByCubeMX%" == "true" (
-  set appli_dir=%oemirot_boot_path_project%
+  set appli_dir=%oemirot_appli_path_project%
   set flash_layout="%cube_fw_path%\Projects\STM32H7S78-DK\Applications\ROT\OEMiROT_Boot\Inc\flash_layout.h"
 ) else (
-  set appli_dir=../../%oemirot_boot_path_project%
+  set appli_dir=../../%oemirot_appli_path_project%
   set flash_layout="%project_dir%..\..\Applications\ROT\OEMiROT_Boot\Inc\flash_layout.h"
 )
 
@@ -31,19 +31,21 @@ set product_state_list=CLOSED LOCKED
 set dbgauth_list=CERTIFICATE PASSWORD
 
 :start
-goto exe:
-goto py:
-:exe
-::called if we want to use AppliCfg executable
-set AppliCfg="%cube_fw_path%\Utilities\PC_Software\ROT_AppliConfig\dist\AppliCfg.exe"
-set "python="
-if exist %AppliCfg% (
-    goto update
+:: Check if Python is installed
+python3 --version >nul 2>&1
+if %errorlevel% neq 0 (
+ python --version >nul 2>&1
+ if !errorlevel! neq 0 (
+    echo Python installation missing. Refer to Utilities\PC_Software\ROT_AppliConfig\README.md
+    goto :error
+ )
+  set "python=python "
+) else (
+  set "python=python3 "
 )
-:py
-::called if we just want to use AppliCfg python (think to comment "goto exe:")
+
+:: Environment variable for AppliCfg
 set AppliCfg="%cube_fw_path%\Utilities\PC_Software\ROT_AppliConfig\AppliCfg.py"
-set "python=python "
 
 :update
 set "AppliCfg=%python%%AppliCfg%"

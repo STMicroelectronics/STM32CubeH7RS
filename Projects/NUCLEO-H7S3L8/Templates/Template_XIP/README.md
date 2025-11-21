@@ -38,6 +38,12 @@ integrate in his application in order to enhance the performance.
     Please refer to the AN4838 "Managing memory protection unit (MPU) in STM32 MCUs".
     Please refer to the AN4839 "Level 1 cache on STM32F7 Series".
 
+ 4. The Boot project provides two binary files corresponding to two different clock configurations:
+    - Templates/Template_XIP/Binary/Boot_XIP.hex: This binary is configured to use the HSI clock. It is used by all NUCLEO-H7S3L8 
+	  projects except the FDCAN examples.
+    - Templates/Template_XIP/Binary/Boot_XIP_HSE.hex: This binary is configured to use the HSE clock. It is used by all FDCAN examples 
+	  on the NUCLEO-H7S3L8 board.
+
 ### <b>Keywords</b>
 
 Reference, Template, Boot, Loader, XiP
@@ -101,7 +107,7 @@ In order to make the program work, you must do the following:
   3. Select then "Template_XIP_Appli" workspace
   4. Rebuild all files from sub-project Appli and load your images into memories: This sub-project
      will first load the Appli part in External memory available on NUCLEO-H7S3L8 board, then load
-     the Template_XIP_Boot.hex in internal Flash.
+     the Boot binary in internal Flash.
   5. Run the example
 
 NB: For this target, following switches are set in C/C++ preprocessor settings:
@@ -123,7 +129,7 @@ NB: For this target, following switches are set in C/C++ preprocessor settings:
   3. Select then "Template_XIP_Appli" workspace
   4. Rebuild all files from sub-project Appli and load your images into memories: This sub-project
      will first load the Appli part in External memory available on NUCLEO-H7S3L8 board, then load
-     the Boot_XIP.hex in internal Flash.
+     the Boot binary in internal Flash.
   5. Run the example
 
 NB: For this target, following switches are set in C/C++

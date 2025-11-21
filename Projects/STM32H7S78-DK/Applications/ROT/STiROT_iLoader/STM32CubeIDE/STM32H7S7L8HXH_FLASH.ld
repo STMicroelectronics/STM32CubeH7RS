@@ -36,7 +36,7 @@
 ENTRY(Reset_Handler)
 
 CODE_OFFSET = 0x0;               /* Firmware execution area offset from STiROT_Config.xml */
-CODE_SIZE = 0x6000;              /* Firmware execution area offset from STiROT_Config.xml */
+CODE_SIZE = 0x6200;              /* Firmware execution area size from STiROT_Config.xml */
 
 /* Highest address of the user mode stack */
 _estack = ORIGIN(RAM) + LENGTH(RAM); /* end of "RAM" Ram type memory */

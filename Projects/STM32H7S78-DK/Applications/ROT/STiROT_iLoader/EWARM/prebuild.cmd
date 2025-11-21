@@ -6,9 +6,21 @@ set "env_script=%project_dir%..\..\..\..\ROT_Provisioning\env.bat"
 call "%env_script%"
 
 :: ----------------------- Update the stirot_iloader reference in env.bat -----------------------
+:: Check if Python is installed
+python3 --version >nul 2>&1
+if %errorlevel% neq 0 (
+ python --version >nul 2>&1
+ if !errorlevel! neq 0 (
+    echo Python installation missing. Refer to Utilities\PC_Software\ROT_AppliConfig\README.md
+    goto :error
+ )
+  set "python=python "
+) else (
+  set "python=python3 "
+)
 
-::line for Windows executable
-set applicfg="%cube_fw_path%\Utilities\PC_Software\ROT_AppliConfig\dist\AppliCfg.exe"
+:: Environment variable for AppliCfg
+set "applicfg=%cube_fw_path%\Utilities\PC_Software\ROT_AppliConfig\AppliCfg.py"
 
 :: ----------------------- Update the stirot_iloader icf file -----------------------
 set code_align=0x2000

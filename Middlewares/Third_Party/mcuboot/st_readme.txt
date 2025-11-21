@@ -1,7 +1,7 @@
   @verbatim
   ******************************************************************************
   *
-  *         Portions COPYRIGHT 2016-2023 STMicroelectronics, All Rights Reserved
+  *         Portions COPYRIGHT 2016-2025 STMicroelectronics, All Rights Reserved
   *         Copyright (C) 2006-2015, ARM Limited, All Rights Reserved
   *
   * @file    st_readme.txt 
@@ -15,6 +15,65 @@
   *
   ******************************************************************************
   @endverbatim
+
+### 22-July-2025 ###
+====================
+    + Randomize aes buffers before a copy UPDATE
+    + Reinforcement of the first installation process UPDATE
+    + Fix regression for H7RS OEMuRoT fast wake-up
+
+### 12-June-2025 ###
+====================
+    + Fix Reinforcement of the first installation process
+
+### 10-June-2025 ###
+====================
+    + Reinforcement of the first installation process
+    + Regularly boot_enc_zeroize for compatibility with SAES use to decrypt OBK
+    + Reinforce boot_validate_slot
+    + Randomize aes buffers before a copy
+
+### 28-April-2025 ###
+====================
+    + imgtool python script delivered in the repo
+    + Update shared_data.c from TFM GitHub v2.1.0 with minor adaptations
+    + Provide AES CTR HW implementation fully relying on SAES HW capabilities
+    + Improve counter measures
+
+### 26-February-2025 ###
+========================
+    + Improve counter measures
+
+### 28-January-2025 ###
+========================
+    + Improve installation robustness
+
+### 15-January-2025 ###
+========================
+    + Improve the support of MCE
+
+### 18-December-2024 ###
+========================
+    + Add version logs under MCUBOOT_LOG_VERSION
+
+### 18-October-2024 ###
+========================
+    + Fix compilation warning for GCC compiler
+
+### 09-October-2024 ###
+========================
+    + Fix stdio usage condition in bl2_main.c
+    + Update README and documentation
+
+### 05-September-2024 ###
+========================
+    + Display OEMuROT version in BootROM format
+
+### 12-July-2024 ###
+========================
+    + Support keys in raw mode
+    + Add OEMIROT_FAST_WAKE_UP feature
+    + Minor fixes
 
 ### 12-June-2024 ###
 ========================

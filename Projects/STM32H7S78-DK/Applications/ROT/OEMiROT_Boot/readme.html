@@ -259,7 +259,7 @@ OEMUROT_ENABLE switch will be automatically configured according to
 bootpath.</p>
 <p>Before starting the provisioning process, select the application
 project to use (application example or template), through
-oemirot_boot_path_project variable in ROT_Provisioning/env.bat or
+oemirot_appli_path_project variable in ROT_Provisioning/env.bat or
 env.sh. Then start provisioning process by running provisioning.bat
 (.sh) from ROT_Provisioning/OEMiROT or ROT_Provisioning/STiROT_OEMuROT,
 and follow its instructions. Refer to ROT_Provisioning/OEMiROT or
@@ -284,7 +284,7 @@ to start with STiRoT OEMuRoT on STM32H7S</a>.</li>
 <h4 id="notes"><b>Notes:</b></h4>
 <p>By default the anti-tamper is enabled for internal tamper events
 only. It is possible to change this configuration with
-OEMIROT_TAMPER_ENABLE define in Inc\boot_hal_cfg.h.</p>
+OEMIROT_TAMPER_ENABLE define in Inc_hal_cfg.h.</p>
 <pre><code>#define NO_TAMPER            (0)                   /*!&lt; No tamper activated */
 #define INTERNAL_TAMPER_ONLY (1)                   /*!&lt; Only Internal tamper activated */
 #define ALL_TAMPER           (2)                   /*!&lt; Internal and External tamper activated */

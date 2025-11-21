@@ -42,7 +42,7 @@ _Min_Heap_Size = 0x200; /* required amount of heap */
 _Min_Stack_Size = 0x400; /* required amount of stack */
 
 __FLASH_BEGIN  = 0x70000000;
-__FLASH_SIZE   = 0x08000000;
+__FLASH_SIZE   = 0x02000000;
 
 
 __RAM_BEGIN    = 0x24000000;
@@ -179,7 +179,7 @@ SECTIONS
     __bss_end__ = _ebss;
   } >RAM
 
-  RW_NONCACHEABLE :
+  RW_NONCACHEABLE (NOLOAD):
   {
     __NONCACHEABLEBUFFER_BEGIN = .;/* create symbol for start of section */
     KEEP(*(noncacheable_buffer))

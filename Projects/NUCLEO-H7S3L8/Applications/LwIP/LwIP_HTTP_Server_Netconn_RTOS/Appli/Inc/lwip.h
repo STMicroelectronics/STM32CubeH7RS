@@ -22,7 +22,7 @@
 #ifndef __LWIP_H
 #define __LWIP_H
 #ifdef __cplusplus
-extern "C" {
+ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/

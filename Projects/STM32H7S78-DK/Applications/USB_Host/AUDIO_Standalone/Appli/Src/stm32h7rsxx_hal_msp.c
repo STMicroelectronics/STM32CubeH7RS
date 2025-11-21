@@ -99,8 +99,8 @@ void HAL_SD_MspInit(SD_HandleTypeDef* hsd)
 
     /* USER CODE END SDMMC1_MspInit 0 */
 
-    /** Initializes the peripherals clock
-    */
+  /** Initializes the peripherals clock
+  */
     PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_SDMMC12;
     PeriphClkInit.Sdmmc12ClockSelection = RCC_SDMMC12CLKSOURCE_PLL2S;
     if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
@@ -207,8 +207,8 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
 
     /* USER CODE END UART4_MspInit 0 */
 
-    /** Initializes the peripherals clock
-    */
+  /** Initializes the peripherals clock
+  */
     PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USART234578;
     PeriphClkInit.Usart234578ClockSelection = RCC_USART234578CLKSOURCE_PCLK1;
     if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)

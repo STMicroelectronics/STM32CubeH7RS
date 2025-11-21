@@ -55,11 +55,11 @@ SD_HandleTypeDef SDHandle;
 __IO uint8_t RxCplt, TxCplt;
 
 /******** SD Transmission Buffer definition *******/
-uint8_t aTxBuffer[BUFFER_SIZE];
+ALIGN_32BYTES(uint8_t aTxBuffer[BUFFER_SIZE]);
 /**************************************************/
 
 /******** SD Receive Buffer definition *******/
-uint8_t aRxBuffer[BUFFER_SIZE];
+ALIGN_32BYTES(uint8_t aRxBuffer[BUFFER_SIZE]);
 /**************************************************/
 /* USER CODE END PV */
 
@@ -98,7 +98,7 @@ int main(void)
   SCB_EnableICache();
 
   /* Enable D-Cache---------------------------------------------------------*/
-  SCB_EnableDCache();
+  SCB_DisableDCache();
 
   /* MCU Configuration--------------------------------------------------------*/
 
@@ -133,7 +133,7 @@ int main(void)
   {
     Error_Handler();
   }
-  
+
   HAL_SD_GetCardCID(&hsd1, &pCID);
   HAL_SD_GetCardCSD(&hsd1, &pCSD);
 
@@ -143,8 +143,6 @@ int main(void)
     {
       aTxBuffer[index] = DATA_PATTERN + index;
     }
-    
-    SCB_CleanDCache_by_Addr (aTxBuffer, BUFFER_SIZE);
 
   }
 
@@ -176,12 +174,11 @@ int main(void)
     }
     while(RxCplt == 0);
   }
-  
+
   {
 
     /*##- 6 - Check Reception buffer #####################*/
-    SCB_InvalidateDCache_by_Addr (aRxBuffer, BUFFER_SIZE);
-    
+
     for (index = 0 ; index< (BUFFER_SIZE); index++)
     {
       if (aRxBuffer[index] != aTxBuffer[index])

@@ -110,16 +110,6 @@ volatile uint8_t boot_conf_flag[FLAG_SIZE];
 #endif /* __ICCARM__ */
 #endif /* not MCUBOOT_OVERWRITE_ONLY */
 
-/*
-#define ICACHE_MONITOR
-*/
-#if defined(ICACHE_MONITOR)
-#define ICACHE_MONITOR_PRINT() printf("icache monitor - Hit: %x, Miss: %x\r\n", \
-                                      HAL_ICACHE_Monitor_GetHitValue(), HAL_ICACHE_Monitor_GetMissValue());
-#else
-#define ICACHE_MONITOR_PRINT()
-#endif /* ICACHE_MONITOR */
-
 /* Private function prototypes -----------------------------------------------*/
 /** @defgroup BOOT_HAL_Private_Functions  Private Functions
   * @{
@@ -130,7 +120,6 @@ static void boot_jump_to_RSS(uint32_t boot_jump_addr1, uint32_t boot_jump_addr2,
 void print_jump_to_bl_warning(void);
 #endif /* OEMIROT_JUMP_TO_BL_ENABLE */
 void boot_erase_image(void);
-void icache_init(void);
 #if !defined(MCUBOOT_OVERWRITE_ONLY)
 int boot_check_conf_flag(void);
 #endif /* not MCUBOOT_OVERWRITE_ONLY */
@@ -321,16 +310,6 @@ void boot_platform_quit(struct boot_arm_vector_table *vector)
 #endif /* OEMIROT_LOAD_AND_RUN != NO_LOAD_AND_RUN */
 
   RNG_DeInit();
-
-  ICACHE_MONITOR_PRINT()
-
-#ifdef OEMIROT_ICACHE_ENABLE
-  /* Invalidate ICache before jumping to application */
-  if (HAL_ICACHE_Invalidate() != HAL_OK)
-  {
-    Error_Handler();
-  }
-#endif /* OEMIROT_ICACHE_ENABLE */
 
   SCB_DisableICache();
   SCB_DisableDCache();
@@ -683,35 +662,6 @@ void boot_erase_image(void)
     }
   }
 }
-/**
-  * @brief This function configures and enables the ICache.
-  * @note
-  * @retval execution_status
-  */
-void icache_init(void)
-{
-#ifdef ICACHE_MONITOR
-  if (HAL_ICACHE_Monitor_Reset(ICACHE_MONITOR_HIT_MISS) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  if (HAL_ICACHE_Monitor_Start(ICACHE_MONITOR_HIT_MISS) != HAL_OK)
-  {
-    Error_Handler();
-  }
-
-#endif /* ICACHE_MONITOR */
-
-  ICACHE_MONITOR_PRINT()
-
-#ifdef OEMIROT_ICACHE_ENABLE
-  /* Enable ICache */
-  if (HAL_ICACHE_Enable() != HAL_OK)
-  {
-    Error_Handler();
-  }
-#endif /* OEMIROT_ICACHE_ENABLE */
-}
 
 /**
   * @brief This function prints a warning regarding the jump to BL.
@@ -830,10 +780,10 @@ int32_t boot_platform_init(void)
        - Low Level Initialization
      */
   HAL_Init();
-#ifdef OEMIROT_DEV_MODE
+#ifdef MCUBOOT_HAVE_LOGGING
   /* Init for log */
   stdio_init();
-#endif /*  OEMIROT_DEV_MODE */
+#endif /*  MCUBOOT_HAVE_LOGGING */
 
 
   /* Enable I-Cache */
@@ -841,11 +791,6 @@ int32_t boot_platform_init(void)
 
   /* Enable D-Cache */
   SCB_EnableDCache();
-
-#ifdef OEMIROT_ICACHE_ENABLE
-  /* Configure and enable ICache */
-  icache_init();
-#endif /* OEMIROT_ICACHE_ENABLE */
 
   /* Reload Independent Watchdog */
   IWDG->KR = KR_RELOAD;
@@ -1021,7 +966,7 @@ void Error_Handler(void)
 void __aeabi_assert(const char *expr, const char *file, int line)
 {
 #ifdef OEMIROT_DEV_MODE
-  printf("assertion \" %s \" failed: file %s %d\n", expr, file, line);
+  BOOT_LOG_INF("assertion \" %s \" failed: file %s %d\n", expr, file, line);
 #endif /*  OEMIROT_DEV_MODE  */
   Error_Handler();
 }
@@ -1038,7 +983,7 @@ void __aeabi_assert(const char *expr, const char *file, int line)
 void assert_failed(uint8_t *file, uint32_t line)
 {
   /* User can add his own implementation to report the file name and line number,
-     ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+     ex: BOOT_LOG_INF("Wrong parameters value: file %s on line %d\r\n", file, line) */
 
   Error_Handler();
 }

@@ -136,7 +136,8 @@ void HAL_XSPI_MspInit(XSPI_HandleTypeDef* hxspi)
 
     /* USER CODE END XSPI1_MspInit 0 */
 
-    /* Initializes the peripherals clock */
+    /** Initializes the peripherals clock
+    */
     PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_XSPI1;
     PeriphClkInit.Xspi1ClockSelection = RCC_XSPI1CLKSOURCE_HCLK;
     if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)

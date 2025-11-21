@@ -142,6 +142,9 @@ uint32_t SystemCoreClock = HSI_VALUE;
 
 void SystemInit(void)
 {
+  /* SRAM2 clock enabled -----------------------------------------------------*/
+  __HAL_RCC_SRAM2_CLK_ENABLE();
+
   /* Configure the Vector Table location -------------------------------------*/
   SCB->VTOR = INTVECT_START;
 

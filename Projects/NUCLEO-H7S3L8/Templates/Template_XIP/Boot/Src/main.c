@@ -145,6 +145,8 @@ void SystemClock_Config(void)
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
+
+#ifdef Template_XIP_Boot
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
   RCC_OscInitStruct.HSIDiv = RCC_HSI_DIV1;
@@ -170,6 +172,32 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.PLL2.PLLT = 2;
   RCC_OscInitStruct.PLL2.PLLFractional = 0;
   RCC_OscInitStruct.PLL3.PLLState = RCC_PLL_NONE;
+#elif Template_XIP_Boot_HSE
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+  RCC_OscInitStruct.HSEState = RCC_HSE_ON;
+  RCC_OscInitStruct.PLL1.PLLState = RCC_PLL_ON;
+  RCC_OscInitStruct.PLL1.PLLSource = RCC_PLLSOURCE_HSE;
+  RCC_OscInitStruct.PLL1.PLLM = 2;
+  RCC_OscInitStruct.PLL1.PLLN = 50;
+  RCC_OscInitStruct.PLL1.PLLP = 1;
+  RCC_OscInitStruct.PLL1.PLLQ = 2;
+  RCC_OscInitStruct.PLL1.PLLR = 2;
+  RCC_OscInitStruct.PLL1.PLLS = 2;
+  RCC_OscInitStruct.PLL1.PLLT = 2;
+  RCC_OscInitStruct.PLL1.PLLFractional = 0;
+  RCC_OscInitStruct.PLL2.PLLState = RCC_PLL_ON;
+  RCC_OscInitStruct.PLL2.PLLSource = RCC_PLLSOURCE_HSE;
+  RCC_OscInitStruct.PLL2.PLLM = 2;
+  RCC_OscInitStruct.PLL2.PLLN = 50;
+  RCC_OscInitStruct.PLL2.PLLP = 3;
+  RCC_OscInitStruct.PLL2.PLLQ = 2;
+  RCC_OscInitStruct.PLL2.PLLR = 2;
+  RCC_OscInitStruct.PLL2.PLLS = 3;
+  RCC_OscInitStruct.PLL2.PLLT = 2;
+  RCC_OscInitStruct.PLL2.PLLFractional = 0;
+  RCC_OscInitStruct.PLL3.PLLState = RCC_PLL_NONE;
+#endif /* Template_XIP_Boot */
+
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
     Error_Handler();
@@ -223,7 +251,6 @@ static void MX_XSPI2_Init(void)
   hxspi2.Init.WrapSize = HAL_XSPI_WRAP_NOT_SUPPORTED;
   hxspi2.Init.ClockPrescaler = 3;
   hxspi2.Init.SampleShifting = HAL_XSPI_SAMPLE_SHIFT_NONE;
-  hxspi2.Init.DelayHoldQuarterCycle = HAL_XSPI_DHQC_ENABLE;
   hxspi2.Init.ChipSelectBoundary = HAL_XSPI_BONDARYOF_NONE;
   hxspi2.Init.MaxTran = 0;
   hxspi2.Init.Refresh = 0;
@@ -234,6 +261,7 @@ static void MX_XSPI2_Init(void)
   }
   sXspiManagerCfg.nCSOverride = HAL_XSPI_CSSEL_OVR_NCS1;
   sXspiManagerCfg.IOPort = HAL_XSPIM_IOPORT_2;
+  sXspiManagerCfg.Req2AckTime = 1U;
   if (HAL_XSPIM_Config(&hxspi2, &sXspiManagerCfg, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
   {
     Error_Handler();

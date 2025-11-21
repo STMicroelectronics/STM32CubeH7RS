@@ -1,13 +1,13 @@
 
 ## <b>LwIP_UDP_Echo_Client Application Description</b>
 
-This application guides STM32Cube HAL API users to run UDP Echo Client application based on Raw API of LwIP TCP/IP stack.
+This application guides STM32Cube users to run UDP Echo Client application based on Raw API of LwIP TCP/IP stack.
 
 ####  <b>Expected success behavior</b>
 
- + The board IP address is printed on the HyperTerminal
- + Each time the user pushes the KEY button of the NUCLEO-H7S3L8 board, the messages sent by the client are printed on the HyerTerminal and an echo request is sent to the server.
- + If the [echotool](https://github.com/PavelBansky/EchoTool/releases/tag/v1.5.0.0) utility is used the message sent by the client are displayed on the PC console.
+ + The board IP address is printed on the STLINK USB serial console
+ + Each time the user pushes the User button of the NUCLEO-H7S3L8 board, the messages sent by the client are printed on the serial console and an echo request is sent to the server
+ + If the [echotool](https://github.com/PavelBansky/EchoTool/releases/tag/v1.5.0.0) utility is used, the message sent by the client are displayed on the PC console.
 
 #### <b>Expected error behavior</b>
 
@@ -38,7 +38,7 @@ Connectivity, LwIP, Ethernet, TCP/IP, DHCP, UDP echo client
 
   - This application has been tested with the following environments:
     - NUCLEO-H7S3L8 board revision MB1737-H7S3L8-B02
-    - echotool: (http://bansky.net/echotool/) is used as echo server that sends
+    - [echotool](http://bansky.net/echotool/) is used as echo server that sends
       back every incoming data.
     - DHCP server:  PC utility TFTPD32 (http://tftpd32.jounin.net/) is used as a DHCP server
 
@@ -69,18 +69,19 @@ It boots from internal Flash (Template_XIP_Boot) then jumps to the application c
 To configure STM32CubeIDE Debug Configuration, you must do the following :
 
     1. Upload the template XIP
-    2. Add the adequate external loader (MX25UW25645G_STM32H7S3L8-NUCLEO.stldr file) in Project->Debugger Configuration
+    2. Add the adequate external loader (MX25UW25645G_NUCLEO-H7S3L8.stldr file) in Project->Debugger Configuration
     3. Add in the startup the template_XIP_Boot in Project->Debugger Configuration
     4. Move up the application in the startup
 
-In order to make the program work, you must do the following :
+To run the program, follow these steps :
 
  - Open your preferred toolchain
- - Run the [echotool](https://github.com/PavelBansky/EchoTool/releases/tag/v1.5.0.0) utility on a windows console as following:
+ - Run the [echotool](https://github.com/PavelBansky/EchoTool/releases/tag/v1.5.0.0) utility on a Windows PC command prompt:
 
        c:\> .\echotool.exe /p udp /s
 
-       Example : c:\> .\echotool.exe /p udp /s
-
- - Rebuild all files and load your image into target memory
- - Run the application
+ - Update the echo server IP address and port in source file Appli/Src/lwip.c (#define DEST_IP_ADDR0, DEST_IP_ADDR1, ...)
+ - Rebuild all files 
+ - load the image into STM32 memory and run the application
+ - press the board "User" blue button to send echo packet to the server
+ - check on Echo server tool that it receives the message

@@ -45,7 +45,8 @@
 XSPI_HandleTypeDef hxspi1;
 DMA_HandleTypeDef handle_HPDMA1_Channel1;
 DMA_HandleTypeDef handle_HPDMA1_Channel0;
-uint8_t TxCplt, RxCplt, StatusMatch = 0;
+__IO uint8_t TxCplt = 0;
+__IO uint8_t RxCplt = 0;
 
 /* Buffer used for transmission */
 uint8_t aTxBuffer[BUFFERSIZE];
@@ -275,14 +276,14 @@ static void MX_HPDMA1_Init(void)
   */
 static void MX_GPIO_Init(void)
 {
-/* USER CODE BEGIN MX_GPIO_Init_1 */
-/* USER CODE END MX_GPIO_Init_1 */
+  /* USER CODE BEGIN MX_GPIO_Init_1 */
+  /* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPION_CLK_ENABLE();
 
-/* USER CODE BEGIN MX_GPIO_Init_2 */
-/* USER CODE END MX_GPIO_Init_2 */
+  /* USER CODE BEGIN MX_GPIO_Init_2 */
+  /* USER CODE END MX_GPIO_Init_2 */
 }
 
 /* USER CODE BEGIN 4 */
@@ -331,7 +332,7 @@ static void XSPI_WriteEnable(XSPI_HandleTypeDef *hxspi)
   sCommand.OperationType      = HAL_XSPI_OPTYPE_COMMON_CFG;
   sCommand.Instruction        = OCTAL_WRITE_ENABLE_CMD;
   sCommand.InstructionMode    = HAL_XSPI_INSTRUCTION_8_LINES;
-  sCommand.InstructionWidth    = HAL_XSPI_INSTRUCTION_16_BITS;
+  sCommand.InstructionWidth   = HAL_XSPI_INSTRUCTION_16_BITS;
   sCommand.InstructionDTRMode = HAL_XSPI_INSTRUCTION_DTR_ENABLE;
   sCommand.AddressMode        = HAL_XSPI_ADDRESS_NONE;
   sCommand.AlternateBytesMode = HAL_XSPI_ALT_BYTES_NONE;
@@ -363,11 +364,11 @@ static void XSPI_WriteEnable(XSPI_HandleTypeDef *hxspi)
 
   sConfig.MatchMode           = HAL_XSPI_MATCH_MODE_AND;
   sConfig.AutomaticStop       = HAL_XSPI_AUTOMATIC_STOP_ENABLE;
-  sConfig.IntervalTime        = 0x10;
+  sConfig.IntervalTime        = AUTO_POLLING_INTERVAL;
   sConfig.MatchMask           = WRITE_ENABLE_MASK_VALUE;
   sConfig.MatchValue          = WRITE_ENABLE_MATCH_VALUE;
 
-  if (HAL_XSPI_AutoPolling(&hxspi1, &sConfig, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+  if (HAL_XSPI_AutoPolling(hxspi, &sConfig, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
   {
     Error_Handler();
   }
@@ -407,11 +408,11 @@ static void XSPI_AutoPollingMemReady(XSPI_HandleTypeDef *hxspi)
 
   sConfig.MatchMode           = HAL_XSPI_MATCH_MODE_AND;
   sConfig.AutomaticStop       = HAL_XSPI_AUTOMATIC_STOP_ENABLE;
-  sConfig.IntervalTime        = 0x10;
+  sConfig.IntervalTime        = AUTO_POLLING_INTERVAL;
   sConfig.MatchMask           = MEMORY_READY_MASK_VALUE;
   sConfig.MatchValue          = MEMORY_READY_MATCH_VALUE;
 
-  if (HAL_XSPI_AutoPolling(&hxspi1, &sConfig, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+  if (HAL_XSPI_AutoPolling(hxspi, &sConfig, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
   {
     Error_Handler();
   }

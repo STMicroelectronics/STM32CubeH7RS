@@ -1,4 +1,39 @@
 #!/bin/bash -
+#=================================================================================================
+# Managing HOST OS diversity : begin
+#=================================================================================================
+OS=$(uname)
+
+echo ${OS} | grep -i -e windows -e mingw >/dev/null
+if [ $? == 0 ]; then
+  echo "=================================="
+  echo "HOST OS : Windows detected"
+  echo ""
+  echo ">>> Running ../prebuild.bat $@"
+  echo ""
+  # Enable : exit immediately if any commands returns a non-zero status
+  set -e
+  cd ../
+  cmd.exe /C prebuild.bat $@
+  # Return OK if no error detected during .bat script
+  exit 0
+fi
+
+if [ "$OS" == "Linux" ]; then
+  echo "HOST OS : Linux detected"
+elif [ "$OS" == "Darwin" ]; then
+  echo "HOST OS : MacOS detected"
+else
+  echo "!!!HOST OS not supported : >$OS<!!!"
+  exit 1
+fi
+
+#=================================================================================================
+# Managing HOST OS diversity : end
+#=================================================================================================
+echo "=================================="
+echo ">>> Running $0 $@"
+echo ""
 
 # constants for the prebuild script
 SCRIPT=$(readlink -f $0)
@@ -10,20 +45,22 @@ source "$env_script" "$project_dir"
 # Update the stirot_iloader reference in env.sh
 stirot_iloader_boot_path_project_str="$project_dir"
 
-# line for Windows executable
-applicfg="$cube_fw_path/../../../Utilities/PC_Software/ROT_AppliConfig/dist/AppliCfg.exe"
-uname | grep -i -e windows -e mingw
-if [ $? == 0 ] && [ -e "$applicfg" ]; then
-  #line for window executable
-  echo "AppliCfg with windows executable"
-  python=""
+# Environment variable for AppliCfg
+# Check if Python is installed
+python3 --version >/dev/null 2>&1
+if [ $? -ne 0 ]; then
+  python --version >/dev/null 2>&1
+  if [ $? -ne 0 ]; then
+  echo "Python installation missing. Refer to Utilities/PC_Software/ROT_AppliConfig/README.md"
+  exit 1
+  fi
+  python="python "
 else
-  #line for python
-  echo "AppliCfg with python script"
-  applicfg="$cube_fw_path/../../../Utilities/PC_Software/ROT_AppliConfig/AppliCfg.py"
-  #determine/check python version command
   python="python3 "
 fi
+
+# Environment variable for AppliCfg
+applicfg="$cube_fw_path/../../../Utilities/PC_Software/ROT_AppliConfig/AppliCfg.py"
 
 # Update the stirot_iloader linker file
 code_align="0x2000"
@@ -69,9 +106,9 @@ hexa_size=$(printf "0x%x\n" "$dec_size")
 offset_value_str="#define $size_macro $hexa_size"
 echo "$offset_value_str" >> "$project_dir/tmp.h"
 
-"$python$applicfg" linker -l "$project_dir/tmp.h" -m "$offset_macro" -n "$offset_macro" "$ld_file" > "$project_dir/output.txt" 2>&1
+$python "$applicfg" linker -l "$project_dir/tmp.h" -m "$offset_macro" -n "$offset_macro" "$ld_file" > "$project_dir/output.txt" 2>&1
 
-"$python$applicfg" linker -l "$project_dir/tmp.h" -m "$size_macro" -n "$size_macro" "$ld_file" > "$project_dir/output.txt" 2>&1
+$python "$applicfg" linker -l "$project_dir/tmp.h" -m "$size_macro" -n "$size_macro" "$ld_file" > "$project_dir/output.txt" 2>&1
 
 rm "$project_dir/tmp.h"
 

@@ -93,7 +93,6 @@ LWIP_MEMPOOL_DECLARE(RX_POOL, ETH_RX_BUFFER_CNT, sizeof(RxBuff_t), "Zero-copy RX
 
 /* Variable Definitions */
 static uint8_t RxAllocStatus;
-
 #if defined ( __ICCARM__ ) /*!< IAR Compiler */
 
 #pragma location=0x24020000
@@ -123,7 +122,7 @@ __attribute__((section(".Rx_PoolSection"))) extern u8_t memp_memory_RX_POOL_base
 #elif defined ( __ARMCC_VERSION ) /* ARM 6 Compiler */
 __attribute__((section(".Rx_PoolSection"))) u8_t memp_memory_RX_POOL_base[];
 
-#elif defined ( __GNUC__ ) /* GNU */
+#elif defined ( __GNUC__ ) /* GNU Compiler */
 __attribute__((section(".Rx_PoolSection"))) extern u8_t memp_memory_RX_POOL_base[];
 #endif
 
@@ -218,8 +217,7 @@ static void low_level_init(struct netif *netif)
   LWIP_MEMPOOL_INIT(RX_POOL);
 
 #if LWIP_ARP || LWIP_ETHERNET
-
-  /* set MAC hardware address length */
+  /* Set MAC hardware address length */
   netif->hwaddr_len = ETH_HWADDR_LEN;
 
   /* set MAC hardware address */
@@ -257,8 +255,8 @@ static void low_level_init(struct netif *netif)
 
   if (hal_eth_init_status == HAL_OK)
   {
-  /* Get link state */
-  ethernet_link_check_state(netif);
+    /* Get link state */
+    ethernet_link_check_state(netif);
   }
   else
   {
@@ -419,7 +417,6 @@ err_t ethernetif_init(struct netif *netif)
    * The last argument should be replaced with your link speed, in units
    * of bits per second.
    */
-
   netif->name[0] = IFNAME0;
   netif->name[1] = IFNAME1;
   /* We directly use etharp_output() here to save a function call.
@@ -636,8 +633,7 @@ void HAL_ETH_MspDeInit(ETH_HandleTypeDef* ethHandle)
 int32_t ETH_PHY_IO_Init(void)
 {
   /* We assume that MDIO GPIO configuration is already done
-     in the ETH_MspInit() else it should be done here
-  */
+     in the ETH_MspInit() else it should be done here */
 
   /* Configure the MDIO Clock */
   HAL_ETH_SetMDIOClockRange(&heth);
@@ -718,7 +714,6 @@ void ethernet_link_check_state(struct netif *netif)
   }
   else if(!netif_is_link_up(netif) && (PHYLinkState > LAN8742_STATUS_LINK_DOWN))
   {
-
     switch (PHYLinkState)
     {
     case LAN8742_STATUS_100MBITS_FULLDUPLEX:
@@ -834,4 +829,3 @@ void HAL_ETH_TxFreeCallback(uint32_t * buff)
 /* USER CODE BEGIN 8 */
 
 /* USER CODE END 8 */
-

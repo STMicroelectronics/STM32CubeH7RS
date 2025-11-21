@@ -48,19 +48,22 @@ fi
 active_ide="$(head -n 1 "$iloader_dir/Binary/_ide")"
 
 # AppliCfg path
-AppliCfg="$cube_fw_path/Utilities/PC_Software/ROT_AppliConfig/dist/AppliCfg.exe"
-uname | grep -i -e windows -e mingw
-if [ $? == 0 ] && [ -e "$AppliCfg" ]; then
-  #line for window executable
-  echo "AppliCfg with windows executable"
-  python=""
+# Environment variable for AppliCfg
+# Check if Python is installed
+python3 --version >/dev/null 2>&1
+if [ $? -ne 0 ]; then
+  python --version >/dev/null 2>&1
+  if [ $? -ne 0 ]; then
+  echo "Python installation missing. Refer to Utilities/PC_Software/ROT_AppliConfig/README.md"
+  exit 1
+  fi
+  python="python "
 else
-  #line for python
-  echo "AppliCfg with python script"
-  AppliCfg="$cube_fw_path/Utilities/PC_Software/ROT_AppliConfig/AppliCfg.py"
-  #determine/check python version command
   python="python3 "
 fi
+
+# Environment variable for AppliCfg
+AppliCfg="$cube_fw_path/Utilities/PC_Software/ROT_AppliConfig/AppliCfg.py"
 
 # ================================================ Updating STiROT_iLoader files ========================================================
 echo "Updating the STiROT_iLoader files..."

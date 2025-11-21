@@ -122,7 +122,7 @@ To configure STM32CubeIDE Debug Configuration, you must do the following :
     3. Add in the startup the template_XIP_Boot in Project->Debugger Configuration
     4. Move up the application in the startup
 
-In order to make the program work, you must do the following :
+To run the program, follow these steps:
 
  - Open your preferred toolchain
  - Rebuild all files and load your image into target memory

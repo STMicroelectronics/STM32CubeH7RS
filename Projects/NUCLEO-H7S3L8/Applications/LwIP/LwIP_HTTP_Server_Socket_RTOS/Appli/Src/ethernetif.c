@@ -50,7 +50,7 @@
 #define IFNAME1 't'
 
 /* ETH Setting  */
-#define ETH_DMA_TRANSMIT_TIMEOUT      ( 20U )
+#define ETH_DMA_TRANSMIT_TIMEOUT               ( 20U )
 #define ETH_TX_BUFFER_MAX             ((ETH_TX_DESC_CNT) * 2U)
 /* ETH_RX_BUFFER_SIZE parameter is defined in lwipopts.h */
 
@@ -100,8 +100,7 @@ LWIP_MEMPOOL_DECLARE(RX_POOL, ETH_RX_BUFFER_CNT, sizeof(RxBuff_t), "Zero-copy RX
 
 /* Variable Definitions */
 static uint8_t RxAllocStatus;
-
-#if defined ( __ICCARM__ ) /* !< IAR Compiler */
+#if defined ( __ICCARM__ ) /*!< IAR Compiler */
 
 #pragma location=0x24020000
 ETH_DMADescTypeDef  DMARxDscrTab[ETH_RX_DESC_CNT]; /* Ethernet Rx DMA Descriptors */
@@ -116,11 +115,11 @@ __attribute__((at(0x24020080))) ETH_DMADescTypeDef  DMATxDscrTab[ETH_TX_DESC_CNT
 #elif (defined ( __GNUC__ ) || defined ( __ARMCC_VERSION )) /* GNU Compiler */
 
 ETH_DMADescTypeDef DMARxDscrTab[ETH_RX_DESC_CNT] __attribute__((section(".RxDescripSection"))); /* Ethernet Rx DMA Descriptors */
-ETH_DMADescTypeDef DMATxDscrTab[ETH_TX_DESC_CNT] __attribute__((section(".TxDescripSection"))); /* Ethernet Tx DMA Descriptors */
+ETH_DMADescTypeDef DMATxDscrTab[ETH_TX_DESC_CNT] __attribute__((section(".TxDescripSection")));   /* Ethernet Tx DMA Descriptors */
 
 #endif
 
-#if defined ( __ICCARM__ ) /* !< IAR Compiler */
+#if defined ( __ICCARM__ ) /*!< IAR Compiler */
 #pragma location = 0x24020100
 extern u8_t memp_memory_RX_POOL_base[];
 
@@ -130,7 +129,7 @@ __attribute__((section(".Rx_PoolSection"))) extern u8_t memp_memory_RX_POOL_base
 #elif defined ( __ARMCC_VERSION ) /* ARM 6 Compiler */
 __attribute__((section(".Rx_PoolSection"))) u8_t memp_memory_RX_POOL_base[];
 
-#elif defined ( __GNUC__ ) /* GNU */
+#elif defined ( __GNUC__ ) /* GNU Compiler */
 __attribute__((section(".Rx_PoolSection"))) extern u8_t memp_memory_RX_POOL_base[];
 #endif
 
@@ -156,7 +155,6 @@ osSemaphoreId_t TxPktSemaphore = NULL;   /* Semaphore to signal transmit packet 
 
 /* Global Ethernet handle */
 ETH_HandleTypeDef heth;
-ETH_TxPacketConfigTypeDef TxConfig;
 
 /* Private function prototypes -----------------------------------------------*/
 int32_t ETH_PHY_IO_Init(void);
@@ -218,12 +216,12 @@ void HAL_ETH_ErrorCallback(ETH_HandleTypeDef *handlerEth)
                        LL Driver Interface ( LwIP stack --> ETH)
 *******************************************************************************/
 /**
-  * @brief In this function, the hardware should be initialized.
-  * Called from ethernetif_init().
-  *
-  * @param netif the already initialized lwip network interface structure
-  *        for this ethernetif
-  */
+ * @brief In this function, the hardware should be initialized.
+ * Called from ethernetif_init().
+ *
+ * @param netif the already initialized lwip network interface structure
+ *        for this ethernetif
+ */
 static void low_level_init(struct netif *netif)
 {
   HAL_StatusTypeDef hal_eth_init_status = HAL_OK;
@@ -255,19 +253,13 @@ static void low_level_init(struct netif *netif)
 
   hal_eth_init_status = HAL_ETH_Init(&heth);
 
-  memset(&TxConfig, 0 , sizeof(ETH_TxPacketConfigTypeDef));
-  TxConfig.Attributes = ETH_TX_PACKETS_FEATURES_CSUM | ETH_TX_PACKETS_FEATURES_CRCPAD;
-  TxConfig.ChecksumCtrl = ETH_CHECKSUM_IPHDR_PAYLOAD_INSERT_PHDR_CALC;
-  TxConfig.CRCPadCtrl = ETH_CRC_PAD_INSERT;
-
   /* End ETH HAL Init */
 
   /* Initialize the RX POOL */
   LWIP_MEMPOOL_INIT(RX_POOL);
 
 #if LWIP_ARP || LWIP_ETHERNET
-
-  /* set MAC hardware address length */
+  /* Set MAC hardware address length */
   netif->hwaddr_len = ETH_HWADDR_LEN;
 
   /* set MAC hardware address */
@@ -289,7 +281,7 @@ static void low_level_init(struct netif *netif)
     netif->flags |= NETIF_FLAG_BROADCAST;
   #endif /* LWIP_ARP */
 
-  /* create a binary semaphore used for informing ethernetif of frame reception */
+  /* Create a binary semaphore used for informing ethernetif of frame reception */
   RxPktSemaphore = osSemaphoreNew(1, 0, NULL);
 
   /* create a binary semaphore used for informing ethernetif of frame transmission */
@@ -363,7 +355,6 @@ static void low_level_init(struct netif *netif)
     HAL_ETH_Start_IT(&heth);
     netif_set_up(netif);
     netif_set_link_up(netif);
-
 /* USER CODE BEGIN PHY_POST_CONFIG */
 
 /* USER CODE END PHY_POST_CONFIG */
@@ -382,20 +373,20 @@ static void low_level_init(struct netif *netif)
 }
 
 /**
-  * @brief This function should do the actual transmission of the packet. The packet is
-  * contained in the pbuf that is passed to the function. This pbuf
-  * might be chained.
-  *
-  * @param netif the lwip network interface structure for this ethernetif
-  * @param p the MAC packet to send (e.g. IP packet including MAC addresses and type)
-  * @return ERR_OK if the packet could be sent
-  *         an err_t value if the packet couldn't be sent
-  *
-  * @note Returning ERR_MEM here if a DMA queue of your MAC is full can lead to
-  *       strange results. You might consider waiting for space in the DMA queue
-  *       to become available since the stack doesn't retry to send a packet
-  *       dropped because of memory failure (except for the TCP timers).
-  */
+ * @brief This function should do the actual transmission of the packet. The packet is
+ * contained in the pbuf that is passed to the function. This pbuf
+ * might be chained.
+ *
+ * @param netif the lwip network interface structure for this ethernetif
+ * @param p the MAC packet to send (e.g. IP packet including MAC addresses and type)
+ * @return ERR_OK if the packet could be sent
+ *         an err_t value if the packet couldn't be sent
+ *
+ * @note Returning ERR_MEM here if a DMA queue of your MAC is full can lead to
+ *       strange results. You might consider waiting for space in the DMA queue
+ *       to become available since the stack doesn't retry to send a packet
+ *       dropped because of memory failure (except for the TCP timers).
+ */
 
 static err_t low_level_output(struct netif *netif, struct pbuf *p)
 {
@@ -403,8 +394,15 @@ static err_t low_level_output(struct netif *netif, struct pbuf *p)
   struct pbuf *q = NULL;
   err_t errval = ERR_OK;
   ETH_BufferTypeDef Txbuffer[ETH_TX_DESC_CNT] = {0};
+  ETH_TxPacketConfigTypeDef tx_config;
 
   memset(Txbuffer, 0 , ETH_TX_DESC_CNT*sizeof(ETH_BufferTypeDef));
+
+  /* Set Tx packet config common parameters */
+  memset(&tx_config, 0 , sizeof(ETH_TxPacketConfig));
+  tx_config.Attributes = ETH_TX_PACKETS_FEATURES_CSUM | ETH_TX_PACKETS_FEATURES_CRCPAD;
+  tx_config.ChecksumCtrl = ETH_CHECKSUM_IPHDR_PAYLOAD_INSERT_PHDR_CALC;
+  tx_config.CRCPadCtrl = ETH_CRC_PAD_INSERT;
 
   for(q = p; q != NULL; q = q->next)
   {
@@ -427,15 +425,15 @@ static err_t low_level_output(struct netif *netif, struct pbuf *p)
     i++;
   }
 
-  TxConfig.Length = p->tot_len;
-  TxConfig.TxBuffer = Txbuffer;
-  TxConfig.pData = p;
+  tx_config.Length = p->tot_len;
+  tx_config.TxBuffer = Txbuffer;
+  tx_config.pData = p;
 
   pbuf_ref(p);
 
   do
   {
-    if(HAL_ETH_Transmit_IT(&heth, &TxConfig) == HAL_OK)
+    if(HAL_ETH_Transmit_IT(&heth, &tx_config) == HAL_OK)
     {
       errval = ERR_OK;
     }
@@ -462,13 +460,13 @@ static err_t low_level_output(struct netif *netif, struct pbuf *p)
 }
 
 /**
-  * @brief Should allocate a pbuf and transfer the bytes of the incoming
-  * packet from the interface into the pbuf.
-  *
-  * @param netif the lwip network interface structure for this ethernetif
-  * @return a pbuf filled with the received packet (including MAC header)
-  *         NULL on memory error
-  */
+ * @brief Should allocate a pbuf and transfer the bytes of the incoming
+ * packet from the interface into the pbuf.
+ *
+ * @param netif the lwip network interface structure for this ethernetif
+ * @return a pbuf filled with the received packet (including MAC header)
+ *         NULL on memory error
+   */
 static struct pbuf * low_level_input(struct netif *netif)
 {
   struct pbuf *p = NULL;
@@ -482,14 +480,14 @@ static struct pbuf * low_level_input(struct netif *netif)
 }
 
 /**
-  * @brief This function should be called when a packet is ready to be read
-  * from the interface. It uses the function low_level_input() that
-  * should handle the actual reception of bytes from the network
-  * interface. Then the type of the received packet is determined and
-  * the appropriate input function is called.
-  *
-  * @param netif the lwip network interface structure for this ethernetif
-  */
+ * @brief This function should be called when a packet is ready to be read
+ * from the interface. It uses the function low_level_input() that
+ * should handle the actual reception of bytes from the network
+ * interface. Then the type of the received packet is determined and
+ * the appropriate input function is called.
+ *
+ * @param netif the lwip network interface structure for this ethernetif
+ */
 void ethernetif_input(void* argument)
 {
   struct pbuf *p = NULL;
@@ -516,11 +514,11 @@ void ethernetif_input(void* argument)
 
 #if !LWIP_ARP
 /**
-  * This function has to be completed by user in case of ARP OFF.
-  *
-  * @param netif the lwip network interface structure for this ethernetif
-  * @return ERR_OK if ...
-  */
+ * This function has to be completed by user in case of ARP OFF.
+ *
+ * @param netif the lwip network interface structure for this ethernetif
+ * @return ERR_OK if ...
+ */
 static err_t low_level_output_arp_off(struct netif *netif, struct pbuf *q, const ip4_addr_t *ipaddr)
 {
   err_t errval;
@@ -536,17 +534,17 @@ static err_t low_level_output_arp_off(struct netif *netif, struct pbuf *q, const
 #endif /* LWIP_ARP */
 
 /**
-  * @brief Should be called at the beginning of the program to set up the
-  * network interface. It calls the function low_level_init() to do the
-  * actual setup of the hardware.
-  *
-  * This function should be passed as a parameter to netif_add().
-  *
-  * @param netif the lwip network interface structure for this ethernetif
-  * @return ERR_OK if the loopif is initialized
-  *         ERR_MEM if private data couldn't be allocated
-  *         any other err_t on error
-  */
+ * @brief Should be called at the beginning of the program to set up the
+ * network interface. It calls the function low_level_init() to do the
+ * actual setup of the hardware.
+ *
+ * This function should be passed as a parameter to netif_add().
+ *
+ * @param netif the lwip network interface structure for this ethernetif
+ * @return ERR_OK if the loopif is initialized
+ *         ERR_MEM if private data couldn't be allocated
+ *         any other err_t on error
+ */
 err_t ethernetif_init(struct netif *netif)
 {
   LWIP_ASSERT("netif != NULL", (netif != NULL));
@@ -561,7 +559,6 @@ err_t ethernetif_init(struct netif *netif)
    * The last argument should be replaced with your link speed, in units
    * of bits per second.
    */
-
   netif->name[0] = IFNAME0;
   netif->name[1] = IFNAME1;
   /* We directly use etharp_output() here to save a function call.
@@ -643,7 +640,8 @@ void HAL_ETH_MspInit(ETH_HandleTypeDef* ethHandle)
 
   /* USER CODE END ETH_MspInit 0 */
 
-    /* Initializes the peripherals clock */
+  /** Initializes the peripherals clock
+  */
     PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_ETH1REF|RCC_PERIPHCLK_ETH1PHY;
     PeriphClkInit.Eth1RefClockSelection = RCC_ETH1REFCLKSOURCE_PHY;
     PeriphClkInit.Eth1PhyClockSelection = RCC_ETH1PHYCLKSOURCE_PLL3S;
@@ -666,7 +664,7 @@ void HAL_ETH_MspInit(ETH_HandleTypeDef* ethHandle)
     __HAL_RCC_GPIOB_CLK_ENABLE();
     __HAL_RCC_GPIOG_CLK_ENABLE();
     __HAL_RCC_GPIOA_CLK_ENABLE();
-    /** ETH GPIO Configuration
+    /**ETH GPIO Configuration
     PD4     ------> ETH_PHY_INTN
     PB6     ------> ETH_RMII_REF_CLK
     PG12     ------> ETH_RMII_TXD1
@@ -728,7 +726,7 @@ void HAL_ETH_MspDeInit(ETH_HandleTypeDef* ethHandle)
     __HAL_RCC_ETH1TX_CLK_DISABLE();
     __HAL_RCC_ETH1RX_CLK_DISABLE();
 
-    /** ETH GPIO Configuration
+    /**ETH GPIO Configuration
     PD4     ------> ETH_PHY_INTN
     PB6     ------> ETH_RMII_REF_CLK
     PG12     ------> ETH_RMII_TXD1
@@ -769,8 +767,7 @@ void HAL_ETH_MspDeInit(ETH_HandleTypeDef* ethHandle)
 int32_t ETH_PHY_IO_Init(void)
 {
   /* We assume that MDIO GPIO configuration is already done
-     in the ETH_MspInit() else it should be done here
-  */
+     in the ETH_MspInit() else it should be done here */
 
   /* Configure the MDIO Clock */
   HAL_ETH_SetMDIOClockRange(&heth);
@@ -979,4 +976,3 @@ void HAL_ETH_TxFreeCallback(uint32_t * buff)
 /* USER CODE BEGIN 8 */
 
 /* USER CODE END 8 */
-

@@ -122,11 +122,6 @@
 /* USER CODE END USBPD_USER_EXPORTED_FUNCTIONS_GROUP1 */
 
 /**
-  * @brief  Initialize DPM (port power role, PWR_IF, CAD and PE Init procedures)
-  * @retval USBPD Status
-  */
-
-/**
   * @brief  User delay implementation which is OS dependent
   * @param  Time time in ms
   * @retval None

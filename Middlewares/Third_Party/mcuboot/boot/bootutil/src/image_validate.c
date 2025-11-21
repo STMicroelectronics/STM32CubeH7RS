@@ -223,6 +223,7 @@ bootutil_img_hash(struct enc_key_data *enc_state, int image_index,
 #    define EXPECTED_SIG_TLV IMAGE_TLV_ECDSA256
 #    define SIG_BUF_SIZE 128
 #    define EXPECTED_SIG_LEN(x) ((x) <= 72) /* (tbc) 64 bytes for sign + 8 bytes for asn1 */
+#    define KEY_LEN 91
 #elif defined(MCUBOOT_SIGN_ED25519)
 #    define EXPECTED_SIG_TLV IMAGE_TLV_ED25519
 #    define SIG_BUF_SIZE 64
@@ -357,7 +358,7 @@ bootutil_get_img_security_cnt(struct image_header *hdr,
 }
 #endif /* MCUBOOT_HW_ROLLBACK_PROT */
 
-#if defined(MCUBOOT_DOUBLE_SIGN_VERIF)
+#if defined(MCUBOOT_USE_HASH_REF) && defined(MCUBOOT_DOUBLE_SIGN_VERIF)
 static uint32_t boot_secure_memequal(const void *s1, const void *s2, size_t n)
 {
     size_t i;
@@ -485,7 +486,7 @@ bootutil_img_validate(struct enc_key_data *enc_state, int image_index,
             /*
              * Determine which key we should be checking.
              */
-            if ((len > sizeof(key_buf)) || (len > sizeof(pubkey))) {
+            if ((len > sizeof(key_buf)) || (len != KEY_LEN)) {
                 rc = -1;
                 goto out;
             }
@@ -502,6 +503,12 @@ bootutil_img_validate(struct enc_key_data *enc_state, int image_index,
             }
 #endif /* !MCUBOOT_HW_KEY */
         } else if (type == EXPECTED_SIG_TLV) {
+            /* Exit if signature is already verified */
+            if (fih_not_eq(valid_signature, FIH_FAILURE)) {
+                rc = -1;
+                goto out;
+            }
+
             /* Check signature length*/
             if (!EXPECTED_SIG_LEN(len) || len > sizeof(buf)) {
                 rc = -1;
@@ -548,10 +555,10 @@ bootutil_img_validate(struct enc_key_data *enc_state, int image_index,
             }
 #endif /* MCUBOOT_USE_HASH_REF */
 
-            /* Ignore this signature if it is out of bounds. */
+            /* Exit if signature is out of bounds. */
             if (key_id < 0 || key_id >= bootutil_key_cnt) {
-                key_id = -1;
-                continue;
+                rc = -1;
+                goto out;
             }
             rc = LOAD_IMAGE_DATA(hdr, fap, off, buf, len);
             if (rc) {

@@ -221,6 +221,7 @@ typedef struct _HID_Process
   uint16_t             poll;
   uint32_t             timer;
   uint8_t              DataReady;
+  uint8_t              current_interface;
   HID_DescTypeDef      HID_Desc;
   USBH_StatusTypeDef(* Init)(USBH_HandleTypeDef *phost);
 }

@@ -466,7 +466,7 @@ size_t mbedtls_rsa_get_len(const mbedtls_rsa_context *ctx);
  * \return         An \c MBEDTLS_ERR_RSA_XXX error code on failure.
  */
 int mbedtls_rsa_gen_key(mbedtls_rsa_context *ctx,
-                        int (*f_rng)(void *, unsigned char *, size_t),
+                        mbedtls_f_rng_t *f_rng,
                         void *p_rng,
                         unsigned int nbits, int exponent);
 
@@ -591,7 +591,7 @@ int mbedtls_rsa_public(mbedtls_rsa_context *ctx,
  *
  */
 int mbedtls_rsa_private(mbedtls_rsa_context *ctx,
-                        int (*f_rng)(void *, unsigned char *, size_t),
+                        mbedtls_f_rng_t *f_rng,
                         void *p_rng,
                         const unsigned char *input,
                         unsigned char *output);
@@ -620,7 +620,7 @@ int mbedtls_rsa_private(mbedtls_rsa_context *ctx,
  * \return         An \c MBEDTLS_ERR_RSA_XXX error code on failure.
  */
 int mbedtls_rsa_pkcs1_encrypt(mbedtls_rsa_context *ctx,
-                              int (*f_rng)(void *, unsigned char *, size_t),
+                              mbedtls_f_rng_t *f_rng,
                               void *p_rng,
                               size_t ilen,
                               const unsigned char *input,
@@ -647,7 +647,7 @@ int mbedtls_rsa_pkcs1_encrypt(mbedtls_rsa_context *ctx,
  * \return         An \c MBEDTLS_ERR_RSA_XXX error code on failure.
  */
 int mbedtls_rsa_rsaes_pkcs1_v15_encrypt(mbedtls_rsa_context *ctx,
-                                        int (*f_rng)(void *, unsigned char *, size_t),
+                                        mbedtls_f_rng_t *f_rng,
                                         void *p_rng,
                                         size_t ilen,
                                         const unsigned char *input,
@@ -681,7 +681,7 @@ int mbedtls_rsa_rsaes_pkcs1_v15_encrypt(mbedtls_rsa_context *ctx,
  * \return           An \c MBEDTLS_ERR_RSA_XXX error code on failure.
  */
 int mbedtls_rsa_rsaes_oaep_encrypt(mbedtls_rsa_context *ctx,
-                                   int (*f_rng)(void *, unsigned char *, size_t),
+                                   mbedtls_f_rng_t *f_rng,
                                    void *p_rng,
                                    const unsigned char *label, size_t label_len,
                                    size_t ilen,
@@ -724,7 +724,7 @@ int mbedtls_rsa_rsaes_oaep_encrypt(mbedtls_rsa_context *ctx,
  * \return         An \c MBEDTLS_ERR_RSA_XXX error code on failure.
  */
 int mbedtls_rsa_pkcs1_decrypt(mbedtls_rsa_context *ctx,
-                              int (*f_rng)(void *, unsigned char *, size_t),
+                              mbedtls_f_rng_t *f_rng,
                               void *p_rng,
                               size_t *olen,
                               const unsigned char *input,
@@ -766,7 +766,7 @@ int mbedtls_rsa_pkcs1_decrypt(mbedtls_rsa_context *ctx,
  *
  */
 int mbedtls_rsa_rsaes_pkcs1_v15_decrypt(mbedtls_rsa_context *ctx,
-                                        int (*f_rng)(void *, unsigned char *, size_t),
+                                        mbedtls_f_rng_t *f_rng,
                                         void *p_rng,
                                         size_t *olen,
                                         const unsigned char *input,
@@ -807,7 +807,7 @@ int mbedtls_rsa_rsaes_pkcs1_v15_decrypt(mbedtls_rsa_context *ctx,
  * \return         An \c MBEDTLS_ERR_RSA_XXX error code on failure.
  */
 int mbedtls_rsa_rsaes_oaep_decrypt(mbedtls_rsa_context *ctx,
-                                   int (*f_rng)(void *, unsigned char *, size_t),
+                                   mbedtls_f_rng_t *f_rng,
                                    void *p_rng,
                                    const unsigned char *label, size_t label_len,
                                    size_t *olen,
@@ -850,7 +850,7 @@ int mbedtls_rsa_rsaes_oaep_decrypt(mbedtls_rsa_context *ctx,
  * \return         An \c MBEDTLS_ERR_RSA_XXX error code on failure.
  */
 int mbedtls_rsa_pkcs1_sign(mbedtls_rsa_context *ctx,
-                           int (*f_rng)(void *, unsigned char *, size_t),
+                           mbedtls_f_rng_t *f_rng,
                            void *p_rng,
                            mbedtls_md_type_t md_alg,
                            unsigned int hashlen,
@@ -888,7 +888,7 @@ int rsa_rsassa_pkcs1_v15_encode(mbedtls_md_type_t md_alg,
  * \return         An \c MBEDTLS_ERR_RSA_XXX error code on failure.
  */
 int mbedtls_rsa_rsassa_pkcs1_v15_sign(mbedtls_rsa_context *ctx,
-                                      int (*f_rng)(void *, unsigned char *, size_t),
+                                      mbedtls_f_rng_t *f_rng,
                                       void *p_rng,
                                       mbedtls_md_type_t md_alg,
                                       unsigned int hashlen,
@@ -940,7 +940,7 @@ int mbedtls_rsa_rsassa_pkcs1_v15_sign(mbedtls_rsa_context *ctx,
  * \return         An \c MBEDTLS_ERR_RSA_XXX error code on failure.
  */
 int mbedtls_rsa_rsassa_pss_sign_ext(mbedtls_rsa_context *ctx,
-                                    int (*f_rng)(void *, unsigned char *, size_t),
+                                    mbedtls_f_rng_t *f_rng,
                                     void *p_rng,
                                     mbedtls_md_type_t md_alg,
                                     unsigned int hashlen,
@@ -990,7 +990,7 @@ int mbedtls_rsa_rsassa_pss_sign_ext(mbedtls_rsa_context *ctx,
  * \return         An \c MBEDTLS_ERR_RSA_XXX error code on failure.
  */
 int mbedtls_rsa_rsassa_pss_sign(mbedtls_rsa_context *ctx,
-                                int (*f_rng)(void *, unsigned char *, size_t),
+                                mbedtls_f_rng_t *f_rng,
                                 void *p_rng,
                                 mbedtls_md_type_t md_alg,
                                 unsigned int hashlen,

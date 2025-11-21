@@ -18,6 +18,9 @@ set com_port=COM19
 :: Select device type (H7S or H7R)
 set device_type=H7S
 
+:: Select appli type (1 for template project)
+set /A template_appli_enable=0
+
 :: ==============================================================================
 ::                            STiROT bootpath
 :: ==============================================================================
@@ -30,11 +33,17 @@ set stirot_iloader_boot_path_project=Applications\ROT\STiROT_iLoader
 :: ==============================================================================
 
 :: ==============================================================================
+::                            OEMiROT Appli boot path
+:: Select application project below
+rem set oemirot_appli_path_project=Templates\Template_ROT\OEMiROT_Appli\Appli
+set oemirot_appli_path_project=Applications\ROT\OEMiROT_Appli
+:: ==============================================================================
+
+:: ==============================================================================
 ::                            OEMiROT bootpath
 :: ==============================================================================
-:: Select application project below
-rem set oemirot_boot_path_project=Templates\Template_ROT\OEMiROT_Appli\Appli
-set oemirot_boot_path_project=Applications\ROT\OEMiROT_Appli
+:: Select OEMiROT Boot project below
+set oemirot_boot_path_project=Applications\ROT\OEMiROT_Boot
 :: ==============================================================================
 
 :: ==============================================================================

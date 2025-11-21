@@ -20,7 +20,6 @@
 
 #ifndef __ETHERNETIF_H
 #define __ETHERNETIF_H
-
 #include "lwip/err.h"
 #include "lwip/netif.h"
 

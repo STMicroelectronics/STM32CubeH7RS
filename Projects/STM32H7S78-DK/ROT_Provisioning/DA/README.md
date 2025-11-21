@@ -30,6 +30,7 @@ DA, Password, Certificates, Root of Trust, Security
 
 <b>Scripts</b>
 
+- DA/discovery.bat/.sh                  It allows the user to get the information about the device state.
 - DA/dbg_auth.bat/.sh                   Connects to debug authentication.
 - DA/ob_programming.bat/.sh             Programs option bytes on the device.
 - DA/obk_provisioning.bat/.sh           Programs OBKeys on the device.

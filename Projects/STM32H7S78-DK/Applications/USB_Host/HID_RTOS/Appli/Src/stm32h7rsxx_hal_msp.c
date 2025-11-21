@@ -74,8 +74,8 @@ void HAL_MspInit(void)
   /* Enable USB Voltage detector */
   if(HAL_PWREx_EnableUSBVoltageDetector() != HAL_OK)
   {
-    /* Initialization error */
-    Error_Handler();
+   /* Initialization error */
+   Error_Handler();
   }
 
   HAL_PWREx_EnableUSBHSregulator();
@@ -101,7 +101,8 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
 
     /* USER CODE END UART4_MspInit 0 */
 
-    /* Initializes the peripherals clock */
+  /** Initializes the peripherals clock
+  */
     PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USART234578;
     PeriphClkInit.Usart234578ClockSelection = RCC_USART234578CLKSOURCE_PCLK1;
     if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
@@ -114,7 +115,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
 
     __HAL_RCC_GPIOB_CLK_ENABLE();
     __HAL_RCC_GPIOD_CLK_ENABLE();
-    /** UART4 GPIO Configuration
+    /**UART4 GPIO Configuration
     PB8     ------> UART4_RX
     PD1     ------> UART4_TX
     */
@@ -156,7 +157,7 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* huart)
     /* Peripheral clock disable */
     __HAL_RCC_UART4_CLK_DISABLE();
 
-    /** UART4 GPIO Configuration
+    /**UART4 GPIO Configuration
     PB8     ------> UART4_RX
     PD1     ------> UART4_TX
     */

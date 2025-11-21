@@ -29,6 +29,8 @@
 		<nature>com.st.stm32cube.ide.mcu.MCUSingleCpuProjectNature</nature>
 		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
 		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
+		<nature>com.st.stm32cube.ide.mcu.MCUMultiLinkerEnabledProjectNature</nature>
+		<nature>com.st.stm32cube.ide.mcu.MCUBootModeEnabledProjectNature</nature>
 	</natures>
 	<linkedResources>
 		<link>
@@ -145,6 +147,11 @@
 			<name>Drivers/STM32H7RSxx_HAL_Driver/stm32h7rsxx_hal_uart_ex.c</name>
 			<type>1</type>
 			<locationURI>PARENT-7-PROJECT_LOC/Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_hal_uart_ex.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/LwIP/acd.c</name>
+			<type>1</type>
+			<locationURI>PARENT-7-PROJECT_LOC/Middlewares/Third_Party/LwIP/src/core/ipv4/acd.c</locationURI>
 		</link>
 		<link>
 			<name>Middlewares/LwIP/altcp.c</name>

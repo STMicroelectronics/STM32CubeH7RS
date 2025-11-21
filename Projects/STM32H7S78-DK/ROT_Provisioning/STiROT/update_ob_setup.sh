@@ -33,20 +33,22 @@ else
   STiROT_iLoader_ld_file="$project_dir/$iloader_dir/STM32CubeIDE/STM32H7S7L8HXH_FLASH.ld"
 fi
 
-# AppliCfg path
-AppliCfg="$cube_fw_path/Utilities/PC_Software/ROT_AppliConfig/dist/AppliCfg.exe"
-uname | grep -i -e windows -e mingw
-if [ $? == 0 ] && [ -e "$AppliCfg" ]; then
-  #line for window executable
-  echo "AppliCfg with windows executable"
-  python=""
+# Environment variable for AppliCfg
+# Check if Python is installed
+python3 --version >/dev/null 2>&1
+if [ $? -ne 0 ]; then
+  python --version >/dev/null 2>&1
+  if [ $? -ne 0 ]; then
+  echo "Python installation missing. Refer to Utilities/PC_Software/ROT_AppliConfig/README.md"
+  exit 1
+  fi
+  python="python "
 else
-  #line for python
-  echo "AppliCfg with python script"
-  AppliCfg="$cube_fw_path/Utilities/PC_Software/ROT_AppliConfig/AppliCfg.py"
-  #determine/check python version command
   python="python3 "
 fi
+
+# Environment variable for AppliCfg
+AppliCfg="$cube_fw_path/Utilities/PC_Software/ROT_AppliConfig/AppliCfg.py"
 
 # ======================================================= Updating the Option bytes =======================================================
 echo Updating the ob_flash_programming script...

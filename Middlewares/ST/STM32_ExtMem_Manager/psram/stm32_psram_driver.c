@@ -2,7 +2,7 @@
   ******************************************************************************
   * @file    stm32_psram_driver.c
   * @author  MCD Application Team
-  * @brief   This file includes a driver for psram support
+  * @brief   This file implements the PSRAM driver.
   ******************************************************************************
   * @attention
   *
@@ -28,7 +28,7 @@
 #include "stm32_psram_driver_api.h"
 #if EXTMEM_DRIVER_PSRAM_DEBUG_LEVEL > 0 && defined(EXTMEM_MACRO_DEBUG)
 #include <stdio.h>
-#endif /* #if EXTMEM_DRIVER_PSRAM_DEBUG_LEVEL > 0 && defined(EXTMEM_MACRO_DEBUG) */
+#endif /* EXTMEM_DRIVER_PSRAM_DEBUG_LEVEL > 0 && EXTMEM_MACRO_DEBUG */
 
 /** @defgroup PSRAM PSRAM driver
   * @ingroup EXTMEM_DRIVER
@@ -41,23 +41,23 @@
   */
 
 /**
- * @brief default timeout
- */
+  * @brief Default Timeout value (ms)
+  */
 #define DRIVER_DEFAULT_TIMEOUT 300
 
 #if EXTMEM_DRIVER_PSRAM_DEBUG_LEVEL > 0 && defined(EXTMEM_MACRO_DEBUG)
 /**
- * @brief debug macro for a string
- */
+  * @brief Debug macro for a string
+  */
 #define DEBUG_STR(_STR_)  {                      \
-           EXTMEM_MACRO_DEBUG("\tPSRAM::");  \
-           EXTMEM_MACRO_DEBUG(_STR_);        \
-           EXTMEM_MACRO_DEBUG("\n\r");       \
-           }
+                            EXTMEM_MACRO_DEBUG("\tPSRAM::");  \
+                            EXTMEM_MACRO_DEBUG(_STR_);        \
+                            EXTMEM_MACRO_DEBUG("\n\r");       \
+                            }
 #else
 /**
- * @brief debug macro for a string
- */
+  * @brief Debug macro for a string
+  */
 #define DEBUG_STR(_STR_)
 #endif /* EXTMEM_DRIVER_PSRAM_DEBUG_LEVEL > 0 && defined(EXTMEM_MACRO_DEBUG) */
 
@@ -81,6 +81,14 @@ EXTMEM_DRIVER_PSRAM_StatusTypeDef PSRAM_ExecuteCommand(EXTMEM_DRIVER_PSRAM_Objec
   * @{
   */
 
+/**
+  * @brief Initializes the PSRAM driver.
+  * @param Peripheral Pointer to the peripheral handle.
+  * @param Config Link configuration.
+  * @param ClockInput Input clock frequency.
+  * @param PsramObject Pointer to the PSRAM driver object.
+  * @retval @ref EXTMEM_DRIVER_PSRAM_StatusTypeDef
+  */
 EXTMEM_DRIVER_PSRAM_StatusTypeDef EXTMEM_DRIVER_PSRAM_Init(void *Peripheral, EXTMEM_LinkConfig_TypeDef Config,
                                                            uint32_t ClockInput,
                                                            EXTMEM_DRIVER_PSRAM_ObjectTypeDef *PsramObject)
@@ -89,9 +97,9 @@ EXTMEM_DRIVER_PSRAM_StatusTypeDef EXTMEM_DRIVER_PSRAM_Init(void *Peripheral, EXT
   uint32_t ClockOut;
   SAL_XSPI_PhysicalLinkTypeDef linkvalue;
 
-  /* initialize the instance */
+  /* Initialize the instance */
   DEBUG_STR("initialize the instance")
-  
+
   /* Initialize XSPI low layer */
   (void)SAL_XSPI_Init(&PsramObject->psram_private.SALObject, Peripheral);
 
@@ -100,7 +108,8 @@ EXTMEM_DRIVER_PSRAM_StatusTypeDef EXTMEM_DRIVER_PSRAM_Init(void *Peripheral, EXT
 
   /* Set the frequency prescaler */
   DEBUG_STR("set memory speed according freqIn and freqMax supported by the memory")
-  if (HAL_OK != SAL_XSPI_SetClock(&PsramObject->psram_private.SALObject, ClockInput, PsramObject->psram_public.FreqMax, &ClockOut))
+  if (HAL_OK != SAL_XSPI_SetClock(&PsramObject->psram_private.SALObject, ClockInput, PsramObject->psram_public.FreqMax,
+                                  &ClockOut))
   {
     retr = EXTMEM_DRIVER_PSRAM_ERROR;
     goto error;
@@ -108,7 +117,8 @@ EXTMEM_DRIVER_PSRAM_StatusTypeDef EXTMEM_DRIVER_PSRAM_Init(void *Peripheral, EXT
 
   /* Set the memory size */
   DEBUG_STR("set memory size according")
-  (void)SAL_XSPI_MemoryConfig(&PsramObject->psram_private.SALObject, PARAM_FLASHSIZE, &PsramObject->psram_public.MemorySize);
+  (void)SAL_XSPI_MemoryConfig(&PsramObject->psram_private.SALObject, PARAM_FLASHSIZE,
+                              &PsramObject->psram_public.MemorySize);
 
   /* Set the memory size */
   DEBUG_STR("set xspi link config")
@@ -116,7 +126,8 @@ EXTMEM_DRIVER_PSRAM_StatusTypeDef EXTMEM_DRIVER_PSRAM_Init(void *Peripheral, EXT
   (void)SAL_XSPI_MemoryConfig(&PsramObject->psram_private.SALObject, PARAM_PHY_LINK, &linkvalue);
 
   /* Set the configuration to perform register operation */
-  (void)SAL_XSPI_MemoryConfig(&PsramObject->psram_private.SALObject, PARAM_DUMMY_CYCLES, &PsramObject->psram_public.REG_DummyCycle);
+  (void)SAL_XSPI_MemoryConfig(&PsramObject->psram_private.SALObject, PARAM_DUMMY_CYCLES,
+                              &PsramObject->psram_public.REG_DummyCycle);
 
   /* Execute the command sequence */
   for (uint8_t command_index = 0u; command_index < PsramObject->psram_public.NumberOfConfig; command_index++)
@@ -128,24 +139,33 @@ EXTMEM_DRIVER_PSRAM_StatusTypeDef EXTMEM_DRIVER_PSRAM_Init(void *Peripheral, EXT
     }
   }
 
-  switch(Config)
+  switch (Config)
   {
-  case EXTMEM_LINK_CONFIG_16LINES:
-    linkvalue = PHY_LINK_RAM16;
-    (void)SAL_XSPI_MemoryConfig(&PsramObject->psram_private.SALObject, PARAM_PHY_LINK, &linkvalue);
-    break;
+    case EXTMEM_LINK_CONFIG_16LINES:
+      linkvalue = PHY_LINK_RAM16;
+      (void)SAL_XSPI_MemoryConfig(&PsramObject->psram_private.SALObject, PARAM_PHY_LINK, &linkvalue);
+      break;
 
-  case EXTMEM_LINK_CONFIG_8LINES:
-  default:
-    retr = EXTMEM_DRIVER_PSRAM_ERROR;
-    goto error;
-    break;
+    case EXTMEM_LINK_CONFIG_8LINES:
+      linkvalue = PHY_LINK_RAM8;
+      (void)SAL_XSPI_MemoryConfig(&PsramObject->psram_private.SALObject, PARAM_PHY_LINK, &linkvalue);
+      break;
+
+    default:
+      retr = EXTMEM_DRIVER_PSRAM_ERROR;
+      goto error;
+      break;
   }
 
 error:
   return retr;
 }
 
+/**
+  * @brief Deinitializes the PSRAM driver.
+  * @param PsramObject Pointer to the PSRAM driver object.
+  * @retval @ref EXTMEM_DRIVER_PSRAM_StatusTypeDef
+  */
 EXTMEM_DRIVER_PSRAM_StatusTypeDef EXTMEM_DRIVER_PSRAM_DeInit(EXTMEM_DRIVER_PSRAM_ObjectTypeDef *PsramObject)
 {
   /* Abort any ongoing XSPI action */
@@ -153,23 +173,29 @@ EXTMEM_DRIVER_PSRAM_StatusTypeDef EXTMEM_DRIVER_PSRAM_DeInit(EXTMEM_DRIVER_PSRAM
   return EXTMEM_DRIVER_PSRAM_OK;
 }
 
-EXTMEM_DRIVER_PSRAM_StatusTypeDef EXTMEM_DRIVER_PSRAM_Enable_MemoryMappedMode(EXTMEM_DRIVER_PSRAM_ObjectTypeDef *PsramObject)
+/**
+  * @brief Enables memory-mapped mode for the PSRAM device.
+  * @param PsramObject Pointer to the PSRAM driver object.
+  * @retval @ref EXTMEM_DRIVER_PSRAM_StatusTypeDef
+  */
+EXTMEM_DRIVER_PSRAM_StatusTypeDef EXTMEM_DRIVER_PSRAM_Enable_MemoryMappedMode(EXTMEM_DRIVER_PSRAM_ObjectTypeDef
+                                                                              *PsramObject)
 {
   EXTMEM_DRIVER_PSRAM_StatusTypeDef retr = EXTMEM_DRIVER_PSRAM_OK;
 
-  /* configure the read wrap mode */
-  if (HAL_OK != SAL_XSPI_ConfigureWrappMode(&PsramObject->psram_private.SALObject, 
-                                            PsramObject->psram_public.WrapRead_command, 
+  /* Configure the read wrap mode */
+  if (HAL_OK != SAL_XSPI_ConfigureWrappMode(&PsramObject->psram_private.SALObject,
+                                            PsramObject->psram_public.WrapRead_command,
                                             PsramObject->psram_public.Write_DummyCycle))
   {
     retr = EXTMEM_DRIVER_PSRAM_ERROR_MAP_ENABLE;
   }
-   
-  /* launch the memory mapped mode */
-  if (HAL_OK != SAL_XSPI_EnableMapMode(&PsramObject->psram_private.SALObject, 
-                                       PsramObject->psram_public.Read_command, 
+
+  /* Enable memory mapped mode */
+  if (HAL_OK != SAL_XSPI_EnableMapMode(&PsramObject->psram_private.SALObject,
+                                       PsramObject->psram_public.Read_command,
                                        PsramObject->psram_public.Read_DummyCycle,
-                                       PsramObject->psram_public.Write_command, 
+                                       PsramObject->psram_public.Write_command,
                                        PsramObject->psram_public.Write_DummyCycle))
   {
     retr = EXTMEM_DRIVER_PSRAM_ERROR_MAP_ENABLE;
@@ -177,11 +203,17 @@ EXTMEM_DRIVER_PSRAM_StatusTypeDef EXTMEM_DRIVER_PSRAM_Enable_MemoryMappedMode(EX
   return retr;
 }
 
-EXTMEM_DRIVER_PSRAM_StatusTypeDef EXTMEM_DRIVER_PSRAM_Disable_MemoryMappedMode(EXTMEM_DRIVER_PSRAM_ObjectTypeDef *PsramObject)
+/**
+  * @brief Disables memory-mapped mode for the PSRAM device.
+  * @param PsramObject Pointer to the PSRAM driver object.
+  * @retval @ref EXTMEM_DRIVER_PSRAM_StatusTypeDef
+  */
+EXTMEM_DRIVER_PSRAM_StatusTypeDef EXTMEM_DRIVER_PSRAM_Disable_MemoryMappedMode(EXTMEM_DRIVER_PSRAM_ObjectTypeDef
+                                                                               *PsramObject)
 {
   EXTMEM_DRIVER_PSRAM_StatusTypeDef retr = EXTMEM_DRIVER_PSRAM_OK;
 
-  /* launch mass erase command */
+  /* Disable memory mapped mode */
   if (HAL_OK != SAL_XSPI_DisableMapMode(&PsramObject->psram_private.SALObject))
   {
     retr = EXTMEM_DRIVER_PSRAM_ERROR_MAP_DISABLE;
@@ -198,12 +230,12 @@ EXTMEM_DRIVER_PSRAM_StatusTypeDef EXTMEM_DRIVER_PSRAM_Disable_MemoryMappedMode(E
   */
 
 /**
- * @brief This function executes a command 
- *
- * @param PsramObject psram memory object
- * @param Index command index
- * @return @ref EXTMEM_DRIVER_PSRAM_StatusTypeDef
- **/
+  * @brief Executes a configuration command for the PSRAM device.
+  *
+  * @param PsramObject Pointer to the PSRAM driver object.
+  * @param Index Index of the command to execute.
+  * @retval @ref EXTMEM_DRIVER_PSRAM_StatusTypeDef
+  */
 EXTMEM_DRIVER_PSRAM_StatusTypeDef PSRAM_ExecuteCommand(EXTMEM_DRIVER_PSRAM_ObjectTypeDef *PsramObject, uint8_t Index)
 {
   EXTMEM_DRIVER_PSRAM_StatusTypeDef retr = EXTMEM_DRIVER_PSRAM_OK;
@@ -215,22 +247,22 @@ EXTMEM_DRIVER_PSRAM_StatusTypeDef PSRAM_ExecuteCommand(EXTMEM_DRIVER_PSRAM_Objec
     goto error;
   }
 
-  if (HAL_OK != SAL_XSPI_Read(&PsramObject->psram_private.SALObject, 
+  if (HAL_OK != SAL_XSPI_Read(&PsramObject->psram_private.SALObject,
                               PsramObject->psram_public.ReadREG,
-                              PsramObject->psram_public.config[Index].REGAddress, 
+                              PsramObject->psram_public.config[Index].REGAddress,
                               regval, PsramObject->psram_public.ReadREGSize))
   {
     retr = EXTMEM_DRIVER_PSRAM_ERROR_READREG;
     goto error;
   }
 
-  MODIFY_REG(regval[0], 
-             PsramObject->psram_public.config[Index].WriteMask, 
+  MODIFY_REG(regval[0],
+             PsramObject->psram_public.config[Index].WriteMask,
              PsramObject->psram_public.config[Index].WriteValue);
 
-  if (HAL_OK != SAL_XSPI_Write(&PsramObject->psram_private.SALObject, 
+  if (HAL_OK != SAL_XSPI_Write(&PsramObject->psram_private.SALObject,
                                PsramObject->psram_public.WriteREG,
-                               PsramObject->psram_public.config[Index].REGAddress, 
+                               PsramObject->psram_public.config[Index].REGAddress,
                                regval, PsramObject->psram_public.ReadREGSize))
   {
     retr = EXTMEM_DRIVER_PSRAM_ERROR_WRITEREG;

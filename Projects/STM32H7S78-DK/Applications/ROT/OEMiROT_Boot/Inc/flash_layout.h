@@ -165,11 +165,11 @@ extern "C" {
 #define FLASH_AREA_SCRATCH_SIZE         (0x0)
 #endif /* FLASH_AREA_SCRATCH_ID */
 
-#if  !defined(OEMUROT_ENABLE)
 /* area for BL2 code protected by hdp */
 #define FLASH_AREA_BL2_OFFSET           (0x00000)
 #define FLASH_AREA_BL2_SIZE             (0x10000)
 
+#if  !defined(OEMUROT_ENABLE)
 /* HDP area end at this address */
 #define FLASH_BL2_HDP_END               (FLASH_AREA_BL2_OFFSET+FLASH_AREA_BL2_SIZE-1)
 /* control area for BL2 code protected by hdp */

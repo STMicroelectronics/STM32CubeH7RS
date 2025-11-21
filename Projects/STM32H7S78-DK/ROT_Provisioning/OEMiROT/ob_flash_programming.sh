@@ -48,10 +48,10 @@ hdps=$((($hdp_start<<0)|($hdp_end<<16)))
 app_image_number=1
 
 if [ $isGeneratedByCubeMX == "true" ]; then
-   appli_dir=$oemirot_boot_path_project
+   appli_dir=$oemirot_appli_path_project
    oemirot_code="$cube_fw_path/Projects/STM32H7S78-DK/Applications/ROT/OEMiROT_Boot/Binary/OEMiROT_Boot.bin"
 else
-   appli_dir="../../$oemirot_boot_path_project"
+   appli_dir="../../$oemirot_appli_path_project"
    oemirot_code="$project_dir/../../Applications/ROT/OEMiROT_Boot/Binary/OEMiROT_Boot.bin"
 fi
 

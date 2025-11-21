@@ -472,6 +472,10 @@ void Reset_Handler(void)
   /* enable access to tamper register */
   HAL_PWR_EnableBkUpAccess();
   __HAL_RCC_RTC_ENABLE();
+  /* Release reset of back-up domain in case it is set, to avoid blocking the device (system reset
+  does not release it) */
+  __HAL_RCC_BACKUPRESET_RELEASE();
+
 #ifdef OEMIROT_DEV_MODE
   /* Reset the tamper event status */
   TamperEventCleared = 0;

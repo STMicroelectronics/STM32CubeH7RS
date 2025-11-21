@@ -19,7 +19,7 @@ Debug_authentication_method=${Debug_authentication_method}
 if [ "$script_mode" == "AUTO" ]; then
   Debug_authentication_method=$(echo "$Debug_authentication_method" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
 fi
-if [[ "${Debug_authentication_method^^}" == "CERTIFICATE" ]]; then
+if [[ "${Debug_authentication_method}" == "CERTIFICATE" ]]; then
   # Configure OBKeys for Debug Authentication (in case of Provisioning Product state)
   "$stm32programmercli" $connect_no_reset > /dev/null
   "$stm32programmercli" $connect_no_reset -sdp ./Binary/DA_Config.obk > /dev/null
@@ -28,7 +28,7 @@ if [[ "${Debug_authentication_method^^}" == "CERTIFICATE" ]]; then
   if [ $? -ne 0 ]; then error; exit 1; fi
 
 else
-  if [[ "${Debug_authentication_method^^}" == "PASSWORD" ]]; then
+  if [[ "${Debug_authentication_method}" == "PASSWORD" ]]; then
     # Configure OBKeys for Debug Authentication (in case of Provisioning Product state)
     "$stm32programmercli" $connect_no_reset > /dev/null
     "$stm32programmercli" $connect_no_reset -sdp ./DA/Binary/DA_ConfigWithPassword.obk > /dev/null

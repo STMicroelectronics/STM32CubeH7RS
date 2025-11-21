@@ -79,9 +79,9 @@ enum {
 #define EXTMEM_LRUN_DESTINATION EXTMEMORY_2
 #define EXTMEM_LRUN_DESTINATION_ADDRESS 0x00000000u
 
-/* USER CODE BEGIN PV */
+/* USER CODE BEGIN EC */
 
-/* USER CODE END PV */
+/* USER CODE END EC */
 
 /* Exported configuration --------------------------------------------------------*/
 /** @defgroup EXTMEM_CONF_Exported_configuration EXTMEM_CONF exported configuration definition

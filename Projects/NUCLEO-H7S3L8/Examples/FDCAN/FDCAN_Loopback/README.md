@@ -7,7 +7,7 @@ all the peripherals and initialize the systick used as 1ms HAL timebase.
 
 This project runs from the external Flash memory. It is launched from a first boot stage and inherits from this boot project
 configuration (caches, MPU regions [region 0 and 1], system clock at 600 MHz and external memory interface at the highest speed).
-Note that the boot part is automatically downloaded from the IDE environment via the board project Templates/Template_XIP/Binary/Boot_XIP.hex file.
+Note that the boot part is automatically downloaded from the IDE environment via the board project Templates/Template_XIP/Binary/Boot_XIP_HSE.hex file.
 
 This project calls also SCB_EnableICache() and SCB_EnableDCache() functions in order to enable
 the Layer 1 Core Instruction and Data Caches.
@@ -103,7 +103,7 @@ In order to make the program work, you must do the following :
 **EWARM** and **MDK-ARM**:
 
  - Open your preferred toolchain
- - Rebuild all files from sub-project Appli and load your images into memories: This sub-project will first load Boot_XIP.hex in internal Flash,
+ - Rebuild all files from sub-project Appli and load your images into memories: This sub-project will first load Boot_XIP_HSE.hex in internal Flash,
    than load Appli part in External memory available on NUCLEO-H7S3L8 board.
  - Run the example
 
@@ -128,7 +128,7 @@ In order to make the program work, you must do the following :
    - If your project doesn't contain a boot project:
      - click on [File System] and select the Boot HEX file corresponding to your board
 
-        Boot_XIP.hex can be found in folder [Binary] on each Template_XIP project
+        Boot_XIP_HSE.hex can be found in folder [Binary] on each Template_XIP project
 
         You may need to force the capability to select a .hex file by typing " * " + pressing the "Enter" key in the file name dialog
 

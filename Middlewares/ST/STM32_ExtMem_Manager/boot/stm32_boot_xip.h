@@ -22,7 +22,7 @@
 #define __STM32_BOOT_XIP_H__
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -37,16 +37,17 @@
   * @{
   */
 /**
- * @brief List of status codes for XIP
- */
-typedef enum {
-     BOOT_OK,
-     BOOT_ERROR_UNSUPPORTED_MEMORY, /* !< unsupported memory type         */
-     BOOT_ERROR_NOBASEADDRESS,      /* !< not base address for the memory */
-     BOOT_ERROR_MAPPEDMODEFAIL,     /* !< error during map processing */
-     BOOT_ERROR_INCOMPATIBLEMEMORY, /* !< selected memory not compatible with XIP boot */
-     BOOT_ERROR_DRIVER,
-}BOOTStatus_TypeDef;
+  * @brief List of status codes for XIP
+  */
+typedef enum
+{
+  BOOT_OK,                                 /*!< Operation successful */
+  BOOT_ERROR_UNSUPPORTED_MEMORY,           /*!< Unsupported memory type */
+  BOOT_ERROR_NOBASEADDRESS,                /*!< No base address for the memory */
+  BOOT_ERROR_MAPPEDMODEFAIL,               /*!< Error during memory mapping */
+  BOOT_ERROR_INCOMPATIBLEMEMORY,           /*!< Selected memory not compatible with XIP boot */
+  BOOT_ERROR_DRIVER,                       /*!< Error in driver operation */
+} BOOTStatus_TypeDef;
 
 /**
   * @}
@@ -58,12 +59,6 @@ typedef enum {
   * @{
   */
 
-/**
- * @brief This function boots on the application, the operation consists in mapping
- *        the memory and jumping in the application.
- *
- * @return @ref BOOTStatus_TypeDef
- **/
 BOOTStatus_TypeDef BOOT_Application(void);
 
 /**

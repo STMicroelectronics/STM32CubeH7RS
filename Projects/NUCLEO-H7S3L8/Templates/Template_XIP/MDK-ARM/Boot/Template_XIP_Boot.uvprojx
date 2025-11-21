@@ -338,7 +338,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>USE_HAL_DRIVER,STM32H7S3xx</Define>
+              <Define>USE_HAL_DRIVER,STM32H7S3xx,Template_XIP_Boot</Define>
               <Undefine></Undefine>
               <IncludePath>../../Boot/Inc;../../../../../../Drivers/BSP/STM32H7RSxx_Nucleo;../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Inc;../../../../../../Drivers/CMSIS/Device/ST/STM32H7RSxx/Include;../../../../../../Drivers/CMSIS/Include;../../../../../../Middlewares/ST/STM32_ExtMem_manager</IncludePath>
             </VariousControls>

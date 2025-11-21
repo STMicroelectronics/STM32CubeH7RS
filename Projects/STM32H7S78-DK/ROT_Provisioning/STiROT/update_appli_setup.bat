@@ -42,52 +42,33 @@ set main_h="%appli_dir%\Inc\main.h"
 
 :: STiRoT xml files
 set obk_cfg_file="%project_dir%Config\STiROT_Config.xml"
-set code_image="%project_dir%Image\STiROT_Code_Image.xml"
 
 :: General section need
 set code_size="Firmware area size"
 set code_address="Firmware area address (in internal RAM)"
-set fw_in_bin="Firmware binary input file"
-set fw_out_bin="Image output file"
 set secure_code_size="Size of the secure area"
 
-::Path adapted to IAR postbuild command
-set stirot_app_bin="..\%appli_dir%\Binary\appli.bin"
-set stirot_app_bin=%stirot_app_bin:\=/%
-set stirot_app_hex="..\%appli_dir%\Binary\appli_enc_sign.hex"
-set stirot_app_hex=%stirot_app_hex:\=/%
-
 :start
-goto exe:
-goto py:
-:exe
-::line for Windows executable
-set applicfg="%cube_fw_path%\Utilities\PC_Software\ROT_AppliConfig\dist\AppliCfg.exe"
-set "python="
-if exist %applicfg% (
-echo run config Appli with Windows executable
-goto update
+:: Check if Python is installed
+python3 --version >nul 2>&1
+if %errorlevel% neq 0 (
+ python --version >nul 2>&1
+ if !errorlevel! neq 0 (
+    echo Python installation missing. Refer to Utilities\PC_Software\ROT_AppliConfig\README.md
+    goto :error
+ )
+  set "python=python "
+) else (
+  set "python=python3 "
 )
-:py
-::called if we just want to use AppliCfg python (think to comment "goto exe:")
-set applicfg="%cube_fw_path%\Utilities\PC_Software\ROT_AppliConfig\AppliCfg.py"
-set "python=python ".\..\..\..\Utilities\PC_Software\ROT_AppliConfig\AppliCfg.py"
-set "python=python "
+
+:: Environment variable for AppliCfg
+set "applicfg=%cube_fw_path%\Utilities\PC_Software\ROT_AppliConfig\AppliCfg.py"
 
 :update
 set "AppliCfg=%python% %applicfg%"
 
 :: ================================================ Updating test Application files ========================================================
-
-set "action=Update STiROT_Code_Image.xml input binary file"
-echo !action!
-%AppliCfg% xmlval --name %fw_in_bin% --value %stirot_app_bin% --string --vb %code_image%
-if !errorlevel! neq 0 goto :error
-
-set "action=Update STiROT_Code_Image.xml output encrypted/signed hexadecimal file"
-echo !action!
-%AppliCfg% xmlval --name %fw_out_bin% --value %stirot_app_hex% --string --vb %code_image%
-if !errorlevel! neq 0 goto :error
 
 if exist "%icf_file%" (
     set "action=Updating Linker .icf file"

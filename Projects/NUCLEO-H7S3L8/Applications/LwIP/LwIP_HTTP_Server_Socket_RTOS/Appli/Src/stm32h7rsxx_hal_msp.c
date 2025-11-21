@@ -88,11 +88,12 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
   RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
   if(huart->Instance==USART3)
   {
-  /* USER CODE BEGIN USART3_MspInit 0 */
+    /* USER CODE BEGIN USART3_MspInit 0 */
 
-  /* USER CODE END USART3_MspInit 0 */
+    /* USER CODE END USART3_MspInit 0 */
 
-    /* Initializes the peripherals clock */
+  /** Initializes the peripherals clock
+  */
     PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USART234578;
     PeriphClkInit.Usart234578ClockSelection = RCC_USART234578CLKSOURCE_PCLK1;
     if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
@@ -104,7 +105,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
     __HAL_RCC_USART3_CLK_ENABLE();
 
     __HAL_RCC_GPIOD_CLK_ENABLE();
-    /** USART3 GPIO Configuration
+    /**USART3 GPIO Configuration
     PD8     ------> USART3_TX
     PD9     ------> USART3_RX
     */
@@ -115,12 +116,12 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
     GPIO_InitStruct.Alternate = GPIO_AF7_USART3;
     HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
-  /* USER CODE BEGIN USART3_MspInit 1 */
+    /* USER CODE BEGIN USART3_MspInit 1 */
     /* USART3 interrupt Init */
     HAL_NVIC_SetPriority(USART3_IRQn, 5, 0);
     /* Enable the USART3 global Interrupt */
     HAL_NVIC_EnableIRQ(USART3_IRQn);
-  /* USER CODE END USART3_MspInit 1 */
+    /* USER CODE END USART3_MspInit 1 */
 
   }
 
@@ -136,21 +137,21 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* huart)
 {
   if(huart->Instance==USART3)
   {
-  /* USER CODE BEGIN USART3_MspDeInit 0 */
+    /* USER CODE BEGIN USART3_MspDeInit 0 */
 
-  /* USER CODE END USART3_MspDeInit 0 */
+    /* USER CODE END USART3_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_USART3_CLK_DISABLE();
 
-    /** USART3 GPIO Configuration
+    /**USART3 GPIO Configuration
     PD8     ------> USART3_TX
     PD9     ------> USART3_RX
     */
     HAL_GPIO_DeInit(GPIOD, USART_TX_Pin|USART_RX_Pin);
 
-  /* USER CODE BEGIN USART3_MspDeInit 1 */
+    /* USER CODE BEGIN USART3_MspDeInit 1 */
 
-  /* USER CODE END USART3_MspDeInit 1 */
+    /* USER CODE END USART3_MspDeInit 1 */
   }
 
 }

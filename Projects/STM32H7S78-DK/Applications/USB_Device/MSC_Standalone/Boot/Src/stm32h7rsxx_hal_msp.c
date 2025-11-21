@@ -138,7 +138,8 @@ void HAL_XSPI_MspInit(XSPI_HandleTypeDef* hxspi)
 
     /* USER CODE END XSPI1_MspInit 0 */
 
-    /* Initializes the peripherals clock */
+  /** Initializes the peripherals clock
+  */
     PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_XSPI1;
     PeriphClkInit.Xspi1ClockSelection = RCC_XSPI1CLKSOURCE_PLL2S;
     if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
@@ -155,7 +156,7 @@ void HAL_XSPI_MspInit(XSPI_HandleTypeDef* hxspi)
 
     __HAL_RCC_GPIOO_CLK_ENABLE();
     __HAL_RCC_GPIOP_CLK_ENABLE();
-    /** XSPI1 GPIO Configuration
+    /**XSPI1 GPIO Configuration
     PO3     ------> XSPIM_P1_DQS1
     PP10     ------> XSPIM_P1_IO10
     PP12     ------> XSPIM_P1_IO12
@@ -204,7 +205,8 @@ void HAL_XSPI_MspInit(XSPI_HandleTypeDef* hxspi)
 
     /* USER CODE END XSPI2_MspInit 0 */
 
-    /* Initializes the peripherals clock */
+  /** Initializes the peripherals clock
+  */
     PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_XSPI2;
     PeriphClkInit.Xspi2ClockSelection = RCC_XSPI2CLKSOURCE_PLL2S;
     if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
@@ -220,7 +222,7 @@ void HAL_XSPI_MspInit(XSPI_HandleTypeDef* hxspi)
     __HAL_RCC_XSPI2_CLK_ENABLE();
 
     __HAL_RCC_GPION_CLK_ENABLE();
-    /** XSPI2 GPIO Configuration
+    /**XSPI2 GPIO Configuration
     PN1     ------> XSPIM_P2_NCS1
     PN3     ------> XSPIM_P2_IO1
     PN0     ------> XSPIM_P2_DQS0
@@ -269,7 +271,7 @@ void HAL_XSPI_MspDeInit(XSPI_HandleTypeDef* hxspi)
     }
     __HAL_RCC_XSPI1_CLK_DISABLE();
 
-    /** XSPI1 GPIO Configuration
+    /**XSPI1 GPIO Configuration
     PO3     ------> XSPIM_P1_DQS1
     PP10     ------> XSPIM_P1_IO10
     PP12     ------> XSPIM_P1_IO12
@@ -314,7 +316,7 @@ void HAL_XSPI_MspDeInit(XSPI_HandleTypeDef* hxspi)
     }
     __HAL_RCC_XSPI2_CLK_DISABLE();
 
-    /** XSPI2 GPIO Configuration
+    /**XSPI2 GPIO Configuration
     PN1     ------> XSPIM_P2_NCS1
     PN3     ------> XSPIM_P2_IO1
     PN0     ------> XSPIM_P2_DQS0

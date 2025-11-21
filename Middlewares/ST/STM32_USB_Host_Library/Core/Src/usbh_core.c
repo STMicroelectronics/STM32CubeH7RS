@@ -452,8 +452,6 @@ USBH_StatusTypeDef USBH_ReEnumerate(USBH_HandleTypeDef *phost)
 
     /* Stop Host */
     (void)USBH_Stop(phost);
-
-    phost->device.is_disconnected = 1U;
   }
 
 #if (USBH_USE_OS == 1U)
@@ -476,7 +474,8 @@ USBH_StatusTypeDef USBH_Process(USBH_HandleTypeDef *phost)
   uint8_t idx = 0U;
 
   /* check for Host pending port disconnect event */
-  if (phost->device.is_disconnected == 1U)
+  if ((phost->device.is_disconnected == 1U)
+      || (phost->device.is_ReEnumerated == 1U))
   {
     phost->gState = HOST_DEV_DISCONNECTED;
   }
@@ -750,14 +749,14 @@ USBH_StatusTypeDef USBH_Process(USBH_HandleTypeDef *phost)
     case HOST_DEV_DISCONNECTED :
       phost->device.is_disconnected = 0U;
 
-      (void)DeInitStateMachine(phost);
-
       /* Re-Initilaize Host for new Enumeration */
       if (phost->pActiveClass != NULL)
       {
         phost->pActiveClass->DeInit(phost);
         phost->pActiveClass = NULL;
       }
+
+      (void)DeInitStateMachine(phost);
 
       if (phost->pUser != NULL)
       {
@@ -1172,7 +1171,10 @@ void USBH_LL_PortEnabled(USBH_HandleTypeDef *phost)
 void USBH_LL_PortDisabled(USBH_HandleTypeDef *phost)
 {
   phost->device.PortEnabled = 0U;
-  phost->device.is_disconnected = 1U;
+
+#if (USBH_USE_OS == 1U)
+  USBH_OS_PutMessage(phost, USBH_PORT_EVENT, 0U, 0U);
+#endif /* (USBH_USE_OS == 1U) */
 
   return;
 }
@@ -1226,7 +1228,7 @@ USBH_StatusTypeDef USBH_LL_Disconnect(USBH_HandleTypeDef *phost)
   /* Stop Host */
   (void)USBH_LL_Stop(phost);
 
-  /* FRee Control Pipes */
+  /* Free Control Pipes */
   (void)USBH_FreePipe(phost, phost->Control.pipe_in);
   (void)USBH_FreePipe(phost, phost->Control.pipe_out);
 

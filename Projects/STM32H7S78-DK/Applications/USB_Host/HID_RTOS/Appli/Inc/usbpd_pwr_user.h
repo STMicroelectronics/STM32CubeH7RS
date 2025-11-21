@@ -265,5 +265,5 @@ void    BSP_USBPD_PWR_EventCallback(uint32_t Instance);
 }
 #endif
 
-#endif /* __USBPD_PWR_USER_H */
+#endif /* USBPD_PWR_USER_H_ */
 

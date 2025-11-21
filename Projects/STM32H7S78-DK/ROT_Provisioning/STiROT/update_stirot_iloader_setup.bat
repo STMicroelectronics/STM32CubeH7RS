@@ -58,21 +58,21 @@ set STiROT_iLoader_sct_file="%STiROT_iLoader_sct_file:\=/%"
 set /p active_ide=<"%iloader_dir%\Binary\_ide"
 
 :start
-goto exe:
-goto py:
-:exe
-::line for Windows executable
-set Applicfg="%cube_fw_path%\Utilities\PC_Software\ROT_AppliConfig\dist\AppliCfg.exe"
-set "python="
-if exist %Applicfg% (
-    echo run config Appli with Windows executable
-    goto :update
+:: Check if Python is installed
+python3 --version >nul 2>&1
+if %errorlevel% neq 0 (
+ python --version >nul 2>&1
+ if !errorlevel! neq 0 (
+    echo Python installation missing. Refer to Utilities\PC_Software\ROT_AppliConfig\README.md
+    goto :error
+ )
+  set "python=python "
+) else (
+  set "python=python3 "
 )
-:py
-::called if we just want to use AppliCfg python (think to comment "goto exe:")
+
+:: Environment variable for AppliCfg
 set Applicfg="%cube_fw_path%\Utilities\PC_Software\ROT_AppliConfig\AppliCfg.py"
-set "python=python "
-goto :update
 
 :update
 set "AppliCfg=%python% %Applicfg%"

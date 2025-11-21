@@ -49,7 +49,7 @@ File | Description
 will be automatically updated.
 
 Before starting the provisioning process, select the application project to use (application example or template),
-through oemirot_boot_path_project variable in ROT_Provisioning/env.bat or env.sh.
+through oemirot_appli_path_project variable in ROT_Provisioning/env.bat or env.sh.
 Then start provisioning process by running provisioning.bat (.sh) from ROT_Provisioning/OEMiROT or ROT_Provisioning/STiROT_OEMuROT,
 and follow its instructions. Refer to ROT_Provisioning/OEMiROT or ROT_Provisioning/STiROT_OEMuROT readme for more information on
 the provisioning process for OEMiROT boot path or STiROT_OEMuROT boot path.

@@ -27,7 +27,6 @@
  * 1 tab == 4 spaces!
  */
 /* USER CODE END Header */
-
 #ifndef __FREERTOS_CONFIG_H
 #define __FREERTOS_CONFIG_H
 

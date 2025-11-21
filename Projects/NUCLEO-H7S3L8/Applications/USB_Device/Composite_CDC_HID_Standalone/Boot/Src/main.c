@@ -334,6 +334,7 @@ static void MX_XSPI2_Init(void)
   }
   sXspiManagerCfg.nCSOverride = HAL_XSPI_CSSEL_OVR_NCS1;
   sXspiManagerCfg.IOPort = HAL_XSPIM_IOPORT_2;
+  sXspiManagerCfg.Req2AckTime = 1U;
   if (HAL_XSPIM_Config(&hxspi2, &sXspiManagerCfg, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
   {
     Error_Handler();

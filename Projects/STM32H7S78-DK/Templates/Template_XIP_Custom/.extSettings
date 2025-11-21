@@ -1,0 +1,16 @@
+[Boot:ProjectFiles]
+[Boot:Others]
+Define=
+HALModule=UART
+[Boot:Groups]
+Doc=../README.md;
+Drivers/STM32H7RSxx_HAL_Driver=../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_hal_uart.c;
+Drivers/STM32H7RSxx_HAL_Driver=../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_hal_uart_ex.c;
+[Appli:ProjectFiles]
+HeaderPath=..\..\..\..\..\Drivers\BSP\STM32H7S78-DK
+[Appli:Others]
+Define=
+HALModule=GPIO
+[Appli:Groups]
+Doc=../README.md;
+Drivers/BSP/STM32H7S78-DK=../../../../../Drivers/BSP/STM32H7S78-DK/stm32h7s78_discovery.c;

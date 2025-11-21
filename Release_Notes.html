@@ -62,9 +62,491 @@
 <div class="col-sm-12 col-lg-8">
 <h1 id="update-history">Update History</h1>
 <div class="collapse">
-<input type="checkbox" id="collapse-section3" checked aria-hidden="true"> <label for="collapse-section3" aria-hidden="true"><strong>V1.2.0 / 05-February-2025</strong></label>
+<input type="checkbox" id="collapse-section4" checked aria-hidden="true"> <label for="collapse-section4" aria-hidden="true"><strong>V1.3.0 / 29-October-2025</strong></label>
 <div>
 <h2 id="maintenance-release">Maintenance release</h2>
+<ul>
+<li>General updates to fix known defects and enhancements implementation</li>
+<li><strong>SLA0044</strong> Legal terms updated to latest revision <strong>(Rev 6 / October 2025)</strong></li>
+<li><strong>SLA0048</strong> Legal terms updated to latest revision <strong>(Rev 5 / October 2025)</strong></li>
+<li>Upgrade of <strong>STM32 ExtMem Manager</strong> library to new version <strong>V1.5.0</strong> :
+<ul>
+<li>Addition of a new CUSTOM driver in External Memory Manager middleware allowing external memory management based on a configuration file, describing all required memory configuration steps (configuration register updates) and memory access characteristics and commands.</li>
+<li>Addition of a new XIP template project (available on DK board), based on External Memory Manager Custom driver use.</li>
+</ul></li>
+<li><strong>HAL ETH driver V1.2.0, included in STM32CubeH7RS V1.2.0, breaks compatibility with previous versions and requires updating application code based on older HAL ETH driver versions:</strong>
+<ul>
+<li>The HAL_ETH_SetMACFilterConfig() API was updated to fix the enable/disable broadcast filter configuration.</li>
+<li>When porting an application to the new HAL ETH driver, configure the MAC filter as follows:
+<ul>
+<li>Set BroadcastFilter = DISABLE to allow reception of broadcast packets.</li>
+<li>Set BroadcastFilter = ENABLE to block reception of broadcast packets.</li>
+</ul></li>
+</ul></li>
+<li>Upgrade <strong>CMSIS Core</strong> to <strong>v5.9.0_fix_620_dsp_v1.10.0_nn_v3.1.0_no_doc</strong>: Documentation based on jQuery 1.7.1 removed</li>
+<li>Upgrade of <strong>STM32 ExtMem Loader</strong> library to new version <strong>V1.1.1</strong></li>
+<li>Upgrade of <strong>USB Device</strong> library to new version <strong>V2.11.5</strong></li>
+<li>Upgrade of <strong>USB Host</strong> library to new version <strong>V3.5.4</strong></li>
+<li>Upgrade of <strong>USB USBPD Devices</strong> library to new version <strong>V1.2.2</strong></li>
+<li>Upgrade of <strong>USB USBPD Core</strong> library to new version <strong>V5.3.1</strong></li>
+<li>Upgrade of <strong>LWIP</strong> library to new version <strong>V2.2.1 (ST modified 2025-08-04)</strong>
+<ul>
+<li>Security Advisory SA0039 fixed</li>
+</ul></li>
+<li>Upgrade of <strong>mcuboot</strong> library to new version <strong>V1.7.2.38</strong></li>
+<li>Upgrade of <strong>mbed-crypto</strong> library to new version <strong>V3.6.4 (ST modified 2025-07-01)</strong></li>
+<li>Upgrade of <strong>OpenBootloader</strong> library to new version <strong>V6.1.2</strong></li>
+</ul>
+<h2 id="contents">Contents</h2>
+<ul>
+<li><strong>SBOM</strong>
+<ul>
+<li>Deliver SBOM in <a href="sbom_cdx.json">CycloneDX v1.5 format</a>
+<ul>
+<li>The software component ‘mbed-crypto’ is also referred to as ‘mbedTLS’.</li>
+</ul></li>
+</ul></li>
+<li><strong>CMSIS</strong> updates
+<ul>
+<li>Fix USB GAHBCFG INCR AHB bus definition.</li>
+<li>Fix MISRA-C 2012 Rule 12.2 violations.</li>
+</ul></li>
+<li><strong>HAL</strong> updates
+<ul>
+<li>Fix MISRA-C 2012 Rule 12.2 violations.</li>
+<li><strong>HAL GPIO</strong>
+<ul>
+<li>Correct HAL_GPIO_DeInit() API description.</li>
+</ul></li>
+<li><strong>HAL RTC</strong>
+<ul>
+<li>Prevent entering initialization mode when calling HAL_RTC_Init() API if the RTC is already configured in binary mode to avoid unwanted reset of the SSR register.</li>
+<li>Use SET_BIT() instead of WRITE_REG() in HAL_RTCEx_BKUPErase() and HAL_RTCEx_BKUPBlock() APIs to prevent overwriting other bitfields of the TAMP’s CR2 register.</li>
+<li>Use SET_BIT() instead of WRITE_REG() in HAL_RTCEx_LockBootHardwareKey() API to prevent overwriting other bitfields of the TAMP’s CFGR register.</li>
+</ul></li>
+<li><strong>HAL TIM</strong>
+<ul>
+<li>Resolve MISRA-C 2012 Rule 20.7 warning.</li>
+<li>Correct update flag (UIF) clearing in TIM_Base_SetConfig() function.</li>
+<li>Update TIM_CCER_CCxE_MASK to support internal TIM Channel5 and TIM Channel6.</li>
+<li>Adjust period value assertion to account for dithering.</li>
+<li>Fix complementary channel being systematically disabled by TIM_OCx_SetConfig() function.</li>
+<li>Correct arguments in TIM_ITRx_SetConfig() brief function.</li>
+</ul></li>
+<li><strong>HAL/LL DMA</strong>
+<ul>
+<li>Add attribute ((no_inline)) to DMA_List_CheckNodesBaseAddresse() API to avoid GCC compiler warnings.</li>
+</ul></li>
+<li><strong>HAL HASH</strong>
+<ul>
+<li>Update HAL HASH IT process to enable the Hash interrupt after write data to avoid unexpected error callback.</li>
+</ul></li>
+<li><strong>HAL FMC</strong>
+<ul>
+<li>Remove unused local variables.</li>
+</ul></li>
+<li><strong>HAL SDMMC</strong>
+<ul>
+<li>Resolve HAL SD, MMC and SDIO Coverity warnings.</li>
+<li>Add support for SD card V1 within HAL SD.</li>
+</ul></li>
+<li><strong>HAL ETH</strong>
+<ul>
+<li>Fix Eth Bus Fault error for Rx Context Descriptor and remove CSC MACTSCR configuration.</li>
+</ul></li>
+<li><strong>HAL SPI</strong>
+<ul>
+<li>Resolve buffer overflow in TX interrupt service routine.</li>
+</ul></li>
+<li><strong>HAL XSPI</strong>
+<ul>
+<li>Add new helper HAL_XSPI_IsMemoryMapped() API to verify whether memory-mapped mode is configured or not.</li>
+<li>Include asserts to inform users when data size or address requested is incompatible with current XSPI configuration.</li>
+<li>Suppress auto activation of Data DTR when Instruction is on DTR (user choice).</li>
+<li>Remove DHQC bit references when the feature is not present.</li>
+</ul></li>
+<li><strong>HAL FDCAN</strong>
+<ul>
+<li>Fix GetIndex computation overflow in overwrite mode.</li>
+</ul></li>
+<li><strong>HAL I2C</strong>
+<ul>
+<li>Improve and simplify IsDeviceReady() function.</li>
+</ul></li>
+<li><strong>HAL UART/LPUART</strong>
+<ul>
+<li>Resolve transfer count underflow when using polling mode.</li>
+</ul></li>
+<li><strong>HAL LTDC</strong>
+<ul>
+<li>Update to prevent compilation errors when the DSI module is not enabled.</li>
+</ul></li>
+</ul></li>
+<li><strong>BSP</strong> updates
+<ul>
+<li><strong>BSP Components</strong>
+<ul>
+<li><strong>wm8904</strong>
+<ul>
+<li>Reduce excessive initialization delay by checking stabilization ready flag instead of waiting a fixed time.</li>
+<li>Update initialization to use output device passed as parameter instead of current device which is not yet initialized.</li>
+</ul></li>
+</ul></li>
+<li><strong>BSP Boards</strong>
+<ul>
+<li><strong>STM32H7RSxx_Nucleo</strong>
+<ul>
+<li>Modify the Led_TypeDef enum in the stm32h7rsxx_nucleo.h file to redefine LD2 from LED_BLUE to LED_YELLOW.</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><strong>Middleware</strong> updates:
+<ul>
+<li>Upgrade of <strong>STM32 ExtMem Loader</strong> library to new version <strong>V1.1.1</strong></li>
+<li>Upgrade of <strong>USB Device</strong> library to new version <strong>V2.11.5</strong></li>
+<li>Upgrade of <strong>USB Host</strong> library to new version <strong>V3.5.4</strong></li>
+<li>Upgrade of <strong>USB USBPD Devices</strong> library to new version <strong>V1.2.2</strong></li>
+<li>Upgrade of <strong>USB USBPD Core</strong> library to new version <strong>V5.3.1</strong></li>
+<li>Upgrade of <strong>LWIP</strong> library to new version <strong>V2.2.1 (ST modified 2025-08-04)</strong></li>
+<li>Upgrade of <strong>mcuboot</strong> library to new version <strong>V1.7.2.38</strong></li>
+<li>Upgrade of <strong>mbed-crypto</strong> library to new version <strong>V3.6.4 (ST modified 2025-07-01)</strong></li>
+<li>Upgrade of <strong>OpenBootloader</strong> library to new version <strong>V6.1.2</strong></li>
+</ul></li>
+<li><strong>Project</strong> updates
+<ul>
+<li>Update PSRAM configuration in STM32H7S78-DK examples to fit with 200 MHz frequency.</li>
+<li><strong>ROT Applications</strong>
+<ul>
+<li>Implement general updates to fix known defects and enhancements.</li>
+<li>Resolve binary name error regression.</li>
+<li>Resolve issue related to hardcoded OS name in env.sh.</li>
+<li>Provide API for firmware update image state management.</li>
+<li>Fix wrong error code for invalid flash range.</li>
+</ul></li>
+<li><strong>DMA Examples</strong>
+<ul>
+<li>Update HPDMA_CxBR1 value check from 32-bit to 16-bit.</li>
+</ul></li>
+<li><strong>XSPI Examples</strong>
+<ul>
+<li>Resolve runtime issues in the optimized size version of CubeIDE project for XSPI_NOR_ReadWhileWrite_DTR examples.</li>
+<li>Rework XSPI_AutoPollingMemReady() functions to utilize the Auto Polling feature of the XSPI peripheral.</li>
+</ul></li>
+<li><strong>Templates</strong>
+<ul>
+<li>Addition of a new XIP template project (available on DK board), based on External Memory Manager Custom driver use.</li>
+</ul></li>
+</ul></li>
+</ul>
+<p><br />
+</p>
+<p>The exhaustive list of projects is provided in this table (<a href="Projects/STM32CubeProjectsList.html">STM32CubeProjectsList.html</a>).</p>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Version</th>
+<th>Release notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Projects</td>
+<td>V1.3.0 <span class="icon-st-update"></span></td>
+<td><a href="Projects/Release_Notes.html">release notes</a></td>
+</tr>
+</tbody>
+</table>
+<p><br />
+</p>
+<h2 id="components">Components</h2>
+<p><small>The components flagged by “<span class="icon-st-update"></span>” have changed since the previous release. “<span class="icon-st-add"></span>” are new.</small></p>
+<p><strong>Drivers</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Version</th>
+<th>Release notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">CMSIS</td>
+<td style="text-align: left;">v5.9.0_fix_620_dsp_v1.10.0_nn_v3.1.0_no_doc <span class="icon-st-update"></span></td>
+<td><a href="Drivers/CMSIS/Documentation/index.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32H7RSxx CMSIS</td>
+<td style="text-align: left;">V1.2.1 <span class="icon-st-update"></span></td>
+<td><a href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/cmsis-device-h7rs/blob/main/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">STM32H7RSxx HAL</td>
+<td style="text-align: left;">V1.2.1 <span class="icon-st-update"></span></td>
+<td><a href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32h7rsxx-hal-driver/blob/main/Release_Notes.html">release notes</a></td>
+</tr>
+</tbody>
+</table>
+<p><strong>BSP Drivers</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Version</th>
+<th>Release notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">STM32H7RSxx_Nucleo</td>
+<td style="text-align: left;">V1.1.1 <span class="icon-st-update"></span></td>
+<td><a href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32h7rsxx-nucleo-bsp/blob/main/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32H7S78-DK</td>
+<td style="text-align: left;">V1.0.2 <span class="icon-st-update"></span></td>
+<td><a href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32h7s78-dk-bsp/blob/main/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">aps256xx</td>
+<td style="text-align: left;">V1.0.6</td>
+<td><a href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32-aps256/blob/v1.0.6/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Common</td>
+<td style="text-align: left;">V7.3.0</td>
+<td><a href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32-bsp-common/blob/v7.3.0/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">wm8904</td>
+<td style="text-align: left;">V1.1.1 <span class="icon-st-update"></span></td>
+<td><a href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32-wm8904/blob/v1.1.1/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">gt911</td>
+<td style="text-align: left;">V1.0.1</td>
+<td><a href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32-gt911/blob/v1.0.1/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">lan8742</td>
+<td style="text-align: left;">V1.0.3</td>
+<td><a href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32-lan8742/blob/v1.0.3/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">mx25uw25645g</td>
+<td style="text-align: left;">V1.1.0</td>
+<td><a href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32-mx25uw25645g/blob/v1.1.0/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">mx66uw1g45g</td>
+<td style="text-align: left;">V1.1.0</td>
+<td><a href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32-mx66uw1g45g/blob/v1.1.0/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ov5640</td>
+<td style="text-align: left;">V4.0.2</td>
+<td><a href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32-ov5640/blob/v4.0.2/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">rk050hr18</td>
+<td style="text-align: left;">V1.0.0</td>
+<td><a href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32-rk050hr18/blob/v1.0.0/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">tcpp0203</td>
+<td style="text-align: left;">V1.2.3</td>
+<td><a href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32-tcpp0203/blob/v1.2.3/Release_Notes.html">release notes</a></td>
+</tr>
+</tbody>
+</table>
+<p><br />
+</p>
+<p><strong>Middlewares</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Version</th>
+<th style="text-align: left;">Release notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">FatFS</td>
+<td style="text-align: left;">R0.15</td>
+<td style="text-align: left;"><a href="Middlewares/Third_Party/FatFs/documents/updates.html">release notes</a> ST modified 20241220 <a href="Middlewares/Third_Party/FatFs/source/st_readme.txt">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">FreeRTOS</td>
+<td style="text-align: left;">v10.6.2</td>
+<td style="text-align: left;"><a href="Middlewares/Third_Party/FreeRTOS/Source/readme.txt">release notes</a> ST modified 20241011 <a href="Middlewares/Third_Party/FreeRTOS/Source/st_readme.txt">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">LwIP</td>
+<td style="text-align: left;">v2.2.1 <span class="icon-st-update"></span></td>
+<td style="text-align: left;"><a href="Middlewares/Third_Party/LwIP/CHANGELOG">release notes</a> ST modified 20250804 <a href="Middlewares/Third_Party/LwIP/st_readme.txt">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">mbed-crypto</td>
+<td style="text-align: left;">v3.6.4_20250701 <span class="icon-st-update"></span></td>
+<td style="text-align: left;"><a href="Middlewares/Third_Party/mbed-crypto/st_readme.txt">ST release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">mcuboot</td>
+<td style="text-align: left;">v1.7.2.38 <span class="icon-st-update"></span></td>
+<td style="text-align: left;"><a href="Middlewares/Third_Party/mcuboot/docs/release-notes.md">release notes</a> ST modified 20250722 <a href="Middlewares/Third_Party/mcuboot/st_readme.txt">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">OpenBootloader</td>
+<td style="text-align: left;">v6.1.2 <span class="icon-st-update"></span></td>
+<td style="text-align: left;"><a href="Middlewares/ST/OpenBootloader/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">STM32_ExtMem_Loader</td>
+<td style="text-align: left;">v1.1.1 <span class="icon-st-update"></span></td>
+<td style="text-align: left;"><a href="Middlewares/ST/STM32_ExtMem_Loader/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32_ExtMem_Manager</td>
+<td style="text-align: left;">v1.5.0 <span class="icon-st-update"></span></td>
+<td style="text-align: left;"><a href="Middlewares/ST/STM32_ExtMem_Manager/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">STM32 USB Device Library</td>
+<td style="text-align: left;">v2.11.5 <span class="icon-st-update"></span></td>
+<td style="text-align: left;"><a href="Middlewares/ST/STM32_USB_Device_Library/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32 USB Host Library</td>
+<td style="text-align: left;">v3.5.4 <span class="icon-st-update"></span></td>
+<td style="text-align: left;"><a href="Middlewares/ST/STM32_USB_Host_Library/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">STM32_USBPD_Library - Core</td>
+<td style="text-align: left;">v5.3.1 <span class="icon-st-update"></span></td>
+<td style="text-align: left;"><a href="Middlewares/ST/STM32_USBPD_Library/Core/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32_USBPD_Library - Devices</td>
+<td style="text-align: left;">v1.2.2 <span class="icon-st-update"></span></td>
+<td style="text-align: left;"><a href="Middlewares/ST/STM32_USBPD_Library/Devices/STM32H7RSXX/Release_Notes.html">release notes</a></td>
+</tr>
+</tbody>
+</table>
+<p><br />
+</p>
+<p><strong>Utilities</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Version</th>
+<th style="text-align: left;">Release notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Common</td>
+<td style="text-align: left;">v1.6.1</td>
+<td style="text-align: left;"><a href="Utilities/Common/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CPU</td>
+<td style="text-align: left;">v1.1.4</td>
+<td style="text-align: left;"><a href="Utilities/CPU/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Fonts</td>
+<td style="text-align: left;">v2.0.4</td>
+<td style="text-align: left;"><a href="Utilities/Fonts/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">GUI_INTERFACE</td>
+<td style="text-align: left;">v3.0.1</td>
+<td style="text-align: left;"><a href="Utilities/GUI_INTERFACE/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">JPEG</td>
+<td style="text-align: left;">v2.0.6</td>
+<td style="text-align: left;"><a href="Utilities/JPEG/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">lcd</td>
+<td style="text-align: left;">v2.0.3</td>
+<td style="text-align: left;"><a href="Utilities/lcd/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">lcd_trace</td>
+<td style="text-align: left;">v2.0.2</td>
+<td style="text-align: left;"><a href="Utilities/lcd_trace/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">log</td>
+<td style="text-align: left;">v1.0.4</td>
+<td style="text-align: left;"><a href="Utilities/Log/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ROT_AppliConfig</td>
+<td style="text-align: left;">v1.1.4 <span class="icon-st-update"></span></td>
+<td style="text-align: left;"><a href="Utilities/PC_Software/ROT_AppliConfig/Release_Notes.html">release notes</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">TRACER_EMB</td>
+<td style="text-align: left;">v1.12.0</td>
+<td style="text-align: left;"><a href="Utilities/TRACER_EMB/Release_Notes.html">release notes</a></td>
+</tr>
+</tbody>
+</table>
+<p><br />
+</p>
+<h2 id="development-toolchains-and-compilers">Development Toolchains and Compilers</h2>
+<ul>
+<li>IAR Embedded Workbench for ARM (EWARM) toolchain V9.20.1 + ST-Link</li>
+<li>RealView Microcontroller Development Kit (MDK-ARM) toolchain <strong>V5.39</strong> + ST-Link
+<ul>
+<li>Support of ARM Compiler 6 (AC-5 like warnings) for HAL/LL/BSP drivers and STMicroelectronics Middleware components</li>
+</ul></li>
+<li>STM32CubeIDE <strong>V1.18.0</strong> (GCC13)</li>
+</ul>
+<p><br />
+</p>
+<h2 id="supported-devices-and-boards">Supported Devices and boards</h2>
+<ul>
+<li>ROT applications are compatible with SFSP V1.0.0 (or higher).</li>
+<li>STM32H7R7xx/H7S7xx/H7R3xx/H7S3xx</li>
+<li>STM32H7S78-DK</li>
+<li>NUCLEO-H7S3L8</li>
+</ul>
+<p><br />
+</p>
+<h2 id="known-limitations">Known Limitations</h2>
+<ul>
+<li>Some examples and/or applications not supported by CubeMX</li>
+<li>The following STM32CubeIDE projects include only Debug configuration :
+<ul>
+<li>NUCLEO-H7S3L8//Examples//XSPI//XSPI_NOR_ReadWhileWrite_DTR</li>
+<li>STM32H7S78-DK//Examples//XSPI//XSPI_NOR_ReadWhileWrite_DTR</li>
+</ul></li>
+<li>The following STM32CubeIDE project include only Release configuration :
+<ul>
+<li>STM32H7S78-DK//Applications//ROT//OEMiROT_Boot</li>
+</ul></li>
+<li>On STM32H7S78-DK revision D board, some audio glitches might be perceptible. The issue will be fixed in next release.</li>
+</ul>
+<h2 id="dependencies">Dependencies</h2>
+<h2 id="backward-compatibility">Backward Compatibility</h2>
+<ul>
+<li>Not applicable</li>
+</ul>
+<p><br />
+</p>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section3" aria-hidden="true"> <label for="collapse-section3" aria-hidden="true"><strong>V1.2.0 / 05-February-2025</strong></label>
+<div>
+<h2 id="maintenance-release-1">Maintenance release</h2>
 <ul>
 <li>General updates to fix known defects and enhancements implementation</li>
 <li>Rework readme files of ROT applications</li>
@@ -84,7 +566,7 @@
 <li>Upgrade of <strong>LwIP</strong> library to new version <strong>V2.1.3 (ST modified 2024-12-13)</strong></li>
 <li>Upgrade of <strong>FATFS</strong> library to new version <strong>R0.15 (ST modified 2024-12-20)</strong></li>
 </ul>
-<h2 id="contents">Contents</h2>
+<h2 id="contents-1">Contents</h2>
 <ul>
 <li><strong>CMSIS</strong> updates
 <ul>
@@ -382,7 +864,7 @@
 </table>
 <p><br />
 </p>
-<h2 id="components">Components</h2>
+<h2 id="components-1">Components</h2>
 <p><small>The components flagged by “<span class="icon-st-update"></span>” have changed since the previous release. “<span class="icon-st-add"></span>” are new.</small></p>
 <p><strong>Drivers</strong></p>
 <table>
@@ -444,7 +926,7 @@
 <tr class="odd">
 <td style="text-align: left;">wm8904</td>
 <td style="text-align: left;">V1.1.0 <span class="icon-st-update"></span></td>
-<td><a href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32-wm8904/blob/v1.1.0/Release_Notes.html">release notes</a></td>
+<td><a href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32-wm8904/blob/v1.1.1/Release_Notes.html">release notes</a></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">gt911</td>
@@ -623,7 +1105,7 @@
 </table>
 <p><br />
 </p>
-<h2 id="development-toolchains-and-compilers">Development Toolchains and Compilers</h2>
+<h2 id="development-toolchains-and-compilers-1">Development Toolchains and Compilers</h2>
 <ul>
 <li>IAR Embedded Workbench for ARM (EWARM) toolchain V9.20.1 + ST-Link</li>
 <li>RealView Microcontroller Development Kit (MDK-ARM) toolchain <strong>V5.39</strong> + ST-Link
@@ -634,7 +1116,7 @@
 </ul>
 <p><br />
 </p>
-<h2 id="supported-devices-and-boards">Supported Devices and boards</h2>
+<h2 id="supported-devices-and-boards-1">Supported Devices and boards</h2>
 <ul>
 <li>ROT applications are compatible with SFSP V1.0.0 (or higher).</li>
 <li>STM32H7R7xx/H7S7xx/H7R3xx/H7S3xx</li>
@@ -643,7 +1125,7 @@
 </ul>
 <p><br />
 </p>
-<h2 id="known-limitations">Known Limitations</h2>
+<h2 id="known-limitations-1">Known Limitations</h2>
 <ul>
 <li>Some examples and/or applications not supported by CubeMX</li>
 <li>The following STM32CubeIDE projects include only Debug configuration :
@@ -653,8 +1135,8 @@
 </ul></li>
 <li>On STM32H7S78-DK revision D board, some audio glitches might be perceptible. The issue will be fixed in next release.</li>
 </ul>
-<h2 id="dependencies">Dependencies</h2>
-<h2 id="backward-compatibility">Backward Compatibility</h2>
+<h2 id="dependencies-1">Dependencies</h2>
+<h2 id="backward-compatibility-1">Backward Compatibility</h2>
 <ul>
 <li>Not applicable</li>
 </ul>
@@ -665,9 +1147,9 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section2" aria-hidden="true"> <label for="collapse-section2" aria-hidden="true"><strong>V1.1.0 / 05-June-2024</strong></label>
 <div>
-<h2 id="maintenance-release-1">Maintenance release</h2>
+<h2 id="maintenance-release-2">Maintenance release</h2>
 <p>Maintenance Release of STM32CubeH7RS Firmware package supporting <strong>STM32H7R7xx/H7R3xx/H7S3xx/H7S7xx</strong> devices.</p>
-<h2 id="contents-1">Contents</h2>
+<h2 id="contents-2">Contents</h2>
 <h3 id="features"><strong>Features</strong></h3>
 <p>STM32CubeH7RS gathers in one single package all the generic embedded software components required to develop an application on STM32H7Rx/7Sx microcontrollers.</p>
 <ul>
@@ -747,7 +1229,7 @@
 </table>
 <p><br />
 </p>
-<h2 id="components-1">Components</h2>
+<h2 id="components-2">Components</h2>
 <p><small>The components flagged by “<span class="icon-st-update"></span>” have changed since the previous release. “<span class="icon-st-add"></span>” are new.</small></p>
 <p><strong>Drivers</strong></p>
 <table>
@@ -809,7 +1291,7 @@
 <tr class="odd">
 <td style="text-align: left;">wm8904</td>
 <td style="text-align: left;">V1.0.0</td>
-<td><a href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32-wm8904/blob/v1.1.0/Release_Notes.html">release notes</a></td>
+<td><a href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32-wm8904/blob/v1.1.1/Release_Notes.html">release notes</a></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">gt911</td>
@@ -988,7 +1470,7 @@
 </table>
 <p><br />
 </p>
-<h2 id="development-toolchains-and-compilers-1">Development Toolchains and Compilers</h2>
+<h2 id="development-toolchains-and-compilers-2">Development Toolchains and Compilers</h2>
 <ul>
 <li>IAR Embedded Workbench for ARM (EWARM) toolchain V9.20.1 + ST-Link</li>
 <li>RealView Microcontroller Development Kit (MDK-ARM) toolchain <strong>V5.39</strong> + ST-Link
@@ -999,7 +1481,7 @@
 </ul>
 <p><br />
 </p>
-<h2 id="supported-devices-and-boards-1">Supported Devices and boards</h2>
+<h2 id="supported-devices-and-boards-2">Supported Devices and boards</h2>
 <ul>
 <li>ROT applications are compatible with SFSP V1.0.0 (or higher).</li>
 <li>STM32H7R7xx/H7S7xx/H7R3xx/H7S3xx</li>
@@ -1008,13 +1490,13 @@
 </ul>
 <p><br />
 </p>
-<h2 id="known-limitations-1">Known Limitations</h2>
+<h2 id="known-limitations-2">Known Limitations</h2>
 <ul>
 <li>Some examples and/or applications not supported by CubeMX</li>
 <li>All projects not yet available on MDK-ARM &amp; CubeIDE</li>
 </ul>
-<h2 id="dependencies-1">Dependencies</h2>
-<h2 id="backward-compatibility-1">Backward Compatibility</h2>
+<h2 id="dependencies-2">Dependencies</h2>
+<h2 id="backward-compatibility-2">Backward Compatibility</h2>
 <ul>
 <li>Not applicable</li>
 </ul>
@@ -1027,7 +1509,7 @@
 <div>
 <h2 id="first-release">First release</h2>
 <p>First Official Release of STM32CubeH7RS Firmware package supporting <strong>STM32H7R7xx/H7R3xx/H7S3xx/H7S7xx</strong> devices.</p>
-<h2 id="contents-2">Contents</h2>
+<h2 id="contents-3">Contents</h2>
 <h3 id="features-1"><strong>Features</strong></h3>
 <p>STM32CubeH7RS gathers in one single package all the generic embedded software components required to develop an application on STM32H7Rx/7Sx microcontrollers.</p>
 <ul>
@@ -1107,7 +1589,7 @@
 </table>
 <p><br />
 </p>
-<h2 id="components-2">Components</h2>
+<h2 id="components-3">Components</h2>
 <p><small>The components flagged by “<span class="icon-st-update"></span>” have changed since the previous release. “<span class="icon-st-add"></span>” are new.</small></p>
 <p><strong>Drivers</strong></p>
 <table>
@@ -1169,7 +1651,7 @@
 <tr class="odd">
 <td style="text-align: left;">wm8904</td>
 <td style="text-align: left;">V1.0.0</td>
-<td><a href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32-wm8904/blob/v1.1.0/Release_Notes.html">release notes</a></td>
+<td><a href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32-wm8904/blob/v1.1.1/Release_Notes.html">release notes</a></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">gt911</td>
@@ -1343,7 +1825,7 @@
 </table>
 <p><br />
 </p>
-<h2 id="development-toolchains-and-compilers-2">Development Toolchains and Compilers</h2>
+<h2 id="development-toolchains-and-compilers-3">Development Toolchains and Compilers</h2>
 <ul>
 <li>IAR Embedded Workbench for ARM (EWARM) toolchain V9.20.1 + ST-Link</li>
 <li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.38a + ST-Link
@@ -1354,7 +1836,7 @@
 </ul>
 <p><br />
 </p>
-<h2 id="supported-devices-and-boards-2">Supported Devices and boards</h2>
+<h2 id="supported-devices-and-boards-3">Supported Devices and boards</h2>
 <ul>
 <li>ROT applications are compatible with SFSP V1.0.0 (or higher).</li>
 <li>STM32H7R7xx/H7S7xx/H7R3xx/H7S3xx</li>
@@ -1363,20 +1845,20 @@
 </ul>
 <p><br />
 </p>
-<h2 id="known-limitations-2">Known Limitations</h2>
+<h2 id="known-limitations-3">Known Limitations</h2>
 <ul>
 <li>Some examples and/or applications not supported by CubeMX</li>
 <li>All projects not yet available on MDK-ARM &amp; CubeIDE</li>
 </ul>
 <p>Those limitations will be corrected in maintenance release V1.1.0 planned in June 2024.</p>
-<h2 id="dependencies-2">Dependencies</h2>
+<h2 id="dependencies-3">Dependencies</h2>
 <ul>
 <li>STM32CubeMX V6.11.0
 <ul>
 <li>Projects (Applications and Examples) are generated using STM32CubeMX version V6.11.0.</li>
 </ul></li>
 </ul>
-<h2 id="backward-compatibility-2">Backward Compatibility</h2>
+<h2 id="backward-compatibility-3">Backward Compatibility</h2>
 <ul>
 <li>Not applicable</li>
 </ul>

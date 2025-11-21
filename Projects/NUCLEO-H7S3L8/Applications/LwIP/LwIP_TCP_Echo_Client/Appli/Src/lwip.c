@@ -55,7 +55,7 @@ static void Ethernet_Link_Periodic_Handle(struct netif *netif);
 
 /* ETH Variables initialization ----------------------------------------------*/
 /* USER CODE BEGIN EVI */
-
+extern uint32_t UserButton;
 /* USER CODE END EVI */
 
 /* DHCP Variables initialization ---------------------------------------------*/
@@ -257,7 +257,7 @@ static err_t tcp_echoclient_connected(void *arg, struct tcp_pcb *tpcb, err_t err
       es->state = ES_CONNECTED;
       es->pcb = tpcb;
 
-      sprintf((char*)data, "Sending tcp client message %d", (int)message_count);
+      sprintf((char*)data, "Sending tcp client message %d\n", (int)message_count);
 
       printf("%s", (char*)data);
 
@@ -583,6 +583,11 @@ static void Ethernet_Link_Periodic_Handle(struct netif *netif)
 void MX_LWIP_Process(void)
 {
 /* USER CODE BEGIN 4_1 */
+  if (UserButton)
+  {
+    UserButton = 0;
+    tcp_echoclient_connect();
+  }
 /* USER CODE END 4_1 */
   ethernetif_input(&gnetif);
 

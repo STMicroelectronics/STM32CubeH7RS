@@ -179,7 +179,7 @@ SECTIONS
     __bss_end__ = _ebss;
   } >RAM
 
-  RW_NONCACHEABLE :
+  RW_NONCACHEABLE (NOLOAD):
   {
     __NONCACHEABLEBUFFER_BEGIN = .;/* create symbol for start of section */
     KEEP(*(noncacheable_buffer))

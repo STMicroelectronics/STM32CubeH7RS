@@ -1127,6 +1127,12 @@
     <group>
       <name>STM32H7RSxx_HAL_Driver</name>
       <file>
+        <name>$PROJ_DIR$/../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_hal_tim.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_hal_tim_ex.c</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_hal_rcc.c</name>
       </file>
       <file>
@@ -1173,12 +1179,6 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_hal_uart_ex.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_hal_tim.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_hal_tim_ex.c</name>
       </file>
     </group>
     <group>
@@ -1380,6 +1380,9 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../../Middlewares/Third_Party/LwIP/src/core/udp.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../Middlewares/Third_Party/LwIP/src/core/ipv4/acd.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../../Middlewares/Third_Party/LwIP/src/core/ipv4/autoip.c</name>

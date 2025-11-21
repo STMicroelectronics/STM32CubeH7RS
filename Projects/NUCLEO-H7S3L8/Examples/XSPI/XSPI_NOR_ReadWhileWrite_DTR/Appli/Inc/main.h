@@ -69,6 +69,8 @@ extern "C" {
 #define MEMORY_READY_MATCH_VALUE    0x00
 #define MEMORY_READY_MASK_VALUE     0x01
 
+#define AUTO_POLLING_INTERVAL       0x10
+
 /* OSPI NOR Banks address*/
 #define BANK0_ADDRESS               0x00000000
 #define BANK1_ADDRESS               0x00800000

@@ -22,6 +22,13 @@
 * ******************************************************************************
 @endverbatim
 
+### 20-May-2025 ###
+=======================
+  Tag: v5.9.0_fix_620_dsp_v1.10.0_nn_v3.1.0_no_doc
+  
+  Remove Documentation/ subfolders and update index.html to link to
+  online documentation https://arm-software.github.io/CMSIS_5/latest/General/html/index.html
+  
 ### 14-January-2025 ###
 =======================
   Tag: v5.9.0_fix_620_dsp_v1.10.0_nn_v3.1.0

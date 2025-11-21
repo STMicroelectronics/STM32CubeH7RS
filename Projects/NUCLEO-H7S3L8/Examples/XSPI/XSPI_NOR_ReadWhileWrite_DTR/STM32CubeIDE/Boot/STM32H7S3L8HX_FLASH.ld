@@ -22,7 +22,7 @@
 ******************************************************************************
 ** @attention
 **
-** Copyright (c) 2024 STMicroelectronics.
+** Copyright (c) 2025 STMicroelectronics.
 ** All rights reserved.
 **
 ** This software is licensed under terms that can be found in the LICENSE file
@@ -178,7 +178,7 @@ SECTIONS
     __bss_end__ = _ebss;
   } >RAM
 
-  RW_NONCACHEABLE :
+  RW_NONCACHEABLE (NOLOAD):
   {
     __NONCACHEABLEBUFFER_BEGIN = .;/* create symbol for start of section */
     KEEP(*(noncacheable_buffer))

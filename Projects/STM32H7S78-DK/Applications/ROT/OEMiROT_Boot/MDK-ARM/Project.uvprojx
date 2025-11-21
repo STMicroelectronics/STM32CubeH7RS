@@ -448,11 +448,6 @@
               <FilePath>..\..\..\..\..\..\Drivers\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_gpio.c</FilePath>
             </File>
             <File>
-              <FileName>stm32h7rsxx_hal_icache.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\Drivers\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_icache.c</FilePath>
-            </File>
-            <File>
               <FileName>stm32h7rsxx_hal_pwr.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\Drivers\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_pwr.c</FilePath>

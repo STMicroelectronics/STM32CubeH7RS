@@ -76,20 +76,21 @@ typedef struct
 /** @defgroup USBH_MSC_SCSI_Exported_Defines
   * @{
   */
-#define OPCODE_TEST_UNIT_READY            0x00U
-#define OPCODE_READ_CAPACITY10            0x25U
-#define OPCODE_READ10                     0x28U
-#define OPCODE_WRITE10                    0x2AU
-#define OPCODE_REQUEST_SENSE              0x03U
-#define OPCODE_INQUIRY                    0x12U
+#define OPCODE_TEST_UNIT_READY                           0x00U
+#define OPCODE_READ_CAPACITY10                           0x25U
+#define OPCODE_READ10                                    0x28U
+#define OPCODE_WRITE10                                   0x2AU
+#define OPCODE_REQUEST_SENSE                             0x03U
+#define OPCODE_INQUIRY                                   0x12U
 
-#define DATA_LEN_MODE_TEST_UNIT_READY        0U
-#define DATA_LEN_READ_CAPACITY10             8U
-#define DATA_LEN_INQUIRY                    36U
-#define DATA_LEN_REQUEST_SENSE              14U
+#define DATA_LEN_MODE_TEST_UNIT_READY                       0U
+#define DATA_LEN_READ_CAPACITY10                            8U
+#define DATA_LEN_INQUIRY                                   36U
+#define DATA_LEN_REQUEST_SENSE                             14U
 
-#define CBW_CB_LENGTH                       16U
-#define CBW_LENGTH                          10U
+#define CBW_CB_LENGTH                                      16U
+#define CBW_LENGTH_10                                      10U
+#define CBW_LENGTH_6                                        6U
 
 /** @defgroup USBH_MSC_SCSI_Exported_Defines
   * @{
@@ -116,14 +117,14 @@ typedef struct
 /** @defgroup USBH_MSC_SCSI_Exported_Defines
   * @{
   */
-#define SCSI_ASC_NO_ADDITIONAL_SENSE_INFORMATION         0x00
-#define SCSI_ASC_LOGICAL_UNIT_NOT_READY                  0x04
-#define SCSI_ASC_INVALID_FIELD_IN_CDB                    0x24
-#define SCSI_ASC_WRITE_PROTECTED                         0x27
-#define SCSI_ASC_FORMAT_ERROR                            0x31
-#define SCSI_ASC_INVALID_COMMAND_OPERATION_CODE          0x20
-#define SCSI_ASC_NOT_READY_TO_READY_CHANGE               0x28
-#define SCSI_ASC_MEDIUM_NOT_PRESENT                      0x3A
+#define SCSI_ASC_NO_ADDITIONAL_SENSE_INFORMATION         0x00U
+#define SCSI_ASC_LOGICAL_UNIT_NOT_READY                  0x04U
+#define SCSI_ASC_INVALID_FIELD_IN_CDB                    0x24U
+#define SCSI_ASC_WRITE_PROTECTED                         0x27U
+#define SCSI_ASC_FORMAT_ERROR                            0x31U
+#define SCSI_ASC_INVALID_COMMAND_OPERATION_CODE          0x20U
+#define SCSI_ASC_NOT_READY_TO_READY_CHANGE               0x28U
+#define SCSI_ASC_MEDIUM_NOT_PRESENT                      0x3AU
 /**
   * @}
   */
@@ -132,9 +133,9 @@ typedef struct
 /** @defgroup USBH_MSC_SCSI_Exported_Defines
   * @{
   */
-#define SCSI_ASCQ_FORMAT_COMMAND_FAILED                  0x01
-#define SCSI_ASCQ_INITIALIZING_COMMAND_REQUIRED          0x02
-#define SCSI_ASCQ_OPERATION_IN_PROGRESS                  0x07
+#define SCSI_ASCQ_FORMAT_COMMAND_FAILED                  0x01U
+#define SCSI_ASCQ_INITIALIZING_COMMAND_REQUIRED          0x02U
+#define SCSI_ASCQ_OPERATION_IN_PROGRESS                  0x07U
 
 /**
   * @}

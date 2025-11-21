@@ -100,7 +100,7 @@ int main(void)
 
   /* Initialize leds */
   BSP_LED_Init(LED_GREEN);
-  BSP_LED_Init(LED_BLUE);
+  BSP_LED_Init(LED_YELLOW);
   BSP_LED_Init(LED_RED);
 
   /* Initialize USER push-button, will be used to trigger an interrupt each time it's pressed.*/
@@ -123,7 +123,7 @@ int main(void)
   /* -- Sample board code to switch on, toggle and off leds ---- */
   /* Switch on leds */
   BSP_LED_On(LED_GREEN);
-  BSP_LED_On(LED_BLUE);
+  BSP_LED_On(LED_YELLOW);
   BSP_LED_On(LED_RED);
   /* USER CODE END BSP */
 
@@ -139,7 +139,7 @@ int main(void)
       BspButtonState = BUTTON_RELEASED;
       /* -- Sample board code to toggle leds ---- */
       BSP_LED_Toggle(LED_GREEN);
-      BSP_LED_Toggle(LED_BLUE);
+      BSP_LED_Toggle(LED_YELLOW);
       BSP_LED_Toggle(LED_RED);
       /* ..... Perform your action ..... */
     }

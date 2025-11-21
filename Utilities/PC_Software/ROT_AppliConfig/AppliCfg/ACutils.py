@@ -226,7 +226,7 @@ class SCRIPT_APPLI(MANAGE_FILE):
         else:
             self._logs.error("Linker value not recognized")
 
-    def get_file_value(self, pattern_line:str, search_option:str="\"?((0x[0-9a-fA-F]+)|([0-9]+))\"?")->str:
+    def get_file_value(self, pattern_line:str, search_option:str="\"?((0x[0-9a-fA-F]+)|([0-9]+))\"?", occurrence=1)->str:
         """
         Get the value of an existing variable in a file
         Parameters:
@@ -241,7 +241,10 @@ class SCRIPT_APPLI(MANAGE_FILE):
             replace_resp=regfv.search(line)
             if replace_resp is not None:
                 # Get the value to be replaced
-                return replace_resp.group(1)
+                if occurrence==1:
+                    return replace_resp.group(1)
+                else:
+                    occurrence-=1
         self._logs.error("Pattern not found")
         return ""
         
@@ -261,10 +264,8 @@ class SCRIPT_APPLI(MANAGE_FILE):
         for i, line in enumerate(self.__lines):
             # Search define with value
             pattern_in_line = reqdef1.search(line)
-
             if pattern_in_line is None:
                 pattern_in_line = reqdef2.search(line)
-
             if pattern_in_line:
                 if name in pattern_in_line.group(1):
                     str_idx, end_indx = pattern_in_line.span()
@@ -307,18 +308,20 @@ class SCRIPT_APPLI(MANAGE_FILE):
                         break
         return line_is_modified
     
-    def modify_file_value(self, pattern_line:str, search_value, new_value)->bool:
+    def modify_file_value(self, pattern_line:str, search_value, new_value, cpt=1)->bool:
         """
         Modify the int value of an existing variable in a file 
         Parameters:
             pattern_line - Pattern to choose the line to be modified
             search_value - value to search in the line if present. Every present value is changed if None
             new_value - New value
+            cpt: counter, change the value cpt only, if 0 then all
         Returns:
             value_is_modified - Boolean status (New value is now present)
         """
         # Modify value
         # Read and modify a specific line
+        value_is_modified=False
         nv=StringValue(self._logs)
         nv.set(new_value)
         rv=StringValue(self._logs)
@@ -331,42 +334,57 @@ class SCRIPT_APPLI(MANAGE_FILE):
                 return True
             pattern_line+=r"\(?((0x[0-9a-fA-F]+)|([0-9]+))\)?"
         else:
-            pattern_line+=r"\(?((0x[0-9a-fA-F]+)|([0-9]+))\)?" #the double parenthesis force to get value only
+            pattern_line+=r"(\(?((0x[0-9a-fA-F]+)|([0-9]+))\)?|$)" #the double parenthesis force to get value only
         reqextract = re.compile(pattern_line) #To know the value to replace, extract the number from line
         for i, line in enumerate(self.__lines):
             # Search line to modify
             replace_resp=reqextract.search(line)
             if replace_resp:
-                readvalue=replace_resp.group(1)
-                str_idx, end_indx = replace_resp.span()
-                if readvalue is not None:
-                    rv.set(readvalue)
-                    if int(rv) == int(nv):
-                        self._logs.info("The modification is not necessary")
-                        self._logs.info("The variable has already the correct value (%s)" % str(new_value))
-                        return True
-                    if search_value is None or int(sv)==int(rv):#if readvalue == search value, search value is a restrict access value
-                        cmd_len=end_indx-len(readvalue)
-                        if (line[end_indx-1]==")"):
-                            cmd_len=end_indx-len(readvalue)-1
+                if cpt<=1:
+                    readvalue=replace_resp.group(1)
+                    str_idx, end_indx = replace_resp.span()
+                    if readvalue is not None and readvalue!="":
+                        rv.set(readvalue)
+                        if int(rv) == int(nv):
+                            self._logs.info("The modification is not necessary")
+                            self._logs.info("The variable has already the correct value (%s)" % str(new_value))
+                            return True
+                        if search_value is None or int(sv)==int(rv):#if readvalue == search value, search value is a restrict access value
+                            cmd_len=0
+                            if readvalue[0]=="(":
+                                new_value="("+str(new_value)+")"
+                            else:
+                                if line[end_indx-1]==")":
+                                    cmd_len=-2
+                                else:
+                                    new_value=str(new_value)
+                            cmd_len+=end_indx-len(readvalue)
+                            str_to_replace = line[cmd_len:end_indx].replace(readvalue, new_value).replace("\n","").replace("\r",'')
+                            self.__lines[i] = line[str_idx:cmd_len] + str_to_replace + line[end_indx:]
+                            self._logs.info("The variable value is modified to %s" % new_value)
+                            if cpt==1:
+                                return True
+                            else:
+                                value_is_modified=True
+                    elif search_value is None:
+                        debut=re.sub("\r?\n","",line[:end_indx])
+                        self.__lines[i]=debut+ new_value + line[end_indx:]+"\n"
+                        if cpt==1:
+                            return True
                         else:
-                            cmd_len=end_indx-len(readvalue)
-                        str_to_replace = line[cmd_len:end_indx].replace(readvalue, str(new_value)).replace("\n","").replace("\r",'')
-                        self.__lines[i] = line[str_idx:cmd_len] + str_to_replace + line[end_indx:]
-                        self._logs.info("The variable value is modified to %s" % new_value)
-                        return True
-                elif search_value is None:
-                    debut=re.sub("\r?\n","",line[:end_indx])
-                    self.__lines[i]=debut+ new_value + line[end_indx:]+"\n"
-                    return True
-        self._logs.info("No pattern found in file")
-        return False
+                            value_is_modified=True
+                else:
+                    if cpt>0:
+                        cpt-=1
+        if not value_is_modified:
+            self._logs.info("No pattern found in file")
+        return value_is_modified
     
     def modify_file_strvalue(self, pattern_line:str, search_value, new_value)->bool:
         if type(new_value)==str:
             new_value=new_value.strip()
             if search_value is None:
-                pattern_line+=r"(\(?\w+\)?)" #capture parenthesis if present
+                pattern_line+=r"(\(?[\w+|+|*|\/|//|.|\d]*\)?)" #capture parenthesis if present, string string+integer, string+hex, string*value
             elif search_value == new_value:
                 self._logs.info("The modification is not necessary")
                 self._logs.info("Same value than those to replace" % new_value)
@@ -593,7 +611,10 @@ def compute_expression(expression:str, values:array, constants, logs:LOG)->int:
         for value in values:
             i +=1
             pattern = "val%s" %i
-            expression = expression.replace(pattern, value.getInt())
+            if type(value)==int:
+                expression = expression.replace(pattern, str(value))
+            else:
+                expression = expression.replace(pattern, value.getInt())
     logs.info("Expression patterns were replaced to '%s' " %expression)
     try :
         return int(eval(expression))
@@ -625,7 +646,6 @@ def stirot_compute_wm(code_primary_offset:int, secure_area_size:int,
         raise AppliCFGException("code_primary_offset is not an int, it's a %s" % type(code_primary_offset))
     page_number = (bankSize // pagesize)-1
     secure_sector_size = (secure_area_size // pagesize)-1
-
     if secure_sector_size < 0:
         logs.error("Wrong secure area size '%s'" % hex(secure_sector_size))
     # Compute WM's start and end protections
@@ -681,18 +701,15 @@ def compute_wrp_protections(wrp_address_start:int, wrp_address_end:int, wrp_sect
              " See the reference manual for more information")
     #sector_sz = int(sector_size, 16)
     # Compute the start and end sectors (with the wrp group size)
-
     wrp_start = int(wrp_address_start / wrp_sector_sz)
     wrp_end = int(wrp_address_end / wrp_sector_sz)
     # Total number of sectors group in bank 1 and 2
     wrp_group_nb = (
         int((sector_nb + 1) / int(wrp_sector_sz / sector_size)) * 2) - 1
-
     wrp = ""
     for i in range(wrp_group_nb, -1, -1):
         # 0: the group is write protected; 1: the group is not write protected
         wrp += "0" if wrp_start <= i <= wrp_end else "1"
-
     # Transform binary to dec
     wrpg1_end = int((wrp_group_nb + 1)/2)
     try:
@@ -763,7 +780,6 @@ def compute_sector_area(sector_address_start:int, area_size:int, logs:LOG, secto
         decrement = 0
     else:
         decrement = 1
-
     # Compute the start and end sectors (with the wrp group size)
     logs.info("Computing the erase slot area.")
     slot_sector_sz = sector_size

@@ -69,11 +69,11 @@ It boots from internal Flash (Template_XIP_Boot) then jumps to the application c
 To configure STM32CubeIDE Debug Configuration, you must do the following :
 
     1. Upload the template XIP
-    2. Add the adequate external loader (MX25UW25645G_STM32H7S3L8-NUCLEO.stldr file) in Project->Debugger Configuration
+    2. Add the adequate external loader (MX25UW25645G_NUCLEO-H7S3L8.stldr file) in Project->Debugger Configuration
     3. Add in the startup the template_XIP_Boot in Project->Debugger Configuration
     4. Move up the application in the startup
 
-In order to make the program work, you must do the following :
+To run the program, follow these steps:
 
  - Open your preferred toolchain
  - Run the [echotool](https://github.com/PavelBansky/EchoTool/releases/tag/v1.5.0.0) utility on a windows console as following:

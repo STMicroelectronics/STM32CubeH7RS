@@ -31,6 +31,33 @@ extern "C" {
   * @{
   */
 
+/** @defgroup STM32_LOADER_Exported_definiton Exported definition
+  * @{
+  */
+
+/* Exported types ------------------------------------------------------------*/
+/* Exported constants --------------------------------------------------------*/
+/** @defgroup STM32_LOADER_Exported_Constants constants
+  * @{
+  */
+
+/**
+ * @brief macro to force the compiler to keep the code
+ */
+#if defined(__ICCARM__)
+#define KeepInCompilation __root
+#else
+#define KeepInCompilation __attribute__((used))
+#endif /* __ICCARM__ */
+
+/**
+  * @}
+  */
+
+/**
+  * @}
+  */
+
 /* Private typedefs ----------------------------------------------------------*/
 /** @addtogroup EXTMEM_LOADER_MEMWRAPPER_TypeDefs Exported typedefs
   * @{

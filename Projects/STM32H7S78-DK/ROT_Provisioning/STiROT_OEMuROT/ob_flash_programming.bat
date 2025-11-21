@@ -11,12 +11,12 @@ set connect_no_reset=-c port=SWD speed=fast ap=1 mode=Hotplug
 set connect_reset=-c port=SWD speed=fast ap=1 mode=UR
 
 if "%isGeneratedByCubeMX%" == "true" (
-    set appli_dir=%oemirot_boot_path_project%
+    set appli_dir=%oemirot_appli_path_project%
     set iloader_dir=%stirot_iloader_boot_path_project%
     set STiROT_iLoader_bin=!iloader_dir!\Binary\STiROT_iLoader.bin
     set OEMuROT_hex="%cube_fw_path%\Projects\STM32H7S78-DK\Applications\ROT\OEMiROT_Boot\Binary\OEMiROT_Boot_enc_sign.hex"
 ) else (
-    set appli_dir=..\..\%oemirot_boot_path_project%
+    set appli_dir=..\..\%oemirot_appli_path_project%
     set iloader_dir=..\..\%stirot_iloader_boot_path_project%
     set STiROT_iLoader_bin=%project_dir%\!iloader_dir!\Binary\STiROT_iLoader.bin
     set OEMuROT_hex="%project_dir%..\..\Applications\ROT\OEMiROT_Boot\Binary\OEMiROT_Boot_enc_sign.hex"

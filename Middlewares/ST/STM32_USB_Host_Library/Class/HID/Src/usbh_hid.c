@@ -172,6 +172,9 @@ static USBH_StatusTypeDef USBH_HID_InterfaceInit(USBH_HandleTypeDef *phost)
 
   HID_Handle->state = USBH_HID_ERROR;
 
+  /* Store the HID interface */
+  HID_Handle->current_interface = interface;
+
   /*Decode Bootclass Protocol: Mouse or Keyboard*/
   if (phost->device.CfgDesc.Itf_Desc[interface].bInterfaceProtocol == HID_KEYBRD_BOOT_CODE)
   {
@@ -248,19 +251,34 @@ static USBH_StatusTypeDef USBH_HID_InterfaceInit(USBH_HandleTypeDef *phost)
 static USBH_StatusTypeDef USBH_HID_InterfaceDeInit(USBH_HandleTypeDef *phost)
 {
   HID_HandleTypeDef *HID_Handle = (HID_HandleTypeDef *) phost->pActiveClass->pData;
+  uint8_t interface;
+  uint8_t max_ep;
+  uint8_t num = 0U;
 
-  if (HID_Handle->InPipe != 0x00U)
-  {
-    (void)USBH_ClosePipe(phost, HID_Handle->InPipe);
-    (void)USBH_FreePipe(phost, HID_Handle->InPipe);
-    HID_Handle->InPipe = 0U;     /* Reset the pipe as Free */
-  }
+  /* Get the HID interface */
+  interface = HID_Handle->current_interface;
 
-  if (HID_Handle->OutPipe != 0x00U)
+  /* Check of available number of endpoints */
+  /* Find the number of EPs in the Interface Descriptor */
+  /* Choose the lower number in order not to overrun the buffer allocated */
+  max_ep = ((phost->device.CfgDesc.Itf_Desc[interface].bNumEndpoints <= USBH_MAX_NUM_ENDPOINTS) ?
+            phost->device.CfgDesc.Itf_Desc[interface].bNumEndpoints : USBH_MAX_NUM_ENDPOINTS);
+
+  /* Decode endpoint IN and OUT address from interface descriptor */
+  for (num = 0U; num < max_ep; num++)
   {
-    (void)USBH_ClosePipe(phost, HID_Handle->OutPipe);
-    (void)USBH_FreePipe(phost, HID_Handle->OutPipe);
-    HID_Handle->OutPipe = 0U;     /* Reset the pipe as Free */
+    if ((phost->device.CfgDesc.Itf_Desc[interface].Ep_Desc[num].bEndpointAddress & 0x80U) != 0U)
+    {
+      (void)USBH_ClosePipe(phost, HID_Handle->InPipe);
+      (void)USBH_FreePipe(phost, HID_Handle->InPipe);
+      HID_Handle->InPipe = 0U;     /* Reset the pipe as Free */
+    }
+    else
+    {
+      (void)USBH_ClosePipe(phost, HID_Handle->OutPipe);
+      (void)USBH_FreePipe(phost, HID_Handle->OutPipe);
+      HID_Handle->OutPipe = 0U;     /* Reset the pipe as Free */
+    }
   }
 
   if ((phost->pActiveClass->pData) != NULL)

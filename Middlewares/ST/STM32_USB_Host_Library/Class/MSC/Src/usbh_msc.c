@@ -325,10 +325,22 @@ static USBH_StatusTypeDef USBH_MSC_ClassRequest(USBH_HandleTypeDef *phost)
   */
 static USBH_StatusTypeDef USBH_MSC_Process(USBH_HandleTypeDef *phost)
 {
-  MSC_HandleTypeDef *MSC_Handle = (MSC_HandleTypeDef *) phost->pActiveClass->pData;
+  MSC_HandleTypeDef *MSC_Handle;
   USBH_StatusTypeDef error = USBH_BUSY;
   USBH_StatusTypeDef scsi_status = USBH_BUSY;
   USBH_StatusTypeDef ready_status = USBH_BUSY;
+
+  if (phost == NULL)
+  {
+    return USBH_FAIL;
+  }
+
+  if ((phost->device.PortEnabled == 0U) || (phost->pActiveClass == NULL))
+  {
+    return USBH_FAIL;
+  }
+
+  MSC_Handle = (MSC_HandleTypeDef *)phost->pActiveClass->pData;
 
   switch (MSC_Handle->state)
   {
@@ -540,6 +552,7 @@ static USBH_StatusTypeDef USBH_MSC_Process(USBH_HandleTypeDef *phost)
     default:
       break;
   }
+
   return error;
 }
 
@@ -566,9 +579,21 @@ static USBH_StatusTypeDef USBH_MSC_SOFProcess(USBH_HandleTypeDef *phost)
   */
 static USBH_StatusTypeDef USBH_MSC_RdWrProcess(USBH_HandleTypeDef *phost, uint8_t lun)
 {
-  MSC_HandleTypeDef *MSC_Handle = (MSC_HandleTypeDef *) phost->pActiveClass->pData;
+  MSC_HandleTypeDef *MSC_Handle;
   USBH_StatusTypeDef error = USBH_BUSY;
   USBH_StatusTypeDef scsi_status = USBH_BUSY;
+
+  if (phost == NULL)
+  {
+    return USBH_FAIL;
+  }
+
+  if ((phost->device.PortEnabled == 0U) || (phost->pActiveClass == NULL))
+  {
+    return USBH_FAIL;
+  }
+
+  MSC_Handle = (MSC_HandleTypeDef *) phost->pActiveClass->pData;
 
   /* Switch MSC REQ state machine */
   switch (MSC_Handle->unit[lun].state)

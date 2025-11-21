@@ -37,6 +37,7 @@ DMA_HandleTypeDef hdmatx;
 
 #define REGION_EXTERNAL_MEMORY_NUMBER       (MPU_REGION_NUMBER11)
 #define REGION_EXTERNAL_MEMORY_SIZE         (MPU_REGION_SIZE_256MB)
+#define CONTROL_FLASH_WRITEOPERATION        /*!< Enable the control of each write operation */
 
 /* Private macros ------------------------------------------------------------*/
 #define REGION_MIN_SIZE(_A_,_B_) (((_A_) > (_B_)) ? (_B_) : (_A_))

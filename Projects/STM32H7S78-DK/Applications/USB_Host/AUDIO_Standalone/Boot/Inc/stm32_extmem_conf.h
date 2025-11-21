@@ -23,7 +23,7 @@
 #define __STM32_EXTMEM_CONF__H__
 
 #ifdef __cplusplus
-extern "C" {
+ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -74,9 +74,9 @@ enum {
 */
 #define EXTMEM_MEMORY_BOOTXIP  EXTMEMORY_1
 
-/* USER CODE BEGIN PV */
+/* USER CODE BEGIN EC */
 
-/* USER CODE END PV */
+/* USER CODE END EC */
 
 /* Exported configuration --------------------------------------------------------*/
 /** @defgroup EXTMEM_CONF_Exported_configuration EXTMEM_CONF exported configuration definition

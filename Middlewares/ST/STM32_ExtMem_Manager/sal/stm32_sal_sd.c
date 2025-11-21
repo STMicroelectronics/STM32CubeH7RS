@@ -2,7 +2,7 @@
   ******************************************************************************
   * @file   stm32_sal_sd.c
   * @author  MCD Application Team
-  * @brief   This file is the software adaptation layer for SD
+  * @brief   This file implements the software adaptation layer for SD.
   ******************************************************************************
   * @attention
   *
@@ -21,7 +21,7 @@
 #include "stm32_extmem_conf.h"
 #if EXTMEM_SAL_SD_DEBUG_LEVEL != 0 && defined(EXTMEM_MACRO_DEBUG)
 #include <stdio.h>
-#endif /*EXTMEM_SAL_SD_DEBUG_LEVEL != 0 && defined(EXTMEM_MACRO_DEBUG)*/
+#endif /* EXTMEM_SAL_SD_DEBUG_LEVEL != 0 && EXTMEM_MACRO_DEBUG */
 
 #if EXTMEM_SAL_SD == 1
 #include "stm32_sal_sd_type.h"
@@ -33,7 +33,7 @@
   */
 
 /**
-  * @brief ready timeout value
+  * @brief Ready timeout value
   */
 #define READY_TIMEOUT 1000u
 
@@ -49,25 +49,25 @@
 #define DEBUG_PARAM_END()
 #else
 /**
-  * @brief trace header macro
+  * @brief Trace header macro.
   */
 #define DEBUG_PARAM_BEGIN()     EXTMEM_MACRO_DEBUG("\t\tSALSD::");
 
 /**
-  * @brief trace data string macro
+  * @brief Trace data string macro.
   */
 #define DEBUG_PARAM_DATA(_STR_) EXTMEM_MACRO_DEBUG(_STR_);
 
 /**
-  * @brief trace data integer macro
+  * @brief Trace data integer macro
   */
 #define DEBUG_PARAM_INT(_INT_ ) {                                                 \
                                   char str[10];                                   \
                                   (void)snprintf(str, sizeof(str), "0x%x", _INT_);\
                                   EXTMEM_MACRO_DEBUG(str);                        \
-                                }
+                                  }
 /**
-  * @brief trace close macro
+  * @brief Trace close macro
   */
 #define DEBUG_PARAM_END()       EXTMEM_MACRO_DEBUG("\n");
 
@@ -93,50 +93,73 @@
   * @{
   */
 
-HAL_StatusTypeDef SAL_SD_Init(SAL_SD_ObjectTypeDef* SalSD, void* HALHandle, EXTMEM_DRIVER_SDCARD_InfoTypeDef* Info)
+/**
+  * @brief This function initializes the SD SAL context
+  * @param SalSD SAL SD Object
+  * @param HALHandle HAL handle
+  * @param Info  Information on the SD card
+  * @return @ref HAL_StatusTypeDef
+  **/
+HAL_StatusTypeDef SAL_SD_Init(SAL_SD_ObjectTypeDef *SalSD, void *HALHandle, EXTMEM_DRIVER_SDCARD_InfoTypeDef *Info)
 {
   SalSD->hSD = (SD_HandleTypeDef *)HALHandle;
 
   Info->BlockNbr  = SalSD->hSD->SdCard.BlockNbr;
   Info->BlockSize = SalSD->hSD->SdCard.BlockSize;
 
-#if 0  /* It seems that operation is already in the HAL initialization */
-   /* Enable Wide Operation */
-   HAL_SD_ConfigWideBusOperation(&hsd_sdmmc[Instance], SDMMC_BUS_WIDE_4B);
-#endif    
-
   /* Switch to the highest Speed mode supported by the sd-card */
   return HAL_SD_ConfigSpeedBusOperation(SalSD->hSD, SDMMC_SPEED_MODE_AUTO);
 }
 
-HAL_StatusTypeDef SAL_SD_DeInit(SAL_SD_ObjectTypeDef* SalSD)
+/**
+  * @brief This function un-initializes the SD SAL context
+  * @param SalSD SAL SD Object
+  * @return @ref HAL_StatusTypeDef
+  **/
+HAL_StatusTypeDef SAL_SD_DeInit(SAL_SD_ObjectTypeDef *SalSD)
 {
-  SalSD->hSD->SdCard.BlockNbr= 0;
+  SalSD->hSD->SdCard.BlockNbr = 0;
   return HAL_OK;
 }
 
-HAL_StatusTypeDef SAL_SD_ReadData(SAL_SD_ObjectTypeDef* SalSD, uint32_t BlockIdx, uint8_t* Data, uint32_t NumberOfBlock)
+/**
+  * @brief This function reads data from the SD
+  * @param SalSD SAL SD Object
+  * @param BlockIdx Block index
+  * @param Data Data pointer
+  * @param NumberOfBlock Number of block
+  * @return @ref HAL_StatusTypeDef
+  **/
+HAL_StatusTypeDef SAL_SD_ReadData(SAL_SD_ObjectTypeDef *SalSD, uint32_t BlockIdx, uint8_t *Data, uint32_t NumberOfBlock)
 {
   uint32_t timeout = 100UL * NumberOfBlock;
   HAL_StatusTypeDef retr = HAL_SD_ReadBlocks(SalSD->hSD, (uint8_t *)Data, BlockIdx, NumberOfBlock, timeout);
   if (HAL_OK == retr)
   {
     timeout = HAL_GetTick();
-    /* check the SD status */
-    while(HAL_SD_GetCardState(SalSD->hSD) != HAL_SD_CARD_TRANSFER)
+    /* Check the SD status */
+    while (HAL_SD_GetCardState(SalSD->hSD) != HAL_SD_CARD_TRANSFER)
     {
-     if ((HAL_GetTick() - timeout) > READY_TIMEOUT)
-     {
-      retr = HAL_TIMEOUT;
-      break;
-     }
+      if ((HAL_GetTick() - timeout) > READY_TIMEOUT)
+      {
+        retr = HAL_TIMEOUT;
+        break;
+      }
     }
-  }    
+  }
   return retr;
 }
 
-
-HAL_StatusTypeDef SAL_SD_WriteData(SAL_SD_ObjectTypeDef* SalSD, uint32_t BlockIdx, const uint8_t* const Data, uint32_t NumberOfBlock)
+/**
+  * @brief This function writes data on the SD
+  * @param SalSD SAL SD Object
+  * @param BlockIdx block index
+  * @param Data data pointer
+  * @param NumberOfBlock number of block
+  * @return @ref HAL_StatusTypeDef
+  **/
+HAL_StatusTypeDef SAL_SD_WriteData(SAL_SD_ObjectTypeDef *SalSD, uint32_t BlockIdx, const uint8_t *const Data,
+                                   uint32_t NumberOfBlock)
 {
   uint32_t timeout = 100UL * NumberOfBlock;
   HAL_StatusTypeDef retr;
@@ -145,42 +168,54 @@ HAL_StatusTypeDef SAL_SD_WriteData(SAL_SD_ObjectTypeDef* SalSD, uint32_t BlockId
   if (HAL_OK == retr)
   {
     timeout = HAL_GetTick();
-    /* check the SD status */
-    while(HAL_SD_GetCardState(SalSD->hSD) != HAL_SD_CARD_TRANSFER)
+    /* Check the SD status */
+    while (HAL_SD_GetCardState(SalSD->hSD) != HAL_SD_CARD_TRANSFER)
     {
-     if ((HAL_GetTick() - timeout) > READY_TIMEOUT)
-     {
-      retr = HAL_TIMEOUT;
-      break;
-     }
-    }
-  }    
-  return retr;
-}
-
-HAL_StatusTypeDef SAL_SD_EraseBlock(SAL_SD_ObjectTypeDef* SalSD, uint32_t BlockIdx, uint32_t BlockCount)
-{
-  uint32_t timeout;
-  HAL_StatusTypeDef retr;
-      
-  retr = HAL_SD_Erase(SalSD->hSD, BlockIdx, BlockIdx + BlockCount);
-  if (HAL_OK == retr)
-  {
-    timeout = HAL_GetTick();
-    /* check the SD status */
-    while(HAL_SD_GetCardState(SalSD->hSD) != HAL_SD_CARD_TRANSFER)
-    {
-     if ((HAL_GetTick() - timeout) > (READY_TIMEOUT * BlockCount))
-     {
-      retr = HAL_TIMEOUT;
-      break;
-     }
+      if ((HAL_GetTick() - timeout) > READY_TIMEOUT)
+      {
+        retr = HAL_TIMEOUT;
+        break;
+      }
     }
   }
   return retr;
 }
 
-HAL_StatusTypeDef SAL_SD_MassErase(SAL_SD_ObjectTypeDef* SalSD)
+/**
+  * @brief This function erases an amount of blocks on the SD
+  * @param SalSD SAL SD Object
+  * @param BlockIdx block index
+  * @param BlockCount number of block
+  * @return @ref HAL_StatusTypeDef
+  **/
+HAL_StatusTypeDef SAL_SD_EraseBlock(SAL_SD_ObjectTypeDef *SalSD, uint32_t BlockIdx, uint32_t BlockCount)
+{
+  uint32_t timeout;
+  HAL_StatusTypeDef retr;
+
+  retr = HAL_SD_Erase(SalSD->hSD, BlockIdx, BlockIdx + BlockCount);
+  if (HAL_OK == retr)
+  {
+    timeout = HAL_GetTick();
+    /* Check the SD status */
+    while (HAL_SD_GetCardState(SalSD->hSD) != HAL_SD_CARD_TRANSFER)
+    {
+      if ((HAL_GetTick() - timeout) > (READY_TIMEOUT * BlockCount))
+      {
+        retr = HAL_TIMEOUT;
+        break;
+      }
+    }
+  }
+  return retr;
+}
+
+/**
+  * @brief This function erases all the SD
+  * @param SalSD SAL SD Object
+  * @return @ref HAL_StatusTypeDef
+  **/
+HAL_StatusTypeDef SAL_SD_MassErase(SAL_SD_ObjectTypeDef *SalSD)
 {
   return SAL_SD_EraseBlock(SalSD, 0, SalSD->hSD->SdCard.BlockNbr);
 }

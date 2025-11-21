@@ -20,7 +20,6 @@
 
 #ifndef __ETHERNETIF_H
 #define __ETHERNETIF_H
-
 #include "lwip/err.h"
 #include "lwip/netif.h"
 
@@ -41,4 +40,4 @@ u32_t sys_now(void);
 /* USER CODE BEGIN 1 */
 
 /* USER CODE END 1 */
-#endif /*__ETHERNETIF_H */
+#endif /* __ETHERNETIF_H */

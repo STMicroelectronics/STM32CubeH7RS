@@ -6,6 +6,7 @@
  */
 /*
  *  Copyright The Mbed TLS Contributors
+ *  Portions Copyright (C) STMicroelectronics, All Rights Reserved
  *  SPDX-License-Identifier: Apache-2.0
  */
 #ifndef MBEDTLS_PK_INTERNAL_H
@@ -93,7 +94,7 @@ static inline mbedtls_ecp_group_id mbedtls_pk_get_ec_group_id(const mbedtls_pk_c
         psa_key_type_t opaque_key_type;
         psa_ecc_family_t curve;
 
-        if (psa_get_key_attributes(pk->priv_id, &opaque_attrs) != PSA_SUCCESS) {
+        if (psa_get_key_attributes(pk->MBEDTLS_PRIVATE(priv_id), &opaque_attrs) != PSA_SUCCESS) {
             return MBEDTLS_ECP_DP_NONE;
         }
         opaque_key_type = psa_get_key_type(&opaque_attrs);
@@ -104,9 +105,9 @@ static inline mbedtls_ecp_group_id mbedtls_pk_get_ec_group_id(const mbedtls_pk_c
 #endif /* MBEDTLS_USE_PSA_CRYPTO */
     {
 #if defined(MBEDTLS_PK_USE_PSA_EC_DATA)
-        id = mbedtls_ecc_group_from_psa(pk->ec_family, pk->ec_bits);
+        id = mbedtls_ecc_group_from_psa(pk->MBEDTLS_PRIVATE(ec_family), pk->MBEDTLS_PRIVATE(ec_bits));
 #else /* MBEDTLS_PK_USE_PSA_EC_DATA */
-        id = mbedtls_pk_ec_ro(*pk)->grp.id;
+        id = mbedtls_pk_ec_ro(*pk)->MBEDTLS_PRIVATE(grp).id;
 #endif /* MBEDTLS_PK_USE_PSA_EC_DATA */
     }
 

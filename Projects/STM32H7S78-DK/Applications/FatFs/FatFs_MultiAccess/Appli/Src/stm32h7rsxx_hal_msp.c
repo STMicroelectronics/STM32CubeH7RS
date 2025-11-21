@@ -99,7 +99,8 @@ void HAL_SD_MspInit(SD_HandleTypeDef* hsd)
 
     /* USER CODE END SDMMC1_MspInit 0 */
 
-    /* Initializes the peripherals clock */
+  /** Initializes the peripherals clock
+  */
     PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_SDMMC12;
     PeriphClkInit.Sdmmc12ClockSelection = RCC_SDMMC12CLKSOURCE_PLL2S;
     if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
@@ -112,7 +113,7 @@ void HAL_SD_MspInit(SD_HandleTypeDef* hsd)
 
     __HAL_RCC_GPIOD_CLK_ENABLE();
     __HAL_RCC_GPIOC_CLK_ENABLE();
-    /** SDMMC1 GPIO Configuration
+    /**SDMMC1 GPIO Configuration
     PD2     ------> SDMMC1_CMD
     PC10     ------> SDMMC1_D2
     PC11     ------> SDMMC1_D3
@@ -214,7 +215,7 @@ void HAL_SD_MspDeInit(SD_HandleTypeDef* hsd)
     /* Peripheral clock disable */
     __HAL_RCC_SDMMC1_CLK_DISABLE();
 
-    /** SDMMC1 GPIO Configuration
+    /**SDMMC1 GPIO Configuration
     PD2     ------> SDMMC1_CMD
     PC10     ------> SDMMC1_D2
     PC11     ------> SDMMC1_D3

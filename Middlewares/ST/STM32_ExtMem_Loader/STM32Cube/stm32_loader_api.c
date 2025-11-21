@@ -21,7 +21,6 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm32_device_info.h"
 #include "stm32_loader_api.h"
-#include "memory_wrapper.h"
 #include <string.h>
 #include <stdio.h>
 

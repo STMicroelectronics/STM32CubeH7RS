@@ -40,13 +40,13 @@ connect_reset="-c port=SWD speed=fast ap=1 mode=UR"
 
 # Set directory where OEMuROT code is located
 if [ "$isGeneratedByCubeMX" == "true" ]; then
-   appli_dir=$oemirot_boot_path_project
+   appli_dir=$oemirot_appli_path_project
    iloader_dir="$stirot_iloader_boot_path_project"
    # Set path to STiROT_iLoader.bin file
    STiROT_iLoader_bin="$stirot_iloader_boot_path_project/Binary/STiROT_iLoader.bin"
    OEMuROT_hex="$cube_fw_path/Projects/STM32H7S78-DK/Applications/ROT/OEMiROT_Boot/Binary/OEMiROT_Boot_enc_sign.hex"
 else
-   appli_dir="../../$oemirot_boot_path_project"
+   appli_dir="../../$oemirot_appli_path_project"
    iloader_dir="../../$stirot_iloader_boot_path_project"
    # Set path to STiROT_iLoader.bin file
    STiROT_iLoader_bin="$project_dir/$iloader_dir/Binary/STiROT_iLoader.bin"

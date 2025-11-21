@@ -2,8 +2,7 @@
   ******************************************************************************
   * @file    stm32_sal_sd_type.h
   * @author  MCD Application Team
-  * @brief   This file contains the software adaptation layer SD functions
-  *          prototypes.
+  * @brief   This file contains SAL SD type definitions.
   ******************************************************************************
   * @attention
   *
@@ -22,7 +21,7 @@
 #define __STM32_SAL_SD_TYPE_H
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /** @addtogroup SAL_SD
@@ -41,8 +40,9 @@
   * @{
   */
 
-typedef struct {
-   SD_HandleTypeDef     *hSD;            /*!< handle on the SD instance */
+typedef struct
+{
+  SD_HandleTypeDef     *hSD;            /*!< Pointer to the SD instance handle. */
 } SAL_SD_ObjectTypeDef;
 
 

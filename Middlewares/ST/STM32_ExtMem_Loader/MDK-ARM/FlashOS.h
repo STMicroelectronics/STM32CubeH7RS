@@ -26,6 +26,9 @@
   ******************************************************************************
   */
 
+/* Includes ------------------------------------------------------------------*/
+#include "memory_wrapper.h"
+
 #define VERS 1 // Interface Version 1.01
 
 
@@ -68,18 +71,18 @@ struct FlashDevice
 #define FLASH_DRV_VERS (0x0100 + VERS) // Driver Version, do not modify!
 
 // Flash Programming Functions (Called by FlashOS)
-extern int Init(unsigned long adr, // Initialize Flash
+extern KeepInCompilation int Init(unsigned long adr, // Initialize Flash
                 unsigned long clk,
                 unsigned long fnc);
-extern int UnInit(unsigned long fnc);    // De-initialize Flash
-extern int BlankCheck(unsigned long adr, // Blank Check
+extern KeepInCompilation int UnInit(unsigned long fnc);    // De-initialize Flash
+extern KeepInCompilation int BlankCheck(unsigned long adr, // Blank Check
                       unsigned long sz,
                       unsigned char pat);
-extern int EraseChip(void);                // Erase complete Device
-extern int EraseSector(unsigned long adr); // Erase Sector Function
-extern int ProgramPage(unsigned long adr,  // Program Page Function
+extern KeepInCompilation int EraseChip(void);                // Erase complete Device
+extern KeepInCompilation int EraseSector(unsigned long adr); // Erase Sector Function
+extern KeepInCompilation int ProgramPage(unsigned long adr,  // Program Page Function
                        unsigned long sz,
                        unsigned char *buf);
-extern unsigned long Verify(unsigned long adr, // Verify Function
+extern KeepInCompilation unsigned long Verify(unsigned long adr, // Verify Function
                             unsigned long sz,
                             unsigned char *buf);

@@ -97,7 +97,8 @@ void HAL_MDF_MspInit(MDF_HandleTypeDef* hmdf)
 
     /* USER CODE END ADF1_MspInit 0 */
 
-    /* Initializes the peripherals clock */
+  /** Initializes the peripherals clock
+  */
     PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_ADF1;
     PeriphClkInit.Adf1ClockSelection = RCC_ADF1CLKSOURCE_HCLK;
     if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
@@ -109,7 +110,7 @@ void HAL_MDF_MspInit(MDF_HandleTypeDef* hmdf)
     __HAL_RCC_ADF1_CLK_ENABLE();
 
     __HAL_RCC_GPIOE_CLK_ENABLE();
-    /** ADF1 GPIO Configuration
+    /**ADF1 GPIO Configuration
     PE2     ------> ADF1_CCK0
     PE6     ------> ADF1_SDI0
     */
@@ -151,7 +152,7 @@ void HAL_MDF_MspDeInit(MDF_HandleTypeDef* hmdf)
     /* Peripheral clock disable */
     __HAL_RCC_ADF1_CLK_DISABLE();
 
-    /** ADF1 GPIO Configuration
+    /**ADF1 GPIO Configuration
     PE2     ------> ADF1_CCK0
     PE6     ------> ADF1_SDI0
     */

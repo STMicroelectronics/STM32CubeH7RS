@@ -113,10 +113,11 @@ void HAL_XSPI_MspInit(XSPI_HandleTypeDef* hxspi)
 
     __HAL_RCC_GPION_CLK_ENABLE();
     /**XSPI1 GPIO Configuration
+    PN1     ------> XSPIM_P2_NCS1
     PN3     ------> XSPIM_P2_IO1
     PN0     ------> XSPIM_P2_DQS0
-    PN11     ------> XSPIM_P2_IO7
-    PN10     ------> XSPIM_P2_IO6
+    PN11    ------> XSPIM_P2_IO7
+    PN10    ------> XSPIM_P2_IO6
     PN9     ------> XSPIM_P2_IO5
     PN2     ------> XSPIM_P2_IO0
     PN6     ------> XSPIM_P2_CLK
@@ -214,10 +215,11 @@ void HAL_XSPI_MspDeInit(XSPI_HandleTypeDef* hxspi)
     __HAL_RCC_XSPI1_CLK_DISABLE();
 
     /**XSPI1 GPIO Configuration
+    PN1     ------> XSPIM_P2_NCS1
     PN3     ------> XSPIM_P2_IO1
     PN0     ------> XSPIM_P2_DQS0
-    PN11     ------> XSPIM_P2_IO7
-    PN10     ------> XSPIM_P2_IO6
+    PN11    ------> XSPIM_P2_IO7
+    PN10    ------> XSPIM_P2_IO6
     PN9     ------> XSPIM_P2_IO5
     PN2     ------> XSPIM_P2_IO0
     PN6     ------> XSPIM_P2_CLK

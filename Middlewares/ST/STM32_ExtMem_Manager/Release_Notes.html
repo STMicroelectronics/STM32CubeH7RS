@@ -22,7 +22,7 @@
     }
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
-  <link rel="stylesheet" href="_htmresc/mini-st.css" />
+  <link rel="stylesheet" href="_htmresc/mini-st_2020.css" />
   <link rel="icon" type="image/x-icon" href="_htmresc/favicon.png" />
 </head>
 <body>
@@ -58,20 +58,43 @@ Architecture</figcaption>
 <p>Here is the list of references to user documents:</p>
 <ul>
 <li><a
+href="https://wiki.st.com/stm32mcu/wiki/Introduction_to_External_memory_Manager">WIKI
+Page</a>: Introduction to External Memory Manager</li>
+<li><a
 href="https://wiki.st.com/stm32mcu/wiki/Getting_started_with_External_memory_Manager_and_External_memory_loader">WIKI
-Page</a>: Getting started with External memory Manager</li>
+Page</a>: Getting started with External Memory Manager</li>
 </ul>
 </div>
 <section id="update-history" class="col-sm-12 col-lg-8">
 <h1>Update History</h1>
 <div class="collapse">
-<input type="checkbox" id="collapse-section3" checked aria-hidden="true">
-<label for="collapse-section3" aria-hidden="true"><strong>V1.3.0 /
-17-December-2024</strong></label>
+<input type="checkbox" id="collapse-section6" checked aria-hidden="true">
+<label for="collapse-section6" aria-hidden="true"><strong>V1.5.0 /
+10-Sep-2025</strong></label>
 <div>
 <h2 id="release-update">Release update</h2>
 <ul>
-<li>doc : code comment update</li>
+<li>Solve EMM Initialisation issues with Macronix MX25L25645G QSPI
+memory</li>
+<li>Correct number of dummy cycles used in 1S1S1S reading on Octal
+MX66</li>
+<li>Check number of dummy cycles to be used in Octal mode for READ SFDP
+command</li>
+<li>Adapt the memory interface frequency according to max requested
+frequency as defined in configuration table in Octal mode</li>
+<li>Correct initialisation of nb of dummy cycles in some cases of 4
+lines configuration</li>
+<li>Handle case where MaxFreq is undefined in NOR SFDP
+extmem_list_config</li>
+<li>Codespell and MCUAstyle corrections</li>
+<li>Add DCache management in EXTMEM_DRIVER_NOR_SFDP_WriteInMappedMode()
+in Nor Flash driver</li>
+<li>Addition of a new EMM driver type : CUSTOM driver allows end user to
+handle memories thanks to a configuration file containing all required
+memory characteristics, register configuration step descriptions, …
+Examples of configuration files used with this CUSTOM driver are
+provided.</li>
+<li>Refactoring of code comments</li>
 </ul>
 <h2 id="known-limitations">Known limitations</h2>
 <ul>
@@ -79,15 +102,24 @@ Page</a>: Getting started with External memory Manager</li>
 </ul>
 <h2 id="supported-memories">Supported memories</h2>
 <ul>
-<li>List of the tested memories
+<li>List of the tested memories (per selected EMM driver type)
 <ul>
 <li>NOR_SFDP :
 <ul>
 <li>MACRONIX MX66UW1G45G, MX25UW25645G, MX25LM51245G</li>
 <li>WINBOND W25Q64JV</li>
+<li>ISSI IS25WP032D, IS25LP032D</li>
+<li>GIGADEVICES GD25LX512ME, GD55LX01GE</li>
 </ul></li>
-<li>PSRAM: APMEMORY APS256XXN</li>
-<li>SDCARD: micro SD kingstone 1GB</li>
+<li>CUSTOM (configuration files provided) :
+<ul>
+<li>MACRONIX MX66UW1G45G, MX25UW25645G, MX25UM51245G</li>
+<li>ISSI IS25WP032D</li>
+<li>GIGADEVICES GD25LX512ME</li>
+<li>APMEMORY APS256XXN-OBR-BG</li>
+</ul></li>
+<li>PSRAM: APMEMORY APS256XXN-OBR-BG</li>
+<li>SDCARD: Micro SD kingstone 1GB</li>
 </ul></li>
 </ul>
 <h2 id="supported-devices-and-boards">Supported Devices and boards</h2>
@@ -105,14 +137,21 @@ Page</a>: Getting started with External memory Manager</li>
 </div>
 </div>
 <div class="collapse">
-<input type="checkbox" id="collapse-section3" aria-hidden="true">
-<label for="collapse-section3" aria-hidden="true"><strong>V1.2.0 /
-09-October-2024</strong></label>
+<input type="checkbox" id="collapse-section5" aria-hidden="true">
+<label for="collapse-section5" aria-hidden="true"><strong>V1.4.0 /
+27-May-2025</strong></label>
 <div>
 <h2 id="release-update-1">Release update</h2>
 <ul>
-<li>fix : jump issue without compiler optim</li>
-<li>fix : performance issue detected in security context</li>
+<li>Update of Nor SFDP friver for support of GigaDevices memories
+(GD25LX512ME, GD55LX01GE)</li>
+<li>Update of Nor SFDP friver for support of ISSI Quad memories
+(IS25WP032D)</li>
+<li>Correction in QSPI enabling procedure for 0x04 method (QE is bit 1
+of status register 2)</li>
+<li>Correction of typographical errors</li>
+<li>WIP flag check executed just after DTR octal mode entry should be
+executed in Octal mode</li>
 </ul>
 <h2 id="known-limitations-1">Known limitations</h2>
 <ul>
@@ -126,6 +165,8 @@ Page</a>: Getting started with External memory Manager</li>
 <ul>
 <li>MACRONIX MX66UW1G45G, MX25UW25645G, MX25LM51245G</li>
 <li>WINBOND W25Q64JV</li>
+<li>ISSI IS25WP032D, IS25LP032D</li>
+<li>GIGADEVICES GD25LX512ME, GD55LX01GE</li>
 </ul></li>
 <li>PSRAM: APMEMORY APS256XXN</li>
 <li>SDCARD: micro SD kingstone 1GB</li>
@@ -147,24 +188,13 @@ boards</h2>
 </div>
 </div>
 <div class="collapse">
-<input type="checkbox" id="collapse-section2" aria-hidden="true">
-<label for="collapse-section2" aria-hidden="true"><strong>V1.1.0 /
-29-May-2024</strong></label>
+<input type="checkbox" id="collapse-section4" aria-hidden="true">
+<label for="collapse-section4" aria-hidden="true"><strong>V1.3.0 /
+17-December-2024</strong></label>
 <div>
 <h2 id="release-update-2">Release update</h2>
 <ul>
-<li>NOR_SFDP :
-<ul>
-<li>update for memory presenting only short basic JEDEC table</li>
-<li>update to add frequency upgrade when JEDEC doesn’t provide frequency
-information</li>
-<li>fix issue detected during octal activation requiring adding WIP
-operations</li>
-</ul></li>
-<li>SAL_XSPI :
-<ul>
-<li>update to support DMA transfer</li>
-</ul></li>
+<li>doc : code comment update</li>
 </ul>
 <h2 id="known-limitations-2">Known limitations</h2>
 <ul>
@@ -199,17 +229,28 @@ boards</h2>
 </div>
 </div>
 <div class="collapse">
-<input type="checkbox" id="collapse-section1" aria-hidden="true">
-<label for="collapse-section1" aria-hidden="true"><strong>V1.0.0 /
-28-February-2024</strong></label>
+<input type="checkbox" id="collapse-section3" aria-hidden="true">
+<label for="collapse-section3" aria-hidden="true"><strong>V1.2.0 /
+09-October-2024</strong></label>
 <div>
-<h2 id="first-release">First release</h2>
-<p>First official release of STM32_ExtMem_Manager</p>
+<h2 id="release-update-3">Release update</h2>
+<ul>
+<li>fix : jump issue without compiler optim</li>
+<li>fix : performance issue detected in security context</li>
+</ul>
 <h2 id="known-limitations-3">Known limitations</h2>
+<ul>
+<li>See supported memories</li>
+</ul>
+<h2 id="supported-memories-3">Supported memories</h2>
 <ul>
 <li>List of the tested memories
 <ul>
-<li>NOR_SFDP : MACRONIX MX66UW1G45G, MX25UW25645G</li>
+<li>NOR_SFDP :
+<ul>
+<li>MACRONIX MX66UW1G45G, MX25UW25645G, MX25LM51245G</li>
+<li>WINBOND W25Q64JV</li>
+</ul></li>
 <li>PSRAM: APMEMORY APS256XXN</li>
 <li>SDCARD: micro SD kingstone 1GB</li>
 </ul></li>
@@ -224,6 +265,89 @@ boards</h2>
 <li>Not applicable</li>
 </ul>
 <h2 id="dependencies-3">Dependencies</h2>
+<ul>
+<li>Not applicable</li>
+</ul>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section2" aria-hidden="true">
+<label for="collapse-section2" aria-hidden="true"><strong>V1.1.0 /
+29-May-2024</strong></label>
+<div>
+<h2 id="release-update-4">Release update</h2>
+<ul>
+<li>NOR_SFDP :
+<ul>
+<li>update for memory presenting only short basic JEDEC table</li>
+<li>update to add frequency upgrade when JEDEC doesn’t provide frequency
+information</li>
+<li>fix issue detected during octal activation requiring adding WIP
+operations</li>
+</ul></li>
+<li>SAL_XSPI :
+<ul>
+<li>update to support DMA transfer</li>
+</ul></li>
+</ul>
+<h2 id="known-limitations-4">Known limitations</h2>
+<ul>
+<li>See supported memories</li>
+</ul>
+<h2 id="supported-memories-4">Supported memories</h2>
+<ul>
+<li>List of the tested memories
+<ul>
+<li>NOR_SFDP :
+<ul>
+<li>MACRONIX MX66UW1G45G, MX25UW25645G, MX25LM51245G</li>
+<li>WINBOND W25Q64JV</li>
+</ul></li>
+<li>PSRAM: APMEMORY APS256XXN</li>
+<li>SDCARD: micro SD kingstone 1GB</li>
+</ul></li>
+</ul>
+<h2 id="supported-devices-and-boards-4">Supported Devices and
+boards</h2>
+<ul>
+<li>Not applicable</li>
+</ul>
+<h2 id="backward-compatibility-4">Backward Compatibility</h2>
+<ul>
+<li>Not applicable</li>
+</ul>
+<h2 id="dependencies-4">Dependencies</h2>
+<ul>
+<li>Not applicable</li>
+</ul>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section1" aria-hidden="true">
+<label for="collapse-section1" aria-hidden="true"><strong>V1.0.0 /
+28-February-2024</strong></label>
+<div>
+<h2 id="first-release">First release</h2>
+<p>First official release of STM32_ExtMem_Manager</p>
+<h2 id="known-limitations-5">Known limitations</h2>
+<ul>
+<li>List of the tested memories
+<ul>
+<li>NOR_SFDP : MACRONIX MX66UW1G45G, MX25UW25645G</li>
+<li>PSRAM: APMEMORY APS256XXN</li>
+<li>SDCARD: micro SD kingstone 1GB</li>
+</ul></li>
+</ul>
+<h2 id="supported-devices-and-boards-5">Supported Devices and
+boards</h2>
+<ul>
+<li>Not applicable</li>
+</ul>
+<h2 id="backward-compatibility-5">Backward Compatibility</h2>
+<ul>
+<li>Not applicable</li>
+</ul>
+<h2 id="dependencies-5">Dependencies</h2>
 <ul>
 <li>Not applicable</li>
 </ul>

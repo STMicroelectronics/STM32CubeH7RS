@@ -2,7 +2,7 @@
   ******************************************************************************
   * @file    stm32_user_driver_type.h
   * @author  MCD Application Team
-  * @brief   This file contains the user driver type definition.
+  * @brief   This file contains USER driver type definitions.
   ******************************************************************************
   * @attention
   *
@@ -21,7 +21,7 @@
 #define __STM32_USER_DRIVER_TYPE_H
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -48,11 +48,12 @@
   */
 
 /**
- * @brief driver USER object definition
- */
-typedef struct {
-  uint32_t MemID;
-  void* PtrUserDriver;
+  * @brief USER driver object definition.
+  */
+typedef struct
+{
+  uint32_t MemID;           /*!< Memory ID. */
+  void *PtrUserDriver;      /*!< Pointer to the user driver instance. */
 } EXTMEM_DRIVER_USER_ObjectTypeDef;
 
 /**

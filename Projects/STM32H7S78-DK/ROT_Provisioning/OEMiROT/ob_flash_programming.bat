@@ -37,10 +37,10 @@ if /i "!selected_product_state!" == "OPEN" (
 )
 
 if "%isGeneratedByCubeMX%" == "true" (
-    set appli_dir=%oemirot_boot_path_project%
+    set appli_dir=%oemirot_appli_path_project%
     set oemirot_code="%cube_fw_path%\Projects\STM32H7S78-DK\Applications\ROT\OEMiROT_Boot\Binary\OEMiROT_Boot.bin"
 ) else (
-    set appli_dir=..\..\%oemirot_boot_path_project%
+    set appli_dir=..\..\%oemirot_appli_path_project%
     set oemirot_code="%~dp0..\..\Applications\ROT\OEMiROT_Boot\Binary\OEMiROT_Boot.bin"
 )
 

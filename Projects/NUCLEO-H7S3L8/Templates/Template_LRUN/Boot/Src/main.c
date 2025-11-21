@@ -223,7 +223,6 @@ static void MX_XSPI2_Init(void)
   hxspi2.Init.WrapSize = HAL_XSPI_WRAP_NOT_SUPPORTED;
   hxspi2.Init.ClockPrescaler = 3;
   hxspi2.Init.SampleShifting = HAL_XSPI_SAMPLE_SHIFT_NONE;
-  hxspi2.Init.DelayHoldQuarterCycle = HAL_XSPI_DHQC_ENABLE;
   hxspi2.Init.ChipSelectBoundary = HAL_XSPI_BONDARYOF_NONE;
   hxspi2.Init.MaxTran = 0;
   hxspi2.Init.Refresh = 0;
@@ -234,6 +233,7 @@ static void MX_XSPI2_Init(void)
   }
   sXspiManagerCfg.nCSOverride = HAL_XSPI_CSSEL_OVR_NCS1;
   sXspiManagerCfg.IOPort = HAL_XSPIM_IOPORT_2;
+  sXspiManagerCfg.Req2AckTime = 1U;
   if (HAL_XSPIM_Config(&hxspi2, &sXspiManagerCfg, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
   {
     Error_Handler();
@@ -251,14 +251,14 @@ static void MX_XSPI2_Init(void)
   */
 static void MX_GPIO_Init(void)
 {
-/* USER CODE BEGIN MX_GPIO_Init_1 */
-/* USER CODE END MX_GPIO_Init_1 */
+  /* USER CODE BEGIN MX_GPIO_Init_1 */
+  /* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPION_CLK_ENABLE();
 
-/* USER CODE BEGIN MX_GPIO_Init_2 */
-/* USER CODE END MX_GPIO_Init_2 */
+  /* USER CODE BEGIN MX_GPIO_Init_2 */
+  /* USER CODE END MX_GPIO_Init_2 */
 }
 
 /* USER CODE BEGIN 4 */
@@ -328,8 +328,7 @@ void Error_Handler(void)
   }
   /* USER CODE END Error_Handler_Debug */
 }
-
-#ifdef  USE_FULL_ASSERT
+#ifdef USE_FULL_ASSERT
 /**
   * @brief  Reports the name of the source file and the source line number
   *         where the assert_param error has occurred.

@@ -44,4 +44,4 @@ void MX_FATFS_Init(void);
 #ifdef __cplusplus
 }
 #endif
-#endif /* __FATFS_H */
+#endif /*__FATFS_H */

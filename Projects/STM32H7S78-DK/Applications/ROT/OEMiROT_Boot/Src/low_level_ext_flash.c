@@ -585,7 +585,7 @@ static int32_t Ext_Flash_ReadData(uint32_t addr, void *data, uint32_t cnt)
   /*  ECC to implement with NMI */
   /*  do a memcpy */
 #ifdef DEBUG_EXT_FLASH_ACCESS
-  printf("read %lx n=%x \r\n", (addr + EXT_FLASH_BASE_ADDRESS), cnt);
+  BOOT_LOG_INF("read %lx n=%x \r\n", (addr + EXT_FLASH_BASE_ADDRESS), cnt);
 #endif /*  DEBUG_EXT_FLASH_ACCESS */
 
   /* Reload Independent Watchdog */
@@ -611,7 +611,7 @@ static int32_t Ext_Flash_ProgramData(uint32_t addr,
   dest = (void *)(flash_base + addr);
 #endif /* CHECK_WRITE or DEBUG_EXT_FLASH_ACCESS */
 #ifdef DEBUG_EXT_FLASH_ACCESS
-  printf("write %x n=%x \r\n", (uint32_t) dest, cnt);
+  BOOT_LOG_INF("write %x n=%x \r\n", (uint32_t) dest, cnt);
 #endif /* DEBUG_EXT_FLASH_ACCESS */
   /* Check Flash memory boundaries and alignment with minimum write size
     * (program_unit), data size also needs to be a multiple of program_unit.
@@ -655,14 +655,14 @@ static int32_t Ext_Flash_ProgramData(uint32_t addr,
   {
     err = EXTMEM_ERROR_DRIVER;
 #ifdef DEBUG_EXT_FLASH_ACCESS
-    printf("write %x n=%x (cmp failed)\r\n", (uint32_t)(dest), cnt);
+    BOOT_LOG_INF("write %x n=%x (cmp failed)\r\n", (uint32_t)(dest), cnt);
 #endif /* DEBUG_EXT_FLASH_ACCESS */
   }
 #endif /* CHECK_WRITE */
 #ifdef DEBUG_EXT_FLASH_ACCESS
   if (err != EXTMEM_OK)
   {
-    printf("failed write %x n=%x \r\n", (uint32_t)(dest), cnt);
+    BOOT_LOG_INF("failed write %x n=%x \r\n", (uint32_t)(dest), cnt);
   }
 #endif /* DEBUG_EXT_FLASH_ACCESS */
   return (err == EXTMEM_OK) ? ARM_DRIVER_OK : ARM_DRIVER_ERROR;
@@ -677,7 +677,7 @@ static int32_t Ext_Flash_EraseSector(uint32_t addr)
   uint32_t *pt;
 #endif /* CHECK_ERASE */
 #ifdef DEBUG_EXT_FLASH_ACCESS
-  printf("erase %x\r\n", addr);
+  BOOT_LOG_INF("erase %x\r\n", addr);
 #endif /* DEBUG_EXT_FLASH_ACCESS */
   if (!(is_range_valid(&ARM_EXT_FLASH0_DEV, addr)) ||
       !(is_erase_aligned(&ARM_EXT_FLASH0_DEV, addr)) ||
@@ -686,9 +686,9 @@ static int32_t Ext_Flash_EraseSector(uint32_t addr)
     ARM_EXT_FLASH0_STATUS.error = DRIVER_STATUS_ERROR;
 #ifdef DEBUG_EXT_FLASH_ACCESS
 #if defined(__ARMCC_VERSION)
-    printf("failed erase %x\r\n", addr);
+    BOOT_LOG_INF("failed erase %x\r\n", addr);
 #else
-    printf("failed erase %lx\r\n", addr);
+    BOOT_LOG_INF("failed erase %lx\r\n", addr);
 #endif /* __ARMCC_VERSION */
 #endif /* DEBUG_EXT_FLASH_ACCESS */
     return ARM_DRIVER_ERROR_PARAMETER;
@@ -721,7 +721,7 @@ static int32_t Ext_Flash_EraseSector(uint32_t addr)
 #ifdef DEBUG_EXT_FLASH_ACCESS
   if (err != EXTMEM_OK)
   {
-    printf("erase failed \r\n");
+    BOOT_LOG_INF("erase failed \r\n");
   }
 #endif /* DEBUG_EXT_FLASH_ACCESS */
 #ifdef CHECK_ERASE
@@ -732,7 +732,7 @@ static int32_t Ext_Flash_EraseSector(uint32_t addr)
     if (pt[i] != 0xffffffff)
     {
 #ifdef DEBUG_EXT_FLASH_ACCESS
-      printf("erase failed off %x %x %x\r\n", addr, &pt[i], pt[i]);
+      BOOT_LOG_INF("erase failed off %x %x %x\r\n", addr, &pt[i], pt[i]);
 #endif /* DEBUG_EXT_FLASH_ACCESS */
       err = EXTMEM_ERROR_DRIVER;
       break;

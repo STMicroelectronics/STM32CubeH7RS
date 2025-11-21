@@ -1,4 +1,40 @@
 #!/bin/bash -
+#=================================================================================================
+# Managing HOST OS diversity : begin
+#=================================================================================================
+OS=$(uname)
+
+echo ${OS} | grep -i -e windows -e mingw >/dev/null
+if [ $? == 0 ]; then
+  echo "=================================="
+  echo "HOST OS : Windows detected"
+  echo ""
+  echo ">>> Running ../postbuild.bat $@"
+  echo ""
+  # Enable : exit immediately if any commands returns a non-zero status
+  set -e
+  cd ../
+  cmd.exe /C postbuild.bat $@
+  # Return OK if no error detected during .bat script
+  exit 0
+fi
+
+if [ "$OS" == "Linux" ]; then
+  echo "HOST OS : Linux detected"
+elif [ "$OS" == "Darwin" ]; then
+  echo "HOST OS : MacOS detected"
+else
+  echo "!!!HOST OS not supported : >$OS<!!!"
+  exit 1
+fi
+
+#=================================================================================================
+# Managing HOST OS diversity : end
+#=================================================================================================
+echo "=================================="
+echo ">>> Running $0 $@"
+echo ""
+
 # Getting the Trusted Package Creator CLI path
 SCRIPT=$(readlink -f $0)
 project_dir=`dirname "$SCRIPT"`
@@ -7,6 +43,7 @@ cd "$project_dir/../../../../ROT_Provisioning"
 provisioning_dir="$(pwd)"
 cd "$project_dir"
 source "$provisioning_dir/env.sh" "$provisioning_dir"
+template_appli_enable_status=$template_appli_enable
 
 # Environment variable for log file
 current_log_file="$project_dir/postbuild.log"
@@ -15,27 +52,35 @@ echo "" > "$current_log_file"
 # arg1 is the config type (Debug, Release)
 config=$1
 
-applicfg="$cube_fw_path/Utilities/PC_Software/ROT_AppliConfig/dist/AppliCfg.exe"
-uname | grep -i -e windows -e mingw
-if [ $? == 0 ] && [ -e "$applicfg" ]; then
-  #line for window executable
-  echo "AppliCfg with windows executable"
-  python=""
+# Environment variable for AppliCfg
+# Check if Python is installed
+python3 --version >/dev/null 2>&1
+if [ $? -ne 0 ]; then
+  python --version >/dev/null 2>&1
+  if [ $? -ne 0 ]; then
+  echo "Python installation missing. Refer to Utilities/PC_Software/ROT_AppliConfig/README.md"
+  exit 1
+  fi
+  python="python "
 else
-  #line for python
-  echo "AppliCfg with python script"
-  applicfg="$cube_fw_path/Utilities/PC_Software/ROT_AppliConfig/AppliCfg.py"
-  #determine/check python version command
   python="python3 "
 fi
+
+# Environment variable for AppliCfg
+applicfg="$cube_fw_path/Utilities/PC_Software/ROT_AppliConfig/AppliCfg.py"
 
 auto_rot_update="$project_dir/../auto_rot_update.sh"
 map_properties="$project_dir/../map.properties"
 preprocess_bl2_file="$project_dir/image_macros_preprocessed_bl2.c"
-appli_dir="../../../../$oemirot_boot_path_project"
+appli_dir="../../../../$oemirot_appli_path_project"
 
 appli_flash_layout="$appli_dir/Inc/appli_flash_layout.h"
 appli_postbuild="$appli_dir/STM32CubeIDE/postbuild.sh"
+if [[ "$template_appli_enable_status" -eq 1 ]]; then
+    appli_postbuild="$appli_dir/../STM32CubeIDE/Appli/postbuild.sh"
+else
+    appli_postbuild="$appli_dir/STM32CubeIDE/postbuild.sh"
+fi
 
 $python"$applicfg" flash --layout "$preprocess_bl2_file" -b oemurot_enable -m RE_OEMUROT_ENABLE --decimal "$auto_rot_update" --vb >> "$current_log_file"
 
@@ -172,10 +217,22 @@ if [ $? != 0 ]; then error; fi
 $python"$applicfg" linker --layout "$preprocess_bl2_file" -m RE_AREA_0_SIZE -n CODE_SIZE "$ld_file" --vb >> "$current_log_file"
 if [ $? != 0 ]; then error; fi
 
+$python"$applicfg" flash --layout "$preprocess_bl2_file" -b oemurot_enable -m RE_OEMUROT_ENABLE --decimal "$appli_postbuild" --vb >> "$current_log_file"
+if [ $? != 0 ]; then error; fi
+
 # Bypass configuration of appli_flash_layout file if not present
 if [ -f "$appli_flash_layout" ]; then
   $python"$applicfg" setdefine --layout "$preprocess_bl2_file" -m RE_OVER_WRITE -n MCUBOOT_OVERWRITE_ONLY -v 1 "$appli_flash_layout" --vb >> "$current_log_file"
   if [ $? != 0 ]; then error; fi
+
+  $python"$applicfg" definevalue --layout "$preprocess_bl2_file" -m RE_CODE_START -n FLASH_PRIMARY_APP_SLOT_OFFSET "$appli_flash_layout" --vb >> "$current_log_file" 2>&1
+  if [ $? != 0 ]; then  error; fi
+
+  $python"$applicfg" definevalue --layout "$preprocess_bl2_file" -m RE_IMAGE_DOWNLOAD_ADDRESS -n FLASH_SECONDARY_APP_SLOT_OFFSET "$appli_flash_layout" --vb >> "$current_log_file" 2>&1
+  if [ $? != 0 ]; then  error; fi
+
+  $python"$applicfg" definevalue --layout "$preprocess_bl2_file" -m RE_AREA_0_SIZE -n FLASH_PRIMARY_APP_SLOT_SIZE "$appli_flash_layout" --vb >> "$current_log_file" 2>&1
+  if [ $? != 0 ]; then  error; fi
 fi
 
 $python"$applicfg" xmlval --layout "$preprocess_bl2_file" -m RE_IMAGE_FLASH_SIZE -c S "$code_xml" --vb >> "$current_log_file"

@@ -2,7 +2,7 @@
   ******************************************************************************
   * @file    stm32_sdcard_type.h
   * @author  MCD Application Team
-  * @brief   This file contains the sd card driver definition.
+  * @brief   This file contains SDCARD driver type definitions.
   ******************************************************************************
   * @attention
   *
@@ -21,7 +21,7 @@
 #define __STM32_SDCARD_TYPE_H
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -38,44 +38,45 @@
   */
 
 /**
- * @brief physical link to drive SDCARD communication
- */
-typedef enum {
+  * @brief Enumeration of physical link types for SDCARD communication.
+  */
+typedef enum
+{
   EXTMEM_DRIVER_SDCARD_LINKSD,  /*!< link SD card */
   EXTMEM_DRIVER_SDCARD_LINKMMC, /*!< link EMMC card */
   EXTMEM_DRIVER_SDCARD_LINKSPI  /*!< link SPI card */
 } SDCardLinkTypeDef;
-  
+
 /**
- * @brief driver SDCARD instance definition
- */
- typedef struct
- {
-  struct 
+  * @brief Driver SDCARD instance definition
+  */
+typedef struct
+{
+  struct
   {
-    SDCardLinkTypeDef Link;   /*!< physical link */
-  }sdcard_public;
-  
-  struct 
+    SDCardLinkTypeDef Link;   /*!< Physical link type. */
+  } sdcard_public;
+
+  struct
   {
-    EXTMEM_DRIVER_SDCARD_InfoTypeDef Info;  /*!< sdcard information */
+    EXTMEM_DRIVER_SDCARD_InfoTypeDef Info;  /*!< SDCARD information. */
     union
     {
 #if EXTMEM_SAL_SD == 1
-      SAL_SD_ObjectTypeDef SDObject; /*!< SD Object memory */
-#endif                               /* EXTMEM_SAL_SD == 1 */
+      SAL_SD_ObjectTypeDef SDObject; /*!< SAL SD object. */
+#endif /* EXTMEM_SAL_SD == 1 */
 #if EXTMEM_SAL_MMC == 1
-      SAL_MMC_ObjectTypeDef MMCObject; /*!< MMC Object memory */
-#endif                                 /* EXTMEM_SAL_MMC == 1 */
+      SAL_MMC_ObjectTypeDef MMCObject; /*!< SAL MMC object. */
+#endif /* EXTMEM_SAL_MMC == 1 */
     } SALObject;
-  }sdcard_private;
-  
+  } sdcard_private;
+
 } EXTMEM_DRIVER_SDCARD_ObjectTypeDef;
 
 /**
   * @}
   */
- 
+
 /* Exported functions --------------------------------------------------------*/
 
 /**

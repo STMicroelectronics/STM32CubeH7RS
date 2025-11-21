@@ -2,7 +2,7 @@
   ******************************************************************************
   * @file    stm32_extmem_conf_template.h
   * @author  MCD Application Team
-  * @brief   Header configuration for extmem module
+  * @brief   Configuration header for the EXTMEM module
   ******************************************************************************
   * @attention
   *
@@ -34,12 +34,23 @@ extern "C" {
   *              #define EXTMEM_DRIVER_PSRAM      1\n
   *              #define EXTMEM_DRIVER_SDCARD     0\n
   *              #define EXTMEM_DRIVER_USER       0
+  *              #define EXTMEM_DRIVER_CUSTOM     0
   * @{
   */
 #define EXTMEM_DRIVER_NOR_SFDP   1
 #define EXTMEM_DRIVER_PSRAM      1
 #define EXTMEM_DRIVER_SDCARD     0
 #define EXTMEM_DRIVER_USER       0
+#define EXTMEM_DRIVER_CUSTOM     0
+
+/* At least one of the above driver type defines should be set to 1 for proper use of EMM Middleware */
+#if (!(defined(EXTMEM_DRIVER_NOR_SFDP) && (EXTMEM_DRIVER_NOR_SFDP == 1))) \
+  &&(!(defined(EXTMEM_DRIVER_PSRAM)    && (EXTMEM_DRIVER_PSRAM == 1)))    \
+  &&(!(defined(EXTMEM_DRIVER_SDCARD)   && (EXTMEM_DRIVER_SDCARD == 1)))   \
+  &&(!(defined(EXTMEM_DRIVER_USER)     && (EXTMEM_DRIVER_USER == 1)))     \
+  &&(!(defined(EXTMEM_DRIVER_CUSTOM)   && (EXTMEM_DRIVER_CUSTOM == 1)))
+#warning "Please enable at least one EMM driver type"
+#endif /* Check on EMM driver type enabled defines */
 
 /**
   * @}
@@ -64,7 +75,7 @@ extern "C" {
 #include "stm32_extmem_type.h"
 
 /** @defgroup EXTMEM_CONF_SAL_imported_variable External Memory configuration list of the imported variables
-  * this section is used to import the HAL handle variable. Handle Can be one of the following:
+  * This section imports the HAL handle variable. The handle can be one of the following:
   *             extern XSPI_HandleTypeDef \n
   *             extern SD_HandleTypeDef
   * @{
@@ -89,7 +100,8 @@ extern XSPI_HandleTypeDef       hxspi1;
 /** @defgroup EXTMEM_CONF_Exported_constants EXTMEM_CONF exported constants
   * @{
   */
-enum {
+enum
+{
   EXTMEMORY_1  = 0,  /*!< ID=0 for the first external memory  */
   EXTMEMORY_2  = 1,  /*!< ID=1 for the second external memory */
 };
@@ -102,7 +114,16 @@ enum {
   * @}
   */
 
+/*
+  @brief Default value for the maximum clock frequency supplied to the memory
+*/
+#define EXTMEM_DEFAULT_MAX_CLOCK_FREQ  50000000U
+/**
+  * @}
+  */
+
 /* Exported configuration --------------------------------------------------------*/
+
 /** @defgroup EXTMEM_CONF_Exported_configuration EXTMEM_CONF exported configuration definition
   * Memory type can be EXTMEM_SDCARD, EXTMEM_NOR_SFDP, EXTMEM_PSRAM
   * @{
@@ -111,26 +132,27 @@ extern EXTMEM_DefinitionTypeDef extmem_list_config[2];
 #if defined(EXTMEM_C)
 EXTMEM_DefinitionTypeDef extmem_list_config[2] =
 {
+#if defined(EXTMEM_DRIVER_NOR_SFDP) && (EXTMEM_DRIVER_NOR_SFDP == 1)
   /* EXTMEMORY_1 */
   {
     .MemType = EXTMEM_NOR_SFDP,
-    .Handle = (void*)&hxspi2,
+    .Handle = (void *) &hxspi2,
     .ConfigType = EXTMEM_LINK_CONFIG_8LINES,
-#if !defined ( __GNUC__ )
     .NorSfdpObject =
     {
-      0u
+      .sfdp_public.MaxFreq = EXTMEM_DEFAULT_MAX_CLOCK_FREQ,
     }
-#endif /* __GNUC__ */
   },
+#endif /* EXTMEM_DRIVER_NOR_SFDP == 1 */
+#if defined(EXTMEM_DRIVER_PSRAM) && (EXTMEM_DRIVER_PSRAM == 1)
   /* EXTMEMORY_2 */
   {
     .MemType = EXTMEM_PSRAM,
-    .Handle = (void*)&hxspi1,
+    .Handle = (void *) &hxspi1,
     .ConfigType = EXTMEM_LINK_CONFIG_16LINES,
     .PsramObject =
     {
-      .psram_public = 
+      .psram_public =
       {
         .MemorySize = HAL_XSPI_SIZE_256MB,
         .FreqMax = 200 * 1000000u,
@@ -152,6 +174,7 @@ EXTMEM_DefinitionTypeDef extmem_list_config[2] =
       }
     }
   }
+#endif /* EXTMEM_DRIVER_PSRAM == 1 */
 };
 #endif /* EXTMEM_C */
 

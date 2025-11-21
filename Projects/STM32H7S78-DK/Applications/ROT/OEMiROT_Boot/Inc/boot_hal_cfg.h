@@ -43,11 +43,6 @@ extern "C" {
 #endif /* RTC_CLOCK_SOURCE_LSE */
 #define RCC_CSI_TIMEOUT_VALUE 1U  /* 1 ms */
 
-/* ICache */
-#ifdef ICACHE
-#define OEMIROT_ICACHE_ENABLE /*!< Instruction cache enable */
-#endif /* ICache */
-
 /* Static protections */
 #if  !defined(OEMUROT_ENABLE)
 #define OEMIROT_WRP_PROTECT_ENABLE /*!< Write Protection  */

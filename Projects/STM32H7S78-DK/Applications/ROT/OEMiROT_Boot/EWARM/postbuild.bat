@@ -5,6 +5,7 @@ pushd "%project_dir%\..\..\..\..\ROT_Provisioning"
 set provisioning_dir=%cd%
 popd
 call "%provisioning_dir%\env.bat"
+set /A template_appli_enable_status=%template_appli_enable%
 
 :: Enable delayed expansion
 setlocal EnableDelayedExpansion
@@ -14,34 +15,38 @@ set current_log_file="%project_dir%\postbuild.log"
 echo. > %current_log_file%
 
 :start
-goto exe:
-goto py:
-:exe
-::line for window executable
-set applicfg="%cube_fw_path%\Utilities\PC_Software\ROT_AppliConfig\dist\AppliCfg.exe"
-set "python="
-if exist %applicfg% (
-    echo run config Appli with windows executable
-    goto postbuild
+:: Check if Python is installed
+python3 --version >nul 2>&1
+if %errorlevel% neq 0 (
+ python --version >nul 2>&1
+ if !errorlevel! neq 0 (
+    echo Python installation missing. Refer to Utilities\PC_Software\ROT_AppliConfig\README.md
+    goto :error
+ )
+  set "python=python "
+) else (
+  set "python=python3 "
 )
-:py
-::line for python
-echo run config Appli with python script
-set applicfg="%cube_fw_path%\Utilities\PC_Software\ROT_AppliConfig\AppliCfg.py"
-set "python= "
+
+:: Environment variable for AppliCfg
+set "applicfg=%cube_fw_path%\Utilities\PC_Software\ROT_AppliConfig\AppliCfg.py"
 
 :postbuild
 set auto_rot_update="%project_dir%\..\auto_rot_update.bat"
 set preprocess_bl2_file="%project_dir%\image_macros_preprocessed_bl2.c"
-set appli_dir="..\..\..\..\%oemirot_boot_path_project%"
+set appli_dir="..\..\..\..\%oemirot_appli_path_project%"
+set appli_flash_layout="%appli_dir%\Inc\appli_flash_layout.h"
+if %template_appli_enable_status% EQU 1 (
+    set appli_postbuild="%appli_dir%\..\EWARM\Appli\postbuild.bat"
+)else (
+    set appli_postbuild="%appli_dir%\EWARM\postbuild.bat"
+)
 set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b oemurot_enable -m RE_OEMUROT_ENABLE --decimal %auto_rot_update% --vb >> %current_log_file% 2>&1"
 %command%
 IF !errorlevel! NEQ 0 goto :error
 call %auto_rot_update%
 set update="%provisioning_dir%\%bootpath%\ob_flash_programming.bat"
 
-:: Environment variable for AppliCfg
-set appli_flash_layout="%appli_dir%\Inc\appli_flash_layout.h"
 REM Check the configuration of the application: Applications or Templates
 if exist "%appli_dir%\EWARM\stm32h7rsxx_RAMxspi2_ROMxspi1.icf" (
     REM Project configuration "Applications"
@@ -202,6 +207,10 @@ set "command=%python%%applicfg% linker --layout %preprocess_bl2_file% -m RE_AREA
 %command%
 IF !errorlevel! NEQ 0 goto :error
 
+set "command=%python%%applicfg% flash --layout %preprocess_bl2_file% -b oemurot_enable -m RE_OEMUROT_ENABLE --decimal %appli_postbuild% --vb >> %current_log_file% 2>&1"
+%command%
+IF !errorlevel! NEQ 0 goto :error
+
 REM appli_flash_layout.h may not exist in a template application
 REM Initialize the variable "command" outside of the parentheses
 set "command=%python%%applicfg% setdefine --layout %preprocess_bl2_file% -m RE_OVER_WRITE -n MCUBOOT_OVERWRITE_ONLY -v 1 %appli_flash_layout% --vb >> %current_log_file% 2>&1"
@@ -210,6 +219,22 @@ if exist %appli_flash_layout% (
   IF !errorlevel! NEQ 0 goto :error
 )
 
+:: Bypass configuration of appli_flash_layout file if not present
+if not exist %appli_flash_layout% goto :cubemx
+
+set "command=%python%%applicfg% definevalue --layout %preprocess_bl2_file% -m RE_CODE_START -n FLASH_PRIMARY_APP_SLOT_OFFSET %appli_flash_layout% --vb >> %current_log_file% 2>&1"
+%command%
+IF !errorlevel! NEQ 0 goto :error
+
+set "command=%python%%applicfg% definevalue --layout %preprocess_bl2_file% -m RE_IMAGE_DOWNLOAD_ADDRESS -n FLASH_SECONDARY_APP_SLOT_OFFSET %appli_flash_layout% --vb >> %current_log_file% 2>&1"
+%command%
+IF !errorlevel! NEQ 0 goto :error
+
+set "command=%python%%applicfg% definevalue --layout %preprocess_bl2_file% -m RE_AREA_0_SIZE -n FLASH_PRIMARY_APP_SLOT_SIZE %appli_flash_layout% --vb >> %current_log_file% 2>&1"
+%command%
+IF !errorlevel! NEQ 0 goto :error
+
+:cubemx
 
 set "command=%python%%applicfg% xmlval --layout %preprocess_bl2_file% -m RE_IMAGE_FLASH_SIZE -c S %code_xml% --vb >> %current_log_file% 2>&1"
 %command%
