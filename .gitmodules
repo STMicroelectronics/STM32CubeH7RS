@@ -54,3 +54,51 @@
 	path = Drivers/BSP/Components/wm8904
 	url = https://github.com/STMicroelectronics/stm32-wm8904.git
 	branch = main
+[submodule "Middlewares/ST/STM32_ExtMem_Loader"]
+	path = Middlewares/ST/STM32_ExtMem_Loader
+	url = https://github.com/STMicroelectronics/stm32-mw-extmem-ldr
+	branch = main
+[submodule "Middlewares/ST/STM32_ExtMem_Manager"]
+	path = Middlewares/ST/STM32_ExtMem_Manager
+	url = https://github.com/STMicroelectronics/stm32-mw-extmem-mgr
+	branch = main
+[submodule "Middlewares/ST/OpenBootloader"]
+	path = Middlewares/ST/OpenBootloader
+	url = https://github.com/STMicroelectronics/stm32-mw-openbl
+	branch = main
+[submodule "Middlewares/ST/STM32_USB_Device_Library"]
+	path = Middlewares/ST/STM32_USB_Device_Library
+	url = https://github.com/STMicroelectronics/stm32-mw-usb-device
+	branch = master
+[submodule "Middlewares/ST/STM32_USB_Host_Library"]
+	path = Middlewares/ST/STM32_USB_Host_Library
+	url = https://github.com/STMicroelectronics/stm32-mw-usb-host
+	branch = master
+[submodule "Middlewares/ST/STM32_USBPD_Library/Core"]
+	path = Middlewares/ST/STM32_USBPD_Library/Core
+	url = https://github.com/STMicroelectronics/stm32-mw-usbpd-core
+	branch = main
+[submodule "Middlewares/ST/STM32_USBPD_Library/Devices/STM32H7RSXX"]
+	path = Middlewares/ST/STM32_USBPD_Library/Devices/STM32H7RSXX
+	url = https://github.com/STMicroelectronics/stm32-mw-usbpd-device-h7rs
+	branch = main
+[submodule "Middlewares/Third_Party/FatFs"]
+	path = Middlewares/Third_Party/FatFs
+	url = https://github.com/STMicroelectronics/stm32-mw-fatfs
+	branch = master
+[submodule "Middlewares/Third_Party/FreeRTOS"]
+	path = Middlewares/Third_Party/FreeRTOS
+	url = https://github.com/STMicroelectronics/stm32-mw-freertos
+	branch = master
+[submodule "Middlewares/Third_Party/LwIP"]
+	path = Middlewares/Third_Party/LwIP
+	url = https://github.com/STMicroelectronics/stm32-mw-lwip
+	branch = master
+[submodule "Middlewares/Third_Party/mbed-crypto"]
+	path = Middlewares/Third_Party/mbed-crypto
+	url = https://github.com/STMicroelectronics/stm32-mw-mbedtls
+	branch = main
+[submodule "Middlewares/Third_Party/mcuboot"]
+	path = Middlewares/Third_Party/mcuboot
+	url = https://github.com/STMicroelectronics/stm32-mw-mcuboot
+	branch = main
